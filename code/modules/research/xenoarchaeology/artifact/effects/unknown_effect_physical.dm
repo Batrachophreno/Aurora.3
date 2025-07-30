@@ -85,7 +85,7 @@
 			C.adjustBruteLoss(rand(5,25) * weakness)
 			C.adjustFireLoss(rand(5,25) * weakness)
 			C.adjustBrainLoss(rand(5,25) * weakness)
-			C.apply_damage(25 * weakness, DAMAGE_RADIATION, damage_flags = DAMAGE_FLAG_DISPERSED)
+			SSradiation.radiate(src, 25 * weakness)
 			C.adjustNutritionLoss(50 * weakness)
 			C.adjustHydrationLoss(50 * weakness)
 			C.make_dizzy(6 * weakness)
@@ -328,8 +328,7 @@
 
 /datum/artifact_effect/radiate/DoEffectTouch(var/mob/living/user)
 	if(user)
-		user.apply_damage(radiation_amount * 5, DAMAGE_RADIATION, damage_flags = DAMAGE_FLAG_DISPERSED)
-		user.updatehealth()
+		SSradiation.radiate(src,radiation_amount * 5)
 		return TRUE
 
 /datum/artifact_effect/radiate/DoEffectAura()

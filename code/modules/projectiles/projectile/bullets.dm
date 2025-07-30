@@ -510,7 +510,7 @@
 		var/turf/T = get_turf(mob)
 		if(T && (loc.z == T.z))
 			if(ishuman(mob))
-				mob.apply_damage(250, DAMAGE_RADIATION, damage_flags = DAMAGE_FLAG_DISPERSED)
+				SSradiation.radiate(mob,250)
 	new /obj/effect/temp_visual/nuke(target.loc)
 	explosion(target,2,5,9)
 	. = ..()

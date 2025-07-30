@@ -198,8 +198,7 @@
 					radiation = rand() * 15 + 85
 					if(!rad_shield)
 						//irradiate nearby mobs
-						for(var/mob/living/M in view(7,src))
-							M.apply_damage(radiation / 25, DAMAGE_RADIATION, damage_flags = DAMAGE_FLAG_DISPERSED)
+						SSradiation.radiate(src, round(radiation / 25))
 				else
 					t_left_radspike = pick(10,15,25)
 

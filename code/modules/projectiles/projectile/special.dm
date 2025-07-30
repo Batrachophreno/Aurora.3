@@ -157,7 +157,7 @@
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags & IS_PLANT) && (M.nutrition < 500))
 			if(prob(15))
-				H.apply_damage(rand(30,80), DAMAGE_RADIATION, damage_flags = DAMAGE_FLAG_DISPERSED)
+				SSradiation.radiate(src,rand(30,80))
 				M.Weaken(5)
 				for (var/mob/V in viewers(src))
 					V.show_message(SPAN_WARNING("[M] writhes in pain as [M.get_pronoun("his")] vacuoles boil."), 3, SPAN_WARNING("You hear the crunching of leaves."), 2)

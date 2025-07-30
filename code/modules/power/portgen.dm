@@ -486,11 +486,7 @@
 /obj/machinery/power/portgen/basic/fusion/explode()
 	//a nice burst of radiation
 	var/rads = 50 + (sheets + sheet_left)*1.5
-	for (var/mob/living/L in range(src, 10))
-		//should really fall with the square of the distance, but that makes the rads value drop too fast
-		//I dunno, maybe physics works different when you live in 2D -- SM radiation also works like this, apparently
-		L.apply_damage(max(20, round(rads/get_dist(L,src))), DAMAGE_RADIATION, damage_flags = DAMAGE_FLAG_DISPERSED)
-
+	SSradiation.radiate(src,rads)
 	explosion(loc, 3, 6, 12, 16, 1)
 	qdel(src)
 

@@ -66,8 +66,7 @@
 /obj/structure/railing/process()
 	if(!material || !material.radioactivity)
 		return
-	for(var/mob/living/L in range(1,src))
-		L.apply_damage(round(material.radioactivity / 20), DAMAGE_RADIATION)
+	SSradiation.radiate(src, round(material.radioactivity / 20)
 
 /obj/structure/railing/Initialize()
 	. = ..()

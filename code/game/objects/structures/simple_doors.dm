@@ -227,8 +227,7 @@
 /obj/structure/simple_door/process()
 	if(!material.radioactivity)
 		return
-	for(var/mob/living/L in range(1,src))
-		L.apply_damage(round(material.radioactivity/3),DAMAGE_RADIATION, damage_flags = DAMAGE_FLAG_DISPERSED)
+	SSradiation.radiate(src, round(material.radioactivity/3))
 
 /obj/structure/simple_door/iron/New(var/newloc,var/material_name, var/complexity)
 	..(newloc, MATERIAL_IRON, complexity)

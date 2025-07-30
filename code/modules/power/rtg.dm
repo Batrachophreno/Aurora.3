@@ -40,8 +40,7 @@
 	..()
 	add_avail(power_gen)
 	if(panel_open && irradiate)
-		for (var/mob/living/L in range(2, src))
-			L.apply_damage(10, DAMAGE_RADIATION, damage_flags = DAMAGE_FLAG_DISPERSED)	// Weak but noticeable.
+		SSradiation.radiate(src,10)
 
 /obj/machinery/power/rtg/update_icon()
 	icon_state = panel_open ? "[initial(icon_state)]-open" : initial(icon_state)
