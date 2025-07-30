@@ -60,6 +60,22 @@ the HUD updates properly! */
 			P.Client.images += perp.hud_list[IMPLOYAL_HUD]
 			P.Client.images += perp.hud_list[IMPCHEM_HUD]
 
+//Rad HUDs. Pass a value for the second argument to enable implant viewing or other special features.
+/proc/process_rad_hud(var/mob/M, var/advanced_mode, var/mob/Alt)
+	if(!can_process_hud(M))
+		return
+	var/datum/arranged_hud_process/P = arrange_hud_process(M, Alt, GLOB.sec_hud_users)
+	for(var/mob/living/carbon/human/perp in P.Mob.in_view(P.Turf))
+		if(perp.is_invisible_to(M))
+			continue
+
+		P.Client.images += perp.hud_list[ID_HUD]
+		if(advanced_mode)
+			P.Client.images += perp.hud_list[WANTED_HUD]
+			P.Client.images += perp.hud_list[IMPTRACK_HUD]
+			P.Client.images += perp.hud_list[IMPLOYAL_HUD]
+			P.Client.images += perp.hud_list[IMPCHEM_HUD]
+
 /datum/arranged_hud_process
 	var/client/Client
 	var/mob/Mob

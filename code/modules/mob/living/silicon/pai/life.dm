@@ -19,6 +19,9 @@
 	if(src.medHUD)
 		process_med_hud(src, TRUE)
 
+	if(src.radHUD)
+		process_rad_hud(src, TRUE)
+
 	if(silence_time)
 		if(world.timeofday >= silence_time)
 			silence_time = null

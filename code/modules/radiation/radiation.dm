@@ -35,9 +35,14 @@
 /turf/proc/calc_rad_resistance()
 	cached_rad_resistance = 0
 	for(var/obj/O in src.contents)
+		// Blast doors are a special case: very good at containing radiation.
+		if(istype(O, /obj/machinery/door/blast) && O.density)
+			// Lead's material.weight is 32; we'll use 35 here.
+			cached_rad_resistance += (35) / RADIATION_MATERIAL_RESISTANCE_DIVISOR
 		if(!(O.rad_resistance_modifier <= 0) && O.density)
 			var/material/M = O.get_material()
-			if(!M)	continue
+			if(!M)
+				continue
 			cached_rad_resistance += (M.weight * O.rad_resistance_modifier) / RADIATION_MATERIAL_RESISTANCE_DIVISOR
 	// Looks like storing the contents length is meant to be a basic check if the cache is stale due to items enter/exiting.  Better than nothing so I'm leaving it as is. ~Leshana
 	SSradiation.resistance_cache[src] = (length(contents) + 1)

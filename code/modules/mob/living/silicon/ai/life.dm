@@ -67,10 +67,12 @@
 	process_queued_alarms()
 	handle_regular_hud_updates()
 	switch(src.sensor_mode)
-		if (SEC_HUD)
+		if(SEC_HUD)
 			process_sec_hud(src,0,src.eyeobj)
-		if (MED_HUD)
+		if(MED_HUD)
 			process_med_hud(src,0,src.eyeobj)
+		if(RAD_HUD)
+			process_rad_hud(src,0,src.eyeobj)
 
 	return TRUE
 

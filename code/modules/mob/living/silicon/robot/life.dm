@@ -172,6 +172,8 @@
 			process_sec_hud(src, FALSE)
 		if(MED_HUD)
 			process_med_hud(src, FALSE)
+		if(RAD_HUD)
+			process_rad_hud(src, FALSE)
 
 	if(healths)
 		if(stat != DEAD)
