@@ -120,6 +120,14 @@
 	/// Material light. Used for fuel rods.
 	var/luminescence
 
+///This proc is called when the material is added to an object.
+/material/proc/on_applied(atom/source, mat_amount, multiplier)
+	return
+
+///This proc is called when the material is removed from an object.
+/material/proc/on_removed(atom/source, amount, material_flags)
+	return
+
 /material/proc/build_rod_product(var/mob/user, var/obj/item/stack/used_stack, var/obj/item/stack/target_stack)
 	if(!rod_product)
 		to_chat(user, SPAN_WARNING("You cannot make anything out of \the [target_stack]"))
@@ -148,6 +156,7 @@
 	var/obj/item/product = new wire_product(get_turf(user))
 	if(!(user.l_hand && user.r_hand))
 		user.put_in_hands(product)
+
 
 // Make sure we have a display name and shard icon even if they aren't explicitly set.
 /material/New()
@@ -291,6 +300,24 @@
 	stack_origin_tech = list(TECH_MATERIAL = 5)
 	door_icon_base = "stone"
 	golem = SPECIES_GOLEM_URANIUM
+
+/material/uranium/on_applied(atom/source, mat_amount, multiplier)
+	. = ..()
+
+	// Uranium structures should irradiate, but not items, because item irradiation is a lot more annoying.
+	// For example, consider picking up uranium as a miner.
+	if (isitem(source))
+		return
+
+	source.AddElement(/datum/element/radioactive, chance = URANIUM_IRRADIATION_CHANCE * multiplier)
+
+/material/uranium/on_removed(atom/source, mat_amount, multiplier)
+	. = ..()
+
+	if (isitem(source))
+		return
+
+	source.RemoveElement(/datum/element/radioactive, chance = URANIUM_IRRADIATION_CHANCE * multiplier)
 
 /material/diamond
 	name = MATERIAL_DIAMOND

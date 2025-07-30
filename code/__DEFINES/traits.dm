@@ -170,6 +170,12 @@
 /// When mobs are irradiated.
 #define TRAIT_IRRADIATED "irradiated"
 
+/// Mobs that are rad-immune.
+#define TRAIT_RADIMMUNE "rad_immune"
+
+/// Bypass for early irradiation checks
+#define TRAIT_BYPASS_EARLY_IRRADIATED_CHECK "bypass_early_irrad_check"
+
 // IPC OVERLOADER OVERDOSE STATES
 #define TRAIT_SOURCE_OVERLOADER "overloader"
 #define TRAIT_OVERLOADER_OD_INITIAL "overloader_od_initial"
@@ -207,3 +213,6 @@
 #define TRAIT_DOUBLE_SEATS "double_seats"
 /// Apply this to make a mob passable by other mobs.
 #define TRAIT_UNDENSE "undense"
+
+/// Harmful radiation effects, the toxin damage and the burns, will not occur while this trait is active
+#define TRAIT_HALT_RADIATION_EFFECTS "halt_radiation_effects"
