@@ -204,3 +204,20 @@
 #define TRAIT_DOUBLE_SEATS "double_seats"
 /// Apply this to make a mob passable by other mobs.
 #define TRAIT_UNDENSE "undense"
+
+/// Has the ingredients_holder component
+#define TRAIT_INGREDIENTS_HOLDER "ingredients_holder"
+
+// Item Traits
+/// If this item's been fried
+#define TRAIT_FOOD_FRIED "food_fried"
+/// Has the ingredients_holder component
+#define TRAIT_INGREDIENTS_HOLDER "ingredients_holder"
+/// If this item's been bbq grilled
+#define TRAIT_FOOD_BBQ_GRILLED "food_bbq_grilled"
+/// This is a silver slime created item
+#define TRAIT_FOOD_SILVER "food_silver"
+/// If this item's been made by a chef instead of being map-spawned or admin-spawned or such
+#define TRAIT_FOOD_CHEF_MADE "food_made_by_chef"
+/// This atom has a quality_food_ingredient element attached
+#define TRAIT_QUALITY_FOOD_INGREDIENT "quality_food_ingredient"
