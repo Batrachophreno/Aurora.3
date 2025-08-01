@@ -34,7 +34,7 @@
 #define FIRE_DAMAGE_MODIFIER 0.0215 // Higher values result in more external fire damage to the skin. (default 0.0215)
 #define  AIR_DAMAGE_MODIFIER 2.025  // More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
 
-// Organ status defines.
+/// Organ status defines.
 #define ORGAN_CUT_AWAY   (1<<0)
 #define ORGAN_BLEEDING   (1<<1)
 #define ORGAN_BROKEN     (1<<2)
@@ -47,14 +47,15 @@
 #define ORGAN_ADV_ROBOT  (1<<9)
 #define ORGAN_PLANT      (1<<10)
 #define ORGAN_ARTERY_CUT (1<<11)
-#define ORGAN_LIFELIKE   (1<<12)   // Robotic, made to appear organic.
+/// Robotic, made to appear organic.
+#define ORGAN_LIFELIKE   (1<<12)
 #define ORGAN_NYMPH   	 (1<<13)
 #define ORGAN_ZOMBIFIED  (1<<14)
 
-// the largest bitflag, in the WORLD
+/// The largest bitflag, in the WORLD
 #define ORGAN_DAMAGE_STATES ORGAN_CUT_AWAY|ORGAN_BLEEDING|ORGAN_BROKEN|ORGAN_DESTROYED|ORGAN_SPLINTED|ORGAN_DEAD|ORGAN_MUTATED|ORGAN_ARTERY_CUT
 
-// Limb behaviour defines.
+/// Limb behaviour defines.
 #define ORGAN_CAN_AMPUTATE (1<<0) //Can this organ be amputated?
 #define ORGAN_CAN_BREAK    (1<<1) //Can this organ break?
 #define ORGAN_CAN_GRASP    (1<<2) //Can this organ grasp things?
@@ -69,18 +70,20 @@
 #define DROPLIMB_BLUNT 1
 #define DROPLIMB_BURN 2
 
-// Damage above this value must be repaired with surgery.
+/// Damage above this value must be repaired with surgery.
 #define ROBOLIMB_SELF_REPAIR_CAP 30
 
 //Germs and infections.
-#define GERM_LEVEL_AMBIENT  110 // Maximum germ level you can reach by standing still.
-#define GERM_LEVEL_MOVE_CAP 200 // Maximum germ level you can reach by running around.
+/// Maximum germ level you can reach by standing still.
+#define GERM_LEVEL_AMBIENT  110
+/// Maximum germ level you can reach by running around.
+#define GERM_LEVEL_MOVE_CAP 200
 
 #define INFECTION_LEVEL_ONE   100
 #define INFECTION_LEVEL_TWO   500
 #define INFECTION_LEVEL_THREE 1000
 
-//Blood levels. These are percentages based on the species blood_volume var.
+/// Blood levels. These are percentages based on the species blood_volume var.
 #define BLOOD_VOLUME_SAFE    85
 #define BLOOD_VOLUME_OKAY    70
 #define BLOOD_VOLUME_BAD     60
@@ -90,10 +93,12 @@
 // that dealing just enough burn damage to kill the player will cause the given
 // proportion of their max blood volume to be lost
 // (e.g. 0.6 == 60% lost if 200 burn damage is taken).
-#define FLUIDLOSS_WIDE_BURN 0.3 //for burns from heat applied over a wider area, like from fire
-#define FLUIDLOSS_CONC_BURN 0.2 //for concentrated burns, like from lasers
+/// For burns from heat applied over a wider area, like from fire
+#define FLUIDLOSS_WIDE_BURN 0.3
+/// For concentrated burns, like from lasers
+#define FLUIDLOSS_CONC_BURN 0.2
 
-// The bandage levels a limb can have, basically how badly bandaged up their are
+/// The bandage levels a limb can have, basically how badly bandaged up their are
 #define BANDAGE_LEVEL_NONE 0
 #define BANDAGE_LEVEL_LIGHT 1
 #define BANDAGE_LEVEL_MEDIUM 2

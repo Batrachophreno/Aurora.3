@@ -3,19 +3,25 @@
 	var/description = "A non-descript chemical."
 	var/taste_description = "old rotten bandaids"
 	var/list/species_taste_description
-	var/taste_mult = 1 //how this taste compares to others. Higher values means it is more noticable
+	/// How this taste compares to others. Higher values means it is more noticable
+	var/taste_mult = 1
 	var/reagent_state = SOLID
-	var/metabolism = REM // This would be 0.2 normally
+	/// 'Reagent Effect Multiplier': Usually 0.2, this is how many units of reagent are consumed per tick
+	var/metabolism = REM
 	var/ingest_met = 0
 	var/touch_met = 0
 	var/breathe_met = 0
 	var/ingest_mul = 0.5
 	var/touch_mul = 0
 	var/breathe_mul = 0.75
-	var/overdose = 0 // Volume of a chemical required in the blood to meet overdose criteria.
-	var/od_minimum_dose = 5 // Metabolised dose of a chemical required to meet overdose criteria.
-	var/scannable = 0 // Shows up on health analyzers.
-	var/spectro_hidden = FALSE // doesn't show up on basic mass spectrometers, only shows on the advanced variant
+	// Volume of a chemical required in the blood to meet overdose criteria.
+	var/overdose = 0
+	/// Metabolised dose of a chemical required to meet overdose criteria.
+	var/od_minimum_dose = 5
+	/// Shows up on health analyzers.
+	var/scannable = 0
+	/// Doesn't show up on basic mass spectrometers, only shows on the advanced variant
+	var/spectro_hidden = FALSE
 	var/affects_dead = 0
 	var/glass_icon_state = null
 	var/glass_name = null
@@ -28,17 +34,25 @@
 	var/condiment_center_of_mass = null
 	var/color = "#000000"
 	var/color_weight = 1
-	var/unaffected_species = IS_DIONA | IS_MACHINE	// Species that aren't affected by this reagent. Does not prevent affect_touch.
-	var/metabolism_min = 0.01 //How much for the medicine to be present in the system to actually have an effect.
-	var/conflicting_reagent //Reagents that conflict with this medicine, and cause adverse effects when in the blood.
-
-	var/default_temperature = T0C + 20 //This is its default spawning temperature, if none is provided.
-	var/specific_heat = -1 //The higher, the more difficult it is to change its temperature. 0 or lower values indicate that the specific heat has yet to be assigned.
-	var/fallback_specific_heat = -1 //Setting this value above 0 will set the specific heat to this value only if the system could not find an appropriate specific heat to assign using the recipe system.
-	//Never ever ever ever change this value for singleton/reagent. This should only be used for massive, yet specific things like drinks or food where it is infeasible to assign a specific heat value.
-
-	var/germ_adjust = 0 // for makeshift bandages/disinfectant
-	var/carbonated = FALSE // if it's carbonated or not
+	/// Species that aren't affected by this reagent. Does not prevent affect_touch.
+	var/unaffected_species = IS_DIONA | IS_MACHINE
+	/// How much for the medicine to be present in the system to actually have an effect.
+	var/metabolism_min = 0.01
+	/// Reagents that conflict with this medicine, and cause adverse effects when in the blood.
+	var/conflicting_reagent
+	/// This is its default spawning temperature, if none is provided.
+	var/default_temperature = T0C + 20
+	/// The higher, the more difficult it is to change its temperature. 0 or lower values indicate that the specific heat has yet to be assigned.
+	var/specific_heat = -1
+	/*
+	 *	Setting this value above 0 will set the specific heat to this value only if the system could not find an appropriate specific heat to assign using the recipe system.
+	 *	Never ever ever ever change this value for singleton/reagent. This should only be used for massive, yet specific things like drinks or food where it is infeasible to assign a specific heat value.
+	 */
+	var/fallback_specific_heat = -1
+	/// For makeshift bandages/disinfectant
+	var/germ_adjust = 0
+	/// Carbonated or not
+	var/carbonated = FALSE
 
 	/// Adds to the value of whatever container's holding it, value * units of reagents
 	var/value = 1
@@ -76,9 +90,11 @@
 /singleton/reagent/proc/is_overdosing(mob/living/carbon/M, location, datum/reagents/holder)
 	var/OD = get_overdose(M, location, holder)
 	var/OD_min = get_od_min_dose(M, location, holder)
-	return OD && (REAGENT_VOLUME(holder, type) > OD) && (LAZYACCESS(M.chem_doses, type) > OD_min) && (!location || (location != CHEM_TOUCH)) //OD based on volume in blood, but waits for a small amount of the drug to metabolise before kicking in.
+	/// OD based on volume in blood, but waits for a small amount of the drug to metabolise before kicking in.
+	return OD && (REAGENT_VOLUME(holder, type) > OD) && (LAZYACCESS(M.chem_doses, type) > OD_min) && (!location || (location != CHEM_TOUCH))
 
-/singleton/reagent/proc/on_mob_life(var/mob/living/carbon/M, var/alien, var/location, var/datum/reagents/holder) // Currently, on_mob_life is called on carbons. Any interaction with non-carbon mobs (lube) will need to be done in touch_mob.
+/// Currently, on_mob_life is called on carbons. Any interaction with non-carbon mobs (lube) will need to be done in touch_mob.
+/singleton/reagent/proc/on_mob_life(var/mob/living/carbon/M, var/alien, var/location, var/datum/reagents/holder)
 	if(!istype(M))
 		return
 	if(!affects_dead && M.stat == DEAD)

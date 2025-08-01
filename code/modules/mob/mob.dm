@@ -294,7 +294,6 @@
 /**
  * Handles the biological and general over-time processes of the mob.
  *
- *
  * Arguments:
  * - seconds_per_tick: The amount of time that has elapsed since this last fired
  * - times_fired: The number of times SSmobs has fired
@@ -365,7 +364,10 @@
 				client.eye = loc
 	return
 
-
+/**
+ *	Used when click-dragging a mob onto yourself to search their inventory/equipment.
+ *	Can probably be updated to a TGUI for a bit more dynamic interactivity in future.
+ */
 /mob/proc/show_inv(mob/user)
 	user.set_machine(src)
 	var/dat = {"

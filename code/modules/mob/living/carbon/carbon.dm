@@ -1,3 +1,6 @@
+/**
+ *	Sets up reagent holders for a carbon's metabolism: bloodstr, touching, and breathing.
+ */
 /mob/living/carbon/Initialize()
 	//setup reagent holders
 	bloodstr = new/datum/reagents/metabolism(1000, src, CHEM_BLOOD)
