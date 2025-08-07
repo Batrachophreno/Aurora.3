@@ -15,28 +15,38 @@
 	var/id = null
 	var/result = null
 	var/list/required_reagents = list()
-	var/required_temperature_min // Temperatures must exceed this value to trigger.
-	var/required_temperature_max // Temperatures must be less than this value to trigger.
+	/// Temperatures must exceed this value to trigger.
+	var/required_temperature_min
+	/// Temperatures must be less than this value to trigger.
+	var/required_temperature_max
 	var/list/catalysts = list()
 	var/list/inhibitors = list()
 	var/result_amount = 0
 
-	//how far the reaction proceeds each time it is processed. Used with either REACTION_RATE or HALF_LIFE macros.
+	/// How far the reaction proceeds each time it is processed. Used with either REACTION_RATE or HALF_LIFE macros.
 	var/reaction_rate = HALF_LIFE(0)
 
-	//if less than 1, the reaction will be inhibited if the ratio of products/reagents is too high.
-	//0.5 = 50% yield -> reaction will only proceed halfway until products are removed.
+	/**
+	 * If less than 1, the reaction will be inhibited if the ratio of products/reagents is too high.
+	 * 0.5 = 50% yield -> reaction will only proceed halfway until products are removed.
+	 */
 	var/yield = 1.0
 
-	//If limits on reaction rate would leave less than this amount of any reagent (adjusted by the reaction ratios),
-	//the reaction goes to completion. This is to prevent reactions from going on forever with tiny reagent amounts.
+	/**
+	 * If limits on reaction rate would leave less than this amount of any reagent (adjusted by the reaction ratios),
+	 * the reaction goes to completion. This is to prevent reactions from going on forever with tiny reagent amounts.
+	 */
 	var/min_reaction = 2
 
 	var/mix_message = "The solution begins to bubble."
 	var/reaction_sound = 'sound/effects/bubbles.ogg'
 
-	var/log_is_important = 0 // If this reaction should be considered important for logging. Important recipes message admins when mixed, non-important ones just log to file.
+	/// If this reaction should be considered important for logging. Important recipes message admins when mixed, non-important ones just log to file.
+	var/log_is_important = 0
 
+/**
+ * Checks a datum/reagents for the right reagents @ the right temperature range to react.
+ */
 /datum/chemical_reaction/proc/can_happen(var/datum/reagents/holder)
 	//check that all the required reagents are present
 	if(!holder.has_all_reagents(required_reagents))
@@ -59,8 +69,11 @@
 
 	return 1
 
+/**
+ * Calculate reaction progress: uses a simple exponential progression.
+ */
 /datum/chemical_reaction/proc/calc_reaction_progress(var/datum/reagents/holder, var/reaction_limit)
-	var/progress = reaction_limit * reaction_rate //simple exponential progression
+	var/progress = reaction_limit * reaction_rate
 
 	//calculate yield
 	if(1-yield > 0.001) //if yield ratio is big enough just assume it goes to completion
@@ -120,11 +133,15 @@
 
 	return reaction_progress
 
-//called when a reaction processes
+/**
+ * Called when a reaction processes.
+ */
 /datum/chemical_reaction/proc/on_reaction(var/datum/reagents/holder, var/created_volume, var/created_thermal_energy)
 	return
 
-//called after processing reactions, if they occurred
+/**
+ * If reactions occured, called after processing.
+ */
 /datum/chemical_reaction/proc/post_reaction(var/datum/reagents/holder)
 	var/atom/container = holder.my_atom
 	if(container && !ismob(container))

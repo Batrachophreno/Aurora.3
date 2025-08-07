@@ -1,3 +1,4 @@
+/// Everything from cups to pills to packets to patches to bags.
 /obj/item/reagent_containers
 	name = "Container"
 	desc = "..."
@@ -7,12 +8,16 @@
 	recyclable = TRUE
 	var/amount_per_transfer_from_this = 5
 	var/possible_transfer_amounts = list(5,10,15,25,30)
+	/// Volume = capacity in the mysterious 'units'
 	var/volume = 30
-	var/filling_states				// List of percentages full that have icons
+	/// List of percentages full that have icons
+	var/filling_states
 	var/accuracy = 1
-	var/fragile = 0        // If nonzero, above what force do we shatter?
+	/// If nonzero, above what force do we shatter?
+	var/fragile = 0
 	var/shatter_sound = /singleton/sound_category/glass_break_sound
-	var/material/shatter_material = MATERIAL_GLASS //slight typecasting abuse here, gets converted to a material in initializee
+	/// Slight typecasting abuse here, gets converted to a material in initializee
+	var/material/shatter_material = MATERIAL_GLASS
 	var/can_be_placed_into = list(
 		/obj/machinery/chem_master,
 		/obj/machinery/chem_heater,
@@ -41,7 +46,10 @@
 	)
 	//The above list a misnomer. This basically means that anything in this list has their own way of handling reagent transfers and should be ignored in afterattack.
 
-/obj/item/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
+/**
+ * Set amount_per_transfer_from_this.
+ */
+/obj/item/reagent_containers/verb/set_APTFT()
 	set name = "Set transfer amount"
 	set category = "Object"
 	set src in range(0)
@@ -86,9 +94,12 @@
 		return
 	reagents.apply_force(throwingdatum.speed)
 
+/**
+  Splashes the mob holding it or its turf.
+ */
 /obj/item/reagent_containers/proc/shatter(var/obj/item/W, var/mob/user)
 	if(reagents?.total_volume)
-		reagents.splash(src.loc, reagents.total_volume) // splashes the mob holding it or the turf it's on
+		reagents.splash(src.loc, reagents.total_volume)
 	audible_message(SPAN_WARNING("\The [src] shatters with a resounding crash!"), SPAN_WARNING("\The [src] breaks."))
 	playsound(src, shatter_sound, 70, 1)
 	shatter_material.place_shard(loc)
@@ -138,7 +149,10 @@
 /obj/item/reagent_containers/proc/get_temperature()
 	return reagents.get_temperature()
 
-/obj/item/reagent_containers/proc/reagentlist() // For attack logs
+/**
+ * For attack logs.
+ */
+/obj/item/reagent_containers/proc/reagentlist()
 	return reagents.get_reagents()
 
 /obj/item/reagent_containers/proc/standard_dispenser_refill(var/mob/user, var/obj/structure/reagent_dispensers/target)
@@ -322,7 +336,10 @@
 				H.emote("gasp")
 		return
 
-/obj/item/reagent_containers/proc/standard_pour_into(var/mob/user, var/atom/target) // This goes into afterattack and yes, it's atom-level
+/**
+ * This goes into afterattack and yes, it's atom-level
+ */
+/obj/item/reagent_containers/proc/standard_pour_into(var/mob/user, var/atom/target)
 	if(!target.reagents)
 		return 0
 
