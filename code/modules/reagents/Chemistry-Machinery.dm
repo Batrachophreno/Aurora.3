@@ -23,17 +23,25 @@
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/obj/item/storage/pill_bottle/loaded_pill_bottle = null
 	var/mode = TRUE
+	/// Do we ACTUALLY make delicious delicious sauce? (is_condimaster)
 	var/condi = 0
-	var/useramount = 30 // Last used amount
+	/// Last used amount.
+	var/useramount = 30
 	var/pillamount = 10
-	var/bottlesprite = "bottle-1" //yes, strings
+	/// Yes, strings.
+	var/bottlesprite = "bottle-1"
 	var/pillsprite = "pill1"
 	var/max_pill_count = 20
 	atom_flags = ATOM_FLAG_OPEN_CONTAINER
 	var/datum/asset/spritesheet/chem_master/chem_asset
-	var/list/forbidden_containers = list(/obj/item/reagent_containers/glass/bucket) //For containers we don't want people to shove into the chem machine. Like big-ass buckets.
+	/// For containers we don't want people to shove into the chem machine. Like big-ass buckets. This may be updated to an in-code check for max volume.
+	var/list/forbidden_containers = list(/obj/item/reagent_containers/glass/bucket)
 	var/datum/tgui/ui = null
 	var/list/analysis = list()
+
+/obj/machinery/chem_master/mechanics_hints(mob/user, distance, is_adjacent)
+	. += ..()
+	. += "<b>ALT-click</b> the [src] to eject the currently loaded container into your hands. If your hands are full, it will be placed safely on the floor."
 
 /obj/machinery/chem_master/Initialize()
 	. = ..()
@@ -363,6 +371,10 @@
 		/obj/item/reagent_containers/food/drinks/shaker,
 		/obj/item/reagent_containers/cooking_container
 	)
+
+/obj/machinery/reagentgrinder/mechanics_hints(mob/user, distance, is_adjacent)
+	. += ..()
+	. += "Click-drag the [src] onto someone to try and feed their hair into it! They probably won't like this."
 
 /obj/machinery/reagentgrinder/Initialize()
 	. = ..()
