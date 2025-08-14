@@ -14,12 +14,15 @@
 	obj_flags = OBJ_FLAG_ROTATABLE
 	var/sortType = ""
 	var/ptype = 0
-	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6=disposal bin, 7=outlet, 8=inlet 9=pipe-j1s 10=pipe-j2s
+	/// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6=disposal bin, 7=outlet, 8=inlet 9=pipe-j1s 10=pipe-j2s
 	var/subtype = 0
-	var/dpdir = 0	// directions as disposalpipe
+	/// directions as disposalpipe
+	var/dpdir = 0
 	var/base_state = "pipe-s"
 
-	// update iconstate and dpdir due to dir and type
+/**
+ * Update iconstate and dpdir by dir and type.
+ */
 /obj/structure/disposalconstruct/proc/update()
 	var/flip = turn(dir, 180)
 	var/left = turn(dir, 90)
@@ -97,8 +100,10 @@
 		alpha = 255
 		//otherwise burying half-finished pipes under floors causes them to half-fade
 
-	// hide called by levelupdate if turf intact status changes
-	// change visibility status and force update of icon
+/**
+ * Called by levelupdate if turf intact status changes.
+ * Changes visibility status and force update of icon.
+ */
 /obj/structure/disposalconstruct/hide(var/intact)
 	set_invisibility((intact && level==1) ? 101: 0)	// hide if floor is intact
 	update()
@@ -132,7 +137,9 @@
 
 	update()
 
-	// returns the type path of disposalpipe corresponding to this item dtype
+/**
+ * Returns the type path of disposalpipe corresponding to this item dtype.
+ */
 /obj/structure/disposalconstruct/proc/dpipetype()
 	switch(ptype)
 		if(0,1)
@@ -175,12 +182,10 @@
 			return /obj/structure/disposalpipe/tagger/partial
 	return
 
-
-
-	// attackby item
-	// wrench: (un)anchor
-	// weldingtool: convert to real pipe
-
+/**
+ * Wrench: unanchor.
+ * Welder: convert to a real pipe.
+ */
 /obj/structure/disposalconstruct/attackby(obj/item/attacking_item, mob/user)
 	var/nicetype = "pipe"
 	var/ispipe = 0 // Indicates if we should change the level of this pipe
