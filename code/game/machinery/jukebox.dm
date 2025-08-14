@@ -36,6 +36,10 @@
 		new/datum/track("Thunderdome", 'sound/music/THUNDERDOME.ogg')
 	)
 
+/obj/machinery/media/jukebox/antagonist_hints(mob/user, distance, is_adjacent)
+	. += ..()
+	. += "Emagging this will cause it to emit a deafening noise when someone hits Play. This noise deafens, weakens, and has a chance to stun or paralyze everyone nearby without ear protection. Fifteen seconds later, it will explode!"
+
 /obj/machinery/media/jukebox/Destroy()
 	StopPlaying()
 	return ..()
