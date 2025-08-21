@@ -6,22 +6,29 @@
 	item_state = "binoculars"
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	var/has_dropped = 0 // Counter of how many times the targeter has been used
-	var/drop_amount = 2 // How many times can this item be used?
+	/// Counter of how many times the targeter has been used
+	var/has_dropped = 0
+	/// How many times can this item be used?
+	var/drop_amount = 2
 
-	var/tileoffset = 8 // How far can you zoom with these binocular targeters
-	var/viewsize = 7 // How large the view is when you zoom
+	/// How far can you zoom with these binocular targeters
+	var/tileoffset = 8
+	/// How large the view is when you zoom
+	var/viewsize = 7
 
-	var/paint_distance = 14 // From how far away can you paint a target?
+	/// From how far away can you paint a target?
+	var/paint_distance = 14
 
 	var/does_explosion = TRUE
-	var/emagged = FALSE // If emagged, things can be dropped in on station areas
+	/// If emagged, things can be dropped in on station areas
+	var/emagged = FALSE
 
 	var/drop_message_language = LANGUAGE_TCB
 	var/drop_message = "Orbital package inbound, clear the targetted area immediately!"
 	var/drop_message_emagged = "O*b$ital p&ck@ge in#)und, c-c-c-!"
 	var/announcer_name = "Operations Long Range Package Delivery System"
-	var/announcer_frequency = SUP_FREQ // If not emagged, will announce to this channel. If emagged, will always announce on the common channel.
+	/// If not emagged, will announce to this channel. If emagged, will always announce on the common channel.
+	var/announcer_frequency = SUP_FREQ
 
 	var/datum/map_template/map
 
