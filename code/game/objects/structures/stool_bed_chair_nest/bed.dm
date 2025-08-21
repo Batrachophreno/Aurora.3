@@ -30,28 +30,30 @@
 	var/base_icon = "bed"
 	var/buckling_sound = 'sound/effects/buckle.ogg'
 
-	var/painted_colour // Used for paint gun and preset colours. I know this name sucks.
+	/// Used for paint gun and preset colours. I know this name sucks.
+	var/painted_colour
 
 	var/can_dismantle = TRUE
 	var/can_pad = TRUE
 
 	gfi_layer_rotation = GFI_ROTATION_DEFDIR
 	var/makes_rolling_sound = FALSE
-	var/held_item = null // Set to null if you don't want people to pick this up.
+	/// Set to null if you don't want people to pick this up.
+	var/held_item = null
 	slowdown = 5
-
-	var/driving = FALSE // Shit for wheelchairs. Doesn't really get used here, but it's for code cleanliness.
+	/// Shit for wheelchairs. Doesn't really get used here, but it's for code cleanliness.
+	var/driving = FALSE
 	var/mob/living/pulling = null
-	var/propelled = 0 // Check for fire-extinguisher-driven chairs
+	/// Check for fire-extinguisher-driven chairs
+	var/propelled = 0
 
-/obj/structure/bed/mechanics_hints()
+/obj/structure/bed/mechanics_hints(mob/user, distance, is_adjacent)
 	. = list()
 	. += ..()
 	. += "Click and drag yourself (or anyone) to this to buckle in."
 	. += "Click on this with an empty hand to undo the buckles."
-	. += "Anyone with restraints, such as handcuffs, will not be able to unbuckle themselves. They must use the Resist button, or verb, to break free of \
-	the buckles instead."
-	. += "To unbuckle people as a stationbound, click the bed with an empty gripper."
+	if(issilicon(user))
+		. += "To unbuckle people as a stationbound, click the bed with an empty gripper."
 	if(held_item)
 		. += "Click and drag this onto yourself to pick it up."
 
@@ -380,15 +382,32 @@
 	var/obj/item/vitals_monitor/vitals
 	var/iv_attached = 0
 	var/iv_stand = TRUE
-	var/iv_transfer_rate = 4 //Same as max for regular IV drips
+	/// Same as max for regular IV drips
+	var/iv_transfer_rate = 4
 	var/has_iv_light = TRUE
-	//Items that can be attached to an IV
+	/// Items that can be attached to an IV
 	var/list/accepted_containers = list(
 		/obj/item/reagent_containers/blood,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/bottle)
-	var/patient_shift = 9 //How much are mobs moved up when they are buckled_to.
+	/// How much are mobs moved up when they are buckled_to.
+	var/patient_shift = 9
 	slowdown = 0
+
+/obj/structure/bed/roller/mechanics_hints(mob/user, distance, is_adjacent)
+	. = list()
+	. += ..()
+	. += "Roller beds have a lower surgery success chance than operating tables, but a much higher one than ordinary tables."
+	. += "ALT-Click this to lock or unlock it in place."
+	. += "Vitals monitors and blood bags/bottles can be attached or detached to this."
+
+/// Can't fuck with these like regular beds.
+/obj/structure/bed/assembly_hints()
+	return
+
+/// Can't fuck with these like regular beds.
+/obj/structure/bed/disassembly_hints()
+	return
 
 /obj/structure/bed/roller/Initialize()
 	. = ..()

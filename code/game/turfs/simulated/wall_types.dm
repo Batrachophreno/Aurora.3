@@ -4,11 +4,14 @@
 
 /turf/simulated/wall/r_wall/disassembly_hints(mob/user, distance, is_adjacent)
 	. += ..()
-	. += "You can deconstruct this by with the following steps:<br>\
-	Cut the outer grill with wirecutters, then unscrew them.<br>\
-	Slice the cover with a welder, then pry it off with a crowbar.<br>\
-	Use a wrench to loosen the anchor bolts, then cut the supports with a welder.<br>\
-	Pry off the sheath with a crowbar to expose the girder."
+	. += "You can deconstruct this down to the underlying reinforced girder with the following steps:<br>\
+	Cut the outer grille free with <b>wirecutters</b>.<br>\
+	<b>Unscrew</b> the outer grille.<br>\
+	Slice the cover free with a <b>welder</b>.<br>\
+	Pry the cover off with a <b>crowbar</b>.<br>\
+	Use a <b>wrench</b> to loosen the anchor bolts.<br>\
+	Cut the supports with a <b>welder</b>.<br>\
+	Pry off the sheath with a <b>crowbar</b> to expose the girder."
 
 /turf/simulated/wall/r_wall/Initialize(mapload)
 	. = ..(mapload, "plasteel","plasteel") //3strong

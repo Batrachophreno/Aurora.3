@@ -1,5 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-#define DOOR_REPAIR_AMOUNT 50	//amount of health regained per stack amount used
+/// Amount of health regained per stack amount used
+#define DOOR_REPAIR_AMOUNT 50
 
 /obj/machinery/door
 	name = "Door"
@@ -41,13 +42,19 @@
 	var/destroy_hits = 10
 	/// Integer. Minimum amount of force needed to damage the door with a melee weapon.
 	var/min_force = 10
-	var/hitsound = 'sound/weapons/smash.ogg' //sound door makes when hit with a weapon
-	var/hitsound_light = 'sound/effects/glass_hit.ogg'//Sound door makes when hit very gently
-	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
-	var/open_duration = 150//How long it stays open
+	/// Sound door makes when hit with a weapon
+	var/hitsound = 'sound/weapons/smash.ogg'
+	/// Sound door makes when hit very gently
+	var/hitsound_light = 'sound/effects/glass_hit.ogg'
+	/// If set, air zones cannot merge across the door even when it is opened.
+	var/block_air_zones = 1
+	/// How long it stays open
+	var/open_duration = 150
 
-	var/hashatch = 0//If 1, this door has hatches, and certain small creatures can move through them without opening the door
-	var/hatchstate = 0//0: closed, 1: open
+	/// If TRUE, this door has hatches, and certain small creatures can move through them without opening the door
+	var/hashatch = 0
+	/// 0: closed, 1: open
+	var/hatchstate = 0
 	var/hatch_open_sound = 'sound/machines/hatch_open.ogg'
 	var/hatch_close_sound = 'sound/machines/hatch_close.ogg'
 
@@ -60,6 +67,17 @@
 	atmos_canpass = CANPASS_PROC
 
 	can_astar_pass = CANASTARPASS_ALWAYS_PROC
+
+/obj/machinery/door/assembly_hints(mob/user, distance, is_adjacent)
+	. = list()
+	. += ..()
+	if (health < initial(health))
+		var/amount_needed = (maxhealth - health) / DOOR_REPAIR_AMOUNT
+		amount_needed = (round(amount_needed) == amount_needed)? amount_needed : round(amount_needed) + 1
+		. += "To repair this door, you must apply <b>[amount_needed] steel</b> to the broken and damaged sections. Do so by using a <b>hammer</b> on the door while <b>holding in your inactive hand</b> at least <b>[amount_needed] steel</b>."
+		. += "After having applied the steel, use a <b>welding tool</b> on the door."
+		. += "If you change your mind before welding, you can remove any attached steel by <b>prying</b> it off."
+	return .
 
 /obj/machinery/door/condition_hints(mob/user, distance, is_adjacent)
 	. = ..()

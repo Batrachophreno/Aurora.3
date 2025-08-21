@@ -9,7 +9,8 @@
 	pass_flags_self = PASSTABLE
 	var/state = 0
 	var/health = 200
-	var/cover = 50 //how much cover the girder provides against projectiles.
+	/// How much cover the girder provides against projectiles.
+	var/cover = 50
 	build_amt = 2
 	var/material/reinf_material
 	var/reinforcing = 0
@@ -17,24 +18,25 @@
 
 /obj/structure/girder/condition_hints(mob/user, distance, is_adjacent)
 	. += ..()
-	var/state
+	var/condition_state
 	var/current_damage = health / initial(health)
 	switch(current_damage)
 		if(0 to 0.2)
-			state = SPAN_DANGER("The support struts are collapsing!")
+			condition_state = SPAN_DANGER("The support struts are collapsing!")
 		if(0.2 to 0.4)
-			state = SPAN_WARNING("The support struts are warped!")
+			condition_state = SPAN_WARNING("The support struts are warped!")
 		if(0.4 to 0.8)
-			state = SPAN_NOTICE("The support struts are dented, but holding together.")
+			condition_state = SPAN_NOTICE("The support struts are dented, but holding together.")
 		if(0.8 to 1)
-			state = SPAN_NOTICE("The support struts look completely intact.")
-	. += state
+			condition_state = SPAN_NOTICE("The support struts look completely intact.")
+	. += condition_state
 
 /obj/structure/girder/mechanics_hints()
 	. = list()
 	. += ..()
+	. += "Hiding behind this would provide partial ([cover]%) cover from projectiles."
 	if (state == 0 && anchored)
-		. += SPAN_NOTICE("It could be <b>pried</b> to subtly displace it to build a fake wall.")
+		. += "It could be <b>pried</b> to subtly displace it to build a fake wall."
 	return .
 
 /obj/structure/girder/assembly_hints()
@@ -45,7 +47,7 @@
 
 	if (anchored)
 		if (!reinf_material && !reinforcing)
-			. += "It could be prepared for reinforcement with some <b>screws</b>."
+			. += "It could be prepared for reinforcement with a <b>screwdriver</b>."
 		if (reinforcing)
 			. += "It could be given reinforced plating with some <b>plasteel sheets</b>."
 		if (!plating)
@@ -64,8 +66,7 @@
 	else if (state == 1)
 		. += "Its unsecured support struts could be <b>cut</b> out."
 	if (!anchored)
-		. += "It is held together by a couple of <b>bolts</b>; a heavy <b>cutting</b> tool might also take it apart."
-
+		. += "It is held together by a couple of <b>bolts</b>; a heavy <b>cutting</b> tool or might also take it apart."
 
 /obj/structure/girder/displaced
 	name = "displaced girder"
