@@ -624,7 +624,7 @@
 
 /obj/item/clothing/head/proc/toggle_block_hair()
 	set name = "Toggle Hair Coverage"
-	set category = "Object"
+	set category = "Object.Equipped"
 	set src in usr
 
 	if(allow_hair_covering)
@@ -838,7 +838,7 @@
 
 /obj/item/clothing/mask/proc/adjust_mask(mob/user, var/self = TRUE)
 	set name = "Adjust Mask"
-	set category = "Object"
+	set category = "Object.Equipped"
 	set src in usr
 
 	if(!adjustable)
@@ -922,7 +922,7 @@
 /obj/item/clothing/shoes/proc/draw_knife()
 	set name = "Draw Boot Knife"
 	set desc = "Pull out your boot knife."
-	set category = "Object"
+	set category = "Object.Held"
 	set src in usr
 
 	if(use_check_and_message(usr))
@@ -962,7 +962,7 @@
 
 /obj/item/clothing/shoes/verb/toggle_layer()
 	set name = "Switch Shoe Layer"
-	set category = "Object"
+	set category = "Object.Equipped"
 	set src in usr
 
 	if(use_check_and_message(usr))
@@ -1148,6 +1148,19 @@
 	valid_accessory_slots = list(ACCESSORY_SLOT_UTILITY, ACCESSORY_SLOT_UTILITY_MINOR, ACCESSORY_SLOT_ARMBAND, ACCESSORY_SLOT_GENERIC, ACCESSORY_SLOT_CAPE)
 	restricted_accessory_slots = list(ACCESSORY_SLOT_UTILITY)
 
+/obj/item/clothing/under/feedback_hints(mob/user, distance, is_adjacent)
+	. += ..()
+	if(has_sensor)
+		switch(src.sensor_mode)
+			if(SUIT_SENSOR_OFF)
+				. += "Its sensors appear to be disabled."
+			if(SUIT_SENSOR_BINARY)
+				. += "Its binary life sensors appear to be enabled."
+			if(SUIT_SENSOR_VITAL)
+				. += "Its vitals tracker appears to be enabled."
+			if(SUIT_SENSOR_TRACKING)
+				. += "Its vitals tracker and tracking beacon appear to be enabled."
+
 /obj/item/clothing/under/attack_hand(var/mob/user)
 	if(LAZYLEN(accessories))
 		..()
@@ -1271,19 +1284,6 @@
 		M.update_inv_w_uniform()
 		playsound(M, /singleton/sound_category/rustle_sound, 15, TRUE, SILENCED_SOUND_EXTRARANGE, ignore_walls = FALSE)
 
-/obj/item/clothing/under/get_examine_text(mob/user, distance, is_adjacent, infix, suffix)
-	. = ..()
-	if(has_sensor)
-		switch(src.sensor_mode)
-			if(SUIT_SENSOR_OFF)
-				. += "Its sensors appear to be disabled."
-			if(SUIT_SENSOR_BINARY)
-				. += "Its binary life sensors appear to be enabled."
-			if(SUIT_SENSOR_VITAL)
-				. += "Its vitals tracker appears to be enabled."
-			if(SUIT_SENSOR_TRACKING)
-				. += "Its vitals tracker and tracking beacon appear to be enabled."
-
 /obj/item/clothing/under/proc/set_sensors(mob/user as mob)
 	var/mob/M = user
 	if (isobserver(M) || user.incapacitated())
@@ -1332,13 +1332,13 @@
 
 /obj/item/clothing/under/proc/toggle()
 	set name = "Toggle Suit Sensors"
-	set category = "Object"
+	set category = "Object.Equipped"
 	set src in usr
 	set_sensors(usr)
 
 /obj/item/clothing/under/proc/rollsuit()
 	set name = "Roll Up/Down Jumpsuit"
-	set category = "Object"
+	set category = "Object.Equipped"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
 	if(usr.stat) return
@@ -1379,7 +1379,7 @@
 
 /obj/item/clothing/under/proc/rollsleeves()
 	set name = "Roll Up/Down Sleeves"
-	set category = "Object"
+	set category = "Object.Equipped"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
 	if(usr.stat) return
