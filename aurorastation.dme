@@ -446,6 +446,7 @@
 #include "code\datums\callback.dm"
 #include "code\datums\cargo.dm"
 #include "code\datums\category.dm"
+#include "code\datums\cogbar.dm"
 #include "code\datums\computerfiles.dm"
 #include "code\datums\datum.dm"
 #include "code\datums\datumvars.dm"

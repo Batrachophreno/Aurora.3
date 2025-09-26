@@ -591,11 +591,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/holding = user.get_active_hand()
 
 	var/datum/progressbar/progbar
+	var/datum/cogbar/cogbar
 	if (display_progress && user.client && (user.client.prefs.toggles_secondary & PROGRESS_BARS))
 		var/atom/loc_check = target
 		for(var/i = 0; !isturf(loc_check.loc) && i < 5; i++)
 			loc_check = target.loc
 		progbar = new(user, delay, loc_check)
+		cogbar = new(user)
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
@@ -635,9 +637,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
  * * do_flags: Flags that determine what the user and target can and cannot do, defined in [mobs.dm]. Defaults to DO_DEFAULT.
  * * incapacitation_flags: Incapacitation flags that determines if the user can be incapacitated. Defaults to INCAPACITATION_DEFAULT.
  * * extra_checks: Optional extra checks, that uses a callback. See [datum/callback].
+ * * hidden: If TRUE, do not display a cogbar icon over the user.
  *
  */
-/proc/do_after(mob/user, delay, atom/target, do_flags = DO_DEFAULT, incapacitation_flags = INCAPACITATION_DEFAULT, datum/callback/extra_checks)
+/proc/do_after(
+	mob/user,
+	delay,
+	atom/target,
+	do_flags = DO_DEFAULT,
+	incapacitation_flags = INCAPACITATION_DEFAULT,
+	datum/callback/extra_checks)
 	return !do_after_detailed(user, delay, target, do_flags, incapacitation_flags, extra_checks)
 
 /**
@@ -645,7 +654,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
  * Returns the exact error, defined in [mobs.dm] for custom error messages.
  * Overlaps with do_flags, with some extra error messages available.
  */
-/proc/do_after_detailed(mob/user, delay, atom/target, do_flags = DO_DEFAULT, incapacitation_flags = INCAPACITATION_DEFAULT, datum/callback/extra_checks)
+/proc/do_after_detailed(
+	mob/user,
+	delay,
+	atom/target,
+	do_flags = DO_DEFAULT,
+	incapacitation_flags = INCAPACITATION_DEFAULT,
+	datum/callback/extra_checks)
 	if(!delay)
 		return FALSE
 
@@ -684,8 +699,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			target_loc = get_turf(target)
 
 	var/datum/progressbar/progbar
+	var/datum/cogbar/cogbar
 	if ((do_flags & DO_SHOW_PROGRESS) && user.client && (user.client.prefs.toggles_secondary & PROGRESS_BARS))
 		progbar = new(user, delay, target || user)
+		cogbar = new(user)
 
 	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
 

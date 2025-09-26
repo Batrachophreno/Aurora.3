@@ -255,6 +255,7 @@
 	/// The icon size width of the mob. Used for langchat resizing.
 	var/icon_size = 32
 
+	var/datum/cogbar
 	var/list/progressbars
 
 	var/frozen = FALSE //related to wizard statues, if set to true, life won't process
