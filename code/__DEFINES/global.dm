@@ -19,6 +19,7 @@ GLOBAL_LIST(global_map)
 GLOBAL_PROTECT(global_map)
 
 GLOBAL_LIST_EMPTY(cable_list)
+GLOBAL_LIST_EMPTY(conduit_list)
 
 GLOBAL_VAR(diary)
 GLOBAL_PROTECT(diary)

@@ -1,71 +1,79 @@
-/**
- * IMPORTANT: This file governs the behavior of POWER CABLES, which are the original implementation for powernets.
- *
- * This is distinct from POWER CONDUIT CABLES, which come in different flavors of voltages and are structured
- * directionally in different ways.
- */
-
-GLOBAL_LIST_INIT(cable_coil_colours, list(
-	"Yellow" = COLOR_YELLOW,
-	"Green" = COLOR_LIME,
-	"Pink" = COLOR_PINK,
-	"Blue" = COLOR_BLUE,
-	"Orange" = COLOR_ORANGE,
-	"Cyan" = COLOR_CYAN,
-	"Red" = COLOR_RED,
-	"White" = COLOR_WHITE
-))
-
 ///////////////////////////////
-//CABLE STRUCTURE
+//CONDUIT STRUCTURE
 ///////////////////////////////
-
 
 ////////////////////////////////
 // Definitions
 ////////////////////////////////
+/*
+	Unlike standard Cable directions, which are defined by two terminal points (d1 + d2), Conduit directions are
+	single static values. Because they are offset from the center of their tile, we can't just rotate them to
+	cleanly connect them to their neighbors. Unlike Cables, which can only ever connect to two points, Conduits
+	can instead each connect to a maximum of 5 directions (all cardinal directions and 0). Additionally, unlike
+	with Cables, diagonal connections are disallowed for Conduits.
 
-/* Cable directions (d1 and d2)
+	>      1
+	>      |
+	>  8 - 0 - 4
+	>      |
+	>      2
 
+	> z-level UP: 11
+	> z_level DOWN: 12
 
->  9   1   5
->    \ | /
->  8 - 0 - 4
->    / | \
->  10  2   6
-
-If d1 = 0 and d2 = 0, there's no cable
-If d1 = 0 and d2 = dir, it's a O-X cable, getting from the center of the tile to dir (knot cable)
-If d1 = dir1 and d2 = dir2, it's a full X-X cable, getting from dir1 to dir2
-By design, d1 is the smallest direction and d2 is the highest
+	CONDUIT ID# : CONDUIT CONNECTION(S):
+		0	:	0
+		1	:	0-1
+		2	:	0-2
+		3	:	1-2
+		4	:	0-4
+		5	:	1-4
+		6	:	2-4
+		7	:	0-1-2-4
+		8	:	0-8
+		9	:	1-8
+		10	:	2-8
+		11	:	0-1-2-8
+		12	:	4-8
+		13	:	0-1-4-8
+		14	:	0-2-4-8
+		15	:	0-1-2-4-8
+		16	:	0-11
+		17	:	1-12
+		18	:	2-12
+		19	:	4-12
+		20	:	8-12
 */
-/obj/structure/cable
+
+/obj/structure/conduit
 	level = 1
-	anchored =1
+	anchored = 1
+	/// With what powernet is this conduit associated?
 	var/datum/powernet/powernet
-	name = "power cable"
-	desc = "A flexible superconducting cable for heavy-duty power transfer."
-	icon = 'icons/obj/machinery/power/power_cond_white.dmi'
-	icon_state = "0-1"
+	name = "power conduit"
+	desc = "A superconducting cable for heavy-duty electrical systems."
+	icon = 'icons/obj/machinery/power/power_cond_hv.dmi'
+	icon_state = "0"
 	obj_flags = OBJ_FLAG_MOVES_UNSUPPORTED
-	var/d1 = 0
-	var/d2 = 1
 	layer = EXPOSED_WIRE_LAYER
 	color = COLOR_RED
+	/// What voltage power does this conduit carry?
+	var/voltage_level = POWER_VOLTAGE_ANY
 	var/obj/machinery/power/breakerbox/breaker_box
 
-/obj/structure/cable/feedback_hints(mob/user, distance, is_adjacent)
+/obj/structure/conduit/feedback_hints(mob/user, distance, is_adjacent)
 	. += ..()
-	var/found_color_name = "Unknown"
-	for(var/color_name in GLOB.cable_coil_colours)
-		var/color_value = GLOB.cable_coil_colours[color_name]
-		if(color == color_value)
-			found_color_name = color_name
-			break
-	. += "This cable is: <span style='color:[color]'>[found_color_name]</span>"
+	var/found_voltage_level = "variable"
+	switch(voltage_level)
+		if(POWER_VOLTAGE_LOW)
+			found_voltage_level = "low"
+		if(POWER_VOLTAGE_MEDIUM)
+			found_voltage_level = "medium"
+		if(POWER_VOLTAGE_HIGH)
+			found_voltage_level = "high"
+	. += "It is rated for <b>[found_voltage_level]-voltage</b> power transfer."
 
-/obj/structure/cable/drain_power(var/drain_check, var/surge, var/amount = 0)
-
+/obj/structure/conduit/drain_power(var/drain_check, var/surge, var/amount = 0)
 	if(drain_check)
 		return TRUE
 
@@ -74,29 +82,48 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	return PN.draw_power(amount)
 
-/obj/structure/cable/yellow
+/obj/structure/conduit/lv/yellow
+	color = COLOR_YELLOW
+/obj/structure/conduit/mv/yellow
 	color = COLOR_YELLOW
 
-/obj/structure/cable/green
+/obj/structure/conduit/lv/green
+	color = COLOR_LIME
+/obj/structure/conduit/mv/green
 	color = COLOR_LIME
 
-/obj/structure/cable/blue
+/obj/structure/conduit/lv/blue
+	color = COLOR_BLUE
+/obj/structure/conduit/mv/blue
 	color = COLOR_BLUE
 
-/obj/structure/cable/pink
+/obj/structure/conduit/lv/pink
+	color = COLOR_PINK
+/obj/structure/conduit/mv/pink
 	color = COLOR_PINK
 
-/obj/structure/cable/orange
+/obj/structure/conduit/lv/orange
+	color = COLOR_ORANGE
+/obj/structure/conduit/mv/orange
 	color = COLOR_ORANGE
 
-/obj/structure/cable/cyan
+/obj/structure/conduit/lv/cyan
+	color = COLOR_CYAN
+/obj/structure/conduit/mv/cyan
 	color = COLOR_CYAN
 
-/obj/structure/cable/white
+/obj/structure/conduit/lv/white
+	color = COLOR_WHITE
+/obj/structure/conduit/mv/white
 	color = COLOR_WHITE
 
+/obj/structure/conduit/lv/black
+	color = COLOR_GRAY30
+/obj/structure/conduit/mv/black
+	color = COLOR_GRAY30
+
 // Needs to run before init or we have sad cable knots on away sites
-/obj/structure/cable/New()
+/obj/structure/conduit/New()
 	. = ..()
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
 	var/dash = findtext(icon_state, "-")

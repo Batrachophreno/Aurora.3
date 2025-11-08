@@ -2373,7 +2373,7 @@
 	},
 /obj/effect/decal/fake_object{
 	color = "#ff0000";
-	icon = 'icons/obj/power_cond_white.dmi';
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
 	icon_state = "4-8";
 	name = "cable"
 	},
@@ -10161,7 +10161,7 @@
 	},
 /obj/effect/decal/fake_object{
 	color = "#ff0000";
-	icon = 'icons/obj/power_cond_white.dmi';
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
 	icon_state = "4-8";
 	name = "cable"
 	},
@@ -12574,7 +12574,7 @@
 	},
 /obj/effect/decal/fake_object{
 	color = "#ff0000";
-	icon = 'icons/obj/power_cond_white.dmi';
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
 	icon_state = "4-8";
 	name = "cable"
 	},
@@ -31685,7 +31685,7 @@
 	},
 /obj/effect/decal/fake_object{
 	color = "#ff0000";
-	icon = 'icons/obj/power_cond_white.dmi';
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
 	icon_state = "4-8";
 	name = "cable"
 	},
@@ -35575,7 +35575,7 @@
 	},
 /obj/effect/decal/fake_object{
 	color = "#ff0000";
-	icon = 'icons/obj/power_cond_white.dmi';
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
 	icon_state = "4-8";
 	name = "cable"
 	},
@@ -41248,7 +41248,7 @@
 	},
 /obj/effect/decal/fake_object{
 	color = "#ff0000";
-	icon = 'icons/obj/power_cond_white.dmi';
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
 	icon_state = "4-8";
 	name = "cable"
 	},

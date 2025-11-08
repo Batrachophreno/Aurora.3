@@ -1,24 +1,41 @@
 /datum/powernet
-	var/list/cables = list()	// all cables & junctions
-	var/list/nodes = list()		// all connected machines
+	/// All cables & junctions
+	var/list/cables = list()
+	/// All connected machines
+	var/list/nodes = list()
 
-	var/load = 0				// the current load on the powernet, increased by each machine at processing
-	var/newavail = 0			// what available power was gathered last tick, then becomes...
-	var/avail = 0				//...the current available power in the powernet
-	var/viewload = 0			// the load as it appears on the power console (gradually updated)
-	var/number = 0				// Unused //TODEL
+	/// The current load on the powernet, increased by each machine at processing
+	var/load = 0
+	/// What available power was gathered last tick, then becomes...
+	var/newavail = 0
+	/// ...the current available power in the powernet.
+	var/avail = 0
+	/// The load as it appears on the power console (gradually updated)
+	var/viewload = 0
+	/// Unused
+	var/number = 0
 
-	var/smes_demand = 0			// Amount of power demanded by all SMESs from this network. Needed for load balancing.
-	var/list/inputting = list()	// List of SMESs that are demanding power from this network. Needed for load balancing.
+	/// Amount of power demanded by all SMESs from this network. Needed for load balancing.
+	var/smes_demand = 0
+	/// List of SMESs that are demanding power from this network. Needed for load balancing.
+	var/list/inputting = list()
 
-	var/smes_avail = 0			// Amount of power (avail) from SMESes. Used by SMES load balancing
-	var/smes_newavail = 0		// As above, just for newavail
+	/// Amount of power (avail) from SMESes. Used by SMES load balancing
+	var/smes_avail = 0
+	/// As above, just for newavail
+	var/smes_newavail = 0
 
-	var/perapc = 0			// per-apc avilability
+	/// Per-apc avilability
+	var/perapc = 0
 	var/perapc_excess = 0
-	var/netexcess = 0			// excess power on the powernet (typically avail-load)
+	/// Excess power on the powernet (typically avail-load)
+	var/netexcess = 0
 
-	var/problem = 0				// If this is not 0 there is some sort of issue in the powernet. Monitors will display warnings.
+	/// If this is not 0 there is some sort of issue in the powernet. Monitors will display warnings.
+	var/problem = 0
+
+	/// Governs what objects the powernet is allowed to propagate power to.
+	var/voltage_level = POWER_VOLTAGE_ANY
 
 /datum/powernet/New()
 	START_PROCESSING_POWERNET(src)

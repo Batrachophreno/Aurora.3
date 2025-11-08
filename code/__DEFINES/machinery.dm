@@ -12,17 +12,6 @@
 #define DOOR_CRUSH_DAMAGE 20
 #define ALIEN_SELECT_AFK_BUFFER  1    // How many minutes that a person can be AFK before not being allowed to be an alien.
 
-// Channel numbers for power.
-#define POWER_CHAN  -1  // Use default
-#define AREA_USAGE_EQUIP   1
-#define AREA_USAGE_LIGHT   2
-#define AREA_USAGE_ENVIRON 3
-#define AREA_USAGE_TOTAL   4 // For total power used only.
-
-#define POWER_USE_OFF       0
-#define POWER_USE_IDLE      1
-#define POWER_USE_ACTIVE    2
-
 // Bitflags for machine stat variable.
 // These definitions are copypasted in the dmdocs in 'code/game/machinery.dm' so they can be easily referenced by checking the 'stat' variable.
 // SO THAT MEANS IF YOU UPDATE THEM HERE, UPDATE THEM THERE FOR VISIBILITY!
@@ -149,9 +138,6 @@ GLOBAL_LIST_INIT(restricted_camera_networks, list(NETWORK_ERT,NETWORK_MERCENARY,
 // will continue to have power calculations done.
 #define M_NO_PROCESS 27
 
-// This controls how much power the AME generates per unit of fuel.
-#define AM_POWER_FACTOR 1000000
-
 // Machinery process flags, for use with START_PROCESSING_MACHINE
 #define MACHINERY_PROCESS_SELF          (1<<0)
 #define MACHINERY_PROCESS_COMPONENTS    (1<<1)
@@ -161,3 +147,29 @@ GLOBAL_LIST_INIT(restricted_camera_networks, list(NETWORK_ERT,NETWORK_MERCENARY,
 #define INIT_MACHINERY_PROCESS_SELF         0x1
 #define INIT_MACHINERY_PROCESS_COMPONENTS   0x2
 #define INIT_MACHINERY_PROCESS_ALL          0x3
+
+/**
+ * Power Machinery.
+ */
+// Channel numbers for power.
+#define POWER_CHAN  -1  // Use default
+#define AREA_USAGE_EQUIP   1
+#define AREA_USAGE_LIGHT   2
+#define AREA_USAGE_ENVIRON 3
+#define AREA_USAGE_TOTAL   4
+
+#define POWER_USE_OFF       0
+#define POWER_USE_IDLE      1
+#define POWER_USE_ACTIVE    2
+
+/// When defined on powernets, POWER_VOLTAGE_* defines the type of power it provides, which must match the value for the power recipient.
+#define POWER_VOLTAGE_LOW		(1<<0)
+/// When defined on powernets, POWER_VOLTAGE_* defines the type of power it provides, which must match the value for the power recipient.
+#define POWER_VOLTAGE_MEDIUM	(1<<1)
+/// When defined on powernets, POWER_VOLTAGE_* defines the type of power it provides, which must match the value for the power recipient.
+#define POWER_VOLTAGE_HIGH		(1<<2)
+/// When defined on powernets, POWER_VOLTAGE_* defines the type of power it provides, which must match the value for the power recipient.
+#define POWER_VOLTAGE_ANY		(1<<3)
+
+/// This controls how much power the AME generates per unit of fuel.
+#define AM_POWER_FACTOR 1000000

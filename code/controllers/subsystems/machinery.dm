@@ -120,15 +120,25 @@ SUBSYSTEM_DEF(machinery)
 	for(var/datum/powernet/powernet as anything in powernets)
 		qdel(powernet)
 	powernets.Cut()
+	// Includes conduit-type cables.
 	setup_powernets_for_cables(GLOB.cable_list)
 
 /datum/controller/subsystem/machinery/proc/setup_powernets_for_cables(list/cables)
-	for (var/obj/structure/cable/cable as anything in cables)
-		if (cable.powernet)
+	for(var/obj/structure/cable/cable as anything in cables)
+		if(cable.powernet)
 			continue
 		var/datum/powernet/network = new
 		network.add_cable(cable)
 		propagate_network(cable, cable.powernet)
+
+/// Funky to have this effectively duplicated I know, but until everything is migrated to use conduits, let's keep things separate.
+/datum/controller/subsystem/machinery/proc/setup_powernets_for_conduits(list/conduits)
+	for(var/obj/structure/conduit/conduit as anything in conduits)
+		if(conduit.powernet)
+			continue
+		var/datum/powernet/network = new
+		network.add_conduit(conduit)
+		propagate_network(conduit, conduit.powernet)
 
 /datum/controller/subsystem/machinery/proc/setup_atmos_machinery(list/machines)
 	var/list/atmos_machines = list()
