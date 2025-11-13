@@ -44,9 +44,6 @@
 	icon_state = "xeno_lab"
 	subdepartment = SUBLOC_XENOBIO
 
-/area/horizon/rnd/xenobiology/hazardous
-	name = "Hazardous Containment"
-
 /area/horizon/rnd/xenobiology/dissection
 	name = "Dissection"
 
@@ -82,8 +79,14 @@
 	name = "General Storage"
 	icon_state = "purple"
 
-/area/horizon/rnd/xenoarch/anomaly_harvest
-	name = "Exotic Energy Harvesting"
+/area/horizon/rnd/xenoarch/presentation
+	name = "Xenoarchaeology Presentation"
+
+/area/horizon/rnd/xenoarch/hallway/elevator
+	name = "Xenoarchaeology Hallway"
+
+/area/horizon/rnd/xenoarch/hallway/hangar
+	name = "Xenoarchaeology Hanger Hallway"
 
 /area/horizon/rnd/xenoarch/anomaly_storage
 	name = "Artifact Storage"

@@ -1,6 +1,6 @@
 /obj/machinery/camera
 	name = "security camera"
-	desc = "It's used to monitor rooms."
+	desc = "It's used to monitor compartments."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "camera"
 	use_power = POWER_USE_ACTIVE
@@ -21,7 +21,8 @@
 	var/toughness = 5 //sorta fragile
 
 	// WIRES
-	var/datum/wires/camera/wires = null // Wires datum
+	/// Wires datum
+	var/datum/wires/camera/wires = null
 
 	//OTHER
 

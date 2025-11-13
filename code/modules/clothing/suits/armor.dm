@@ -217,6 +217,10 @@
 	QDEL_NULL(pockets)	//Tactical armor has internal holster instead of pockets, so we null this out
 	ClearOverlays()	// Remove the holster's overlay.
 
+/obj/item/clothing/suit/armor/tactical/Destroy()
+	QDEL_NULL(holster)
+	return ..()
+
 /obj/item/clothing/suit/armor/tactical/attackby(obj/item/attacking_item, mob/user)
 	..()
 	holster.attackby(attacking_item, user)
@@ -229,7 +233,7 @@
 
 /obj/item/clothing/suit/armor/tactical/verb/holster()
 	set name = "Holster"
-	set category = "Object"
+	set category = "Object.Held"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
 	if(usr.stat) return

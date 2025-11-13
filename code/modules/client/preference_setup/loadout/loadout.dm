@@ -577,8 +577,8 @@ GLOBAL_LIST_INIT(gear_datums, list())
 	// Handling for "Organ swapping" augments. Anything that shares an organ tag with a pre-existing organ.
 	if(ispath(spawn_path, /obj/item/organ/internal))
 		var/obj/item/organ/internal/internal_aug = spawn_path
-		var/obj/item/organ/internal/replaced_organ = H.get_organ(initial(internal_aug.organ_tag))
-		if(internal_aug.organ_tag == replaced_organ.organ_tag)
+		var/obj/item/organ/internal/replaced_organ = H.internal_organs_by_name[internal_aug.organ_tag]
+		if(replaced_organ && internal_aug.organ_tag == replaced_organ.organ_tag)
 			replaced_organ.removed(H, null)
 			qdel(replaced_organ)
 
@@ -613,8 +613,15 @@ GLOBAL_LIST_INIT(gear_datums, list())
 
 // arg should be a religion name string
 /datum/gear/proc/check_religion(var/religion_)
-	if((religion && religion_) && (religion != religion_))
-		return FALSE
+	if((religion && religion_))
+		if(islist(religion))
+			var/result = FALSE
+			for(var/religion_path in religion)
+				if(religion_path == religion_)
+					result = TRUE
+			return result
+		else if (religion != religion_)
+			return FALSE
 	return TRUE
 
 // arg should be a role name string

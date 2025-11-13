@@ -4,7 +4,7 @@
 	var/description = "A non-descript chemical."
 	var/taste_description = "old rotten bandaids"
 	var/list/species_taste_description
-	/// How this taste compares to others. Higher values means it is more noticable
+	/// How this tastes compares to others. Higher values means it is more noticable
 	var/taste_mult = 1
 	var/reagent_state = SOLID
 	/// 'Reagent Effect Multiplier': Usually 0.2, this is how many units of reagent are metabolized (consumed!) per tick.
@@ -40,21 +40,25 @@
 	/// How much for the medicine to be present in the system to actually have an effect.
 	var/metabolism_min = 0.01
 	/// Reagents that conflict with this medicine, and cause adverse effects when in the blood.
-	var/conflicting_reagent
+	var/conflicting_reagenter
 	/// This is its default spawning temperature, if none is provided.
 	var/default_temperature = T0C + 20
 	/// The higher, the more difficult it is to change its temperature. 0 or lower values indicate that the specific heat has yet to be assigned.
 	var/specific_heat = -1
-	/*
+	/**
 	 *	Setting this value above 0 will set the specific heat to this value only if the system could not find an appropriate specific heat to assign using the recipe system.
 	 *	Never ever ever ever change this value for singleton/reagent. This should only be used for massive, yet specific things like drinks or food where it is infeasible to assign a specific heat value.
 	 */
 	var/fallback_specific_heat = -1
 	/// For makeshift bandages/disinfectant
 	var/germ_adjust = 0
-	/// Carbonated or not
+	/// Setting this value above 0 will set the specific heat to this value only if the system could not find an appropriate specific heat to assign using the recipe system.
+	/// Never ever ever ever change this value for singleton/reagent. This should only be used for massive, yet specific things like drinks or food where it is infeasible to assign a specific heat value.
+	var/fallback_specific_heat = -1
+	/// For makeshift bandages/disinfectant
+	var/germ_adjust = 0
+	/// If it's carbonated or not.
 	var/carbonated = FALSE
-
 	/// Adds to the value of whatever container's holding it, value * units of reagents
 	var/value = 1
 

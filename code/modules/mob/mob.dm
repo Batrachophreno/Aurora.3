@@ -10,7 +10,6 @@
 	GLOB.living_mob_list -= src
 	unset_machine()
 	QDEL_NULL(hud_used)
-	lose_hearing_sensitivity()
 
 	QDEL_LIST(spell_masters)
 	remove_screen_obj_references()
@@ -448,7 +447,7 @@
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
-	set category = "Object"
+	set category = "Object.Held"
 	set src = usr
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_mode)))
@@ -1248,7 +1247,7 @@
 
 /mob/verb/face_direction()
 	set name = "Face Direction"
-	set category = "IC"
+	set category = "IC.Maneuver"
 	set src = usr
 
 	set_face_dir(dir)
@@ -1577,15 +1576,15 @@
 		// if(thing.item_flags & SLOWS_WHILE_IN_HAND)
 		. += thing
 
-/mob/proc/check_emissive_equipment()
-	var/old_zflags = z_flags
-	z_flags &= ~ZMM_MANGLE_PLANES
-	for(var/atom/movable/AM in get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD))
-		if(AM.z_flags & ZMM_MANGLE_PLANES)
-			z_flags |= ZMM_MANGLE_PLANES
-			break
-	if(old_zflags != z_flags)
-		UPDATE_OO_IF_PRESENT
+///Set the lighting plane hud alpha to the mobs lighting_alpha var
+/mob/proc/sync_lighting_plane_alpha()
+	if(hud_used)
+		var/atom/movable/screen/plane_master/lighting/lighting = hud_used.plane_masters["[LIGHTING_PLANE]"]
+		if (lighting)
+			lighting.alpha = lighting_alpha
+		var/atom/movable/screen/plane_master/lighting/exterior_lighting = hud_used.plane_masters["[EXTERIOR_LIGHTING_PLANE]"]
+		if (exterior_lighting)
+			exterior_lighting.alpha = min(GLOB.minimum_exterior_lighting_alpha, lighting_alpha)
 
 #undef UNBUCKLED
 #undef PARTIALLY_BUCKLED

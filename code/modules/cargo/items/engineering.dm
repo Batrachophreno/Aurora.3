@@ -138,7 +138,7 @@
 
 /singleton/cargo_item/circuitboard_bubbleshield
 	category = "engineering"
-	name = "circuit board (bubble shield generator)"
+	name = T_BOARD("bubble shield generator")
 	supplier = "hephaestus"
 	description = "Looks like a circuit. Probably is."
 	price = 250
@@ -152,7 +152,7 @@
 
 /singleton/cargo_item/circuitboard_hullshield
 	category = "engineering"
-	name = "circuit board (hull shield generator)"
+	name = T_BOARD("hull shield generator")
 	supplier = "hephaestus"
 	description = "Looks like a circuit. Probably is."
 	price = 250
@@ -166,7 +166,7 @@
 
 /singleton/cargo_item/circuitboard_shieldcapacitor
 	category = "engineering"
-	name = "circuit board (shield capacitor)"
+	name = T_BOARD("shield capacitor")
 	supplier = "hephaestus"
 	description = "Looks like a circuit. Probably is."
 	price = 250
@@ -180,7 +180,7 @@
 
 /singleton/cargo_item/circuitboard_solarcontrol
 	category = "engineering"
-	name = "circuit board (solar control console)"
+	name = T_BOARD("solar control console")
 	supplier = "hephaestus"
 	description = "Looks like a circuit. Probably is."
 	price = 250
@@ -894,4 +894,18 @@
 	access = ACCESS_ENGINE
 	container_type = "crate"
 	groupable = FALSE
+	spawn_amount = 1
+
+/singleton/cargo_item/engineeringcart
+	category = "engineering"
+	name = "engineering cart"
+	supplier = "hephaestus"
+	description = "A cart for your engineering-related storage needs."
+	price = 100
+	items = list(
+		/obj/structure/cart/storage/engineeringcart
+	)
+	access = ACCESS_ENGINE
+	container_type = "crate"
+	groupable = TRUE
 	spawn_amount = 1

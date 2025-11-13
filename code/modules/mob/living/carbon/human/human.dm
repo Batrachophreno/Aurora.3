@@ -1309,6 +1309,7 @@
 
 	..()
 
+/// Passes the gas_mixture to the lungs for them to deal with. If lungs exist.
 /mob/living/carbon/human/handle_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)
 		return
@@ -1551,6 +1552,8 @@
 
 	nutrition_loss = HUNGER_FACTOR * species.nutrition_loss_factor
 	hydration_loss = THIRST_FACTOR * species.hydration_loss_factor
+
+	default_lighting_alpha = species.default_lighting_alpha
 
 	speech_bubble_type = species.possible_speech_bubble_types[1]
 	if(typing_indicator)
@@ -1916,7 +1919,7 @@
 /mob/living/carbon/human/verb/toggle_underwear()
 	set name = "Toggle Underwear"
 	set desc = "Shows/hides selected parts of your underwear."
-	set category = "Object"
+	set category = "Object.Equipped"
 
 	if(stat)
 		return
@@ -2264,7 +2267,7 @@
 /mob/living/carbon/human/verb/lookup()
 	set name = "Look Up"
 	set desc = "If you want to know what's above."
-	set category = "IC"
+	set category = "IC.Maneuver"
 
 	look_up_open_space(get_turf(src))
 
@@ -2287,7 +2290,7 @@
 /mob/living/verb/lookdown()
 	set name = "Look Down"
 	set desc = "If you want to know what's below."
-	set category = "IC"
+	set category = "IC.Maneuver"
 
 	look_down_open_space(get_turf(src))
 

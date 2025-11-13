@@ -3,11 +3,16 @@
 ////////////////////////////////////////
 
 #define AALARM_MODE_SCRUBBING	1
-#define AALARM_MODE_REPLACEMENT	2 //like scrubbing, but faster.
-#define AALARM_MODE_PANIC		3 //constantly sucks all air
-#define AALARM_MODE_CYCLE		4 //sucks off all air, then refill and switches to scrubbing
-#define AALARM_MODE_FILL		5 //emergency fill
-#define AALARM_MODE_OFF			6 //Shuts it all down.
+/// Like scrubbing, but faster.
+#define AALARM_MODE_REPLACEMENT	2
+/// Constantly sucks all air
+#define AALARM_MODE_PANIC		3
+/// Sucks out all air, then refill and switches to scrubbing
+#define AALARM_MODE_CYCLE		4
+/// Emergency fill
+#define AALARM_MODE_FILL		5
+/// Shuts it all down.
+#define AALARM_MODE_OFF			6
 
 #define AALARM_SCREEN_MAIN		1
 #define AALARM_SCREEN_VENT		2
@@ -90,7 +95,7 @@ pixel_x = -10;
 dir = EAST; \
 pixel_x = 10;
 
-//all air alarms in area are connected via magic
+/// All air alarms in area are connected via magic
 /area
 	var/list/air_vent_names = list()
 	var/list/air_scrub_names = list()
@@ -110,7 +115,6 @@ pixel_x = 10;
 	clicksound = /singleton/sound_category/button_sound
 	clickvol = 30
 	obj_flags = OBJ_FLAG_MOVES_UNSUPPORTED
-	z_flags = ZMM_MANGLE_PLANES
 
 	var/alarm_id = null
 	var/frequency = 1439
@@ -217,7 +221,7 @@ pixel_x = 10;
 /obj/machinery/alarm/server
 	req_one_access = list(ACCESS_RD, ACCESS_ATMOSPHERICS, ACCESS_ENGINE_EQUIP)
 	target_temperature = 80
-	desc = "A device that controls the local air regulation machinery. This one is designed for use in small server rooms."
+	desc = "A device that controls the local air regulation machinery. This one is designed for use in small server compartments."
 	highpower = 1
 
 /obj/machinery/alarm/server/north
@@ -250,7 +254,7 @@ pixel_x = 10;
 	PRESET_SOUTH
 
 /obj/machinery/alarm/freezer
-	req_one_access = list(ACCESS_KITCHEN, ACCESS_ATMOSPHERICS, ACCESS_ENGINE_EQUIP)
+	req_one_access = list(ACCESS_GALLEY, ACCESS_ATMOSPHERICS, ACCESS_ENGINE_EQUIP)
 	highpower = 1
 	target_temperature = T0C - 20
 
@@ -302,65 +306,32 @@ pixel_x = 10;
 	req_access = null
 	highpower = 1
 
-/obj/machinery/alarm/shuttle/intrepid
-	req_one_access = list(ACCESS_ENGINE_EQUIP, ACCESS_ATMOSPHERICS, ACCESS_INTREPID)
-
-/obj/machinery/alarm/shuttle/intrepid/north
+/obj/machinery/alarm/shuttle/north
 	PRESET_NORTH
 
-/obj/machinery/alarm/shuttle/intrepid/east
+/obj/machinery/alarm/shuttle/east
 	PRESET_EAST
 
-/obj/machinery/alarm/shuttle/intrepid/west
+/obj/machinery/alarm/shuttle/west
 	PRESET_WEST
 
-/obj/machinery/alarm/shuttle/intrepid/south
+/obj/machinery/alarm/shuttle/south
 	PRESET_SOUTH
 
-/obj/machinery/alarm/shuttle/spark
-	req_one_access = list(ACCESS_ENGINE_EQUIP, ACCESS_ATMOSPHERICS, ACCESS_SPARK)
+/// Assigns req_one_access perms associated with the area of the shuttle its mapped in.
+/obj/machinery/alarm/shuttle/Initialize()
+	. = ..()
+	var/area = get_area(src)
 
-/obj/machinery/alarm/shuttle/spark/north
-	PRESET_NORTH
+	if(istype(area, /area/horizon/shuttle/intrepid))
+		req_one_access = list(ACCESS_ENGINE_EQUIP, ACCESS_ATMOSPHERICS, ACCESS_INTREPID)
+	if(istype(area, /area/horizon/shuttle/quark))
+		req_one_access = list(ACCESS_ENGINE_EQUIP, ACCESS_ATMOSPHERICS, ACCESS_QUARK)
+	if(istype(area, /area/horizon/shuttle/mining))
+		req_one_access = list(ACCESS_ENGINE_EQUIP, ACCESS_ATMOSPHERICS, ACCESS_SPARK)
+	if(istype(area, /area/horizon/shuttle/canary))
+		req_one_access = list(ACCESS_ENGINE_EQUIP, ACCESS_ATMOSPHERICS, ACCESS_CANARY)
 
-/obj/machinery/alarm/shuttle/spark/east
-	PRESET_EAST
-
-/obj/machinery/alarm/shuttle/spark/west
-	PRESET_WEST
-
-/obj/machinery/alarm/shuttle/spark/south
-	PRESET_SOUTH
-
-/obj/machinery/alarm/shuttle/quark
-	req_one_access = list(ACCESS_ENGINE_EQUIP, ACCESS_ATMOSPHERICS, ACCESS_QUARK)
-
-/obj/machinery/alarm/shuttle/quark/north
-	PRESET_NORTH
-
-/obj/machinery/alarm/shuttle/quark/east
-	PRESET_EAST
-
-/obj/machinery/alarm/shuttle/quark/west
-	PRESET_WEST
-
-/obj/machinery/alarm/shuttle/quark/south
-	PRESET_SOUTH
-
-/obj/machinery/alarm/shuttle/canary
-	req_one_access = list(ACCESS_ENGINE_EQUIP, ACCESS_ATMOSPHERICS, ACCESS_CANARY)
-
-/obj/machinery/alarm/shuttle/canary/north
-	PRESET_NORTH
-
-/obj/machinery/alarm/shuttle/canary/east
-	PRESET_EAST
-
-/obj/machinery/alarm/shuttle/canary/west
-	PRESET_WEST
-
-/obj/machinery/alarm/shuttle/canary/south
-	PRESET_SOUTH
 
 /obj/machinery/alarm/server/Initialize()
 	. = ..()
@@ -375,14 +346,18 @@ pixel_x = 10;
 //For colder alarms, allowing pressure to drop a bit below normal is necessary. Pressure fluctuates downwards
 //While temperature stabilises.
 
-//Kitchen freezer
+/**
+ * Kitchen freezer
+ */
 /obj/machinery/alarm/freezer/Initialize()
 	. = ..()
 	TLV[GAS_OXYGEN] = list(16, 17, 135, 140) // Partial pressure, kpa
 	TLV["pressure"] = list(ONE_ATMOSPHERE*0.50,ONE_ATMOSPHERE*0.70,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20)
 	TLV["temperature"] = list(0, 0, 273, T0C+40) // No lower limits. Alarm above 0c. Major alarm at harmful heat
 
-//Refridgerated area, cold but above-freezing
+/**
+ * Refridgerated area, cold but above-freezing
+ */
 /obj/machinery/alarm/cold/Initialize()
 	. = ..()
 	TLV["pressure"] =		list(ONE_ATMOSPHERE*0.70,ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20) /* kpa */
@@ -395,6 +370,7 @@ pixel_x = 10;
 	return ..()
 
 /obj/machinery/alarm/LateInitialize()
+	. = ..()
 	apply_mode()
 
 /obj/machinery/alarm/Initialize(mapload, var/dir, var/building = 0)
@@ -423,7 +399,7 @@ pixel_x = 10;
 
 /obj/machinery/alarm/set_pixel_offsets()
 	pixel_x = ((src.dir & (NORTH|SOUTH)) ? 0 : (src.dir == EAST ? 10 : -10))
-	pixel_y = ((src.dir & (NORTH|SOUTH)) ? (src.dir == NORTH ? 21 : -6) : 0)
+	pixel_y = ((src.dir & (NORTH|SOUTH)) ? (src.dir == NORTH ? 21 : -4) : 0)
 
 /obj/machinery/alarm/proc/first_run()
 	alarm_area = get_area(src)
@@ -525,7 +501,7 @@ pixel_x = 10;
 		if(!danger_level && abs(environment.temperature - target_temperature) > 2.0)
 			update_use_power(POWER_USE_ACTIVE)
 			regulating_temperature = 1
-			visible_message("\The [src] clicks as it starts [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",\
+			visible_message("\The [src] clicks as it starts [environment.temperature > target_temperature ? "cooling" : "heating"] the compartment.",\
 			"You hear a click and a faint electronic hum.")
 			update_icon()
 	else
@@ -533,7 +509,7 @@ pixel_x = 10;
 		if (danger_level || abs(environment.temperature - target_temperature) <= 0.5)
 			update_use_power(POWER_USE_IDLE)
 			regulating_temperature = 0
-			visible_message("\The [src] clicks quietly as it stops [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",\
+			visible_message("\The [src] clicks quietly as it stops [environment.temperature > target_temperature ? "cooling" : "heating"] the compartment.",\
 			"You hear a click as a faint electronic humming stops.")
 			update_icon()
 
@@ -565,8 +541,9 @@ pixel_x = 10;
 
 			environment.merge(gas)
 
-
-// Returns whether this air alarm thinks there is a breach, given the sensors that are available to it.
+/**
+ * Returns whether this air alarm thinks there is a breach, given the sensors that are available to it.
+ */
 /obj/machinery/alarm/proc/breach_detected()
 	var/turf/simulated/location = loc
 
@@ -605,7 +582,7 @@ pixel_x = 10;
 	alarm_overlay = image(icon, "alarm[icon_level]")
 	AddOverlays(alarm_overlay)
 
-	var/emissive_overlay = emissive_appearance(icon, "alarm[icon_level]")
+	emissive_overlay = emissive_appearance(icon, "alarm[icon_level]")
 	AddOverlays(emissive_overlay)
 
 	var/new_color = null
@@ -617,7 +594,8 @@ pixel_x = 10;
 		if (2)
 			new_color = COLOR_RED_LIGHT
 
-	set_light(l_range = L_WALLMOUNT_RANGE, l_power = L_WALLMOUNT_POWER, l_color = new_color)
+	if(light_color != new_color)
+		set_light(L_WALLMOUNT_RANGE, L_WALLMOUNT_POWER, new_color)
 
 	if(regulating_temperature)
 		AddOverlays("alarm_fan_on")
@@ -641,7 +619,10 @@ pixel_x = 10;
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
 
-/obj/machinery/alarm/proc/send_signal(var/target, var/list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+/**
+ * Sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+ */
+/obj/machinery/alarm/proc/send_signal(var/target, var/list/command)
 	if(!radio_connection)
 		return 0
 
@@ -742,8 +723,10 @@ pixel_x = 10;
 	var/remote_access = 0
 	if(state)
 		var/list/href = state.href_list(user)
-		remote_connection = href["remote_connection"]	// Remote connection means we're non-adjacent/connecting from another computer
-		remote_access = href["remote_access"]			// Remote access means we also have the privilege to alter the air alarm.
+		/// Remote connection means we're non-adjacent/connecting from another computer
+		remote_connection = href["remote_connection"]
+		/// Remote access means we also have the privilege to alter the air alarm.
+		remote_access = href["remote_access"]
 
 	data["locked"] = locked && !issilicon(user)
 	data["remote_connection"] = remote_connection
@@ -830,7 +813,7 @@ pixel_x = 10;
 			var/modes[0]
 			modes[++modes.len] = list("name" = "Filtering - Scrubs out contaminants", 			"mode" = AALARM_MODE_SCRUBBING,		"selected" = mode == AALARM_MODE_SCRUBBING, 	"danger" = 0)
 			modes[++modes.len] = list("name" = "Replace Air - Siphons out air while replacing", "mode" = AALARM_MODE_REPLACEMENT,	"selected" = mode == AALARM_MODE_REPLACEMENT,	"danger" = 0)
-			modes[++modes.len] = list("name" = "Panic - Siphons air out of the room", 			"mode" = AALARM_MODE_PANIC,			"selected" = mode == AALARM_MODE_PANIC, 		"danger" = 1)
+			modes[++modes.len] = list("name" = "Panic - Siphons air out of the compartment", 			"mode" = AALARM_MODE_PANIC,			"selected" = mode == AALARM_MODE_PANIC, 		"danger" = 1)
 			modes[++modes.len] = list("name" = "Cycle - Siphons air before replacing", 			"mode" = AALARM_MODE_CYCLE,			"selected" = mode == AALARM_MODE_CYCLE, 		"danger" = 1)
 			modes[++modes.len] = list("name" = "Fill - Shuts off scrubbers and opens vents", 	"mode" = AALARM_MODE_FILL,			"selected" = mode == AALARM_MODE_FILL, 			"danger" = 0)
 			modes[++modes.len] = list("name" = "Off - Shuts off vents and scrubbers", 			"mode" = AALARM_MODE_OFF,			"selected" = mode == AALARM_MODE_OFF, 			"danger" = 0)
@@ -1048,18 +1031,6 @@ pixel_x = 10;
 				update_icon()
 				return TRUE
 
-			if (attacking_item.GetID())// trying to unlock the interface with an ID card
-				if(stat & (NOPOWER|BROKEN))
-					to_chat(user, SPAN_NOTICE("Nothing happens."))
-					return TRUE
-				else
-					if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
-						locked = !locked
-						to_chat(user, SPAN_NOTICE("You [ locked ? "lock" : "unlock"] the Air Alarm interface."))
-					else
-						to_chat(user, SPAN_WARNING("Access denied."))
-				return TRUE
-
 		if(1)
 			if(attacking_item.iscoil())
 				var/obj/item/stack/cable_coil/C = attacking_item
@@ -1099,6 +1070,27 @@ pixel_x = 10;
 				return TRUE
 
 	return ..()
+
+/obj/machinery/alarm/AltClick(mob/user)
+	if(Adjacent(user))
+		if(stat & (NOPOWER|BROKEN))
+			to_chat(user, SPAN_NOTICE("Nothing happens."))
+			return TRUE
+
+		else if(allowed(user))
+			locked = !locked
+			if(locked)
+				playsound(src, 'sound/machines/terminal/terminal_button03.ogg', 35, FALSE)
+			else
+				playsound(src, 'sound/machines/terminal/terminal_button01.ogg', 35, FALSE)
+			balloon_alert(user, locked ? "locked" : "unlocked")
+			updateUsrDialog()
+
+		else
+			to_chat(user, SPAN_NOTICE("Access denied."))
+			playsound(src, 'sound/machines/terminal/terminal_error.ogg', 25, FALSE)
+			balloon_alert(user, "access denied!")
+		return TRUE
 
 /obj/machinery/alarm/power_change()
 	..()

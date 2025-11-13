@@ -24,6 +24,8 @@
 #define POWER_USE_ACTIVE    2
 
 // Bitflags for machine stat variable.
+// These definitions are copypasted in the dmdocs in 'code/game/machinery.dm' so they can be easily referenced by checking the 'stat' variable.
+// SO THAT MEANS IF YOU UPDATE THEM HERE, UPDATE THEM THERE FOR VISIBILITY!
 #define BROKEN   0x1
 #define NOPOWER  0x2
 #define POWEROFF 0x4  // TBD.
@@ -104,14 +106,14 @@ GLOBAL_LIST_INIT(restricted_camera_networks, list(NETWORK_ERT,NETWORK_MERCENARY,
 #define STATUS_DISABLED 0 // RED Visability
 #define STATUS_CLOSE -1 // Close the interface
 
-/*
- *	Atmospherics Machinery.
-*/
+/**
+ * Atmospherics Machinery.
+ */
 
-///Maximum flowrate, in L/s, that the scrubbers use when siphoning. Anything higher than `CELL_VOLUME` has no effect.
+/// Maximum flowrate, in L/s, that the scrubbers use when siphoning. Anything higher than `CELL_VOLUME` has no effect.
 #define MAX_SIPHON_FLOWRATE   5000
 
-///Maximum flowrate, in L/s, that the scrubbers use when scrubbing from a turf.
+/// Maximum flowrate, in L/s, that the scrubbers use when scrubbing from a turf.
 #define MAX_SCRUBBER_FLOWRATE 400
 
 #define ATMOS_PUMP_MAX_PRESSURE 15000

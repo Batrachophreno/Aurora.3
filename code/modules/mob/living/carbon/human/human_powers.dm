@@ -672,7 +672,7 @@
 	if (!stop_sight_update)
 		to_chat(src, SPAN_NOTICE("Your eyes shift around, allowing you to see in the dark."))
 		src.stop_sight_update = 1
-		src.see_invisible = SEE_INVISIBLE_NOLIGHTING
+		src.lighting_alpha = LIGHTING_PLANE_ALPHA_SOMEWHAT_INVISIBLE
 
 	else
 		to_chat(src, SPAN_NOTICE("You return your vision to normal."))
@@ -1261,7 +1261,7 @@
 /mob/living/carbon/human/proc/change_animal_name()
 	set name = "Name Animal"
 	set desc = "Name a monkeylike animal."
-	set category = "IC"
+	set category = "IC.Critters"
 	set src in view(1)
 
 	var/mob/living/carbon/M = usr

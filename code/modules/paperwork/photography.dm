@@ -1,9 +1,9 @@
 /*	Photography!
- *	Contains:
- *		Camera
- *		Camera Film
- *		Photos
- *		Photo Albums
+ * Contains:
+ * * Camera
+ * * Camera Film
+ * * Photos
+ * * Photo Albums
  */
 
 /*******
@@ -47,7 +47,7 @@ GLOBAL_VAR_INIT(photo_count, 0)
 
 /obj/item/photo/feedback_hints(mob/user, distance, is_adjacent)
 	. += ..()
-	if(distance <= 1)
+	if(distance <= 1 || in_slide_projector(user))
 		show(user)
 		. += SPAN_NOTICE("[picture_desc]")
 	else

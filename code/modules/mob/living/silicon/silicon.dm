@@ -53,7 +53,6 @@
 	var/can_hear_hivenet = TRUE
 
 	// Misc
-	uv_intensity = 175 //Lights cast by robots have reduced effect on diona
 	mob_thinks = FALSE
 
 	var/can_speak_basic = TRUE
@@ -212,7 +211,7 @@
 
 /mob/living/silicon/check_languages()
 	set name = "Check Known Languages"
-	set category = "IC"
+	set category = "IC.Language"
 	set src = usr
 
 	var/dat = "<b><font size = 5>Known Languages</font></b><br/><br/>"
@@ -234,6 +233,7 @@
 	src << browse(HTML_SKELETON(dat), "window=checklanguage")
 	return
 
+/// Prompts the silicon mob which HUD to choose from, changes `sensor_mode` depending on choice
 /mob/living/silicon/proc/toggle_sensor_mode()
 	var/sensor_type = tgui_input_list(src, "Please select sensor type.", "Sensor Integration", list("Security", "Medical", "Disable"))
 	switch(sensor_type)

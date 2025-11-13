@@ -600,7 +600,6 @@
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
 	w_class = WEIGHT_CLASS_SMALL
-	uv_intensity = 50 //Light emitted by this object or creature has limited interaction with diona
 	species_restricted = list("exclude",BODYTYPE_VAURCA_BREEDER,BODYTYPE_VAURCA_WARFORM,BODYTYPE_TESLA_BODY)
 
 	drop_sound = 'sound/items/drop/hat.ogg'
@@ -608,13 +607,14 @@
 
 	valid_accessory_slots = list(ACCESSORY_SLOT_HEAD)
 
+	light_system = DIRECTIONAL_LIGHT
+
 	/// In case if you want to allow someone to switch the BLOCKHEADHAIR var from the helmet or not
 	var/allow_hair_covering = TRUE
 
 	var/light_overlay = "helmet_light"
 	var/light_applied
-	var/brightness_on
-	var/on = 0
+	var/on = FALSE
 	var/protects_against_weather = FALSE
 
 /obj/item/clothing/head/Initialize(mapload, material_key)
@@ -624,7 +624,7 @@
 
 /obj/item/clothing/head/proc/toggle_block_hair()
 	set name = "Toggle Hair Coverage"
-	set category = "Object"
+	set category = "Object.Equipped"
 	set src in usr
 
 	if(allow_hair_covering)
@@ -638,22 +638,22 @@
 	return on
 
 /obj/item/clothing/head/attack_self(mob/user)
-	if(brightness_on)
+	if(light_range)
 		if(!isturf(user.loc))
 			to_chat(user, "You cannot turn the light on while in this [user.loc]")
 			return
 		on = !on
-		to_chat(user, "You [on ? "enable" : "disable"] the helmet light.")
+		to_chat(user, SPAN_NOTICE("You [on ? "enable" : "disable"] the helmet light."))
 		update_flashlight(user)
 	else
 		return ..(user)
 
 /obj/item/clothing/head/proc/update_flashlight(var/mob/user = null)
 	if(on && !light_applied)
-		set_light(brightness_on)
+		set_light_on(on)
 		light_applied = 1
 	else if(!on && light_applied)
-		set_light(0)
+		set_light_on(on)
 		light_applied = 0
 	update_icon(user)
 	user.update_action_buttons()
@@ -662,7 +662,7 @@
 	if(!mob_wear_hat(user))
 		return ..()
 
-/obj/item/clothing/head/attack_generic(var/mob/user)
+/obj/item/clothing/head/attack_generic(mob/user, damage, attack_message, environment_smash, armor_penetration, attack_flags, damage_type)
 	if(!mob_wear_hat(user))
 		return ..()
 
@@ -838,7 +838,7 @@
 
 /obj/item/clothing/mask/proc/adjust_mask(mob/user, var/self = TRUE)
 	set name = "Adjust Mask"
-	set category = "Object"
+	set category = "Object.Equipped"
 	set src in usr
 
 	if(!adjustable)
@@ -922,7 +922,7 @@
 /obj/item/clothing/shoes/proc/draw_knife()
 	set name = "Draw Boot Knife"
 	set desc = "Pull out your boot knife."
-	set category = "Object"
+	set category = "Object.Held"
 	set src in usr
 
 	if(use_check_and_message(usr))
@@ -962,7 +962,7 @@
 
 /obj/item/clothing/shoes/verb/toggle_layer()
 	set name = "Switch Shoe Layer"
-	set category = "Object"
+	set category = "Object.Equipped"
 	set src in usr
 
 	if(use_check_and_message(usr))
@@ -1332,13 +1332,13 @@
 
 /obj/item/clothing/under/proc/toggle()
 	set name = "Toggle Suit Sensors"
-	set category = "Object"
+	set category = "Object.Equipped"
 	set src in usr
 	set_sensors(usr)
 
 /obj/item/clothing/under/proc/rollsuit()
 	set name = "Roll Up/Down Jumpsuit"
-	set category = "Object"
+	set category = "Object.Equipped"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
 	if(usr.stat) return
@@ -1379,7 +1379,7 @@
 
 /obj/item/clothing/under/proc/rollsleeves()
 	set name = "Roll Up/Down Sleeves"
-	set category = "Object"
+	set category = "Object.Equipped"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
 	if(usr.stat) return
