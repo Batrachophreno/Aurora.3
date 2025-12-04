@@ -1,11 +1,27 @@
-///
-///
-/// Example: reagent_containers/food/snack/kois_bar is contained within reagent_containers
 
+////////////////////////////////////////////Snacks//////////////////////////////////////////////////
 /**
- * Food items that can be eaten normally- that is to say, without any additional tools. You can hold these in your hand, put them on a plate, put them in your mouth, etc.
- * These are things like sandwiches, candy bars, liquid rations, etc.
+ * Items in the "Snacks" subcategory are food items that people can easily eat w/o utensils. The key points are that they are
+ * created already filled with reagents and are destroyed when empty, often creating a trassh item. Additionally, they make a
+ * "munching" noise when eaten.
+ *
+ * Food in the "snacks" subtype can hold a maximum of 50 units Generally speaking, you don't want to go over 40 total for the
+ * item because you want to leave space for extra condiments. If you want effect besides healing, add a reagent for
+ * it. Try to stick to existing reagents when possible (so if you want a stronger healing effect, just use Tricordrazine). On use
+ * effect (such as the old officer eating a donut code) requires a unique reagent (unless you can figure out a better way).
+ *
+ * Bitesize is the rate at which the reagents are consumed. So if you have 6 nutriment and a bitesize of 2, then it'll take 3 bites
+ * to eat. Unlike the old system, the contained reagents are evenly spread among all the bites. No more contained reagents = no more bites.
+ *
+ * Here is an example of the new formatting for anyone who wants to add more food items.
+ * * /obj/item/reagent_containers/food/snacks/burger/xeno											/// Identification path for the object.
+ * * name = "xenoburger"																			/// Name that displays in the UI.
+ * * desc = "Smells caustic. Tastes like heresy."													/// Duh
+ * * icon_state = "xburger"																			/// Refers to an icon in food.dmi
+ * * reagents_to_add = list(/singleton/reagent/xenomicrobes = 10, /singleton/reagent/nutriment = 2) /// This is what is in the food item.
+ * * bitesize = 3																					/// This is the amount each bite consumes
  */
+
 /obj/item/reagent_containers/food/snacks
 	name = "snack"
 	desc = "Yummy!"
@@ -423,26 +439,4 @@
 	update_icon()
 	return
 
-//////////////////////////////////////////////////
-////////////////////////////////////////////Snacks
-//////////////////////////////////////////////////
-//Items in the "Snacks" subcategory are food items that people actually eat. The key points are that they are created
-//	already filled with reagents and are destroyed when empty. Additionally, they make a "munching" noise when eaten.
 
-//Notes by Darem: Food in the "snacks" subtype can hold a maximum of 50 units Generally speaking, you don't want to go over 40
-//	total for the item because you want to leave space for extra condiments. If you want effect besides healing, add a reagent for
-//	it. Try to stick to existing reagents when possible (so if you want a stronger healing effect, just use Tricordrazine). On use
-//	effect (such as the old officer eating a donut code) requires a unique reagent (unless you can figure out a better way).
-
-//The nutriment reagent and bitesize variable replace the old heal_amt and amount variables. Each unit of nutriment is equal to
-//	2 of the old heal_amt variable. Bitesize is the rate at which the reagents are consumed. So if you have 6 nutriment and a
-//	bitesize of 2, then it'll take 3 bites to eat. Unlike the old system, the contained reagents are evenly spread among all
-//	the bites. No more contained reagents = no more bites.
-
-//Here is an example of the new formatting for anyone who wants to add more food items.
-///obj/item/reagent_containers/food/snacks/burger/xeno			//Identification path for the object.
-//	name = "xenoburger"													//Name that displays in the UI.
-//	desc = "Smells caustic. Tastes like heresy."						//Duh
-//	icon_state = "xburger"												//Refers to an icon in food.dmi
-//  reagents_to_add = list(/singleton/reagent/xenomicrobes = 10, /singleton/reagent/nutriment = 2) //This is what is in the food item.
-//	bitesize = 3													//This is the amount each bite consumes

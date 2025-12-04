@@ -3,7 +3,8 @@
 	desc = "Can I offer you a nice egg in this trying time?"
 	icon = 'icons/obj/item/reagent_containers/food/egg.dmi'
 	icon_state = "egg"
-	item_state = "egg" // don't change the item_state unless you know what you're doing, or i will kill you. -Wezzy
+	/// Handled by procs- do not change manually.
+	item_state = "egg"
 	filling_color = "#FDFFD1"
 	volume = 10
 	reagents_to_add = list(/singleton/reagent/nutriment/protein/egg = 3)
