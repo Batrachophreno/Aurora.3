@@ -3511,7 +3511,6 @@
 #include "code\modules\reagents\reagent_containers\tooth_paste.dm"
 #include "code\modules\reagents\reagent_containers\welding_backpack.dm"
 #include "code\modules\reagents\reagent_containers\cups\bottle.dm"
-#include "code\modules\reagents\reagent_containers\cups\bottle_robot.dm"
 #include "code\modules\reagents\reagent_containers\cups\bowls_plates.dm"
 #include "code\modules\reagents\reagent_containers\cups\coffeecup.dm"
 #include "code\modules\reagents\reagent_containers\cups\ladle.dm"

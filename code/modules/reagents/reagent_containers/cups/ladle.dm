@@ -1,4 +1,4 @@
-/obj/item/reagent_containers/ladle
+/obj/item/reagent_containers/cup/ladle
 	name = "ladle"
 	desc = "A serving ladle. Soup's on!"
 	icon = 'icons/obj/kitchen.dmi'
@@ -14,7 +14,7 @@
 	pickup_sound = 'sound/items/pickup/glass.ogg'
 	center_of_mass = list("x"=14, "y"=6)
 
-/obj/item/reagent_containers/ladle/afterattack(var/obj/target, var/mob/user, var/flag)
+/obj/item/reagent_containers/cup/ladle/afterattack(var/obj/target, var/mob/user, var/flag)
 	if(!target.is_open_container() || !flag)
 		return ..(target, user, flag)
 	if(reagents.total_volume)
@@ -31,8 +31,8 @@
 		to_chat(user, SPAN_NOTICE("[target] is empty."))
 		return TRUE
 	if(istype(target, /obj/item/reagent_containers/food/snacks))
-		var/obj/item/reagent_containers/food/snacks/S = target
-		if(!S.is_liquid)
+		var/obj/item/reagent_containers/food/snacks/target_snack = target
+		if(!target_snack.is_liquid)
 			return TRUE
 	var/trans = target.reagents.trans_to_obj(src, amount_per_transfer_from_this)
 	user.visible_message(
@@ -41,10 +41,10 @@
 	)
 	return TRUE
 
-/obj/item/reagent_containers/ladle/on_reagent_change()
+/obj/item/reagent_containers/cup/ladle/on_reagent_change()
 	update_icon()
 
-/obj/item/reagent_containers/ladle/update_icon()
+/obj/item/reagent_containers/cup/ladle/update_icon()
 	ClearOverlays()
 	if(!reagents.total_volume)
 		return

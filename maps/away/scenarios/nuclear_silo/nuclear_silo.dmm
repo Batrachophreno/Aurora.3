@@ -16984,7 +16984,7 @@
 "Ly" = (
 /obj/effect/floor_decal/corner/paleblue/diagonal,
 /obj/structure/table/stone/marble,
-/obj/item/reagent_containers/ladle{
+/obj/item/reagent_containers/cup/ladle{
 	pixel_x = -10
 	},
 /obj/item/reagent_containers/cooking_container/pot{

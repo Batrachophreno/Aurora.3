@@ -35,7 +35,7 @@
 		/obj/item/reagent_containers/cooking_container/pot = 4,
 		/obj/item/reagent_containers/cooking_container/board = 3,
 		/obj/item/reagent_containers/cooking_container/board/bowl = 2,
-		/obj/item/reagent_containers/ladle = 4,
+		/obj/item/reagent_containers/cup/ladle = 4,
 		/obj/item/storage/toolbox/lunchbox/nt = 6,
 		/obj/item/storage/toolbox/lunchbox/idris = 6,
 		/obj/item/reagent_containers/glass/rag = 8,

@@ -87,7 +87,8 @@
 		if(!(reagents && SA.reagents))
 			return
 
-		var/m_bitesize = bitesize * SA.bite_factor//Modified bitesize based on creature size
+		// Modified bitesize based on creature size
+		var/m_bitesize = bitesize * SA.bite_factor
 		var/amount_eaten = m_bitesize
 		m_bitesize = min(m_bitesize, reagents.total_volume)
 

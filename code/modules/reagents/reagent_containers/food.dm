@@ -16,6 +16,7 @@
 	/// Used by sandwiches; if null, it just uses the normal name.
 	var/ingredient_name
 	var/trash = null
+	/// Used to determine sounds and verbs.
 	var/is_liquid = TRUE
 	var/empty_icon_state
 
