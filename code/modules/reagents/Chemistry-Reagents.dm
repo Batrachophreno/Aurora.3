@@ -40,7 +40,7 @@
 	/// How much for the medicine to be present in the system to actually have an effect.
 	var/metabolism_min = 0.01
 	/// Reagents that conflict with this medicine, and cause adverse effects when in the blood.
-	var/conflicting_reagenter
+	var/conflicting_reagent
 	/// This is its default spawning temperature, if none is provided.
 	var/default_temperature = T0C + 20
 	/// The higher, the more difficult it is to change its temperature. 0 or lower values indicate that the specific heat has yet to be assigned.
@@ -49,11 +49,6 @@
 	 *	Setting this value above 0 will set the specific heat to this value only if the system could not find an appropriate specific heat to assign using the recipe system.
 	 *	Never ever ever ever change this value for singleton/reagent. This should only be used for massive, yet specific things like drinks or food where it is infeasible to assign a specific heat value.
 	 */
-	var/fallback_specific_heat = -1
-	/// For makeshift bandages/disinfectant
-	var/germ_adjust = 0
-	/// Setting this value above 0 will set the specific heat to this value only if the system could not find an appropriate specific heat to assign using the recipe system.
-	/// Never ever ever ever change this value for singleton/reagent. This should only be used for massive, yet specific things like drinks or food where it is infeasible to assign a specific heat value.
 	var/fallback_specific_heat = -1
 	/// For makeshift bandages/disinfectant
 	var/germ_adjust = 0

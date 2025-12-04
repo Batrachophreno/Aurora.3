@@ -1,14 +1,14 @@
 // This folder contains code that was originally ported from Apollo Station and then refactored/optimized/changed.
 
-// Tracks precooked food to stop deep fried baked grilled grilled grilled diona nymph cereal.
+/// Tracks precooked food to stop deep fried baked grilled grilled grilled diona nymph cereal.
 /obj/item/reagent_containers/food/snacks
 	var/tmp/list/cooked
 
-//similar process for food containers that you can create via a cooking process
+/// Similar process for food containers that you can create via a cooking process
 /obj/item/storage/box/fancy/food
 	var/tmp/list/cooked
 
-// Root type for cooking machines. See following files for specific implementations.
+/// Root type for cooking machines. See following files for specific implementations.
 /obj/machinery/appliance
 	name = "cooker"
 	desc = DESC_PARENT
@@ -28,21 +28,36 @@
 
 	parts_power_mgmt = FALSE
 
-	var/cooking_power = 0			// Effectiveness/speed at cooking
-	var/cooking_coeff = 0			// Part-based cooking power multiplier
-	var/heating_power = 1000		// Effectiveness at heating up; not used for mixers, should be equal to active_power_usage
-	var/max_contents = 1			// Maximum number of things this appliance can simultaneously cook
-	var/on_icon						// Icon state used when cooking.
-	var/off_icon					// Icon state used when not cooking.
-	var/cooking						// Whether or not the machine is currently operating.
-	var/cook_type					// A string value used to track what kind of food this machine makes.
-	var/can_cook_mobs				// Whether or not this machine accepts grabbed mobs.
-	var/mobdamagetype = DAMAGE_BRUTE		// Burn damage for cooking appliances, brute for cereal/candy
-	var/food_color					// Colour of resulting food item.
-	var/cooked_sound = 'sound/machines/ding.ogg'				// Sound played when cooking completes.
-	var/can_burn_food				// Can the object burn food that is left inside?
-	var/burn_chance = 10			// How likely is the food to burn?
-	var/list/cooking_objs = list()	// List of things being cooked
+	/// Effectiveness/speed at cooking
+	var/cooking_power = 0
+    /// Part-based cooking power multiplier
+	var/cooking_coeff = 0
+    /// Effectiveness at heating up; not used for mixers, should be equal to active_power_usage
+	var/heating_power = 1000
+    /// Maximum number of things this appliance can simultaneously cook
+	var/max_contents = 1
+    /// Icon state used when cooking.
+	var/on_icon
+    /// Icon state used when not cooking.
+	var/off_icon
+    /// Whether or not the machine is currently operating.
+	var/cooking
+    /// A string value used to track what kind of food this machine makes.
+	var/cook_type
+    /// Whether or not this machine accepts grabbed mobs.
+	var/can_cook_mobs
+    /// Burn damage for cooking appliances, brute for cereal/candy
+	var/mobdamagetype = DAMAGE_BRUTE
+    /// Colour of resulting food item.
+	var/food_color
+    /// Sound played when cooking completes.
+	var/cooked_sound = 'sound/machines/ding.ogg'
+    /// Can the object burn food that is left inside?
+	var/can_burn_food
+    /// How likely is the food to burn?
+	var/burn_chance = 10
+    /// List of things being cooked
+	var/list/cooking_objs = list()
 	var/particles/particle_holder
 	var/particle_type = /particles/cooking_smoke
 	var/smoke_percent = 0
@@ -52,7 +67,8 @@
 	var/list/output_options = list()
 	var/finish_verb = "pings!"
 	var/place_verb = "into"
-	var/combine_first = FALSE//If 1, this appliance will do combination cooking before checking recipes
+    /// If TRUE, this appliance will do combination cooking before checking recipes
+	var/combine_first = FALSE
 
 /obj/machinery/appliance/mechanics_hints(mob/user, distance, is_adjacent)
 	. += ..()
@@ -425,8 +441,8 @@
 		S.cook()
 
 
-//Combination cooking involves combining the names and reagents of ingredients into a predefined output object
-//The ingredients represent flavours or fillings. EG: donut pizza, cheese bread
+/// Combination cooking involves combining the names and reagents of ingredients into a predefined output object
+/// The ingredients represent flavours or fillings. EG: donut pizza, cheese bread
 /obj/machinery/appliance/proc/combination_cook(var/datum/cooking_item/CI)
 	if(!CI.combine_target)
 		return

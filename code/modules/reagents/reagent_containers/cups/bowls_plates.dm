@@ -20,7 +20,9 @@ Plates that can hold your cooking stuff
 	. += ..()
 	. += "Click with food to put food into it."
 	. += "If it has food on it, click with cutlery to scoop some food up."
-	. += "If it has food on it, click it with the active hand to remove the food."
+	. += "If it has food on it, click it with the active hand to pick up the food."
+	if(grease && !isipc(user))
+		. += "Use this on yourself to lick it clean!"
 
 /obj/item/reagent_containers/bowl/feedback_hints(mob/user, distance, is_adjacent)
 	. += ..()
@@ -172,6 +174,25 @@ Plates that can hold your cooking stuff
 	update_icon()
 	return
 
+/obj/item/reagent_containers/bowl/attack(mob/living/target_mob, mob/living/user, target_zone)
+	if(isipc(user))
+		to_chat(user, SPAN_NOTICE("You don't have a mouth, so you can't lick \the [src] clean."))
+		return
+	if(grease && !reagents.total_volume && (target_mob == user))
+		user.visible_message(
+			SPAN_NOTICE("[user] starts to lick \the [src] clean."),
+			SPAN_NOTICE("You start to lick \the [src] clean.")
+		)
+		if(do_after(user, 5))
+			grease = FALSE
+			user.visible_message(
+				SPAN_NOTICE("[user] licks everything off \the [src]."),
+				SPAN_NOTICE("You lick everything off \the [src].")
+			)
+	else
+		return ..()
+	update_icon()
+	return
 /obj/item/reagent_containers/bowl/plate/update_icon()
 	ClearOverlays()
 	var/list/O = list()

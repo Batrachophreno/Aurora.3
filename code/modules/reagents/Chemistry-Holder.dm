@@ -36,7 +36,7 @@
 /**
  * Applies force to the reagents inside it. Ex. throwing a non-fragile reagent holder at a wall. Do we care? Probably not, unless one of the reagents inside is nitroglycerin or similar.
  */
-/datum/reagents/proc/apply_force(var/force) 
+/datum/reagents/proc/apply_force(var/force)
 	for (var/_A in reagent_volumes)
 		var/singleton/reagent/A = GET_SINGLETON(_A)
 		A.apply_force(force, src)
@@ -608,12 +608,6 @@
  * Arguments:
  * * max_vol - maximum volume of holder
  */
-/atom/proc/create_reagents(max_vol)
-	if(reagents)
-		qdel(reagents)
-	reagents = new /datum/reagents(max_vol)
-	reagents.my_atom = src
-
 /atom/proc/create_reagents(var/max_vol)
 	if(reagents)
 		reagents.maximum_volume = max(reagents.maximum_volume, max_vol)

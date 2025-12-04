@@ -1,4 +1,4 @@
-//Food items that are eaten normally and don't leave anything behind.
+/// Food items that are eaten normally and don't leave anything behind.
 /obj/item/reagent_containers/food/snacks
 	name = "snack"
 	desc = "Yummy!"
@@ -10,18 +10,20 @@
 	var/slices_num
 	var/dried_type = null
 	var/dry = 0
-	var/coating = null // coating typepath, NOT decl
-	var/icon/flat_icon = null //Used to cache a flat icon generated from dipping in batter. This is used again to make the cooked-batter-overlay
+	/// Coating typepath, NOT decl
+	var/coating = null
+	/// Used to cache a flat icon generated from dipping in batter. This is used again to make the cooked-batter-overlay
+	var/icon/flat_icon = null
+	/// If 0, we wont do "battered thing" or similar prefixes. Mainly for recipes that include batter but have a special name
 	var/do_coating_prefix = TRUE
-	//If 0, we wont do "battered thing" or similar prefixes. Mainly for recipes that include batter but have a special name
 
+	/// Used for foods that are "cooked" without being made into a specific recipe or combination.
+	/// Generally applied during modification cooking with oven/fryer
+	/// Used to stop deepfried meat from looking like slightly tanned raw meat, and make it actually look cooked
 	var/cooked_icon = null
-	//Used for foods that are "cooked" without being made into a specific recipe or combination.
-	//Generally applied during modification cooking with oven/fryer
-	//Used to stop deepfried meat from looking like slightly tanned raw meat, and make it actually look cooked
 
-	//Placeholder for effect that trigger on eating that aren't tied to reagents.
-	var/flavor = null // set_flavor()
+	/// Placeholder for effect that trigger on eating that aren't tied to reagents. set_flavor()
+	var/flavor = null
 
 /obj/item/reagent_containers/food/snacks/feedback_hints(mob/user, distance, is_adjacent)
 	. += ..()
@@ -57,6 +59,10 @@
 /obj/item/reagent_containers/food/snacks/attack_self(mob/user as mob)
 	return
 
+/**
+ * Attempts to feed a target mob, as performed by the user. Usually, the target and the user are the same, but this can be used to feed other mobs.
+ *
+ */
 /obj/item/reagent_containers/food/snacks/standard_feed_mob(var/mob/user, var/mob/target)
 
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
