@@ -239,7 +239,7 @@
 		/obj/item/reagent_containers/food/snacks/sliceable/fatshouter_fillet = TRADER_THIS_TYPE,
 		/obj/item/reagent_containers/food/snacks/sliceable/zkahnkowafull     = TRADER_THIS_TYPE,
 		/obj/item/reagent_containers/food/snacks/creamice                    = TRADER_THIS_TYPE,
-		/obj/item/reagent_containers/food/snacks/chipplate/tajcandy          = TRADER_THIS_TYPE,
+		/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy          = TRADER_THIS_TYPE,
 		/obj/item/reagent_containers/food/snacks/explorer_ration             = TRADER_THIS_TYPE,
 		/obj/item/reagent_containers/food/snacks/spicy_clams                 = TRADER_THIS_TYPE,
 		/obj/item/reagent_containers/food/snacks/adhomian_can                = TRADER_THIS_TYPE,

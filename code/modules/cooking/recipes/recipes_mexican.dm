@@ -36,21 +36,21 @@
 // Chips
 //=========================
 
-/singleton/recipe/chips
+/singleton/recipe/chips_plate
 	appliance = SKILLET | FRYER | MICROWAVE
 	reagents = list(/singleton/reagent/sodiumchloride = 1)
 	items = list(
 		/obj/item/reagent_containers/food/snacks/tortilla
 	)
-	result = /obj/item/reagent_containers/food/snacks/chipplate
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/chips
 
-/singleton/recipe/nachos
+/singleton/recipe/nachos_plate
 	appliance = SKILLET | MICROWAVE // melt the cheese!
 	items = list(
-		/obj/item/reagent_containers/food/snacks/chipplate,
+		/obj/item/reagent_containers/food/snacks/fingerfood_container/chips,
 		/obj/item/reagent_containers/food/snacks/cheesewedge
 	)
-	result = /obj/item/reagent_containers/food/snacks/chipplate/nachos
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/chips/nachos
 
 /singleton/recipe/salsa
 	fruit = list("chili" = 1, "tomato" = 1, "lime" = 1)
@@ -85,16 +85,16 @@
 
 // Peanuts
 //=========================
-/singleton/recipe/peanuts_bowl
+/singleton/recipe/peanuts
 	appliance = OVEN | MICROWAVE
 	fruit = list("peanut" = 10)
-	result = /obj/item/reagent_containers/food/snacks/chipplate/peanuts_bowl
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/peanuts
 	reagent_mix = RECIPE_REAGENT_REPLACE // So the output isn't 40u total
 
-/singleton/recipe/peanuts_bowl_dry
+/singleton/recipe/peanuts_dry
 	appliance = OVEN | MICROWAVE
 	fruit = list("dried peanut" = 10)
-	result = /obj/item/reagent_containers/food/snacks/chipplate/peanuts_bowl
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/peanuts
 	reagent_mix = RECIPE_REAGENT_REPLACE
 
 // Burritos

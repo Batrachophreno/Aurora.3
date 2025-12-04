@@ -208,5 +208,5 @@
 		/obj/item/reagent_containers/food/snacks/fish/raw_shrimp,
 		/obj/item/reagent_containers/food/snacks/fish/raw_shrimp
 	)
-	result = /obj/item/reagent_containers/food/snacks/bowl/pop_shrimp_bowl
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/pop_shrimp_bowl
 	reagent_mix = RECIPE_REAGENT_REPLACE //Simplify end product

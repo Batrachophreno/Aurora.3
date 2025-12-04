@@ -1013,7 +1013,7 @@
 /area/adhomai_bar)
 "Zm" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/exoplanet/wood,
 /area/adhomai_bar)
 "Zw" = (

@@ -1,4 +1,11 @@
-/// Food items that are eaten normally and don't leave anything behind.
+///
+///
+/// Example: reagent_containers/food/snack/kois_bar is contained within reagent_containers
+
+/**
+ * Food items that can be eaten normally- that is to say, without any additional tools. You can hold these in your hand, put them on a plate, put them in your mouth, etc.
+ * These are things like sandwiches, candy bars, liquid rations, etc.
+ */
 /obj/item/reagent_containers/food/snacks
 	name = "snack"
 	desc = "Yummy!"

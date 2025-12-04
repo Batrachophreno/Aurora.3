@@ -173,7 +173,7 @@
 	)
 	reagents = list(/singleton/reagent/nutriment/flour/nfrihi = 5, /singleton/reagent/spacespice = 1)
 	reagent_mix = RECIPE_REAGENT_REPLACE
-	result = /obj/item/reagent_containers/food/snacks/chipplate/miniavah_basket
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/miniavah
 
 /singleton/recipe/hardbread_pudding
 	appliance = OVEN
@@ -327,7 +327,7 @@
 	items = list(
 		/obj/item/reagent_containers/food/snacks/dough
 	)
-	result = /obj/item/reagent_containers/food/snacks/chipplate/tajcandy
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy
 
 // Tajaran Dips
 /singleton/recipe/sarmikhir
@@ -404,4 +404,4 @@
 	)
 	reagents = list(/singleton/reagent/nutriment/gelatin = 5, /singleton/reagent/water = 5,  /singleton/reagent/spacespice = 1)
 	reagent_mix = RECIPE_REAGENT_REPLACE
-	result = /obj/item/reagent_containers/food/snacks/chipplate/crownfurter
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/crownfurter

@@ -2337,8 +2337,8 @@
 /area/shuttle/tajaran_smuggler)
 "kYY" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /obj/item/reagent_containers/food/snacks/hardbread,
 /obj/item/reagent_containers/food/snacks/hardbread,
 /obj/item/reagent_containers/food/snacks/fermented_worm,

@@ -271,8 +271,8 @@
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/adhomian_porridge,
 			/obj/item/reagent_containers/food/snacks/adhomian_sausage,
 			/obj/item/reagent_containers/food/snacks/avah,
-			/obj/item/reagent_containers/food/snacks/chipplate/crownfurter,
-			/obj/item/reagent_containers/food/snacks/chipplate/miniavah_basket,
+			/obj/item/reagent_containers/food/snacks/fingerfood_container/crownfurter,
+			/obj/item/reagent_containers/food/snacks/fingerfood_container/miniavah,
 			/obj/item/reagent_containers/food/snacks/chocolate_rikazu,
 			/obj/item/reagent_containers/food/snacks/clam_pasta,
 			/obj/item/reagent_containers/food/snacks/cone_cake,
@@ -318,7 +318,7 @@
 	reward_high = 250
 	required_count = 3
 	random_count = 1
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/chipplate/neaeracandy,
+	wanted_types = list(/obj/item/reagent_containers/food/snacks/fingerfood_container/neaeracandy,
 			/obj/item/reagent_containers/food/snacks/fjylozynboiled,
 			/obj/item/reagent_containers/food/snacks/gnaqmi,
 			/obj/item/reagent_containers/food/snacks/jyalrafresh,

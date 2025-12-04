@@ -180,20 +180,20 @@
 	filling_color = "#cca628"
 
 // chip plates
-/obj/item/reagent_containers/food/snacks/chipplate
+/obj/item/reagent_containers/food/snacks/fingerfood_container/chips
 	name = "basket of chips"
 	desc = "A plate of chips intended for dipping."
 	icon = 'icons/obj/item/reagent_containers/food/mexican.dmi'
 	icon_state = "chip_basket"
 	trash = /obj/item/trash/chipbasket
-	var/vendingobject = /obj/item/reagent_containers/food/snacks/chip
+	vendingobject = /obj/item/reagent_containers/food/snacks/chip
 	reagent_data = list(/singleton/reagent/nutriment = list("tortilla chips" = 10))
 	bitesize = 1
 	reagents_to_add = list(/singleton/reagent/nutriment = 10)
-	var/unitname = "chip"
+	unitname = "chip"
 	filling_color = "#FFF454"
 
-/obj/item/reagent_containers/food/snacks/chipplate/attack_hand(mob/user as mob)
+/obj/item/reagent_containers/food/snacks/fingerfood_container/chips/attack_hand(mob/user as mob)
 	var/obj/item/reagent_containers/food/snacks/returningitem = new vendingobject(loc)
 	returningitem.reagents.clear_reagents()
 	reagents.trans_to(returningitem, bitesize)
@@ -208,7 +208,7 @@
 			user.put_in_hands(waste)
 		qdel(src)
 
-/obj/item/reagent_containers/food/snacks/chipplate/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params) //Dropping the chip onto the user
+/obj/item/reagent_containers/food/snacks/fingerfood_container/chips/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params) //Dropping the chip onto the user
 	var/mob/mob_dropped_over = over
 	if(istype(mob_dropped_over) && user == user)
 		mob_dropped_over.put_in_active_hand(src)
@@ -217,7 +217,7 @@
 
 	. = ..()
 
-/obj/item/reagent_containers/food/snacks/chipplate/nachos
+/obj/item/reagent_containers/food/snacks/fingerfood_container/chips/nachos
 	name = "plate of nachos"
 	desc = "A very cheesy nacho plate."
 	icon = 'icons/obj/item/reagent_containers/food/mexican.dmi'
@@ -328,7 +328,7 @@
 	bitesize = 2
 	filling_color = "#D89E37"
 
-/obj/item/reagent_containers/food/snacks/chipplate/peanuts_bowl
+/obj/item/reagent_containers/food/snacks/fingerfood_container/peanuts
 	name = "bowl of roasted peanuts"
 	desc = "Peanuts roasted to flavourful and rich perfection."
 	icon = 'icons/obj/item/reagent_containers/food/mexican.dmi'

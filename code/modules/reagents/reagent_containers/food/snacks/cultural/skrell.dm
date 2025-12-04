@@ -92,7 +92,7 @@
 		if(51 to INFINITY)
 			icon_state = "neaera_brain_loaf"
 
-/obj/item/reagent_containers/food/snacks/chipplate/neaeracandy
+/obj/item/reagent_containers/food/snacks/fingerfood_container/neaeracandy
 	name = "plate of candied neaera eyes"
 	desc = "Candied neaera eyes shaped into cubes. The mix of savoury and sweet is generally acceptable for most species, although the dish is not commonly liked due to the use of eyes."
 	icon = 'icons/obj/item/reagent_containers/food/cultural/skrell.dmi'
@@ -105,7 +105,7 @@
 	unitname = "candied eye"
 	filling_color = "#7C66DD"
 
-/obj/item/reagent_containers/food/snacks/chipplate/neaeracandy/update_icon()
+/obj/item/reagent_containers/food/snacks/fingerfood_container/neaeracandy/update_icon()
 	switch(reagents.total_volume)
 		if(1)
 			icon_state = "neaera_candied_eyes1"

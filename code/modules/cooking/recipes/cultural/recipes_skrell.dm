@@ -69,7 +69,7 @@
 		/obj/item/reagent_containers/food/snacks/dough,
 		/obj/item/organ/internal/eyes/skrell/neaera
 	)
-	result = /obj/item/reagent_containers/food/snacks/chipplate/neaeracandy
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/neaeracandy
 
 /singleton/recipe/fjylozynboiled
 	appliance = SAUCEPAN | POT

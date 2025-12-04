@@ -178,7 +178,7 @@
 		/obj/item/reagent_containers/food/snacks/spreads/butter
 	)
 	reagent_mix = RECIPE_REAGENT_REPLACE //Simplify end product
-	result = /obj/item/reagent_containers/food/snacks/bowl/alfajores
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/alfajores
 
 /singleton/recipe/biscuits_and_gravy
 	appliance = SAUCEPAN
@@ -198,7 +198,7 @@
 		/obj/item/reagent_containers/food/snacks/cheesewedge
 	)
 	reagent_mix = RECIPE_REAGENT_REPLACE
-	result = /obj/item/reagent_containers/food/snacks/bowl/mozzarella_sticks
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/mozzarella_sticks
 
 /singleton/recipe/mozzarella_sticks_alt
 	appliance = FRYER
@@ -207,7 +207,7 @@
 	)
 	coating = /singleton/reagent/nutriment/coating/batter
 	reagent_mix = RECIPE_REAGENT_REPLACE
-	result = /obj/item/reagent_containers/food/snacks/bowl/mozzarella_sticks
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/mozzarella_sticks
 
 /singleton/recipe/jambalaya
 	appliance = SKILLET
@@ -267,14 +267,14 @@
 	appliance = FRYER
 	fruit = list("cabbage" = 1, "carrot" = 1)
 	reagents = list(/singleton/reagent/nutriment/flour = 5,  /singleton/reagent/nutriment/protein/egg = 3)
-	result = /obj/item/reagent_containers/food/snacks/bowl/eggrolls_vegetable
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/eggrolls_vegetable
 	reagent_mix = RECIPE_REAGENT_REPLACE //Simplify end product
 
 /singleton/recipe/eggrolls_vegetable_vegan
 	appliance = FRYER
 	fruit = list("cabbage" = 1, "carrot" = 1)
 	reagents = list(/singleton/reagent/nutriment/flour = 5,  /singleton/reagent/water = 5)
-	result = /obj/item/reagent_containers/food/snacks/bowl/eggrolls_vegetable
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/eggrolls_vegetable
 	reagent_mix = RECIPE_REAGENT_REPLACE //Simplify end product
 
 /singleton/recipe/eggrolls_meat
@@ -284,7 +284,7 @@
 	items = list(
 		/obj/item/reagent_containers/food/snacks/cutlet,
 	)
-	result = /obj/item/reagent_containers/food/snacks/bowl/eggrolls_meat
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/eggrolls_meat
 	reagent_mix = RECIPE_REAGENT_REPLACE //Simplify end product
 
 /singleton/recipe/eggrolls_meat_alt
@@ -294,7 +294,7 @@
 	items = list(
 		/obj/item/reagent_containers/food/snacks/cutlet,
 	)
-	result = /obj/item/reagent_containers/food/snacks/bowl/eggrolls_meat
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/eggrolls_meat
 	reagent_mix = RECIPE_REAGENT_REPLACE //Simplify end product
 
 // Mictlani
@@ -425,13 +425,13 @@
 	appliance = SKILLET
 	reagents = list(/singleton/reagent/nutriment/flour = 10, /singleton/reagent/water = 5, /singleton/reagent/spacespice = 2, /singleton/reagent/sodiumchloride = 1)
 	reagent_mix = RECIPE_REAGENT_REPLACE
-	result = /obj/item/reagent_containers/food/snacks/bowl/puffpuffs
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/puffpuffs
 
 /singleton/recipe/fufu
 	appliance = SAUCEPAN | POT
 	fruit = list("banana" = 2)
 	reagents = list(/singleton/reagent/water = 5)
-	result = /obj/item/reagent_containers/food/snacks/bowl/fufus
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/fufus
 	reagent_mix = RECIPE_REAGENT_REPLACE
 
 /singleton/recipe/dodo_ikire
@@ -653,4 +653,4 @@
 		/obj/item/reagent_containers/food/snacks/pancakes
 	)
 	reagent_mix = RECIPE_REAGENT_REPLACE
-	result = /obj/item/reagent_containers/food/snacks/bowl/belinas
+	result = /obj/item/reagent_containers/food/snacks/fingerfood_container/belinas

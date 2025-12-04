@@ -261,7 +261,7 @@
 	desc_extended = "Used to only mean 'sweets' or 'sweet thing', now singularly refers to a particular dessert. The batter is grilled and made into soft, spherical shapes, and then covered with fruit jams, sugar, or sweet cream cheese. These treats are often sold at festivals and celebrations, and foreigners compare them to pancakes."
 	filling_color = "#BD8939"
 
-/obj/item/reagent_containers/food/snacks/chipplate/miniavah_basket
+/obj/item/reagent_containers/food/snacks/fingerfood_container/miniavah
 	name = "mini-avah basket"
 	desc = "A basket of mini-avahs, a small variant of a traditional avah filled with meat that are the perfect size for dipping."
 	icon = 'icons/obj/item/reagent_containers/food/cultural/tajara.dmi'
@@ -273,7 +273,7 @@
 	reagents_to_add = list(/singleton/reagent/nutriment = 9, /singleton/reagent/nutriment/protein = 9)
 	reagent_data = list(/singleton/reagent/nutriment = list("baked dough" = 3), /singleton/reagent/nutriment/protein = list("savoury meat" = 3))
 
-/obj/item/reagent_containers/food/snacks/chipplate/miniavah_basket/update_icon()
+/obj/item/reagent_containers/food/snacks/fingerfood_container/miniavah/update_icon()
 	switch(reagents.total_volume)
 		if(1 to 6)
 			icon_state = "miniavahs_1"
@@ -569,7 +569,7 @@
 	reagent_data = list(/singleton/reagent/nutriment/protein/seafood = list("creamy, sweet fish" = 3))
 
 // Tajaran candy
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy
 	name = "plate of sugar tree candy"
 	desc = "A plate full of adhomian candy made from sugar tree, a plant native to Adhomai."
 	icon = 'icons/obj/item/reagent_containers/food/cultural/tajara.dmi'
@@ -582,7 +582,7 @@
 	unitname = "candy"
 	filling_color = "#FCA03D"
 
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy/update_icon()
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy/update_icon()
 	switch(reagents.total_volume)
 		if(1)
 			icon_state = "cubes1"
@@ -721,7 +721,7 @@
 	filling_color = "#94372A"
 	bitesize = 2
 
-/obj/item/reagent_containers/food/snacks/chipplate/crownfurter
+/obj/item/reagent_containers/food/snacks/fingerfood_container/crownfurter
 	name = "crown roast of adhomian frankfurters"
 	desc = "A party favorite, several adhomian sausages have been set upright around a center of sarmikhir for ease of dipping. It's finger food!"
 	icon = 'icons/obj/item/reagent_containers/food/cultural/tajara.dmi'
@@ -734,7 +734,7 @@
 	unitname = "dipped frankfurter"
 	filling_color = "#94372A"
 
-/obj/item/reagent_containers/food/snacks/chipplate/crownfurter/update_icon()
+/obj/item/reagent_containers/food/snacks/fingerfood_container/crownfurter/update_icon()
 	switch(reagents.total_volume)
 		if(1 to 7)
 			icon_state = "crownfurter2"

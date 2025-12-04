@@ -7,11 +7,14 @@
 	contained_sprite = TRUE
 	atom_flags = ATOM_FLAG_OPEN_CONTAINER
 	possible_transfer_amounts = null
-	volume = 50 //Sets the default container amount for all food items.
+	// Sets the default container amount for all food items.
+	volume = 50
 	var/bitesize = 1
 	var/bitecount = 0
-	var/filling_color = "#FFFFFF" //Used by sandwiches
-	var/ingredient_name // Also used by sandwiches; if null, it just uses the normal name.
+	/// Used by sandwiches
+	var/filling_color = "#FFFFFF"
+	/// Used by sandwiches; if null, it just uses the normal name.
+	var/ingredient_name
 	var/trash = null
 	var/is_liquid = TRUE
 	var/empty_icon_state

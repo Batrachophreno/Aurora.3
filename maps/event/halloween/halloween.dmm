@@ -1941,8 +1941,8 @@
 /area/city/garden)
 "gI" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 1
 	},
@@ -3332,7 +3332,7 @@
 /area/city/horrorhouse)
 "nR" = (
 /obj/structure/table/fancy,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/carpet/red,
 /area/city/kitchen)
 "nS" = (
@@ -5185,91 +5185,91 @@
 /obj/structure/sign/flag/halloween/right{
 	pixel_y = 29
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 16;
 	pixel_x = 7
 	},
@@ -7986,7 +7986,7 @@
 /area/city/horrorhouse)
 "FL" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/carpet/red,
 /area/city/dining)
 "FM" = (
@@ -10233,7 +10233,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/wood,
 /area/city/outside)
 "PI" = (
@@ -12263,7 +12263,7 @@
 "VD" = (
 /obj/structure/table/wood,
 /obj/item/flame/candle,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/carpet/red,
 /area/city/dining)
 "VH" = (
@@ -13656,13 +13656,13 @@
 /area/city/dining)
 "ZY" = (
 /obj/structure/table/stone/marble,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/tiled/full,
 /area/city/kitchen)
 

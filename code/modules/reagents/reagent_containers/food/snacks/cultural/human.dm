@@ -268,7 +268,7 @@
 		if(50 to INFINITY)
 			icon_state = "gravybiscuits"
 
-/obj/item/reagent_containers/food/snacks/bowl/mozzarella_sticks
+/obj/item/reagent_containers/food/snacks/fingerfood_container/mozzarella_sticks
 	name = "mozzarella sticks"
 	gender = PLURAL
 	desc = "Fried sticks of molten mozzarrella cheese hidden in a deep fried breaded coating. "
@@ -282,7 +282,7 @@
 	reagents_to_add = list(/singleton/reagent/nutriment/protein/cheese = 4, /singleton/reagent/nutriment = 4)
 	reagent_data = list(/singleton/reagent/nutriment/protein/cheese = list("molten cheese" = 5), /singleton/reagent/nutriment = list("crunchy coating" = 5))
 
-/obj/item/reagent_containers/food/snacks/bowl/mozzarella_sticks/update_icon()
+/obj/item/reagent_containers/food/snacks/fingerfood_container/mozzarella_sticks/update_icon()
 	switch(reagents.total_volume)
 		if(1 to 3)
 			icon_state = "mozzarella_sticks_half"
@@ -314,7 +314,7 @@
 		else
 			icon_state = "jambalaya"
 
-/obj/item/reagent_containers/food/snacks/bowl/pop_shrimp_bowl
+/obj/item/reagent_containers/food/snacks/fingerfood_container/pop_shrimp_bowl
 	name = "bowl of pop shrimp" //Popcorn shrimp were invented in the 70's (after the timeline divergence date) so I figured I'd call them something similar but different in this universe.
 	desc = "A bowl of fried shrimp so small and crunchy you can just pop them right in your mouth!"
 	icon = 'icons/obj/item/reagent_containers/food/fryer.dmi'
@@ -327,7 +327,7 @@
 	reagents_to_add = list(/singleton/reagent/nutriment/protein/seafood = 5, /singleton/reagent/nutriment = 1)
 	reagent_data = list(/singleton/reagent/nutriment/protein/seafood = list("crunchy fried shrimp" = 5), /singleton/reagent/nutriment = list("seasoning" = 5))
 
-/obj/item/reagent_containers/food/snacks/bowl/pop_shrimp_bowl/update_icon()
+/obj/item/reagent_containers/food/snacks/fingerfood_container/pop_shrimp_bowl/update_icon()
 	switch(reagents.total_volume)
 		if(1 to 3)
 			icon_state = "popshrimp_half"
@@ -482,7 +482,7 @@
 	reagent_data = list(/singleton/reagent/nutriment = list("rice" = 4), /singleton/reagent/nutriment/protein = list("sweet and spicy chicken" = 5))
 	bitesize = 2
 
-/obj/item/reagent_containers/food/snacks/bowl/eggrolls_vegetable
+/obj/item/reagent_containers/food/snacks/fingerfood_container/eggrolls_vegetable
 	name = "vegetable eggrolls"
 	gender = PLURAL
 	desc = "Fried, crispy eggrolls full of carrots, cabbage and ginger. Contrary to popular belief, eggrolls are frequently made without any eggs, using rice paper or wheat based wraps instead."
@@ -496,7 +496,7 @@
 	reagents_to_add = list(/singleton/reagent/nutriment = 6)
 	reagent_data = list(/singleton/reagent/nutriment = list("vegetables" = 5, "crunchy coating" = 5, "ginger" = 3))
 
-/obj/item/reagent_containers/food/snacks/bowl/eggrolls_vegetable/update_icon()
+/obj/item/reagent_containers/food/snacks/fingerfood_container/eggrolls_vegetable/update_icon()
 	switch(reagents.total_volume)
 		if(1 to 2)
 			icon_state = "eggrolls_veg_one"
@@ -510,7 +510,7 @@
 	icon_state = "eggroll_veg"
 	filling_color = "#b19445"
 
-/obj/item/reagent_containers/food/snacks/bowl/eggrolls_meat
+/obj/item/reagent_containers/food/snacks/fingerfood_container/eggrolls_meat
 	name = "meat eggrolls"
 	gender = PLURAL
 	desc = "Fried, crispy eggrolls full of meat, traditionally either pork or chicken, although other kinds exist around the spur. Contrary to popular belief, eggrolls are frequently made without any eggs, using rice paper or wheat based wraps instead."
@@ -524,7 +524,7 @@
 	reagents_to_add = list(/singleton/reagent/nutriment/protein = 3, /singleton/reagent/nutriment = 3)
 	reagent_data = list(/singleton/reagent/nutriment/protein = list("meat" = 5), /singleton/reagent/nutriment = list("crunchy coating" = 5, "ginger" = 3))
 
-/obj/item/reagent_containers/food/snacks/bowl/eggrolls_meat/update_icon()
+/obj/item/reagent_containers/food/snacks/fingerfood_container/eggrolls_meat/update_icon()
 	switch(reagents.total_volume)
 		if(1 to 2)
 			icon_state = "eggrolls_meat_one"
@@ -671,7 +671,6 @@
 			icon_state = "chetroinuoc3"
 
 // Europa
-
 /obj/item/reagent_containers/food/snacks/deepdive
 	name = "deep dive"
 	desc = "A traditional savory stacked layer dish from Europa, made of fish pastes, cream cheese, seaweed on top, and occasionaly some sauce, served in a transparent deep dish."
@@ -685,7 +684,6 @@
 	pickup_sound = 'sound/items/pickup/glass.ogg'
 
 // Biesel
-
 /obj/item/reagent_containers/food/snacks/bluemoon
 	name = "blue moon"
 	desc = "This way of serving a white chocolate-raspberry mousse was originally made popular in Mendell's Vega De Rosa district in the 24th century and has since gained popularity around Tau Ceti."
@@ -698,23 +696,31 @@
 	drop_sound = 'sound/items/drop/glass.ogg'
 	pickup_sound = 'sound/items/pickup/glass.ogg'
 
-
-// Eridani
-
-ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/bowl)
+/**
+ * This is a sinful snowflake, in that a 'cup-like' object (plate or bowl) is NOT a child of /obj/item/reagent_containers/cup.
+ *
+ * Normally, a cup (a plate or bowl) contains a list of reagents, which are accessed by using a utensil on it, eating it, etc. In most cases,
+ * these are undifferentiated; that is to say, one spoonful of soup/forkful of pasta is not a discrete object. If you have a bowl of chips though,
+ * each chip is its own differentiated obj: you have to be able to see an individual Chip placed in your hand!
+ *
+ * To handle this, use vendingobject, which must be the differentiated object that is generated in-hand when accessed.
+ */
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/fingerfood_container)
 	name = "a bowl of item"
 	desc = "If you're seeing this, something has gone wrong D:"
 	icon = 'icons/obj/item/reagent_containers/food/cultural/human.dmi'
 	icon_state = "puffpuffbowl"
 	trash = /obj/item/trash/snack_bowl
-	var/vendingobject = /obj/item/reagent_containers/food/snacks/puffpuff
-	///This is the item itself that the bowl dispenses, as an obj. I have it set to puff puffs by default but if you reuse this code for a different food - change accordingly.
+	/// This is the item itself that the bowl dispenses, as an obj.
+	var/obj/item/reagent_containers/food/vendingobject = /obj/item/reagent_containers/food/snacks/puffpuff
+	/// This is the NAME of the item the bowl dispenses, as it would show up in a sentence.
+	var/unitname = "contained_food"
 	reagent_data = list(/singleton/reagent/nutriment = list("fried dough" = 10, "ginger" = 4))
 	bitesize = 4
 	reagents_to_add = list(/singleton/reagent/nutriment = 24)
-	var/unitname = "contained_food" ///this is the NAME of the item the bowl dispenses, as it would show up in a sentence.
 
-/obj/item/reagent_containers/food/snacks/bowl/puffpuffs
+// Eridani
+/obj/item/reagent_containers/food/snacks/fingerfood_container/puffpuffs
 	name = "puff-puff bowl"
 	desc = "A bowl of puffy dough balls. Much like donut balls except pan fried, chewier, and often served savory, not just sweet. It originates in Nigeria, but this is the Eridani variant, which is made with ginger instead of pepper."
 	bitesize = 4
@@ -722,7 +728,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/bowl)
 	unitname = "puff-puff"
 	filling_color = "#bb8a41"
 
-/obj/item/reagent_containers/food/snacks/bowl/attack_hand(mob/user as mob)
+/obj/item/reagent_containers/food/snacks/fingerfood_container/attack_hand(mob/user as mob)
 	var/obj/item/reagent_containers/food/snacks/returningitem = new vendingobject(loc)
 	returningitem.reagents.clear_reagents()
 	reagents.trans_to(returningitem, bitesize)
@@ -737,7 +743,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/bowl)
 			user.put_in_hands(waste)
 		qdel(src)
 
-/obj/item/reagent_containers/food/snacks/bowl/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params) //Dropping the bowl of food onto the user
+/obj/item/reagent_containers/food/snacks/fingerfood_container/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params) //Dropping the bowl of food onto the user
 	var/mob/mob_dropped_over = over
 	if(istype(mob_dropped_over) && !use_check_and_message(mob_dropped_over))
 		mob_dropped_over.put_in_active_hand(src)
@@ -746,7 +752,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/bowl)
 
 	. = ..()
 
-/obj/item/reagent_containers/food/snacks/bowl/puffpuffs/update_icon()
+/obj/item/reagent_containers/food/snacks/fingerfood_container/puffpuffs/update_icon()
 	switch(reagents.total_volume)
 		if(1 to 8)
 			icon_state = "puffpuffbowlfew"
@@ -761,7 +767,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/bowl)
 	bitesize = 2
 	filling_color = "#bb8a41"
 
-/obj/item/reagent_containers/food/snacks/bowl/fufus
+/obj/item/reagent_containers/food/snacks/fingerfood_container/fufus
 	name = "fufu dumplings"
 	desc = "These Eridanian dumplings are made from plantains, and while dense, they are not typically supposed to be served on their own, but rather as a side dish for various Eridanian soups."
 	icon = 'icons/obj/item/reagent_containers/food/cultural/human.dmi'
@@ -773,7 +779,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/bowl)
 	reagents_to_add = list(/singleton/reagent/nutriment = 9)
 	reagent_data = list(/singleton/reagent/nutriment = list("plantains" = 10))
 
-/obj/item/reagent_containers/food/snacks/bowl/fufus/update_icon()
+/obj/item/reagent_containers/food/snacks/fingerfood_container/fufus/update_icon()
 	switch(reagents.total_volume)
 		if(1 to 4)
 			icon_state = "fufufew"
@@ -817,7 +823,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/bowl)
 	reagents_to_add = list(/singleton/reagent/nutriment/ = 4)
 	reagent_data = list(/singleton/reagent/nutriment = list("lime" = 5, "chocolate" = 5, "chili" = 2))
 
-/obj/item/reagent_containers/food/snacks/bowl/alfajores
+/obj/item/reagent_containers/food/snacks/fingerfood_container/alfajores
 	name = "alfajores"
 	desc = "A plate of delicious vanilla sandwich cookies filled with dulche de leche and covered in coconut shavings. A sweet South American treat!"
 	icon = 'icons/obj/item/reagent_containers/food/cultural/human.dmi'
@@ -830,7 +836,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/bowl)
 	bitesize = 2
 	reagent_data = list(/singleton/reagent/nutriment = list("dulce de leche" = 5, "vanilla cookie" = 5, "coconut" = 2))
 
-/obj/item/reagent_containers/food/snacks/bowl/alfajores/update_icon()
+/obj/item/reagent_containers/food/snacks/fingerfood_container/alfajores/update_icon()
 	switch(reagents.total_volume)
 		if(1 to 3)
 			icon_state = "alfajores_one"
@@ -1091,7 +1097,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/bowl)
 		if(50 to INFINITY)
 			icon_state = "bierock"
 
-/obj/item/reagent_containers/food/snacks/bowl/belinas
+/obj/item/reagent_containers/food/snacks/fingerfood_container/belinas
 	name = "belinas"
 	gender = PLURAL
 	desc = "Tiny little mini-pancakes with cream cheese and salmon. This dish originates in eastern Europe and has been popularized in the solarian world Sankt Frederick, especially in large gatherings and events."
@@ -1105,7 +1111,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/bowl)
 	reagents_to_add = list(/singleton/reagent/nutriment = 4, /singleton/reagent/nutriment/protein/cream_cheese = 8, /singleton/reagent/nutriment/protein/seafood = 8)
 	reagent_data = list(/singleton/reagent/nutriment = list("pancake" = 4), /singleton/reagent/nutriment/protein/cream_cheese = list("cream cheese" =5), /singleton/reagent/nutriment/protein/seafood = list("salmon" = 5))
 
-/obj/item/reagent_containers/food/snacks/bowl/belinas/update_icon()
+/obj/item/reagent_containers/food/snacks/fingerfood_container/belinas/update_icon()
 	switch(reagents.total_volume)
 		if(1 to 3)
 			icon_state = "belinas_few"

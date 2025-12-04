@@ -1381,7 +1381,7 @@
 /area/wrecked_nt_ship)
 "Gq" = (
 /obj/structure/table/steel,
-/obj/item/reagent_containers/food/snacks/chipplate,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/chips,
 /turf/simulated/floor/wood/airless,
 /area/wrecked_nt_ship)
 "GH" = (

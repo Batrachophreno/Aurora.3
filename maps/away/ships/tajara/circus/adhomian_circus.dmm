@@ -1598,7 +1598,7 @@
 /area/adhomian_circus/fortune)
 "ixs" = (
 /obj/structure/table/stone/marble,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/lino/diamond{
 	temperature = 278.15
 	},
@@ -2508,11 +2508,11 @@
 /obj/item/reagent_containers/food/snacks/adhomian_sausage,
 /obj/item/reagent_containers/food/snacks/adhomian_sausage,
 /obj/item/reagent_containers/food/snacks/adhomian_sausage,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube_empty"

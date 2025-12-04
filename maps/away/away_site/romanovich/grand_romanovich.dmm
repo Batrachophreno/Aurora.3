@@ -673,7 +673,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 1
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/carpet/art,
 /area/grand_romanovich)
 "cb" = (
@@ -725,7 +725,7 @@
 /obj/effect/floor_decal/spline/fancy/wood/corner{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/wood,
 /area/grand_romanovich)
 "cg" = (
@@ -928,7 +928,7 @@
 /obj/machinery/computer/security/telescreen{
 	pixel_x = -32
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/wood,
 /area/grand_romanovich)
 "cA" = (
@@ -1282,7 +1282,7 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/wood,
 /area/grand_romanovich)
 "dv" = (
@@ -2676,7 +2676,7 @@
 "he" = (
 /obj/structure/table/wood,
 /obj/item/material/ashtray/glass,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/carpet/art,
 /area/grand_romanovich)
 "hf" = (
@@ -2944,7 +2944,7 @@
 /area/grand_romanovich)
 "hP" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 10
 	},
 /obj/item/reagent_containers/food/drinks/bottle/sugartree_liquor{
@@ -3674,7 +3674,7 @@
 /area/grand_romanovich)
 "kx" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/lino,
 /area/grand_romanovich)
 "kB" = (
@@ -3752,12 +3752,12 @@
 /area/grand_romanovich)
 "kV" = (
 /obj/structure/table/stone/marble,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/wood,
 /area/grand_romanovich)
 "kW" = (
 /obj/structure/table/stone/marble,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/lino,
 /area/grand_romanovich)
 "kX" = (
@@ -4056,7 +4056,7 @@
 	dir = 1;
 	icon_state = "tube_empty"
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /obj/effect/floor_decal/corner/yellow{
 	dir = 5;
 	icon_state = "corner_white"
@@ -4726,7 +4726,7 @@
 	dir = 4;
 	icon_state = "tube_empty"
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /obj/effect/floor_decal/corner/yellow{
 	dir = 6;
 	icon_state = "corner_white"
@@ -5007,7 +5007,7 @@
 /obj/machinery/light{
 	icon_state = "tube_empty"
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /obj/effect/floor_decal/corner/yellow{
 	dir = 10;
 	icon_state = "corner_white"
@@ -5475,7 +5475,7 @@
 "uH" = (
 /obj/effect/floor_decal/spline/fancy/wood,
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/simulated/floor/wood,
 /area/grand_romanovich)
 "uI" = (
@@ -6384,7 +6384,7 @@
 /area/grand_romanovich/outdoors)
 "Kt" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy{
 	pixel_y = 10
 	},
 /obj/item/reagent_containers/food/drinks/bottle/sugartree_liquor{
@@ -6897,7 +6897,7 @@
 /area/grand_romanovich/outdoors)
 "Sl" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /obj/item/reagent_containers/food/drinks/bottle/messa_mead,
 /turf/simulated/floor/carpet/art,
 /area/grand_romanovich)

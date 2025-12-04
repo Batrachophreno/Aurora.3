@@ -705,7 +705,7 @@
 /area/space)
 "oL" = (
 /obj/structure/table/stone/marble,
-/obj/item/reagent_containers/food/snacks/chipplate/peanuts_bowl{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/peanuts{
 	pixel_y = 14
 	},
 /obj/item/material/ashtray/bronze{
@@ -946,7 +946,7 @@
 	pixel_x = 8;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/peanuts_bowl{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/peanuts{
 	pixel_y = -1
 	},
 /turf/simulated/floor/marble/dark,
@@ -1016,7 +1016,7 @@
 /area/space)
 "wq" = (
 /obj/structure/table/stone/marble,
-/obj/item/reagent_containers/food/snacks/chipplate/peanuts_bowl{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/peanuts{
 	pixel_y = 1
 	},
 /obj/item/material/ashtray/bronze{
@@ -1180,8 +1180,8 @@
 /area/space)
 "Ae" = (
 /obj/structure/table/rack/retail_shelf,
-/obj/item/reagent_containers/food/snacks/chipplate/peanuts_bowl,
-/obj/item/reagent_containers/food/snacks/chipplate/peanuts_bowl,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/peanuts,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/peanuts,
 /turf/simulated/floor/exoplanet/tiled/white,
 /area/space)
 "An" = (
@@ -1556,7 +1556,7 @@
 	pixel_x = 8;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/food/snacks/chipplate/peanuts_bowl{
+/obj/item/reagent_containers/food/snacks/fingerfood_container/peanuts{
 	pixel_y = 14
 	},
 /turf/simulated/floor/marble/dark,

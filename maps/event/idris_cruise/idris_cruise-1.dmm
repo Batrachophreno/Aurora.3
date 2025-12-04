@@ -7404,7 +7404,7 @@
 /area/cruise/dining_hall)
 "gcJ" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chipplate/tajcandy,
+/obj/item/reagent_containers/food/snacks/fingerfood_container/tajcandy,
 /turf/unsimulated/floor{
 	icon_state = "dark_preview"
 	},
