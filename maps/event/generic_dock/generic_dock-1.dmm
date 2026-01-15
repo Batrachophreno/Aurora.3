@@ -2341,6 +2341,29 @@
 	name = "military corvette"
 	},
 /area/shuttle/administration)
+"bhj" = (
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	dir = 4;
+	icon = 'icons/atmos/pipes.dmi';
+	icon_state = "intact-scrubbers";
+	name = "pipe"
+	},
+/obj/effect/decal/fake_object{
+	color = "#0000ff";
+	dir = 4;
+	icon = 'icons/atmos/pipes.dmi';
+	icon_state = "intact-supply";
+	name = "pipe"
+	},
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "4-8";
+	name = "cable"
+	},
+/turf/unsimulated/floor/plating,
+/area/centcom/bar)
 "biK" = (
 /obj/effect/map_effect/window_spawner/full/reinforced/indestructible,
 /turf/simulated/floor,
@@ -3007,29 +3030,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape)
-"cdV" = (
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	dir = 4;
-	icon = 'icons/atmos/pipes.dmi';
-	icon_state = "intact-scrubbers";
-	name = "pipe"
-	},
-/obj/effect/decal/fake_object{
-	color = "#0000ff";
-	dir = 4;
-	icon = 'icons/atmos/pipes.dmi';
-	icon_state = "intact-supply";
-	name = "pipe"
-	},
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "4-8";
-	name = "cable"
-	},
-/turf/unsimulated/floor/plating,
-/area/centcom/bar)
 "cfh" = (
 /obj/effect/floor_decal/corner/blue/full,
 /obj/structure/table/rack,
@@ -4394,6 +4394,33 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/holding)
+"eep" = (
+/obj/machinery/light{
+	icon_state = "tube_empty"
+	},
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "4-8";
+	name = "cable"
+	},
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	dir = 4;
+	icon = 'icons/atmos/pipes.dmi';
+	icon_state = "intact-scrubbers";
+	name = "pipe"
+	},
+/obj/effect/decal/fake_object{
+	color = "#0000ff";
+	dir = 4;
+	icon = 'icons/atmos/pipes.dmi';
+	icon_state = "intact-supply";
+	name = "pipe"
+	},
+/obj/structure/lattice/catwalk/indoor,
+/turf/unsimulated/floor/plating,
+/area/centcom/checkpoint/aft)
 "efo" = (
 /obj/structure/disposalpipe/trunk,
 /obj/structure/disposaloutlet,
@@ -4431,6 +4458,37 @@
 /obj/structure/table/reinforced,
 /turf/unsimulated/floor,
 /area/centcom/control)
+"ehI" = (
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube_empty"
+	},
+/obj/structure/railing/mapped{
+	name = "adjusted railing"
+	},
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "4-8";
+	name = "cable"
+	},
+/obj/effect/decal/fake_object{
+	color = "#0000ff";
+	dir = 4;
+	icon = 'icons/atmos/pipes.dmi';
+	icon_state = "intact-supply";
+	name = "pipe"
+	},
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	dir = 4;
+	icon = 'icons/atmos/pipes.dmi';
+	icon_state = "intact-scrubbers";
+	name = "pipe"
+	},
+/obj/structure/lattice/catwalk/indoor,
+/turf/unsimulated/floor/plating,
+/area/centcom/checkpoint/fore)
 "ehQ" = (
 /obj/structure/shuttle_part/ert{
 	icon_state = "10,2";
@@ -8449,37 +8507,6 @@
 /obj/structure/computerframe,
 /turf/simulated/floor/shuttle/black,
 /area/centcom/specops)
-"jja" = (
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube_empty"
-	},
-/obj/structure/railing/mapped{
-	name = "adjusted railing"
-	},
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "4-8";
-	name = "cable"
-	},
-/obj/effect/decal/fake_object{
-	color = "#0000ff";
-	dir = 4;
-	icon = 'icons/atmos/pipes.dmi';
-	icon_state = "intact-supply";
-	name = "pipe"
-	},
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	dir = 4;
-	icon = 'icons/atmos/pipes.dmi';
-	icon_state = "intact-scrubbers";
-	name = "pipe"
-	},
-/obj/structure/lattice/catwalk/indoor,
-/turf/unsimulated/floor/plating,
-/area/centcom/checkpoint/fore)
 "jkC" = (
 /turf/simulated/wall/shuttle/unique/hapt{
 	desc = "A scary armed military corvette. Carries no branding or emblem of any sort. This thing looks mean.";
@@ -11399,33 +11426,6 @@
 	},
 /turf/simulated/floor/shuttle/dark_blue,
 /area/shuttle/arrival)
-"njP" = (
-/obj/machinery/light{
-	icon_state = "tube_empty"
-	},
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "4-8";
-	name = "cable"
-	},
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	dir = 4;
-	icon = 'icons/atmos/pipes.dmi';
-	icon_state = "intact-scrubbers";
-	name = "pipe"
-	},
-/obj/effect/decal/fake_object{
-	color = "#0000ff";
-	dir = 4;
-	icon = 'icons/atmos/pipes.dmi';
-	icon_state = "intact-supply";
-	name = "pipe"
-	},
-/obj/structure/lattice/catwalk/indoor,
-/turf/unsimulated/floor/plating,
-/area/centcom/checkpoint/aft)
 "nli" = (
 /obj/effect/floor_decal/spline/plain/black{
 	dir = 1
@@ -14756,6 +14756,10 @@
 	icon_state = "wood"
 	},
 /area/centcom/control)
+"sys" = (
+/obj/machinery/fabricator/autolathe/hacked,
+/turf/unsimulated/floor/plating,
+/area/centcom/specops)
 "syP" = (
 /obj/effect/floor_decal/corner/red{
 	dir = 1
@@ -16859,15 +16863,6 @@
 	icon_state = "dark_preview"
 	},
 /area/centcom/holding)
-"wjW" = (
-/obj/machinery/autolathe{
-	desc = "Your typical Autolathe. It appears to have much more options than your regular one, however...";
-	hacked = 1;
-	name = "Modified Autolathe";
-	pixel_y = 2
-	},
-/turf/unsimulated/floor/plating,
-/area/centcom/specops)
 "wkk" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Red Access";
@@ -43243,7 +43238,7 @@ mQk
 jTO
 axZ
 mTj
-wjW
+sys
 nLO
 mrG
 sio
@@ -56345,7 +56340,7 @@ amr
 lRx
 hAS
 wzE
-jja
+ehI
 nli
 etl
 qwZ
@@ -56357,7 +56352,7 @@ vxi
 nZv
 vbT
 avo
-njP
+eep
 bQP
 qza
 kvZ
@@ -58121,7 +58116,7 @@ eBz
 aBJ
 aGI
 tdl
-cdV
+bhj
 tdl
 cFZ
 alJ
@@ -58378,7 +58373,7 @@ eBz
 eBz
 bag
 tdl
-cdV
+bhj
 tdl
 sFB
 uEJ
@@ -58635,7 +58630,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 qHs
 uEJ
@@ -58892,7 +58887,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 cFZ
 hkb
@@ -59149,7 +59144,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 cFZ
 alJ
@@ -59406,7 +59401,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 sFB
 uEJ
@@ -59663,7 +59658,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 qHs
 uEJ
@@ -59920,7 +59915,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 cFZ
 hkb
@@ -60177,7 +60172,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 cFZ
 alJ
@@ -60434,7 +60429,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 sFB
 uEJ
@@ -60691,7 +60686,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 qHs
 uEJ
@@ -60948,7 +60943,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 cFZ
 hkb
@@ -61205,7 +61200,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 cFZ
 alJ
@@ -61462,7 +61457,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 sFB
 uEJ
@@ -61719,7 +61714,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 qHs
 uEJ
@@ -61976,7 +61971,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 cFZ
 hkb
@@ -62233,7 +62228,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 dTe
 hrP
@@ -62490,7 +62485,7 @@ eBz
 eBz
 bYv
 tdl
-cdV
+bhj
 tdl
 dTe
 ixW

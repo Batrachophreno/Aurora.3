@@ -1,7 +1,7 @@
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
-	icon = 'icons/obj/closet.dmi'
+	icon = 'icons/obj/containers/closet.dmi'
 	icon_state = "generic"
 	density = TRUE
 	build_amt = 2
@@ -417,10 +417,13 @@
 	else if(istype(attacking_item, /obj/item/device/cratescanner))
 		var/obj/item/device/cratescanner/Cscanner = attacking_item
 		if(locked)
-			to_chat(user, SPAN_WARNING("[attacking_item] refuses to scan [src]. Unlock it first!"))
+			to_chat(user, SPAN_WARNING("[attacking_item] refuses to scan \the [src]. Unlock it first!"))
 			return
 		if(welded)
-			to_chat(user, SPAN_WARNING("[attacking_item] detects that [src] is welded shut, and refuses to scan."))
+			to_chat(user, SPAN_WARNING("[attacking_item] detects that \the [src] is welded shut, and refuses to scan."))
+			return
+		if(istype(loc, /obj/structure/crate_shelf))
+			to_chat(user, SPAN_WARNING("[attacking_item] can't scan \the [src] while it is on \the [loc]."))
 			return
 		Cscanner.print_contents(name, contents, src.loc)
 	else if(istype(attacking_item, /obj/item/stack/packageWrap))
@@ -623,6 +626,7 @@
 			update_secure_overlays()
 
 /obj/structure/closet/proc/update_secure_overlays()
+	AddOverlays("[icon_door_overlay]securitypanel")
 	if(broken)
 		AddOverlays("[icon_door_overlay]emag")
 	else

@@ -995,6 +995,28 @@
 	icon_state = "wood_birch"
 	},
 /area/cruise/escort)
+"aHP" = (
+/obj/structure/window/reinforced,
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/obj/effect/decal/fake_object{
+	density = 1;
+	desc = "An advanced input device for affecting VR, without actually being in VR!";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "hub";
+	name = "VR input centraplex";
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 8
+	},
+/turf/unsimulated/floor,
+/area/cruise/arcade)
 "aId" = (
 /obj/structure/table/wood,
 /obj/item/newspaper,
@@ -1937,16 +1959,6 @@
 	icon_state = "dark"
 	},
 /area/cruise/fore)
-"bps" = (
-/obj/structure/lattice,
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "4-8";
-	name = "cable"
-	},
-/turf/template_noop,
-/area/template_noop)
 "bqk" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/structure/railing/mapped{
@@ -2374,6 +2386,16 @@
 	icon_state = "dark_preview"
 	},
 /area/cruise/escort)
+"bIc" = (
+/obj/structure/lattice,
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/turf/template_noop,
+/area/template_noop)
 "bJl" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/grass/jungle{
@@ -2520,6 +2542,25 @@
 	name = "gloomy grass"
 	},
 /area/cruise/virtual_reality)
+"bRa" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice/catwalk/indoor/grate,
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "4-8";
+	name = "cable"
+	},
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/turf/unsimulated/floor,
+/area/cruise/arcade)
 "bRs" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/grass/jungle{
@@ -2630,6 +2671,22 @@
 "bWr" = (
 /turf/simulated/wall/shuttle/idris,
 /area/cruise/security)
+"bXb" = (
+/obj/effect/decal/fake_object{
+	icon = 'icons/obj/doors/door_assembly.dmi';
+	icon_state = "door_as_ext0";
+	name = "damaged airlock"
+	},
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/turf/unsimulated/floor{
+	icon_state = "panelscorched"
+	},
+/area/cruise/arcade)
 "bXj" = (
 /obj/machinery/vending/dinnerware{
 	density = 0;
@@ -2813,6 +2870,20 @@
 	icon_state = "dark_preview"
 	},
 /area/cruise/aft_s)
+"cgB" = (
+/obj/structure/lattice/catwalk/indoor/grate,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/obj/structure/closet/crate/large,
+/turf/unsimulated/floor/plating,
+/area/cruise/arcade)
 "cho" = (
 /obj/structure/flora/grass/jungle{
 	icon_state = "bushb2";
@@ -4653,6 +4724,33 @@
 	icon_state = "wood"
 	},
 /area/cruise/main_bar/aft)
+"dJP" = (
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "4-8";
+	name = "cable"
+	},
+/obj/effect/decal/fake_object{
+	density = 1;
+	desc = "An advanced input device for affecting VR, without actually being in VR!";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "hub";
+	name = "VR input centraplex";
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/cruise/arcade)
 "dKz" = (
 /obj/structure/bed/stool/chair/office/bridge,
 /turf/unsimulated/floor{
@@ -5046,6 +5144,47 @@
 	icon_state = "wood"
 	},
 /area/cruise/library)
+"eja" = (
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "4-8";
+	name = "cable"
+	},
+/turf/template_noop,
+/area/template_noop)
+"ejv" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/obj/effect/decal/fake_object{
+	density = 1;
+	desc = "An advanced input device for affecting VR, without actually being in VR!";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "hub";
+	name = "VR input centraplex";
+	pixel_x = 6;
+	pixel_y = -10
+	},
+/obj/effect/decal/fake_object{
+	density = 1;
+	desc = "An advanced input device for affecting VR, without actually being in VR!";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "hub";
+	name = "VR input centraplex";
+	pixel_x = 6
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 8
+	},
+/turf/unsimulated/floor,
+/area/cruise/arcade)
 "ejQ" = (
 /obj/item/device/radio/intercom/east,
 /obj/effect/landmark/force_spawnpoint{
@@ -5726,20 +5865,6 @@
 	name = "gloomy grass"
 	},
 /area/cruise/virtual_reality)
-"eLd" = (
-/obj/structure/lattice/catwalk/indoor/grate,
-/obj/effect/floor_decal/industrial/warning{
-	dir = 8
-	},
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/obj/structure/closet/crate/large,
-/turf/unsimulated/floor/plating,
-/area/cruise/arcade)
 "eLE" = (
 /obj/structure/window/reinforced/crescent{
 	dir = 1
@@ -6147,6 +6272,19 @@
 /obj/item/hullbeacon/red,
 /turf/unsimulated/floor,
 /area/template_noop)
+"fec" = (
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "0-8";
+	name = "cable"
+	},
+/turf/unsimulated/floor{
+	dir = 6;
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "advanced_plating_alt"
+	},
+/area/cruise/arcade)
 "feC" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/unsimulated/floor{
@@ -7102,22 +7240,6 @@
 	icon_state = "white"
 	},
 /area/cruise/medical)
-"fQU" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/lattice/catwalk/indoor/grate,
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/turf/unsimulated/floor,
-/area/cruise/arcade)
 "fRt" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/grass,
@@ -7297,20 +7419,6 @@
 	},
 /turf/simulated/floor/tiled/ramp/bottom,
 /area/cruise/beach)
-"fXL" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/lattice/catwalk/indoor/grate,
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/turf/unsimulated/floor,
-/area/cruise/arcade)
 "fXP" = (
 /obj/item/device/radio/intercom/north,
 /turf/unsimulated/floor,
@@ -7585,38 +7693,6 @@
 	icon_state = "dark_preview"
 	},
 /area/cruise/fore_p)
-"giL" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/obj/effect/decal/fake_object{
-	density = 1;
-	desc = "An advanced input device for affecting VR, without actually being in VR!";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "hub";
-	name = "VR input centraplex";
-	pixel_x = -5;
-	pixel_y = -10
-	},
-/obj/effect/decal/fake_object{
-	density = 1;
-	desc = "An advanced input device for affecting VR, without actually being in VR!";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "hub";
-	name = "VR input centraplex";
-	pixel_x = -5
-	},
-/obj/effect/floor_decal/industrial/warning{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/cruise/arcade)
 "gjp" = (
 /obj/structure/window/reinforced/crescent{
 	dir = 1
@@ -9721,15 +9797,6 @@
 	icon_state = "dark_preview"
 	},
 /area/cruise/aft_s)
-"iam" = (
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "4-8";
-	name = "cable"
-	},
-/turf/template_noop,
-/area/template_noop)
 "iaR" = (
 /obj/effect/floor_decal/spline/fancy{
 	dir = 8
@@ -10536,20 +10603,6 @@
 	icon_state = "wood"
 	},
 /area/cruise/security)
-"iJM" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/lattice/catwalk/indoor/grate,
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/turf/unsimulated/floor,
-/area/cruise/arcade)
 "iKg" = (
 /obj/structure/railing/mapped,
 /turf/unsimulated/floor{
@@ -11656,6 +11709,25 @@
 /turf/simulated/floor/tiled/ramp{
 	dir = 4
 	},
+/area/cruise/arcade)
+"jCx" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice/catwalk/indoor/grate,
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "4-8";
+	name = "cable"
+	},
+/turf/unsimulated/floor,
 /area/cruise/arcade)
 "jDk" = (
 /obj/structure/lattice/catwalk/indoor/grate,
@@ -12792,19 +12864,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/cruise/pool)
-"kDR" = (
-/obj/structure/lattice/catwalk/indoor/grate,
-/obj/effect/floor_decal/industrial/warning{
-	dir = 8
-	},
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/turf/unsimulated/floor/plating,
-/area/cruise/arcade)
 "kEk" = (
 /obj/structure/lattice/catwalk/indoor/grate,
 /turf/unsimulated/floor/plating,
@@ -13713,33 +13772,6 @@
 	icon_state = "wood"
 	},
 /area/cruise/virtual_reality)
-"luP" = (
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "4-8";
-	name = "cable"
-	},
-/obj/effect/decal/fake_object{
-	density = 1;
-	desc = "An advanced input device for affecting VR, without actually being in VR!";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "hub";
-	name = "VR input centraplex";
-	pixel_x = -5;
-	pixel_y = -3
-	},
-/obj/effect/floor_decal/industrial/warning{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/cruise/arcade)
 "lvA" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/floor_decal/industrial/outline/yellow,
@@ -14215,38 +14247,6 @@
 	icon_state = "dark_preview"
 	},
 /area/cruise/fore)
-"lKQ" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/obj/effect/decal/fake_object{
-	density = 1;
-	desc = "An advanced input device for affecting VR, without actually being in VR!";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "hub";
-	name = "VR input centraplex";
-	pixel_x = 6;
-	pixel_y = -10
-	},
-/obj/effect/decal/fake_object{
-	density = 1;
-	desc = "An advanced input device for affecting VR, without actually being in VR!";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "hub";
-	name = "VR input centraplex";
-	pixel_x = 6
-	},
-/obj/effect/floor_decal/industrial/warning{
-	dir = 8
-	},
-/turf/unsimulated/floor,
-/area/cruise/arcade)
 "lMW" = (
 /turf/simulated/wall/shuttle/idris,
 /area/cruise/beach)
@@ -14703,6 +14703,22 @@
 	icon_state = "carpet"
 	},
 /area/cruise/security)
+"meH" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk/indoor/grate,
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/turf/unsimulated/floor,
+/area/cruise/arcade)
 "mfb" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/simulated/floor/grass,
@@ -16378,22 +16394,6 @@
 /obj/effect/floor_decal/spline/fancy/wood/cee,
 /turf/simulated/floor/wood,
 /area/cruise/main_bar/aft)
-"nzZ" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/lattice/catwalk/indoor/grate,
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/turf/unsimulated/floor,
-/area/cruise/arcade)
 "nAc" = (
 /obj/effect/floor_decal/corner/green/diagonal,
 /obj/effect/floor_decal/spline/fancy{
@@ -16556,6 +16556,19 @@
 	icon_state = "white"
 	},
 /area/cruise/virtual_reality)
+"nHI" = (
+/obj/structure/lattice/catwalk/indoor/grate,
+/obj/effect/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/turf/unsimulated/floor/plating,
+/area/cruise/arcade)
 "nHT" = (
 /obj/effect/floor_decal/corner/blue/diagonal,
 /obj/effect/floor_decal/spline/fancy,
@@ -17358,6 +17371,16 @@
 	icon_state = "wood_cherry"
 	},
 /area/cruise/pool/sauna3)
+"orc" = (
+/obj/structure/lattice,
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "4-8";
+	name = "cable"
+	},
+/turf/template_noop,
+/area/template_noop)
 "orp" = (
 /obj/effect/decal/fake_object{
 	desc = "A button.";
@@ -18508,25 +18531,6 @@
 	},
 /turf/unsimulated/floor/concrete,
 /area/cruise/virtual_reality)
-"pqj" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/lattice/catwalk/indoor/grate,
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "4-8";
-	name = "cable"
-	},
-/turf/unsimulated/floor,
-/area/cruise/arcade)
 "pqv" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -18791,33 +18795,6 @@
 	icon_state = "dark"
 	},
 /area/cruise/jungle)
-"pBZ" = (
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "4-8";
-	name = "cable"
-	},
-/obj/effect/decal/fake_object{
-	density = 1;
-	desc = "An advanced input device for affecting VR, without actually being in VR!";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "hub";
-	name = "VR input centraplex";
-	pixel_x = 6;
-	pixel_y = -3
-	},
-/obj/effect/floor_decal/industrial/warning{
-	dir = 8
-	},
-/turf/unsimulated/floor,
-/area/cruise/arcade)
 "pCv" = (
 /obj/structure/foamedmetal,
 /turf/unsimulated/floor{
@@ -18994,25 +18971,6 @@
 	color = "#4b0082"
 	},
 /area/cruise/main_bar/aft)
-"pOG" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/lattice/catwalk/indoor/grate,
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "4-8";
-	name = "cable"
-	},
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/turf/unsimulated/floor,
-/area/cruise/arcade)
 "pPg" = (
 /obj/effect/floor_decal/corner/blue/diagonal,
 /obj/machinery/light{
@@ -19172,6 +19130,17 @@
 /obj/structure/table/reinforced,
 /turf/simulated/floor/greengrid,
 /area/cruise/virtual_reality)
+"pVt" = (
+/obj/machinery/fabricator/autolathe/hacked,
+/obj/effect/floor_decal/corner/yellow/diagonal,
+/obj/structure/railing/mapped,
+/obj/structure/railing/mapped{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark_preview"
+	},
+/area/cruise/escort)
 "pVN" = (
 /obj/effect/decal/fake_object{
 	desc = "A descriptive sign.";
@@ -19656,6 +19625,38 @@
 	icon_state = "white"
 	},
 /area/cruise/medical)
+"qtC" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/obj/effect/decal/fake_object{
+	density = 1;
+	desc = "An advanced input device for affecting VR, without actually being in VR!";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "hub";
+	name = "VR input centraplex";
+	pixel_x = -5;
+	pixel_y = -10
+	},
+/obj/effect/decal/fake_object{
+	density = 1;
+	desc = "An advanced input device for affecting VR, without actually being in VR!";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "hub";
+	name = "VR input centraplex";
+	pixel_x = -5
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/cruise/arcade)
 "quM" = (
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -19917,28 +19918,6 @@
 "qFg" = (
 /turf/unsimulated/mineral,
 /area/cruise/beach_cave)
-"qFW" = (
-/obj/structure/window/reinforced,
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/obj/effect/decal/fake_object{
-	density = 1;
-	desc = "An advanced input device for affecting VR, without actually being in VR!";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "hub";
-	name = "VR input centraplex";
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/effect/floor_decal/industrial/warning{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/cruise/arcade)
 "qGc" = (
 /obj/structure/window/reinforced/crescent{
 	dir = 8
@@ -20043,22 +20022,6 @@
 /obj/effect/mist,
 /turf/simulated/floor/beach/water/pool,
 /area/cruise/pool/sauna1)
-"qNh" = (
-/obj/machinery/autolathe{
-	desc = "Your typical Autolathe. It appears to have much more options than your regular one, however...";
-	hacked = 1;
-	name = "Modified Autolathe";
-	pixel_y = 2
-	},
-/obj/effect/floor_decal/corner/yellow/diagonal,
-/obj/structure/railing/mapped,
-/obj/structure/railing/mapped{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark_preview"
-	},
-/area/cruise/escort)
 "qNp" = (
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 8
@@ -20213,16 +20176,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/cruise/dining_hall)
-"qTw" = (
-/obj/structure/lattice,
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/turf/template_noop,
-/area/template_noop)
 "qUf" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/unsimulated/floor{
@@ -20564,6 +20517,28 @@
 	icon_state = "wood_preview"
 	},
 /area/cruise/pool/sauna2)
+"roc" = (
+/obj/structure/window/reinforced,
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/obj/effect/decal/fake_object{
+	density = 1;
+	desc = "An advanced input device for affecting VR, without actually being in VR!";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "hub";
+	name = "VR input centraplex";
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/cruise/arcade)
 "rog" = (
 /obj/effect/floor_decal/corner/mauve/diagonal,
 /obj/structure/table/stone/marble,
@@ -21081,28 +21056,6 @@
 	icon_state = "rub_carpet"
 	},
 /area/cruise/beach)
-"rJf" = (
-/obj/structure/window/reinforced,
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/obj/effect/decal/fake_object{
-	density = 1;
-	desc = "An advanced input device for affecting VR, without actually being in VR!";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "hub";
-	name = "VR input centraplex";
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/effect/floor_decal/industrial/warning{
-	dir = 8
-	},
-/turf/unsimulated/floor,
-/area/cruise/arcade)
 "rJK" = (
 /turf/unsimulated/floor{
 	desc = "What you can not comprehend.";
@@ -22162,19 +22115,6 @@
 	icon_state = "wood_birch"
 	},
 /area/cruise/dining_hall)
-"sIV" = (
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "0-8";
-	name = "cable"
-	},
-/turf/unsimulated/floor{
-	dir = 6;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "advanced_plating_alt"
-	},
-/area/cruise/arcade)
 "sJi" = (
 /obj/machinery/door/airlock/multi_tile/glass{
 	name = "Main Deck Hydroponics"
@@ -23007,6 +22947,15 @@
 	dir = 8
 	},
 /area/cruise/arcade)
+"tsf" = (
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/turf/template_noop,
+/area/template_noop)
 "tsv" = (
 /obj/structure/lattice/catwalk/indoor/grate,
 /obj/machinery/light/small,
@@ -23557,22 +23506,6 @@
 	icon_state = "dark_preview"
 	},
 /area/cruise/aft_s)
-"tNf" = (
-/obj/effect/decal/fake_object{
-	icon = 'icons/obj/doors/door_assembly.dmi';
-	icon_state = "door_as_ext0";
-	name = "damaged airlock"
-	},
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/turf/unsimulated/floor{
-	icon_state = "panelscorched"
-	},
-/area/cruise/arcade)
 "tNE" = (
 /obj/effect/decal/fake_object{
 	density = 1;
@@ -23668,6 +23601,20 @@
 	icon_state = "plating"
 	},
 /area/cruise/tcomms_sat)
+"tTd" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/lattice/catwalk/indoor/grate,
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/turf/unsimulated/floor,
+/area/cruise/arcade)
 "tTB" = (
 /obj/structure/window/reinforced/crescent,
 /obj/structure/window/reinforced/crescent{
@@ -27175,6 +27122,20 @@
 	icon_state = "beach"
 	},
 /area/cruise/beach_cave)
+"wRn" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/lattice/catwalk/indoor/grate,
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/turf/unsimulated/floor,
+/area/cruise/arcade)
 "wSg" = (
 /obj/structure/flora/tree/jungle/small{
 	icon_state = "tree2"
@@ -27187,15 +27148,6 @@
 	name = "lush grass"
 	},
 /area/cruise/jungle)
-"wSm" = (
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "1-2";
-	name = "cable"
-	},
-/turf/template_noop,
-/area/template_noop)
 "wSB" = (
 /turf/unsimulated/floor,
 /area/cruise/e_supplies)
@@ -27340,19 +27292,6 @@
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/unsimulated/floor,
 /area/cruise/centerline)
-"wYE" = (
-/obj/effect/decal/fake_object{
-	color = "#ff0000";
-	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
-	icon_state = "0-4";
-	name = "cable"
-	},
-/turf/unsimulated/floor{
-	dir = 6;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "advanced_plating_alt"
-	},
-/area/cruise/arcade)
 "wYO" = (
 /obj/effect/floor_decal/spline/fancy{
 	dir = 8
@@ -27931,6 +27870,22 @@
 	icon_state = "grass_stalk"
 	},
 /area/cruise/hydroponics)
+"xul" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk/indoor/grate,
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/turf/unsimulated/floor,
+/area/cruise/arcade)
 "xvq" = (
 /obj/structure/curtain/black{
 	icon_state = "open";
@@ -28235,6 +28190,19 @@
 	icon_state = "dark"
 	},
 /area/cruise/aft_p)
+"xGl" = (
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "0-4";
+	name = "cable"
+	},
+/turf/unsimulated/floor{
+	dir = 6;
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "advanced_plating_alt"
+	},
+/area/cruise/arcade)
 "xGq" = (
 /obj/structure/railing/mapped{
 	color = "#6e472b"
@@ -28393,6 +28361,33 @@
 	icon_state = "wood_cherry"
 	},
 /area/cruise/pool/sauna3)
+"xMT" = (
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "1-2";
+	name = "cable"
+	},
+/obj/effect/decal/fake_object{
+	color = "#ff0000";
+	icon = ''icons/obj/machinery/power/power_cond_white.dmi'';
+	icon_state = "4-8";
+	name = "cable"
+	},
+/obj/effect/decal/fake_object{
+	density = 1;
+	desc = "An advanced input device for affecting VR, without actually being in VR!";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "hub";
+	name = "VR input centraplex";
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/effect/floor_decal/industrial/warning{
+	dir = 8
+	},
+/turf/unsimulated/floor,
+/area/cruise/arcade)
 "xNe" = (
 /obj/machinery/portable_atmospherics/hydroponics,
 /obj/effect/floor_decal/industrial/outline/yellow,
@@ -57598,8 +57593,8 @@ asj
 gxb
 asj
 kxc
-wSm
-wSm
+tsf
+tsf
 kxc
 kxc
 fzC
@@ -58599,7 +58594,7 @@ lMW
 asj
 lIu
 lIu
-bps
+orc
 oSt
 oSt
 oSt
@@ -58856,7 +58851,7 @@ lWQ
 asj
 oSt
 oSt
-iam
+eja
 oSt
 oSt
 oSt
@@ -59113,7 +59108,7 @@ lWQ
 asj
 lIu
 lIu
-bps
+orc
 lIu
 lIu
 lIu
@@ -59633,8 +59628,8 @@ ffg
 ffg
 xBF
 xiy
-wSm
-qTw
+tsf
+bIc
 tVt
 tVt
 tVt
@@ -60910,7 +60905,7 @@ cfr
 cfr
 qNr
 ffg
-bps
+orc
 asj
 xBF
 bxd
@@ -61167,7 +61162,7 @@ qNr
 qNr
 qNr
 xBF
-iam
+eja
 gxb
 xBF
 mXv
@@ -61424,7 +61419,7 @@ umE
 fjZ
 xfu
 xBF
-bps
+orc
 asj
 kpO
 kpO
@@ -64294,11 +64289,11 @@ vPu
 iiU
 ezk
 tKo
-qTw
-wSm
-wSm
-wSm
-wSm
+bIc
+tsf
+tsf
+tsf
+tsf
 oXd
 cby
 efG
@@ -65328,7 +65323,7 @@ oSt
 oSt
 oSt
 gxb
-bps
+orc
 oSt
 asj
 lIu
@@ -65585,7 +65580,7 @@ gxb
 xiy
 lIu
 oSt
-iam
+eja
 gxb
 lIu
 lIu
@@ -70734,7 +70729,7 @@ qoV
 mOC
 mOC
 mOC
-wYE
+xGl
 mOC
 mOC
 mOC
@@ -70990,9 +70985,9 @@ mOC
 wqI
 mOC
 mOC
-fQU
-pOG
-iJM
+xul
+bRa
+wRn
 mOC
 mOC
 wqI
@@ -71247,9 +71242,9 @@ utH
 qoV
 whO
 fmb
-lKQ
-pBZ
-rJf
+ejv
+xMT
+aHP
 jcQ
 whO
 qoV
@@ -71504,9 +71499,9 @@ uDI
 qoV
 hVh
 dda
-giL
-luP
-qFW
+qtC
+dJP
+roc
 baL
 hVh
 qoV
@@ -71761,9 +71756,9 @@ jqa
 wqI
 jqa
 jqa
-nzZ
-pqj
-fXL
+meH
+jCx
+tTd
 jqa
 jqa
 wqI
@@ -72019,7 +72014,7 @@ qoV
 jqa
 jqa
 jqa
-sIV
+fec
 jqa
 jqa
 jqa
@@ -73299,21 +73294,21 @@ kTh
 kTh
 uEV
 sjz
-eLd
-kDR
-kDR
+cgB
+nHI
+nHI
 fLY
-kDR
-kDR
-kDR
+nHI
+nHI
+nHI
 fLY
-kDR
-kDR
-kDR
-tNf
-kDR
-kDR
-kDR
+nHI
+nHI
+nHI
+bXb
+nHI
+nHI
+nHI
 sjz
 sjz
 asj
@@ -83869,7 +83864,7 @@ arG
 xeN
 ohY
 eZP
-qNh
+pVt
 arG
 gYv
 xeN

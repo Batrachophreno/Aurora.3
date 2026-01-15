@@ -17,11 +17,13 @@
 	name = "Hard Storage"
 	icon_state = "engineering_storage"
 	horizon_deck = 2
+	lightswitch = FALSE
 
 /area/horizon/engineering/storage_hard/lower
 	name = "Hard Storage"
 	icon_state = "engineering_storage"
 	horizon_deck = 1
+	lightswitch = FALSE
 
 /area/horizon/engineering/storage_eva
 	name = "EVA Storage"
@@ -57,10 +59,12 @@
 	name = "Technical Storage"
 	icon_state = "auxstorage"
 	horizon_deck = 1
+	lightswitch = FALSE
 
 /area/horizon/engineering/storage/lower
 	name = "Lower Deck Storage"
 	horizon_deck = 1
+	lightswitch = FALSE
 
 /area/horizon/engineering/aft_airlock
 	name = "Aft Stowage Airlock"
@@ -122,6 +126,14 @@
 	icon_state = "atmos_storage"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 	area_blurb = "The softly reassuring sounds of churning humming whirring resound gently from the distribution control compartment below."
+	horizon_deck = 2
+
+/area/horizon/engineering/atmos/storage_maintenance
+	name = "Atmos Storage maintenance"
+	icon_state = "atmos_storage"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	area_blurb = "The metal clanking of pipes being jostled; gas canister telltales blinking out from corners. \
+	It's as organized as you would expect a hidden away storage to be."
 	horizon_deck = 2
 
 /area/horizon/engineering/atmos/air
