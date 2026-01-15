@@ -177,11 +177,14 @@
 // GLOBAL PROCS for powernets handling
 //////////////////////////////////////////
 
+/**
+ * Returns a list of all power-related objects (nodes, cable, junctions) in turf,
+ * excluding the source, that match the direction 'd'.
+ *
+ * If unmarked is TRUE, only return those with no powernet.
+ */
 
-// returns a list of all power-related objects (nodes, cable, junctions) in turf,
-// excluding source, that match the direction d
-// if unmarked==1, only return those with no powernet
-/proc/power_list(var/turf/T, var/source, var/d, var/unmarked=0, var/cable_only = 0)
+/proc/power_list(var/turf/T, var/source, var/d, var/unmarked=FALSE, var/cable_only = 0)
 	. = list()
 	var/fdir = (!d)? 0 : turn(d, 180)			// the opposite direction to d (or 0 if d==0)
 ///// Z-Level Stuff
@@ -193,27 +196,38 @@
 	else
 		Zdir = 999
 ///// Z-Level Stuff
-	for(var/AM in T)
-		if(AM == source)	continue			//we don't want to return source
+	for(var/atom_movable in T)
+		if(atom_movable == source)	continue
 
-		if(!cable_only && istype(AM,/obj/machinery/power))
-			var/obj/machinery/power/P = AM
-			if(P.powernet == 0)	continue		// exclude APCs which have powernet=0
+		if(!cable_only && istype(atom_movable, /obj/machinery/power))
+			var/obj/machinery/power/P = atom_movable
+			// Exclude APCs which have powernet=0.
+			if(P.powernet == 0)	continue
 
-			if(!unmarked || !P.powernet)		//if unmarked=1 we only return things with no powernet
+			// If unmarked is TRUE, we only return things with no powernet.
+			if(!unmarked || !P.powernet)
 				if(d == 0)
 					. += P
 
-		else if(istype(AM,/obj/structure/cable))
-			var/obj/structure/cable/C = AM
+		else if(istype(atom_movable, /obj/structure/cable))
+			var/obj/structure/cable/cable = atom_movable
 
-			if(!unmarked || !C.powernet)
-///// Z-Level Stuff
-				if(C.d1 == fdir || C.d2 == fdir || C.d1 == Zdir || C.d2 == Zdir)
-///// Z-Level Stuff
-					. += C
-				else if(C.d1 == d || C.d2 == d)
-					. += C
+			if(!unmarked || !cable.powernet)
+				// Z-Level Stuff
+				if(cable.d1 == fdir || cable.d2 == fdir || cable.d1 == Zdir || cable.d2 == Zdir)
+					. += cable
+				else if(cable.d1 == d || cable.d2 == d)
+					. += cable
+
+		else if(istype(atom_movable, /obj/structure/conduit))
+			var/obj/structure/conduit/conduit = atom_movable
+
+			if(!unmarked || !conduit.powernet)
+				// Z-Level Stuff
+				if(conduit.d1 == fdir || conduit.d2 == fdir || conduit.d1 == Zdir || conduit.d2 == Zdir)
+					. += conduit
+				else if(conduit.d1 == d || conduit.d2 == d)
+					. += conduit
 	return .
 
 //remove the old powernet and replace it with a new one throughout the network.

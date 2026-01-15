@@ -47,7 +47,7 @@
 
 /obj/structure/conduit
 	level = 1
-	anchored = 1
+	anchored = TRUE
 	/// With what powernet is this conduit associated?
 	var/datum/powernet/powernet
 	name = "power conduit"
@@ -130,14 +130,14 @@
 	d1 = text2num(copytext(icon_state, 1, dash))
 	d2 = text2num(copytext(icon_state, dash + 1))
 
-/obj/structure/cable/Initialize(mapload)
+/obj/structure/conduit/Initialize(mapload)
 	. = ..()
 
 	var/turf/T = src.loc			// hide if turf is not intact
 	if(level == 1 && !T.is_hole)
 		hide(!T.is_plating())
 
-	GLOB.cable_list += src
+	GLOB.conduit_list += src
 
 	if(mapload)
 		var/image/I = image(icon, T, icon_state, dir, pixel_x, pixel_y)
@@ -146,10 +146,10 @@
 		I.color = color
 		LAZYADD(T.blueprints, I)
 
-/obj/structure/cable/Destroy()					// called when a cable is deleted
+/obj/structure/conduit/Destroy()					// called when a cable is deleted
 	if(powernet)
-		cut_cable_from_powernet()				// update the powernets
-	GLOB.cable_list -= src							//remove it from global cable list
+		cut_conduit_from_powernet()				// update the powernets
+	GLOB.conduit_list -= src							//remove it from global cable list
 	return ..()										// then go ahead and delete the cable
 
 ///////////////////////////////////
@@ -157,28 +157,28 @@
 ///////////////////////////////////
 
 //If underfloor, hide the cable
-/obj/structure/cable/hide(var/i)
+/obj/structure/conduit/hide(var/i)
 	if(istype(loc, /turf))
 		set_invisibility(i ? 101 : 0)
 	update_icon()
 
-/obj/structure/cable/hides_under_flooring()
+/obj/structure/conduit/hides_under_flooring()
 	return TRUE
 
-/obj/structure/cable/update_icon()
+/obj/structure/conduit/update_icon()
 	icon_state = "[d1]-[d2]"
 	alpha = invisibility ? 127 : 255
 
-//Telekinesis has no effect on a cable
-/obj/structure/cable/do_simple_ranged_interaction(var/mob/user)
+//Telekinesis has no effect on conduit
+/obj/structure/conduit/do_simple_ranged_interaction(var/mob/user)
 	return
 
-// Items usable on a cable :
-//   - Wirecutters : cut it duh !
-//   - Cable coil : merge cables
-//   - Multitool : get the power currently passing through the cable
+// Items usable on a conduit :
+//   - Wirecutters : cut it!
+//   - Conduit spool : merge conduits
+//   - Multitool : get the power currently passing through the conduit
 //
-/obj/structure/cable/attackby(obj/item/attacking_item, mob/user)
+/obj/structure/conduit/attackby(obj/item/attacking_item, mob/user)
 
 	var/turf/T = src.loc
 	if(!T.can_have_cabling())
@@ -194,11 +194,11 @@
 				shock(user, 50, 0.7)
 
 		if(d1 == 12 || d2 == 12)
-			to_chat(user, SPAN_WARNING("You must cut this cable from above."))
+			to_chat(user, SPAN_WARNING("You must cut this conduit from above."))
 			return
 
 		if(breaker_box)
-			to_chat(user, SPAN_WARNING("This cable is connected to a nearby breaker box. Use the breaker box to interact with it."))
+			to_chat(user, SPAN_WARNING("This conduit is connected to a nearby breaker box. Use the breaker box to interact with it."))
 			return
 
 		if (shock(user, 50))
@@ -210,13 +210,13 @@
 			new/obj/item/stack/cable_coil(T, 1, color)
 
 		for(var/mob/O in viewers(src, null))
-			O.show_message(SPAN_WARNING("[user] cuts the cable."), 1)
+			O.show_message(SPAN_WARNING("[user] cuts the conduit."), 1)
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 
 		if(d1 == 11 || d2 == 11)
 			var/turf/turf = GET_TURF_BELOW(T)
 			if(turf)
-				for(var/obj/structure/cable/c in turf)
+				for(var/obj/structure/conduit/c in turf)
 					if(c.d1 == 12 || c.d2 == 12)
 						qdel(c)
 
@@ -246,7 +246,7 @@
 	src.add_fingerprint(user)
 
 // shock the user with probability prb
-/obj/structure/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0)
+/obj/structure/conduit/proc/shock(mob/user, prb, var/siemens_coeff = 1.0)
 	if(!prob(prb))
 		return FALSE
 	if (electrocute_mob(user, powernet, src, siemens_coeff))
@@ -255,7 +255,7 @@
 			return TRUE
 	return FALSE
 
-/obj/structure/cable/attack_generic(mob/user, damage, attack_message, environment_smash, armor_penetration, attack_flags, damage_type)
+/obj/structure/conduit/attack_generic(mob/user, damage, attack_message, environment_smash, armor_penetration, attack_flags, damage_type)
 	//Let those rats (and other small things) nibble the cables
 	if (issmall(user) && !isDrone(user))
 		to_chat(user, SPAN_DANGER("You bite into \the [src]."))
@@ -265,7 +265,7 @@
 	..()
 
 //explosion handling
-/obj/structure/cable/ex_act(severity)
+/obj/structure/conduit/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -280,7 +280,7 @@
 				qdel(src)
 	return
 
-/obj/structure/cable/proc/cableColor(var/colorC)
+/obj/structure/conduit/proc/cableColor(var/colorC)
 	var/color_n = "#DD0000"
 	if(colorC)
 		color_n = colorC
@@ -292,12 +292,12 @@
 
 //handles merging diagonally matching cables
 //for info : direction^3 is flipping horizontally, direction^12 is flipping vertically
-/obj/structure/cable/proc/mergeDiagonalsNetworks(var/direction)
+/obj/structure/conduit/proc/mergeDiagonalsNetworks(var/direction)
 
 	//search for and merge diagonally matching cables from the first direction component (north/south)
 	var/turf/T  = get_step(src, direction&3)//go north/south
 
-	for(var/obj/structure/cable/C in T)
+	for(var/obj/structure/conduit/C in T)
 
 		if(!C)
 			continue
@@ -318,7 +318,7 @@
 	//the same from the second direction component (east/west)
 	T  = get_step(src, direction&12)//go east/west
 
-	for(var/obj/structure/cable/C in T)
+	for(var/obj/structure/conduit/C in T)
 
 		if(!C)
 			continue
@@ -336,7 +336,7 @@
 				C.powernet.add_cable(src) //else, we simply connect to the matching cable powernet
 
 // merge with the powernets of power objects in the given direction
-/obj/structure/cable/proc/mergeConnectedNetworks(var/direction)
+/obj/structure/conduit/proc/mergeConnectedNetworks(var/direction)
 
 	var/fdir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
 
@@ -345,7 +345,7 @@
 
 	var/turf/TB  = get_step(src, direction)
 
-	for(var/obj/structure/cable/C in TB)
+	for(var/obj/structure/conduit/C in TB)
 
 		if(!C)
 			continue
@@ -364,7 +364,7 @@
 				C.powernet.add_cable(src) //else, we simply connect to the matching cable powernet
 
 // merge with the powernets of power objects in the source turf
-/obj/structure/cable/proc/mergeConnectedNetworksOnTurf()
+/obj/structure/conduit/proc/mergeConnectedNetworksOnTurf()
 	var/list/to_connect = list()
 
 	if(!powernet) //if we somehow have no powernet, make one (should not happen for cables)
@@ -374,8 +374,8 @@
 	//first let's add turf cables to our powernet
 	//then we'll connect machines on turf with a node cable is present
 	for(var/AM in loc)
-		if(istype(AM,/obj/structure/cable))
-			var/obj/structure/cable/C = AM
+		if(istype(AM,/obj/structure/conduit))
+			var/obj/structure/conduit/C = AM
 			if(C.d1 == d1 || C.d2 == d1 || C.d1 == d2 || C.d2 == d2) //only connected if they have a common direction
 				if(C.powernet == powernet)	continue
 				if(C.powernet)
@@ -409,12 +409,12 @@
 // Powernets handling helpers
 //////////////////////////////////////////////
 
-//if powernetless_only = 1, will only get connections without powernet
-/obj/structure/cable/proc/get_connections(var/powernetless_only = 0)
+/// If powernetless_only = 1, will only get connections without powernet
+/obj/structure/conduit/proc/get_connections(var/powernetless_only = FALSE)
 	. = list()	// this will be a list of all connected power objects
 	var/turf/T
 
-	// Handle up/down cables
+	// Handle up/down conduits
 	if(d1 == 11 || d2 == 11)
 		var/turf/current_turf = get_turf(src)
 		T = GET_TURF_BELOW(current_turf)
@@ -427,27 +427,19 @@
 		if(T)
 			. += power_list(T, src, 11, powernetless_only)
 
-	// Handle standard cables in adjacent turfs
-	for(var/cable_dir in list(d1, d2))
-		if(cable_dir == 11 || cable_dir == 12 || cable_dir == 0)
+	// Handle standard conduits in adjacent turfs
+	for(var/conduit_dir in list(d1, d2))
+		if(conduit_dir == 11 || conduit_dir == 12 || conduit_dir == 0)
 			continue
-		var/reverse = REVERSE_DIR(cable_dir)
-		T = get_step(src, cable_dir)
+		var/reverse = REVERSE_DIR(conduit_dir)
+		T = get_step(src, conduit_dir)
 		if(T)
-			for(var/obj/structure/cable/C in T)
+			for(var/obj/structure/conduit/C in T)
 				if((C.d1 && C.d1 == reverse) || (C.d2 && C.d2 == reverse))
 					. += C
-		if(cable_dir & (cable_dir - 1)) // Diagonal, check for /\/\/\ style cables along cardinal directions
-			for(var/pair in list(NORTH|SOUTH, EAST|WEST))
-				T = get_step(src, cable_dir & pair)
-				if(T)
-					var/req_dir = cable_dir ^ pair
-					for(var/obj/structure/cable/C in T)
-						if((C.d1 && C.d1 == req_dir) || (C.d2 && C.d2 == req_dir))
-							. += C
 
-	// Handle cables on the same turf as us
-	for(var/obj/structure/cable/C in loc)
+	// Handle conduits on the same turf as us
+	for(var/obj/structure/conduit/C in loc)
 		if(C.d1 == d1 || C.d2 == d1 || C.d1 == d2 || C.d2 == d2) // if either of C's d1 and d2 match either of ours
 			. += C
 
@@ -457,33 +449,35 @@
 			if(!powernetless_only || !P.powernet)
 				. += P
 
-	// if the caller asked for powernetless cables only, dump the ones with powernets
+	// if the caller asked for powernetless conduits only, dump the ones with powernets
 	if(powernetless_only)
-		for(var/obj/structure/cable/C in .)
+		for(var/obj/structure/conduit/C in .)
 			if(C.powernet)
 				. -= C
 
-/obj/structure/cable/proc/auto_propagate_cut_cable(obj/O)
+/obj/structure/conduit/proc/auto_propagate_cut_cable(obj/O)
 	if(O && !QDELETED(O))
 		var/datum/powernet/newPN = new()// creates a new powernet...
 		propagate_network(O, newPN)//... and propagates it to the other side of the cable
 
-//should be called after placing a cable which extends another cable, creating a "smooth" cable that no longer terminates in the centre of a turf.
-//needed as this can, unlike other placements, disconnect cables
-/obj/structure/cable/proc/denode()
+/**
+ * Called after placing a conduit which extends another conduit, creating a "smooth" cable that no longer terminates in the centre of a turf.
+ * This is needed as this can, unlike other placements, disconnect conduits entirely.
+ */
+/obj/structure/conduit/proc/denode()
 	var/turf/T1 = loc
 	if(!T1) return
 
-	var/list/powerlist = power_list(T1,src,0,0) //find the other cables that ended in the centre of the turf, with or without a powernet
+	var/list/powerlist = power_list(T1,src,0,0) //find the other conduits that ended in the centre of the turf, with or without a powernet
 	if(powerlist.len>0)
 		var/datum/powernet/PN = new()
 		propagate_network(powerlist[1],PN) //propagates the new powernet beginning at the source cable
 
-		if(PN.is_empty()) //can happen with machines made nodeless when smoothing cables
+		if(PN.is_empty()) //can happen with machines made nodeless when smoothing conduits
 			qdel(PN)
 
-// cut the cable's powernet at this cable and updates the powergrid
-/obj/structure/cable/proc/cut_cable_from_powernet()
+/// Cut the conduit's powernet at this conduit and update the powergrid
+/obj/structure/conduit/proc/cut_conduit_from_powernet()
 	var/turf/T1 = loc
 	var/turf/T2
 	var/list/P_list
@@ -522,12 +516,12 @@
 
 #define MAXCOIL 30
 
-/obj/item/stack/cable_coil
-	name = "power cable"
+/obj/item/stack/conduit_spool
+	name = "power conduit"
 	icon = 'icons/obj/power.dmi'
-	icon_state = "coil"
-	item_state = "coil"
-	desc = "A coil of wire used in delicate electronics and cable laying."
+	icon_state = "wire"
+	item_state = "wire"
+	desc = "A superconducting cable for heavy-duty electrical systems."
 	singular_name = "length"
 	gender = NEUTER
 	amount = MAXCOIL
@@ -815,20 +809,20 @@
 		else
 			dirn = get_dir(F, user)
 
-		for(var/obj/structure/cable/LC in F)
+		for(var/obj/structure/conduit/LC in F)
 			if((LC.d1 == dirn && LC.d2 == 0 ) || ( LC.d2 == dirn && LC.d1 == 0))
 				to_chat(user, SPAN_WARNING("There's already a cable at that position."))
 				return
 ///// Z-Level Stuff
 		// check if the target is open space
 		if(isopenturf(F))
-			for(var/obj/structure/cable/LC in F)
+			for(var/obj/structure/conduit/LC in F)
 				if((LC.d1 == dirn && LC.d2 == 11 ) || ( LC.d2 == dirn && LC.d1 == 11))
 					to_chat(user, SPAN_WARNING("There's already a cable at that position."))
 					return
 
-			var/obj/structure/cable/C = new(F)
-			var/obj/structure/cable/D = new(GET_TURF_BELOW(F))
+			var/obj/structure/conduit/C = new(F)
+			var/obj/structure/conduit/D = new(GET_TURF_BELOW(F))
 
 			C.cableColor(color)
 
@@ -856,12 +850,12 @@
 		// do the normal stuff
 		else
 ///// Z-Level Stuff
-			for(var/obj/structure/cable/LC in F)
+			for(var/obj/structure/conduit/LC in F)
 				if((LC.d1 == dirn && LC.d2 == 0 ) || ( LC.d2 == dirn && LC.d1 == 0))
 					to_chat(user, "There's already a cable at that position.")
 					return
 
-			var/obj/structure/cable/C = new(F)
+			var/obj/structure/conduit/C = new(F)
 
 			C.cableColor(color)
 
@@ -890,7 +884,7 @@
 
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
-/obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user)
+/obj/item/stack/cable_coil/proc/cable_join(obj/structure/conduit/C, mob/user)
 	var/turf/U = user.loc
 	if(!isturf(U))
 		return
@@ -922,12 +916,12 @@
 
 			var/fdirn = turn(dirn, 180)		// the opposite direction
 
-			for(var/obj/structure/cable/LC in U)		// check to make sure there's not a cable there already
+			for(var/obj/structure/conduit/LC in U)		// check to make sure there's not a cable there already
 				if(LC.d1 == fdirn || LC.d2 == fdirn)
 					to_chat(user, "There's already a cable at that position.")
 					return
 
-			var/obj/structure/cable/NC = new(U)
+			var/obj/structure/conduit/NC = new(U)
 			NC.cableColor(color)
 
 			NC.d1 = 0
@@ -966,7 +960,7 @@
 			nd2 = C.d2
 
 
-		for(var/obj/structure/cable/LC in T)		// check to make sure there's no matching cable
+		for(var/obj/structure/conduit/LC in T)		// check to make sure there's no matching cable
 			if(LC == C)			// skip the cable we're interacting with
 				continue
 			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) )	// make sure no cable matches either direction

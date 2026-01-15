@@ -120,8 +120,8 @@ SUBSYSTEM_DEF(machinery)
 	for(var/datum/powernet/powernet as anything in powernets)
 		qdel(powernet)
 	powernets.Cut()
-	// Includes conduit-type cables.
 	setup_powernets_for_cables(GLOB.cable_list)
+	setup_powernets_for_conduits(GLOB.conduit_list)
 
 /datum/controller/subsystem/machinery/proc/setup_powernets_for_cables(list/cables)
 	for(var/obj/structure/cable/cable as anything in cables)

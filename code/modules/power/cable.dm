@@ -383,7 +383,7 @@ By design, d1 is the smallest direction and d2 is the highest
 //////////////////////////////////////////////
 
 //if powernetless_only = 1, will only get connections without powernet
-/obj/structure/cable/proc/get_connections(var/powernetless_only = 0)
+/obj/structure/cable/proc/get_connections(var/powernetless_only = FALSE)
 	. = list()	// this will be a list of all connected power objects
 	var/turf/T
 
@@ -465,9 +465,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	for(var/check_dir in list(d1, d2))
 		if(check_dir)
 			T2 = get_step(loc, check_dir)
-			P_list += power_list(T2, src, turn(check_dir,180),0,cable_only = 1)	// what adjacently joins on to cut cable...
+			P_list += power_list(T2, src, turn(check_dir,180), unmarked = FALSE, cable_only = TRUE)	// what adjacently joins on to cut cable...
 
-	P_list += power_list(loc, src, d1, 0, cable_only = 1)//... and on turf
+	P_list += power_list(loc, src, d1, unmarked = FALSE, cable_only = TRUE)//... and on turf
 
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	loc = null

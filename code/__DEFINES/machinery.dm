@@ -175,7 +175,7 @@ GLOBAL_LIST_INIT(restricted_camera_networks, list(NETWORK_ERT,NETWORK_MERCENARY,
 /// When defined on powernets, POWER_VOLTAGE_* defines the type of power it provides, which must match the value for the power recipient.
 #define POWER_VOLTAGE_HIGH		(1<<2)
 /// When defined on powernets, POWER_VOLTAGE_* defines the type of power it provides, which must match the value for the power recipient.
-#define POWER_VOLTAGE_ANY		(1<<3)
+#define POWER_VOLTAGE_ANY		(1<<3) // USE THIS FOR LEGACY, NON-CONDUIT POWERNETS
 
 /// This controls how much power the AME generates per unit of fuel.
 #define AM_POWER_FACTOR 1000000
