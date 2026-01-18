@@ -184,7 +184,7 @@
  * If unmarked is TRUE, only return those with no powernet.
  */
 
-/proc/power_list(var/turf/T, var/source, var/d, var/unmarked=FALSE, var/cable_only = 0)
+/proc/power_list(var/turf/T, var/source, var/d, var/unmarked=FALSE, var/cable_only = 0, var/conduit_only = FALSE)
 	. = list()
 	var/fdir = (!d)? 0 : turn(d, 180)			// the opposite direction to d (or 0 if d==0)
 ///// Z-Level Stuff
