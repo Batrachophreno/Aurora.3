@@ -15,7 +15,22 @@
 	var/datum/computer_file/program/camera_monitor/camera_monitor_program
 	circuit = /obj/item/circuitboard/security
 
+	/// The turf where the camera was last updated.
+	var/turf/last_camera_turf
+	var/list/concurrent_users = list()
+
+	// Stuff needed to render the map
+	var/camera_map_name
+
+	var/admin_console = FALSE
+	var/stay_connected = FALSE
+
 /obj/machinery/computer/security/Initialize()
+	RegisterSignal(src, COMSIG_CAMERA_MAPNAME_ASSIGNED, PROC_REF(camera_mapname_update))
+
+	// camera setup
+	AddComponent(/datum/component/camera_manager)
+
 	if(!console_networks)
 		console_networks = SSatlas.current_map.station_networks.Copy()
 	. = ..()
