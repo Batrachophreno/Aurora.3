@@ -1250,3 +1250,22 @@ GLOBAL_LIST_INIT(wall_items, typecacheof(list(
 
 	if(final_x || final_y)
 		return locate(final_x, final_y, T.z)
+
+/// Simple datum for storing coordinates.
+/datum/coords
+	var/x_pos = null
+	var/y_pos = null
+	var/z_pos = null
+
+/datum/coords/New(turf/location)
+	. = ..()
+	if(location)
+		x_pos = location.x
+		y_pos = location.y
+		z_pos = location.z
+
+/datum/coords/proc/get_turf_from_coord()
+	if(!x_pos || !y_pos || !z_pos)
+		return
+
+	return locate(x_pos, y_pos, z_pos)
