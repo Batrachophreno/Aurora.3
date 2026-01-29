@@ -5,7 +5,7 @@
 
 /datum/component/camera_manager
 	var/map_name
-	var/obj/structure/machinery/camera/current
+	var/obj/machinery/camera/current
 	var/datum/shape/current_area
 	var/atom/movable/screen/map_view/cam_screen
 	var/atom/movable/screen/background/cam_background
@@ -49,7 +49,7 @@
 	QDEL_NULL(cam_background)
 	QDEL_NULL(cam_screen)
 	if(current)
-		UnregisterSignal(current, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(current, COMSIG_QDELETING)
 	current = null
 	last_camera_turf = null
 
@@ -84,8 +84,6 @@
 	SEND_SIGNAL(parent, COMSIG_CAMERA_MAPNAME_ASSIGNED, map_name)
 	RegisterSignal(parent, COMSIG_CAMERA_REGISTER_UI, PROC_REF(register))
 	RegisterSignal(parent, COMSIG_CAMERA_UNREGISTER_UI, PROC_REF(unregister))
-	RegisterSignal(parent, COMSIG_CAMERA_SET_NVG, PROC_REF(enable_nvg))
-	RegisterSignal(parent, COMSIG_CAMERA_CLEAR_NVG, PROC_REF(disable_nvg))
 	RegisterSignal(parent, COMSIG_CAMERA_SET_AREA, PROC_REF(set_camera_area))
 	RegisterSignal(parent, COMSIG_CAMERA_SET_TARGET, PROC_REF(set_camera))
 	RegisterSignal(parent, COMSIG_CAMERA_CLEAR, PROC_REF(clear_camera))
@@ -95,8 +93,6 @@
 	. = ..()
 	UnregisterSignal(parent, COMSIG_CAMERA_REGISTER_UI)
 	UnregisterSignal(parent, COMSIG_CAMERA_UNREGISTER_UI)
-	UnregisterSignal(parent, COMSIG_CAMERA_SET_NVG)
-	UnregisterSignal(parent, COMSIG_CAMERA_CLEAR_NVG)
 	UnregisterSignal(parent, COMSIG_CAMERA_SET_AREA)
 	UnregisterSignal(parent, COMSIG_CAMERA_SET_TARGET)
 	UnregisterSignal(parent, COMSIG_CAMERA_CLEAR)
@@ -105,7 +101,7 @@
 /datum/component/camera_manager/proc/clear_camera()
 	SIGNAL_HANDLER
 	if(current)
-		UnregisterSignal(current, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(current, COMSIG_QDELETING)
 	current_area = null
 	current = null
 	target_x = null
@@ -126,18 +122,18 @@
 	SIGNAL_HANDLER
 	render_mode = RENDER_MODE_TARGET
 	if(current)
-		UnregisterSignal(current, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(current, COMSIG_QDELETING)
 	current = target
 	target_width = w
 	target_height = h
-	RegisterSignal(current, COMSIG_PARENT_QDELETING, PROC_REF(show_camera_static))
+	RegisterSignal(current, COMSIG_QDELETING, PROC_REF(show_camera_static))
 	update_target_camera()
 
 /datum/component/camera_manager/proc/set_camera_area(source, datum/shape/new_area, z)
 	SIGNAL_HANDLER
 	render_mode = RENDER_MODE_AREA
 	if(current)
-		UnregisterSignal(current, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(current, COMSIG_QDELETING)
 	current = null
 	current_area = new_area
 	target_x = current_area.center_x
@@ -146,20 +142,6 @@
 	target_width = current_area.bounds_x
 	target_height = current_area.bounds_y
 	update_area_camera()
-
-/datum/component/camera_manager/proc/enable_nvg(source, power, matrixcol)
-	SIGNAL_HANDLER
-	for(var/plane_id in cam_plane_masters)
-		var/atom/movable/screen/plane_master/plane = cam_plane_masters["[plane_id]"]
-		plane.add_filter("nvg", 1, color_matrix_filter(color_matrix_from_string(matrixcol)))
-	sync_lighting_plane_alpha(LIGHTING_PLANE_ALPHA_SOMEWHAT_INVISIBLE)
-
-/datum/component/camera_manager/proc/disable_nvg()
-	SIGNAL_HANDLER
-	for(var/plane_id in cam_plane_masters)
-		var/atom/movable/screen/plane_master/plane = cam_plane_masters["[plane_id]"]
-		plane.remove_filter("nvg")
-	sync_lighting_plane_alpha(LIGHTING_PLANE_ALPHA_VISIBLE)
 
 /datum/component/camera_manager/proc/sync_lighting_plane_alpha(lighting_alpha)
 	var/atom/movable/screen/plane_master/lighting/lighting = cam_plane_masters["[LIGHTING_PLANE]"]
@@ -186,14 +168,14 @@
 
 	// Is this camera located in or attached to a living thing, Vehicle or helmet? If so, assume the camera's loc is the living (or non) thing.
 	var/cam_location = current
-	if(isliving(current.loc) || isVehicle(current.loc))
+	if(isliving(current.loc) || ismech(current.loc))
 		cam_location = current.loc
 	else if(istype(current.loc, /obj/item/clothing))
 		var/obj/item/clothing/clothing = current.loc
 		cam_location = clothing.loc
 
-	else if(istype(current.loc, /obj/item/device/overwatch_camera))
-		var/obj/item/device/overwatch_camera/cam_gear = current.loc
+	else if(istype(current.loc, /obj/item/clothing/head/helmet))
+		var/obj/item/clothing/head/helmet/cam_gear = current.loc
 		cam_location = cam_gear.loc
 	// If we're not forcing an update for some reason and the cameras are in the same location,
 	// we don't need to update anything.

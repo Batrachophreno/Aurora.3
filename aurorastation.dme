@@ -44,6 +44,7 @@
 #include "code\__DEFINES\callbacks.dm"
 #include "code\__DEFINES\chemistry.dm"
 #include "code\__DEFINES\circuitboard.dm"
+#include "code\__DEFINES\client.dm"
 #include "code\__DEFINES\color.dm"
 #include "code\__DEFINES\combat.dm"
 #include "code\__DEFINES\components.dm"
