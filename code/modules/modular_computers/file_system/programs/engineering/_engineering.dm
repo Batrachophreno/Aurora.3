@@ -112,7 +112,7 @@
 
 			if(isAI(user))
 				for(var/obj/machinery/camera/C in A.cameras())
-					cameras += list(C.nano_structure())
+					cameras += list(C.camera_data())
 			for(var/datum/alarm_source/AS in A.sources)
 				if(!AS.source)
 					lost_sources += list(AS.source_name)

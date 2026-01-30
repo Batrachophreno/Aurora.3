@@ -205,8 +205,8 @@
 			// Has to be here specfically to allow WASD/arrow movement of cameras while buckled.
 			// TODO: Remove when machinery/computer finally dies.
 			var/obj/machinery/computer/security/console = mob.machine
-			if(console.current_camera)
-				var/turf/T = get_turf(console.current_camera)
+			if(console.current)
+				var/turf/T = get_turf(console.current)
 				for(var/i;i<10;i++)
 					T = get_step(T,direct)
 				console.jump_on_click(mob,T)

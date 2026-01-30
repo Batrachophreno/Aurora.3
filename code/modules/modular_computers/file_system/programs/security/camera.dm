@@ -48,7 +48,7 @@
 /datum/computer_file/program/camera_monitor/ui_data(mob/user)
 	var/list/data = initial_data()
 
-	data["current_camera"] = current_camera ? current_camera.nano_structure() : null
+	data["current_camera"] = current_camera ? current_camera.camera_data() : null
 	data["current_network"] = current_network
 
 	var/list/all_networks = list()

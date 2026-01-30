@@ -6,7 +6,7 @@
 	icon_keyboard_emis = "yellow_key_mask"
 	light_color = LIGHT_COLOR_YELLOW
 	var/current_network = null
-	var/obj/machinery/camera/current_camera = null
+	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
 	var/list/console_networks
 	var/mapping = 0
@@ -19,10 +19,9 @@
 	var/turf/last_camera_turf
 	var/list/concurrent_users = list()
 
-	// Stuff needed to render the map
+	/// Needed to render the map
 	var/camera_map_name
 
-	var/admin_console = FALSE
 	var/stay_connected = FALSE
 
 /obj/machinery/computer/security/Initialize()
@@ -30,6 +29,7 @@
 
 	// camera setup
 	AddComponent(/datum/component/camera_manager)
+	SEND_SIGNAL(src, COMSIG_CAMERA_CLEAR)
 
 	if(!console_networks)
 		console_networks = SSatlas.current_map.station_networks.Copy()
@@ -39,6 +39,17 @@
 
 	camera_monitor_program = new("Compless")
 
+/obj/machinery/computer/security/Destroy()
+	SStgui.close_uis(src)
+	current = null
+	UnregisterSignal(src, COMSIG_CAMERA_MAPNAME_ASSIGNED)
+	last_camera_turf = null
+	concurrent_users = null
+	return ..()
+
+/obj/machinery/computer/security/proc/camera_mapname_update(source, value)
+	camera_map_name = value
+
 /obj/machinery/computer/security/attack_ai(var/mob/user as mob)
 	if(!ai_can_interact(user))
 		return
@@ -47,9 +58,9 @@
 /obj/machinery/computer/security/check_eye(var/mob/user as mob)
 	if (user.stat || user.blinded || !operable())
 		return -1
-	if(!current_camera)
+	if(!current)
 		return 0
-	var/viewflag = current_camera.check_eye(user)
+	var/viewflag = current.check_eye(user)
 	if ( viewflag < 0 ) //camera doesn't work
 		reset_current()
 	return viewflag
@@ -57,9 +68,9 @@
 /obj/machinery/computer/security/grants_equipment_vision(var/mob/user as mob)
 	if(user.stat || user.blinded || !operable())
 		return FALSE
-	if(!current_camera)
+	if(!current)
 		return FALSE
-	var/viewflag = current_camera.check_eye(user)
+	var/viewflag = current.check_eye(user)
 	if (viewflag < 0) //camera doesn't work
 		return FALSE
 	return TRUE
@@ -73,13 +84,23 @@
 
 /obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
+
 	if(!ui)
-		if(camera_monitor_program)
-			ui = new(user, src, camera_monitor_program.tgui_id, camera_monitor_program.filedesc)
-			ui.autoupdate = camera_monitor_program.ui_auto_update
-		else
-			to_chat(usr, "Something has gone wrong; please report the circumstances in which you received this message to the GitHub issues tracker.")
-			return
+		var/user_ref = WEAKREF(user)
+		var/is_living = isliving(user)
+		// Ghosts shouldn't count towards concurrent users, which produces
+		// an audible terminal_on click.
+		if(is_living)
+			concurrent_users += user_ref
+		// Turn on the console
+		if(length(concurrent_users) == 1 && is_living)
+			update_use_power(POWER_USE_ACTIVE)
+
+		SEND_SIGNAL(src, COMSIG_CAMERA_REGISTER_UI, user)
+
+		// Open UI
+		ui = new(user, src, camera_monitor_program.tgui_id, camera_monitor_program.filedesc)
+		ui.autoupdate = camera_monitor_program.ui_auto_update
 		ui.open()
 
 /obj/machinery/computer/security/ui_data(mob/user)
@@ -97,14 +118,8 @@
 		. = camera_monitor_program.ui_act(action, params, ui, state)
 
 /obj/machinery/computer/security/attack_hand(var/mob/user as mob)
-	if (!(src.z in GetConnectedZlevels(starting_z_level)))
-		to_chat(user, "Unable to establish a connection.")
-		return
 	if(stat & (NOPOWER|BROKEN))	return
 
-	if(!isAI(user))
-		user.set_machine(src)
-		user.reset_view(current_camera)
 	ui_interact(user)
 
 /obj/machinery/computer/security/proc/switch_to_camera(var/mob/user, var/obj/machinery/camera/C)
@@ -129,9 +144,9 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		H.reset_view(current_camera)
+		H.reset_view(current)
 	else
-		user.reset_view(current_camera)
+		user.reset_view(current)
 	check_eye(user)
 	return 1
 
@@ -205,25 +220,25 @@
 	return 0
 
 /obj/machinery/computer/security/proc/set_current(var/obj/machinery/camera/C)
-	if(current_camera == C)
+	if(current == C)
 		return
 
-	if(current_camera)
+	if(current)
 		reset_current()
 
-	src.current_camera = C
-	if(current_camera)
+	src.current = C
+	if(current)
 		update_use_power(POWER_USE_ACTIVE)
-		var/mob/living/L = current_camera.loc
+		var/mob/living/L = current.loc
 		if(istype(L))
 			L.tracking_initiated()
 
 /obj/machinery/computer/security/proc/reset_current()
-	if(current_camera)
-		var/mob/living/L = current_camera.loc
+	if(current)
+		var/mob/living/L = current.loc
 		if(istype(L))
 			L.tracking_cancelled()
-	current_camera = null
+	current = null
 	update_use_power(POWER_USE_IDLE)
 
 /obj/machinery/computer/security/telescreen

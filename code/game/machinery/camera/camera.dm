@@ -4,8 +4,8 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "camera"
 	use_power = POWER_USE_ACTIVE
-	idle_power_usage = 5
-	active_power_usage = 10
+	idle_power_usage = 50
+	active_power_usage = 100
 	layer = CAMERA_LAYER
 	obj_flags = OBJ_FLAG_MOVES_UNSUPPORTED
 
@@ -13,7 +13,7 @@
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/status = 1
-	anchored = 1.0
+	anchored = TRUE
 	var/invuln = null
 	var/bugged = 0
 	var/obj/item/camera_assembly/assembly = null
@@ -36,6 +36,16 @@
 	var/on_open_network = 0
 
 	var/affected_by_emp_until = 0
+
+	/// Network Card component of this camera. Allows connection to NTNet.
+	/// Wired cameras (IE built from camera assemblies) on-ship automatically come with a ethernet network card.
+	///
+	var/obj/item/computer_hardware/network_card/network_card
+
+	/// Autonaming. If a camera does not have a c_tag
+	var/autoname = FALSE
+	/// Camera# in area.
+	var/autonumber = 0
 
 /obj/machinery/camera/Initialize()
 	wires = new(src)
@@ -71,6 +81,26 @@
 	on_open_network = open_networks.len
 	if(on_open_network)
 		GLOB.cameranet.add_source(src)
+
+	// This camera automatically sets its name to whatever the area that it's in is called.
+	if(autoname)
+		autonumber = 1
+		var/area/my_area = get_area(src)
+		var/area_display_name
+		if(my_area)
+			area_display_name = get_area_display_name(my_area)
+			for(var/obj/machinery/camera/autoname/current_camera in SSmachinery.all_cameras)
+				if(current_camera == src)
+					continue
+				var/area/current_camera_area = get_area(current_camera)
+				if(current_camera_area.type != my_area.type)
+					continue
+
+				if(!current_camera.autonumber)
+					continue
+
+				autonumber = max(autonumber, current_camera.autonumber + 1)
+			c_tag = "[area_display_name] #[autonumber]"
 
 	return ..()
 
@@ -497,7 +527,7 @@
 		network.Cut()
 		update_coverage(1)
 
-/obj/machinery/camera/proc/nano_structure()
+/obj/machinery/camera/proc/camera_data()
 	var/cam = list()
 	cam["name"] = sanitize(c_tag)
 	cam["deact"] = !can_use()
