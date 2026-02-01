@@ -245,7 +245,7 @@
 /turf/simulated/floor/carpet/art,
 /area/horizon/crew/lounge)
 "abC" = (
-/obj/item/device/healthanalyzer,
+/obj/item/healthanalyzer,
 /obj/effect/floor_decal/corner/mauve/diagonal,
 /obj/effect/floor_decal/corner/mauve{
 	dir = 9
@@ -977,7 +977,7 @@
 	},
 /obj/structure/table/rack,
 /obj/item/storage/box/samplebags,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/storage/box/gloves,
 /obj/effect/floor_decal/corner/mauve{
 	dir = 6
@@ -1077,7 +1077,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/item/device/radio/intercom/west{
+/obj/item/radio/intercom/west{
 	pixel_y = -2
 	},
 /turf/simulated/floor/tiled/white,
@@ -1590,7 +1590,7 @@
 /turf/simulated/floor/grass/no_edge,
 /area/horizon/rnd/hallway/secondary)
 "aii" = (
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /obj/structure/table/rack/retail_shelf,
 /turf/simulated/floor/tiled/full,
 /area/horizon/operations/commissary)
@@ -1837,27 +1837,27 @@
 /area/horizon/maintenance/deck_2/wing/port/far)
 "ajY" = (
 /obj/structure/table/reinforced/steel,
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = 11;
 	pixel_y = 4
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 4;
 	pixel_x = -9
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 4;
 	pixel_x = -5
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 4;
 	pixel_x = -1
 	},
@@ -2478,7 +2478,7 @@
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/engineering/reactor/indra/mainchamber)
 "aoi" = (
-/obj/item/device/camera,
+/obj/item/camera,
 /obj/effect/floor_decal/corner/blue/diagonal,
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -2687,10 +2687,10 @@
 /obj/item/storage/toolbox/electrical{
 	pixel_y = 4
 	},
-/obj/item/device/multitool{
+/obj/item/multitool{
 	pixel_x = 4
 	},
-/obj/item/device/multitool{
+/obj/item/multitool{
 	pixel_x = -4
 	},
 /obj/effect/floor_decal/industrial/outline/yellow,
@@ -3501,7 +3501,7 @@
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/maintenance/deck_1/main/port)
 "auZ" = (
-/obj/item/device/radio/intercom/east{
+/obj/item/radio/intercom/east{
 	pixel_y = 1
 	},
 /obj/effect/floor_decal/industrial/outline/medical,
@@ -4160,7 +4160,7 @@
 /area/horizon/exterior)
 "ayL" = (
 /obj/effect/floor_decal/corner/dark_green/full,
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/structure/bed/stool/chair/office/light{
 	dir = 4
 	},
@@ -4197,7 +4197,7 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/simulated/floor/holofloor/wood,
 /area/horizon/holodeck/source_sauna)
 "azo" = (
@@ -4843,7 +4843,7 @@
 /obj/structure/bed/stool/chair/shuttle{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /turf/simulated/floor/shuttle/dark_blue,
 /area/horizon/shuttle/escape_pod/pod3)
 "aDT" = (
@@ -5043,11 +5043,11 @@
 	pixel_y = 2;
 	pixel_x = -1
 	},
-/obj/item/device/gps/science{
+/obj/item/gps/science{
 	pixel_x = 5;
 	pixel_y = 1
 	},
-/obj/item/device/gps/science{
+/obj/item/gps/science{
 	pixel_x = -7;
 	pixel_y = -5
 	},
@@ -6114,7 +6114,7 @@
 /turf/simulated/floor/tiled,
 /area/horizon/security/hallway)
 "aMm" = (
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/simulated/floor/holofloor/desert{
 	name = "dirt"
 	},
@@ -6280,7 +6280,7 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced/wood,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -6391,7 +6391,7 @@
 /obj/effect/floor_decal/corner/dark_blue{
 	dir = 6
 	},
-/obj/item/device/radio/intercom/east{
+/obj/item/radio/intercom/east{
 	pixel_y = 36
 	},
 /obj/machinery/keycard_auth{
@@ -6446,31 +6446,31 @@
 /obj/item/storage/firstaid/empty{
 	pixel_x = 7
 	},
-/obj/item/device/healthanalyzer{
+/obj/item/healthanalyzer{
 	pixel_x = 8
 	},
-/obj/item/device/healthanalyzer{
+/obj/item/healthanalyzer{
 	pixel_x = 8
 	},
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_x = 8
 	},
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_x = 8
 	},
-/obj/item/device/flash/synthetic{
+/obj/item/flash/synthetic{
 	pixel_x = -5;
 	pixel_y = 6
 	},
-/obj/item/device/flash/synthetic{
+/obj/item/flash/synthetic{
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/device/flash/synthetic{
+/obj/item/flash/synthetic{
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/device/flash/synthetic{
+/obj/item/flash/synthetic{
 	pixel_x = -5;
 	pixel_y = 2
 	},
@@ -6938,7 +6938,7 @@
 /turf/simulated/open,
 /area/horizon/hallway/primary/deck_2/central)
 "aRW" = (
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /obj/item/pickaxe,
 /obj/effect/decal/fake_object/light_source/invisible{
 	light_color = "#C48A18";
@@ -7025,10 +7025,10 @@
 /area/horizon/maintenance/deck_1/hangar/port)
 "aSE" = (
 /obj/structure/table/reinforced/steel,
-/obj/item/device/magnetic_lock,
-/obj/item/device/magnetic_lock,
-/obj/item/device/magnetic_lock,
-/obj/item/device/magnetic_lock,
+/obj/item/magnetic_lock,
+/obj/item/magnetic_lock,
+/obj/item/magnetic_lock,
+/obj/item/magnetic_lock,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -7206,12 +7206,12 @@
 	pixel_y = 8
 	},
 /obj/structure/table/rack,
-/obj/item/device/spaceflare,
-/obj/item/device/spaceflare,
-/obj/item/device/spaceflare,
-/obj/item/device/spaceflare,
-/obj/item/device/spaceflare,
-/obj/item/device/spaceflare,
+/obj/item/spaceflare,
+/obj/item/spaceflare,
+/obj/item/spaceflare,
+/obj/item/spaceflare,
+/obj/item/spaceflare,
+/obj/item/spaceflare,
 /turf/simulated/floor/tiled/dark,
 /area/horizon/hangar/control)
 "aTR" = (
@@ -8297,12 +8297,12 @@
 /turf/simulated/floor/wood,
 /area/horizon/hallway/primary/deck_1/central)
 "bbv" = (
-/obj/item/device/magnetic_lock,
-/obj/item/device/magnetic_lock,
-/obj/item/device/magnetic_lock,
-/obj/item/device/magnetic_lock,
-/obj/item/device/magnetic_lock,
-/obj/item/device/magnetic_lock,
+/obj/item/magnetic_lock,
+/obj/item/magnetic_lock,
+/obj/item/magnetic_lock,
+/obj/item/magnetic_lock,
+/obj/item/magnetic_lock,
+/obj/item/magnetic_lock,
 /obj/structure/closet/crate,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/unsimulated/floor{
@@ -8814,11 +8814,11 @@
 	},
 /obj/structure/table/steel,
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/item/device/healthanalyzer{
+/obj/item/healthanalyzer{
 	pixel_y = 4
 	},
-/obj/item/device/healthanalyzer,
-/obj/item/device/analyzer/plant_analyzer{
+/obj/item/healthanalyzer,
+/obj/item/analyzer/plant_analyzer{
 	pixel_y = -4
 	},
 /turf/simulated/floor/tiled/dark,
@@ -9069,7 +9069,7 @@
 /turf/simulated/floor/tiled,
 /area/horizon/security/hallway)
 "bgH" = (
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/effect/floor_decal/industrial/outline/grey,
 /obj/machinery/vending/mredispenser/low_supply,
 /turf/simulated/floor/tiled/full,
@@ -9538,9 +9538,9 @@
 /area/antag/mercenary)
 "bjb" = (
 /obj/structure/closet/secure_closet/merchant,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/stack/packageWrap,
-/obj/item/device/price_scanner,
+/obj/item/price_scanner,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -10247,7 +10247,7 @@
 	dir = 8
 	},
 /obj/structure/table/stone/marble,
-/obj/item/device/versebook/tribunal,
+/obj/item/versebook/tribunal,
 /turf/simulated/floor/marble,
 /area/horizon/holodeck/source_tribunal)
 "bof" = (
@@ -10482,7 +10482,7 @@
 /turf/simulated/floor/tiled/white,
 /area/horizon/medical/hallway/upper)
 "boS" = (
-/obj/item/device/gps/stationary/mining_shuttle{
+/obj/item/gps/stationary/mining_shuttle{
 	pixel_x = -22;
 	pixel_y = -8
 	},
@@ -10497,7 +10497,7 @@
 	pixel_x = -6;
 	pixel_y = 7
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = 8;
 	pixel_y = 3
 	},
@@ -10799,7 +10799,7 @@
 /obj/effect/floor_decal/corner/dark_blue{
 	dir = 6
 	},
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /turf/simulated/floor/tiled/dark,
 /area/horizon/security/evidence_storage)
 "bqZ" = (
@@ -10928,7 +10928,7 @@
 /turf/simulated/floor/reinforced/reactor,
 /area/horizon/engineering/reactor/supermatter/mainchamber)
 "brM" = (
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -11772,7 +11772,7 @@
 /obj/machinery/atmospherics/binary/pump/fuel{
 	name = "Fuel Tank to Thrusters"
 	},
-/obj/item/device/radio/intercom/east{
+/obj/item/radio/intercom/east{
 	pixel_y = 6
 	},
 /obj/effect/floor_decal/corner/dark_blue/full{
@@ -12134,11 +12134,11 @@
 /area/centcom/legion)
 "bBh" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/flare/torch,
-/obj/item/device/flashlight/flare/torch{
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch{
 	pixel_x = 5
 	},
-/obj/item/device/flashlight/flare/torch{
+/obj/item/flashlight/flare/torch{
 	pixel_x = 9
 	},
 /turf/simulated/floor/holofloor/snow,
@@ -12366,7 +12366,7 @@
 	pixel_x = 9;
 	pixel_y = 4
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/service/hydroponics/lower)
 "bCu" = (
@@ -12829,7 +12829,7 @@
 /area/horizon/maintenance/deck_1/operations/starboard)
 "bGN" = (
 /obj/effect/decal/rolling_fog,
-/obj/item/device/flashlight/lamp/holodeck{
+/obj/item/flashlight/lamp/holodeck{
 	light_color = "#C48A18";
 	light_power = 2;
 	light_range = 14;
@@ -13338,7 +13338,7 @@
 "bKB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/westright,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/structure/table/reinforced/steel,
 /turf/unsimulated/floor{
 	dir = 8
@@ -14887,7 +14887,7 @@
 /obj/effect/floor_decal/corner/dark_blue{
 	dir = 10
 	},
-/obj/item/device/flash,
+/obj/item/flash,
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled/dark,
 /area/horizon/security/checkpoint2)
@@ -14943,7 +14943,7 @@
 	dir = 1
 	},
 /obj/machinery/disposal/small/west,
-/obj/item/device/radio/intercom/east{
+/obj/item/radio/intercom/east{
 	pixel_y = 1
 	},
 /turf/simulated/floor/tiled,
@@ -14960,10 +14960,10 @@
 /obj/structure/closet/crate/secure/legion,
 /obj/item/storage/box/handcuffs,
 /obj/item/storage/box/handcuffs,
-/obj/item/device/flash,
-/obj/item/device/flash,
-/obj/item/device/flash,
-/obj/item/device/flash,
+/obj/item/flash,
+/obj/item/flash,
+/obj/item/flash,
+/obj/item/flash,
 /obj/item/storage/box/tactical/teargas,
 /turf/unsimulated/floor,
 /area/centcom/legion)
@@ -15060,8 +15060,8 @@
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/engineering/atmos/turbine)
 "bWM" = (
-/obj/item/device/paicard,
-/obj/item/device/paicard,
+/obj/item/paicard,
+/obj/item/paicard,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -15331,7 +15331,7 @@
 	opened = 1
 	},
 /obj/item/trash/koisbar,
-/obj/item/device/paicard,
+/obj/item/paicard,
 /obj/random/junk,
 /turf/unsimulated/floor{
 	dir = 8;
@@ -15581,8 +15581,8 @@
 /area/horizon/crew/chargebay)
 "cbh" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/device/taperecorder,
-/obj/item/device/megaphone/red,
+/obj/item/taperecorder,
+/obj/item/megaphone/red,
 /obj/structure/table/reinforced/steel,
 /obj/effect/floor_decal/corner/grey{
 	dir = 5
@@ -16473,7 +16473,7 @@
 	c_tag = "Operations -  Upper Warehouse Port";
 	dir = 8
 	},
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /obj/effect/floor_decal/corner/brown/full{
 	dir = 1
 	},
@@ -16615,7 +16615,7 @@
 /turf/unsimulated/floor/monotile,
 /area/antag/mercenary)
 "chZ" = (
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /obj/effect/floor_decal/corner/purple/full{
 	dir = 4
 	},
@@ -16718,7 +16718,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /turf/simulated/floor/wood,
 /area/horizon/service/chapel/main)
 "ciT" = (
@@ -16900,7 +16900,7 @@
 /area/horizon/engineering/reactor/indra/mainchamber)
 "ckm" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	pixel_x = 5;
 	pixel_y = 10
 	},
@@ -17129,7 +17129,7 @@
 	dir = 10
 	},
 /obj/structure/window/reinforced,
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /obj/machinery/camera/network/third_deck{
 	c_tag = "Third Deck - Holodeck Beta 1";
 	dir = 8
@@ -17457,10 +17457,10 @@
 /area/horizon/rnd/xenobiology/xenoflora)
 "cpe" = (
 /obj/structure/table/rack,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /obj/item/rig_module/cooling_unit,
 /obj/item/rig_module/cooling_unit,
 /turf/unsimulated/floor,
@@ -17588,7 +17588,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/north,
+/obj/item/radio/intercom/north,
 /obj/structure/table/reinforced/steel,
 /obj/item/folder/blue{
 	pixel_y = 7;
@@ -17863,7 +17863,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /obj/effect/floor_decal/corner_wide/green/full{
 	dir = 4
 	},
@@ -18089,7 +18089,7 @@
 /obj/effect/floor_decal/corner/purple/full{
 	dir = 1
 	},
-/obj/item/device/radio/intercom/expedition/north,
+/obj/item/radio/intercom/expedition/north,
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
@@ -18332,14 +18332,14 @@
 /obj/item/grenade/chem_grenade,
 /obj/item/grenade/chem_grenade,
 /obj/item/grenade/chem_grenade,
-/obj/item/device/assembly/igniter,
-/obj/item/device/assembly/igniter,
-/obj/item/device/assembly/igniter,
-/obj/item/device/assembly/igniter,
-/obj/item/device/assembly/timer,
-/obj/item/device/assembly/timer,
-/obj/item/device/assembly/timer,
-/obj/item/device/assembly/timer,
+/obj/item/assembly/igniter,
+/obj/item/assembly/igniter,
+/obj/item/assembly/igniter,
+/obj/item/assembly/igniter,
+/obj/item/assembly/timer,
+/obj/item/assembly/timer,
+/obj/item/assembly/timer,
+/obj/item/assembly/timer,
 /obj/structure/closet/crate/drop/grey{
 	desc = "A large, sturdy crate, that stores grenade components.";
 	name = "grenade crate";
@@ -18734,7 +18734,7 @@
 	dir = 8
 	},
 /obj/effect/floor_decal/corner/dark_blue/diagonal,
-/obj/item/device/radio/intercom/west{
+/obj/item/radio/intercom/west{
 	pixel_y = 36
 	},
 /obj/machinery/keycard_auth{
@@ -19816,8 +19816,8 @@
 /obj/structure/table/rack{
 	dir = 8
 	},
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /obj/item/tank/jetpack/carbondioxide,
 /obj/item/tank/jetpack/carbondioxide,
 /turf/simulated/floor/tiled/white,
@@ -21038,7 +21038,7 @@
 /obj/structure/table/glass{
 	table_reinf = "glass"
 	},
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -21444,7 +21444,7 @@
 /area/horizon/maintenance/deck_2/wing/starboard/far)
 "cQA" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_y = 4
 	},
 /turf/simulated/floor/holofloor/lino,
@@ -21520,35 +21520,35 @@
 /obj/effect/floor_decal/corner/mauve{
 	dir = 5
 	},
-/obj/item/device/radio/sci{
+/obj/item/radio/sci{
 	pixel_y = 12;
 	pixel_x = 6
 	},
-/obj/item/device/radio/sci{
+/obj/item/radio/sci{
 	pixel_y = 12;
 	pixel_x = 6
 	},
-/obj/item/device/radio/sci{
+/obj/item/radio/sci{
 	pixel_y = 12;
 	pixel_x = 6
 	},
-/obj/item/device/radio/sci{
+/obj/item/radio/sci{
 	pixel_y = 12;
 	pixel_x = 6
 	},
-/obj/item/device/radio/sci{
+/obj/item/radio/sci{
 	pixel_y = 12;
 	pixel_x = -6
 	},
-/obj/item/device/radio/sci{
+/obj/item/radio/sci{
 	pixel_y = 12;
 	pixel_x = -6
 	},
-/obj/item/device/radio/sci{
+/obj/item/radio/sci{
 	pixel_y = 12;
 	pixel_x = -6
 	},
-/obj/item/device/radio/sci{
+/obj/item/radio/sci{
 	pixel_y = 12;
 	pixel_x = -6
 	},
@@ -21614,7 +21614,7 @@
 /obj/effect/floor_decal/corner/dark_green{
 	dir = 10
 	},
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /obj/machinery/camera/network/second_deck{
 	c_tag = "Second Deck - Auxiliary Custodial Closet Entrance";
 	dir = 1
@@ -22375,10 +22375,10 @@
 /obj/structure/window/reinforced/crescent{
 	dir = 8
 	},
-/obj/item/device/taperecorder{
+/obj/item/taperecorder{
 	pixel_y = 2
 	},
-/obj/item/device/laser_pointer/red{
+/obj/item/laser_pointer/red{
 	pixel_y = 3
 	},
 /obj/structure/table/wood{
@@ -22642,7 +22642,7 @@
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /turf/simulated/floor/tiled,
 /area/horizon/security/brig)
 "cXQ" = (
@@ -22737,14 +22737,14 @@
 /obj/structure/closet/secure_closet/evidence{
 	name = "closet"
 	},
-/obj/item/device/camera_film,
-/obj/item/device/camera{
+/obj/item/camera_film,
+/obj/item/camera{
 	desc = "A one use - polaroid camera. 30 photos left.";
 	name = "detectives camera";
 	pictures_left = 30
 	},
 /obj/item/storage/slide_projector,
-/obj/item/device/taperecorder{
+/obj/item/taperecorder{
 	pixel_y = 5
 	},
 /turf/simulated/floor/lino,
@@ -22994,27 +22994,27 @@
 	req_one_access = list(24,11,67,73)
 	},
 /obj/structure/table/stone/marble,
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -8;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -8;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -8;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -8;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -8;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -8;
 	pixel_y = 5
 	},
@@ -23418,7 +23418,7 @@
 /turf/simulated/floor/shuttle/dark_blue,
 /area/shuttle/transport1)
 "dcM" = (
-/obj/item/device/radio/intercom/interrogation/north{
+/obj/item/radio/intercom/interrogation/north{
 	dir = 8;
 	pixel_y = 10;
 	pixel_x = -5
@@ -23584,7 +23584,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/north,
+/obj/item/radio/intercom/north,
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
@@ -24589,7 +24589,7 @@
 	dir = 1
 	},
 /obj/effect/floor_decal/industrial/outline/security,
-/obj/item/device/radio/intercom/expedition/west,
+/obj/item/radio/intercom/expedition/west,
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/shuttle/intrepid/flight_deck)
 "djZ" = (
@@ -24780,7 +24780,7 @@
 	},
 /area/centcom/holding)
 "dlj" = (
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /obj/effect/floor_decal/corner/brown/full{
 	dir = 4
 	},
@@ -25221,7 +25221,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /obj/effect/floor_decal/spline/plain/black{
 	dir = 5
 	},
@@ -25311,7 +25311,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/machinery/teleport/pad,
 /obj/effect/floor_decal/spline/plain/cee{
 	dir = 1
@@ -25760,7 +25760,7 @@
 "dqM" = (
 /obj/effect/floor_decal/corner/pink/diagonal,
 /obj/structure/table/standard,
-/obj/item/device/flashlight/lamp/off{
+/obj/item/flashlight/lamp/off{
 	pixel_x = -5;
 	pixel_y = 6
 	},
@@ -25869,7 +25869,7 @@
 /obj/machinery/recharger,
 /obj/structure/table/standard,
 /obj/structure/railing/mapped,
-/obj/item/device/destTagger{
+/obj/item/destTagger{
 	pixel_y = 8;
 	pixel_x = 14
 	},
@@ -27555,7 +27555,7 @@
 /obj/effect/floor_decal/corner/brown/full{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/east{
+/obj/item/radio/intercom/east{
 	pixel_x = 10;
 	pixel_y = 5
 	},
@@ -28104,7 +28104,7 @@
 	name = "Scrubbers to Waste";
 	target_pressure = 15000
 	},
-/obj/item/device/radio/intercom/expedition/east,
+/obj/item/radio/intercom/expedition/east,
 /turf/simulated/floor/tiled/dark,
 /area/horizon/shuttle/intrepid/engineering)
 "dFZ" = (
@@ -28337,14 +28337,14 @@
 	},
 /area/centcom/distress_prep)
 "dHF" = (
-/obj/item/device/taperecorder{
+/obj/item/taperecorder{
 	pixel_x = 3;
 	pixel_y = 3
 	},
 /obj/item/storage/briefcase,
-/obj/item/device/flash,
+/obj/item/flash,
 /obj/item/storage/secure/briefcase,
-/obj/item/device/eftpos{
+/obj/item/eftpos{
 	eftpos_name = "Internal Affairs EFTPOS scanner"
 	},
 /obj/item/clothing/under/suit_jacket/really_black,
@@ -28353,11 +28353,11 @@
 /obj/item/clipboard,
 /obj/item/pen/multi,
 /obj/structure/closet/lawcloset,
-/obj/item/device/camera,
+/obj/item/camera,
 /obj/item/stamp/denied,
 /obj/item/folder/blue,
 /obj/item/folder/white,
-/obj/item/device/destTagger,
+/obj/item/destTagger,
 /obj/item/stack/packageWrap,
 /turf/simulated/floor/carpet,
 /area/horizon/repoffice/representative_two)
@@ -28833,7 +28833,7 @@
 /area/horizon/engineering/hallway/fore)
 "dLi" = (
 /obj/structure/table/standard,
-/obj/item/device/binoculars,
+/obj/item/binoculars,
 /obj/effect/floor_decal/corner/dark_blue{
 	dir = 10
 	},
@@ -29087,7 +29087,7 @@
 /turf/simulated/floor/plating,
 /area/horizon/shuttle/intrepid/port_compartment)
 "dNF" = (
-/obj/item/device/megaphone/red{
+/obj/item/megaphone/red{
 	pixel_x = 1;
 	pixel_y = 4
 	},
@@ -29785,7 +29785,7 @@
 /turf/space,
 /area/template_noop)
 "dSv" = (
-/obj/item/device/laser_pointer/blue{
+/obj/item/laser_pointer/blue{
 	pixel_x = -12;
 	pixel_y = 5
 	},
@@ -30303,7 +30303,7 @@
 "dWF" = (
 /obj/machinery/space_heater,
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /turf/simulated/floor/tiled/full,
 /area/horizon/engineering/lobby)
 "dWI" = (
@@ -30527,7 +30527,7 @@
 /obj/effect/floor_decal/industrial/outline/medical,
 /obj/structure/bed/padded,
 /obj/item/bedsheet/medical,
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /turf/simulated/floor/tiled/white,
 /area/horizon/medical/ward)
 "dYm" = (
@@ -30582,7 +30582,7 @@
 	pixel_y = -6
 	},
 /obj/item/paper_bin,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/key/janicart,
 /obj/effect/floor_decal/corner/purple{
 	dir = 9
@@ -30964,35 +30964,35 @@
 	dir = 8
 	},
 /obj/structure/table/steel,
-/obj/item/device/radio/med{
+/obj/item/radio/med{
 	pixel_x = 6;
 	pixel_y = 12
 	},
-/obj/item/device/radio/med{
+/obj/item/radio/med{
 	pixel_x = -6;
 	pixel_y = 12
 	},
-/obj/item/device/radio/med{
+/obj/item/radio/med{
 	pixel_x = -6;
 	pixel_y = 12
 	},
-/obj/item/device/radio/med{
+/obj/item/radio/med{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/device/radio/med{
+/obj/item/radio/med{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/device/radio/med{
+/obj/item/radio/med{
 	pixel_x = 6;
 	pixel_y = 12
 	},
-/obj/item/device/radio/med{
+/obj/item/radio/med{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/device/radio/med{
+/obj/item/radio/med{
 	pixel_x = 6;
 	pixel_y = 6
 	},
@@ -31176,7 +31176,7 @@
 /turf/simulated/floor/tiled/white,
 /area/shuttle/hapt)
 "ecx" = (
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/structure/table/reinforced/steel,
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -33692,7 +33692,7 @@
 /turf/simulated/floor/tiled,
 /area/horizon/service/hydroponics)
 "etZ" = (
-/obj/item/device/radio/intercom/north{
+/obj/item/radio/intercom/north{
 	broadcasting = 1;
 	frequency = 1443;
 	listening = 0;
@@ -34346,7 +34346,7 @@
 "eyA" = (
 /obj/machinery/porta_turret,
 /obj/effect/floor_decal/industrial/warning/full,
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /turf/simulated/floor/tiled/dark,
 /area/horizon/ai/upload_foyer)
 "eyB" = (
@@ -34585,7 +34585,7 @@
 /obj/effect/floor_decal/spline/plain/black{
 	dir = 1
 	},
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /turf/simulated/floor/carpet/rubber,
 /area/horizon/tcommsat/chamber)
 "eAm" = (
@@ -35618,7 +35618,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
@@ -35646,7 +35646,7 @@
 	dir = 10
 	},
 /obj/structure/table/standard,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/belt/utility,
 /obj/item/stack/rods/full{
@@ -35806,7 +35806,7 @@
 /obj/effect/floor_decal/spline/plain{
 	dir = 9
 	},
-/obj/item/device/binoculars/spyglass,
+/obj/item/binoculars/spyglass,
 /turf/simulated/floor/exoplanet/barren,
 /area/centcom/shared_dream)
 "eIx" = (
@@ -36138,7 +36138,7 @@
 /obj/structure/table/glass{
 	table_reinf = "glass"
 	},
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/effect/floor_decal/corner_wide/paleblue/full{
 	dir = 1
 	},
@@ -36904,11 +36904,11 @@
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/structure/closet/crate,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/flashlight/flare/glowstick/random,
-/obj/item/device/flashlight/flare/glowstick/random,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/device/multitool,
+/obj/item/flashlight/flare/glowstick/random,
+/obj/item/flashlight/flare/glowstick/random,
+/obj/item/flashlight,
+/obj/item/flashlight,
+/obj/item/multitool,
 /turf/simulated/floor,
 /area/horizon/command/bridge/aibunker)
 "eRO" = (
@@ -37810,7 +37810,7 @@
 	pixel_y = -19;
 	pixel_x = -6
 	},
-/obj/item/device/radio/intercom/south{
+/obj/item/radio/intercom/south{
 	pixel_x = 14
 	},
 /turf/simulated/floor/wood,
@@ -38640,7 +38640,7 @@
 /obj/effect/floor_decal/industrial/outline/service,
 /obj/structure/table/rack,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/t_scanner,
+/obj/item/t_scanner,
 /obj/structure/noticeboard{
 	pixel_y = 30
 	},
@@ -38781,7 +38781,7 @@
 	pixel_x = -8;
 	pixel_y = 10
 	},
-/obj/item/device/eftpos{
+/obj/item/eftpos{
 	eftpos_name = "Research EFTPOS scanner"
 	},
 /obj/machinery/light/floor{
@@ -39804,7 +39804,7 @@
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/engineering/reactor/indra/mainchamber)
 "fme" = (
-/obj/item/device/flashlight/lamp/off{
+/obj/item/flashlight/lamp/off{
 	pixel_x = -5;
 	pixel_y = 5
 	},
@@ -40543,25 +40543,25 @@
 /area/horizon/shuttle/escape_pod/pod3)
 "fqW" = (
 /obj/structure/table/rack,
-/obj/item/device/radio/sec{
+/obj/item/radio/sec{
 	pixel_x = -7
 	},
-/obj/item/device/radio/sec{
+/obj/item/radio/sec{
 	pixel_x = -7
 	},
-/obj/item/device/radio/sec{
+/obj/item/radio/sec{
 	pixel_x = -7
 	},
-/obj/item/device/radio/sec{
+/obj/item/radio/sec{
 	pixel_x = -7
 	},
-/obj/item/device/radio/sec{
+/obj/item/radio/sec{
 	pixel_x = -7
 	},
-/obj/item/device/radio/sec{
+/obj/item/radio/sec{
 	pixel_x = -7
 	},
-/obj/item/device/radio/sec{
+/obj/item/radio/sec{
 	pixel_x = -7
 	},
 /obj/item/crowbar/red{
@@ -40588,25 +40588,25 @@
 	pixel_x = 1;
 	pixel_y = -7
 	},
-/obj/item/device/flashlight/maglight{
+/obj/item/flashlight/maglight{
 	pixel_y = -7
 	},
-/obj/item/device/flashlight/maglight{
+/obj/item/flashlight/maglight{
 	pixel_y = -7
 	},
-/obj/item/device/flashlight/maglight{
+/obj/item/flashlight/maglight{
 	pixel_y = -7
 	},
-/obj/item/device/flashlight/maglight{
+/obj/item/flashlight/maglight{
 	pixel_y = -7
 	},
-/obj/item/device/flashlight/maglight{
+/obj/item/flashlight/maglight{
 	pixel_y = -7
 	},
-/obj/item/device/flashlight/maglight{
+/obj/item/flashlight/maglight{
 	pixel_y = -7
 	},
-/obj/item/device/hand_labeler{
+/obj/item/hand_labeler{
 	pixel_x = 7;
 	pixel_y = 10
 	},
@@ -40896,7 +40896,7 @@
 /obj/item/autopsy_scanner{
 	pixel_x = -11
 	},
-/obj/item/device/mass_spectrometer{
+/obj/item/mass_spectrometer{
 	pixel_x = 10
 	},
 /turf/simulated/floor/tiled/dark,
@@ -41276,7 +41276,7 @@
 	pixel_x = 2;
 	pixel_y = 13
 	},
-/obj/item/device/t_scanner{
+/obj/item/t_scanner{
 	pixel_x = -4;
 	pixel_y = 5
 	},
@@ -42023,7 +42023,7 @@
 /obj/effect/floor_decal/corner/dark_green{
 	dir = 9
 	},
-/obj/item/device/radio/intercom/north,
+/obj/item/radio/intercom/north,
 /turf/simulated/floor/tiled,
 /area/horizon/security/checkpoint2)
 "fDq" = (
@@ -42341,7 +42341,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/item/device/paicard,
+/obj/item/paicard,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -42457,9 +42457,9 @@
 	pixel_x = 1;
 	pixel_y = 2
 	},
-/obj/item/device/camera,
-/obj/item/device/megaphone/sec,
-/obj/item/device/megaphone/sec,
+/obj/item/camera,
+/obj/item/megaphone/sec,
+/obj/item/megaphone/sec,
 /turf/unsimulated/floor{
 	icon_state = "dark_preview"
 	},
@@ -43170,7 +43170,7 @@
 /area/horizon/maintenance/deck_1/medical/cryo)
 "fLH" = (
 /obj/structure/table/reinforced/steel,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/structure/fireaxecabinet/west,
 /turf/unsimulated/floor,
 /area/centcom/legion/hangar5)
@@ -44320,10 +44320,10 @@
 /area/horizon/engineering/hallway/interior)
 "fTt" = (
 /obj/structure/table/standard,
-/obj/item/device/mmi{
+/obj/item/mmi{
 	pixel_y = 4
 	},
-/obj/item/device/mmi{
+/obj/item/mmi{
 	pixel_y = 11
 	},
 /turf/simulated/floor/tiled,
@@ -44699,7 +44699,7 @@
 	pixel_x = 7;
 	pixel_y = 8
 	},
-/obj/item/device/healthanalyzer{
+/obj/item/healthanalyzer{
 	pixel_x = -2;
 	pixel_y = 3
 	},
@@ -44707,7 +44707,7 @@
 	pixel_x = 7;
 	pixel_y = 1
 	},
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /turf/simulated/floor/tiled/white,
 /area/horizon/security/autopsy_laboratory)
 "fVE" = (
@@ -44828,7 +44828,7 @@
 	pixel_x = -3;
 	pixel_y = 12
 	},
-/obj/item/device/megaphone/red{
+/obj/item/megaphone/red{
 	pixel_y = -4
 	},
 /obj/structure/table/standard,
@@ -44993,7 +44993,7 @@
 	pixel_x = -7
 	},
 /obj/structure/table/reinforced/steel,
-/obj/item/device/quikpay{
+/obj/item/quikpay{
 	pixel_y = 1;
 	pixel_x = 7
 	},
@@ -46160,7 +46160,7 @@
 /obj/effect/floor_decal/corner/dark_blue{
 	dir = 9
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /turf/simulated/floor/tiled,
 /area/horizon/security/hallway)
 "ggn" = (
@@ -46413,11 +46413,11 @@
 	pixel_x = 6;
 	pixel_y = 7
 	},
-/obj/item/device/binoculars{
+/obj/item/binoculars{
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/device/binoculars{
+/obj/item/binoculars{
 	pixel_x = 3;
 	pixel_y = -2
 	},
@@ -46885,7 +46885,7 @@
 	c_tag = "Bridge - Cockpit";
 	dir = 4
 	},
-/obj/item/device/multitool{
+/obj/item/multitool{
 	pixel_x = 3;
 	pixel_y = 15
 	},
@@ -46933,7 +46933,7 @@
 /obj/effect/floor_decal/spline/plain{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/machinery/disposal/small/east,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -46996,7 +46996,7 @@
 	dir = 6
 	},
 /obj/machinery/recharger,
-/obj/item/device/radio/intercom/north,
+/obj/item/radio/intercom/north,
 /obj/structure/table/reinforced/steel,
 /turf/simulated/floor/carpet/rubber,
 /area/horizon/command/bridge/controlroom)
@@ -47306,7 +47306,7 @@
 /obj/effect/floor_decal/corner/dark_blue{
 	dir = 6
 	},
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /turf/simulated/floor/tiled,
 /area/horizon/security/brig)
 "goM" = (
@@ -47790,7 +47790,7 @@
 	pixel_x = 6;
 	pixel_y = 20
 	},
-/obj/item/device/mass_spectrometer/adv{
+/obj/item/mass_spectrometer/adv{
 	pixel_y = 20;
 	pixel_x = -8
 	},
@@ -48214,7 +48214,7 @@
 /obj/structure/cable/green{
 	icon_state = "0-4"
 	},
-/obj/item/device/paicard,
+/obj/item/paicard,
 /obj/item/tape_roll{
 	pixel_y = 10
 	},
@@ -49136,8 +49136,8 @@
 	},
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/device/cratescanner,
-/obj/item/device/hand_labeler,
+/obj/item/cratescanner,
+/obj/item/hand_labeler,
 /turf/simulated/floor/tiled/gunmetal/full,
 /area/horizon/operations/warehouse)
 "gAF" = (
@@ -49493,7 +49493,7 @@
 /obj/item/pen{
 	pixel_y = 16
 	},
-/obj/item/device/hand_labeler{
+/obj/item/hand_labeler{
 	pixel_y = 2
 	},
 /obj/structure/table/wood{
@@ -50137,7 +50137,7 @@
 /obj/item/shield/energy/legion,
 /obj/item/melee/energy/sword/knife,
 /obj/item/melee/telebaton,
-/obj/item/device/megaphone/sec,
+/obj/item/megaphone/sec,
 /obj/item/storage/box/fancy/cigarettes/cigar,
 /obj/item/flame/lighter/zippo,
 /obj/item/reagent_containers/food/drinks/bottle/victorygin,
@@ -50407,10 +50407,10 @@
 /obj/item/clothing/suit/trinary_robes{
 	pixel_x = 17
 	},
-/obj/item/device/versebook/trinary,
-/obj/item/device/versebook/trinary,
-/obj/item/device/versebook/trinary,
-/obj/item/device/versebook/trinary,
+/obj/item/versebook/trinary,
+/obj/item/versebook/trinary,
+/obj/item/versebook/trinary,
+/obj/item/versebook/trinary,
 /turf/simulated/floor/bluegrid,
 /area/horizon/holodeck/source_trinary)
 "gJk" = (
@@ -50976,7 +50976,7 @@
 	pixel_y = 2;
 	pixel_x = -12
 	},
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /obj/item/material/ashtray/glass{
 	pixel_x = -8;
 	pixel_y = 9
@@ -51074,7 +51074,7 @@
 "gNI" = (
 /obj/effect/floor_decal/corner/brown/diagonal,
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	pixel_x = -4;
 	pixel_y = 11
 	},
@@ -51602,7 +51602,7 @@
 /obj/effect/floor_decal/corner/dark_blue{
 	dir = 9
 	},
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	on = 0
 	},
 /obj/structure/table/standard,
@@ -51668,8 +51668,8 @@
 /obj/structure/table/rack/retail_shelf{
 	name = "storage shelf"
 	},
-/obj/item/device/camera,
-/obj/item/device/camera,
+/obj/item/camera,
+/obj/item/camera,
 /obj/effect/floor_decal/corner/mauve{
 	dir = 9
 	},
@@ -51829,7 +51829,7 @@
 /area/centcom/evac)
 "gTL" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_y = 4
 	},
 /turf/simulated/floor/carpet,
@@ -51953,7 +51953,7 @@
 "gUM" = (
 /obj/structure/table/standard,
 /obj/item/stack/packageWrap,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/machinery/recharger{
 	pixel_y = 9;
 	pixel_x = 7
@@ -52330,7 +52330,7 @@
 "gXd" = (
 /obj/effect/floor_decal/corner/white/diagonal,
 /obj/structure/table/reinforced/steel,
-/obj/item/device/hand_labeler{
+/obj/item/hand_labeler{
 	pixel_x = 3;
 	pixel_y = 6
 	},
@@ -52434,10 +52434,10 @@
 /obj/structure/table/rack{
 	dir = 8
 	},
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/storage/eva)
 "gXR" = (
@@ -52818,7 +52818,7 @@
 /obj/effect/floor_decal/corner/dark_blue{
 	dir = 9
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/structure/table/steel,
 /obj/item/storage/box/fancy/donut,
 /turf/simulated/floor/tiled/dark,
@@ -53040,7 +53040,7 @@
 /obj/machinery/iv_drip,
 /obj/item/clothing/mask/breath/medical,
 /obj/item/tank/oxygen,
-/obj/item/device/radio/intercom/expedition/east,
+/obj/item/radio/intercom/expedition/east,
 /turf/simulated/floor/tiled/white,
 /area/horizon/shuttle/intrepid/medical)
 "hbV" = (
@@ -53147,8 +53147,8 @@
 /obj/item/clothing/gloves/yellow,
 /obj/item/storage/belt/utility/full,
 /obj/item/storage/belt/utility/full,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
+/obj/item/multitool,
+/obj/item/multitool,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/dark/full,
@@ -53463,7 +53463,7 @@
 	req_access = list(1)
 	},
 /obj/effect/floor_decal/industrial/outline/security,
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/item/ammo_magazine/c45m/practice{
 	pixel_x = 4
 	},
@@ -54198,12 +54198,12 @@
 	dir = 9
 	},
 /obj/structure/table/steel,
-/obj/item/device/camera,
-/obj/item/device/camera,
-/obj/item/device/camera{
+/obj/item/camera,
+/obj/item/camera,
+/obj/item/camera{
 	pixel_y = 4
 	},
-/obj/item/device/camera{
+/obj/item/camera{
 	pixel_y = 4
 	},
 /turf/simulated/floor/tiled/dark,
@@ -54227,7 +54227,7 @@
 	},
 /obj/effect/floor_decal/industrial/outline/security,
 /obj/structure/closet/secure_closet/warden,
-/obj/item/device/eftpos{
+/obj/item/eftpos{
 	eftpos_name = "Brig EFTPOS scanner"
 	},
 /obj/item/stamp/warden,
@@ -54643,7 +54643,7 @@
 /obj/structure/table/standard,
 /obj/machinery/cell_charger,
 /obj/item/paper_scanner,
-/obj/item/device/paicard,
+/obj/item/paicard,
 /turf/simulated/floor/tiled,
 /area/horizon/storage/primary)
 "hmK" = (
@@ -54837,15 +54837,15 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/item/device/gps/medical{
+/obj/item/gps/medical{
 	pixel_x = 10;
 	pixel_y = 2
 	},
-/obj/item/device/gps/medical{
+/obj/item/gps/medical{
 	pixel_x = 10;
 	pixel_y = 2
 	},
-/obj/item/device/gps/medical{
+/obj/item/gps/medical{
 	pixel_x = 10;
 	pixel_y = 2
 	},
@@ -55128,18 +55128,18 @@
 /obj/machinery/requests_console/east{
 	department = "Paramedic Bay"
 	},
-/obj/item/device/radio/med{
+/obj/item/radio/med{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/device/radio/med{
+/obj/item/radio/med{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/device/gps/medical{
+/obj/item/gps/medical{
 	pixel_x = -7
 	},
-/obj/item/device/gps/medical{
+/obj/item/gps/medical{
 	pixel_x = 5
 	},
 /obj/structure/table/reinforced/steel,
@@ -55947,13 +55947,13 @@
 	pixel_x = -32
 	},
 /obj/structure/table/reinforced/steel,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /obj/item/storage/bag/inflatable,
 /obj/item/storage/bag/inflatable,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/effect/floor_decal/industrial/outline/operations,
 /obj/item/crowbar/hydraulic_rescue_tool,
 /turf/simulated/floor/carpet/rubber,
@@ -56582,7 +56582,7 @@
 	pixel_x = -1;
 	pixel_y = 14
 	},
-/obj/item/device/healthanalyzer{
+/obj/item/healthanalyzer{
 	pixel_x = -3;
 	pixel_y = 2
 	},
@@ -58173,8 +58173,8 @@
 /area/shuttle/merchant)
 "hJU" = (
 /obj/structure/table/rack,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /turf/simulated/floor/tiled/dark/full,
 /area/shuttle/skipjack)
 "hJV" = (
@@ -58529,7 +58529,7 @@
 	pixel_x = -40;
 	pixel_y = 25
 	},
-/obj/item/device/radio/intercom/west{
+/obj/item/radio/intercom/west{
 	name = "Common Channel";
 	pixel_y = 18;
 	dir = 1;
@@ -58950,7 +58950,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 6
 	},
@@ -59210,7 +59210,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 1
 	},
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = -2;
 	pixel_y = 6
 	},
@@ -60856,7 +60856,7 @@
 /obj/machinery/sleeper{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/east{
+/obj/item/radio/intercom/east{
 	frequency = 1213;
 	name = "Intercom";
 	subspace_transmission = 1;
@@ -61019,7 +61019,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 4
 	},
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/simulated/floor/holofloor/wood,
 /area/horizon/holodeck/source_sauna)
 "idT" = (
@@ -61715,22 +61715,22 @@
 	pixel_y = 10;
 	pixel_x = 2
 	},
-/obj/item/device/gps/science{
+/obj/item/gps/science{
 	pixel_x = 3
 	},
-/obj/item/device/gps{
+/obj/item/gps{
 	pixel_x = -6
 	},
-/obj/item/device/gps/mining{
+/obj/item/gps/mining{
 	pixel_x = 12
 	},
-/obj/item/device/gps{
+/obj/item/gps{
 	pixel_x = -6
 	},
-/obj/item/device/gps/science{
+/obj/item/gps/science{
 	pixel_x = 3
 	},
-/obj/item/device/gps/mining{
+/obj/item/gps/mining{
 	pixel_x = 12
 	},
 /turf/simulated/floor/plating,
@@ -62168,7 +62168,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/simulated/floor/tiled/white,
 /area/horizon/rnd/test_range)
 "ima" = (
@@ -63304,11 +63304,11 @@
 /obj/item/reagent_containers/glass/beaker{
 	pixel_y = 8
 	},
-/obj/item/device/slime_scanner{
+/obj/item/slime_scanner{
 	pixel_x = -11;
 	pixel_y = 4
 	},
-/obj/item/device/slime_scanner{
+/obj/item/slime_scanner{
 	pixel_x = -11;
 	pixel_y = 4
 	},
@@ -63518,7 +63518,7 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/machinery/ringer/west{
 	department = "Auxiliary Custodial";
 	id = "ringers_custodialaux";
@@ -64260,8 +64260,8 @@
 	dir = 5;
 	icon_state = "corner_white"
 	},
-/obj/item/device/versebook/trinary,
-/obj/item/device/versebook/trinary,
+/obj/item/versebook/trinary,
+/obj/item/versebook/trinary,
 /obj/item/clothing/mask/trinary_mask,
 /obj/item/clothing/mask/trinary_mask,
 /obj/item/clothing/mask/trinary_mask,
@@ -64431,7 +64431,7 @@
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide/scc_shuttle{
 	dir = 4
 	},
-/obj/item/device/gps/stationary/sccv_quark{
+/obj/item/gps/stationary/sccv_quark{
 	pixel_x = -23
 	},
 /turf/simulated/floor/plating,
@@ -65048,7 +65048,7 @@
 	pixel_x = -9;
 	pixel_y = 10
 	},
-/obj/item/device/flashlight/lantern{
+/obj/item/flashlight/lantern{
 	pixel_x = 5;
 	pixel_y = -2
 	},
@@ -65321,7 +65321,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/item/device/camera,
+/obj/item/camera,
 /turf/simulated/floor/tiled/white,
 /area/horizon/rnd/xenobiology/foyer)
 "iHD" = (
@@ -65472,7 +65472,7 @@
 /turf/simulated/floor/wood,
 /area/horizon/command/bridge/meeting_room)
 "iIR" = (
-/obj/item/device/flashlight/lamp/lava/purple{
+/obj/item/flashlight/lamp/lava/purple{
 	pixel_y = 8;
 	pixel_x = -8
 	},
@@ -65614,7 +65614,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /turf/simulated/floor/tiled,
 /area/horizon/operations/office)
 "iJW" = (
@@ -66777,7 +66777,7 @@
 /area/shuttle/mercenary)
 "iSq" = (
 /obj/effect/floor_decal/corner/grey/diagonal,
-/obj/item/device/radio/intercom/expedition/west,
+/obj/item/radio/intercom/expedition/west,
 /obj/structure/table/stone/marble,
 /obj/machinery/light/small,
 /obj/machinery/appliance/cooker/microwave{
@@ -67271,7 +67271,7 @@
 /obj/effect/floor_decal/corner/purple/full,
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /obj/machinery/vending/wardrobe/jani_wardrobe,
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /turf/simulated/floor/tiled,
 /area/horizon/service/custodial)
 "iVZ" = (
@@ -67948,9 +67948,9 @@
 	},
 /obj/structure/table/standard,
 /obj/machinery/recharger,
-/obj/item/device/camera_film,
-/obj/item/device/camera_film,
-/obj/item/device/camera,
+/obj/item/camera_film,
+/obj/item/camera_film,
+/obj/item/camera,
 /obj/machinery/camera/network/second_deck{
 	c_tag = "Second Deck - Tool storage";
 	dir = 1
@@ -67997,7 +67997,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
 	},
@@ -68232,7 +68232,7 @@
 /obj/structure/bed/stool/chair/shuttle{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /turf/simulated/floor/shuttle/dark_blue,
 /area/horizon/shuttle/escape_pod/pod1)
 "jck" = (
@@ -69048,7 +69048,7 @@
 	dir = 4
 	},
 /obj/structure/table/stone/marble,
-/obj/item/device/quikpay,
+/obj/item/quikpay,
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/service/kitchen)
 "jit" = (
@@ -69105,7 +69105,7 @@
 /obj/item/clothing/glasses/sunglasses/sechud,
 /obj/item/clothing/accessory/badge/holo,
 /obj/item/clothing/accessory/holster/hip,
-/obj/item/device/radio/headset/ert,
+/obj/item/radio/headset/ert,
 /obj/item/clothing/head/beret/centcom/captain,
 /obj/item/gun/energy/lawgiver,
 /obj/item/card/id/centcom,
@@ -69476,7 +69476,7 @@
 	pixel_x = -22
 	},
 /obj/item/stack/packageWrap,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/stack/wrapping_paper,
 /obj/structure/table/reinforced/steel,
 /obj/item/folder/sec{
@@ -71078,27 +71078,27 @@
 "jwU" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/structure/table/steel,
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = 6;
 	pixel_y = 5
 	},
@@ -71624,7 +71624,7 @@
 /turf/simulated/floor/plating,
 /area/horizon/maintenance/deck_1/wing/starboard/far)
 "jAJ" = (
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
@@ -72337,7 +72337,7 @@
 /area/shuttle/hapt)
 "jFR" = (
 /obj/structure/table/standard,
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -6
 	},
 /obj/random/dirt_75,
@@ -72900,8 +72900,8 @@
 "jKx" = (
 /obj/structure/table/standard,
 /obj/item/stack/packageWrap,
-/obj/item/device/destTagger,
-/obj/item/device/hand_labeler,
+/obj/item/destTagger,
+/obj/item/hand_labeler,
 /obj/item/stack/wrapping_paper,
 /obj/effect/floor_decal/corner/grey/diagonal,
 /obj/machinery/ringer/north{
@@ -72981,7 +72981,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/simulated/floor/holofloor/wood,
 /area/horizon/holodeck/source_sauna)
 "jLi" = (
@@ -73336,8 +73336,8 @@
 	dir = 8;
 	c_tag = "Telecommunications - Entrance"
 	},
-/obj/item/device/multitool,
-/obj/item/device/multitool,
+/obj/item/multitool,
+/obj/item/multitool,
 /obj/structure/table/rack,
 /obj/item/stack/nanopaste,
 /obj/effect/floor_decal/spline/plain/black{
@@ -73867,7 +73867,7 @@
 	name = "reinforced glass table";
 	table_reinf = "glass"
 	},
-/obj/item/device/laser_pointer/red,
+/obj/item/laser_pointer/red,
 /turf/unsimulated/floor/monotile,
 /area/antag/mercenary)
 "jRk" = (
@@ -74588,9 +74588,9 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/north,
+/obj/item/radio/intercom/north,
 /obj/structure/table/reinforced/steel,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /turf/simulated/floor/tiled/dark,
 /area/horizon/command/bridge/controlroom)
 "jVB" = (
@@ -74730,7 +74730,7 @@
 /area/horizon/engineering/reactor/supermatter/mainchamber)
 "jWl" = (
 /obj/structure/table/reinforced/steel,
-/obj/item/device/price_scanner,
+/obj/item/price_scanner,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -74997,7 +74997,7 @@
 	dir = 1
 	},
 /obj/structure/table/standard,
-/obj/item/device/mass_spectrometer{
+/obj/item/mass_spectrometer{
 	pixel_x = 6;
 	pixel_y = 2
 	},
@@ -75355,8 +75355,8 @@
 /obj/item/clothing/gloves/yellow/specialu{
 	pixel_y = 5
 	},
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /obj/effect/decal/cleanable/dirt,
 /turf/unsimulated/floor,
 /area/antag/burglar)
@@ -75484,7 +75484,7 @@
 /obj/structure/closet{
 	name = "materials"
 	},
-/obj/item/device/paint_sprayer,
+/obj/item/paint_sprayer,
 /turf/simulated/floor/tiled,
 /area/merchant_station/warehouse)
 "kbl" = (
@@ -75618,7 +75618,7 @@
 /obj/structure/table/steel,
 /obj/item/storage/belt/utility,
 /obj/item/clothing/head/welding,
-/obj/item/device/flashlight/heavy,
+/obj/item/flashlight/heavy,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -75834,7 +75834,7 @@
 /area/tdome/tdome1)
 "kdj" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -75972,7 +75972,7 @@
 /area/centcom/control)
 "kep" = (
 /obj/structure/table/rack/retail_shelf,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 13
 	},
@@ -76067,7 +76067,7 @@
 /area/horizon/security/hallway)
 "keU" = (
 /obj/effect/floor_decal/corner/green/full,
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /turf/simulated/floor/tiled/white,
 /area/horizon/crew/washroom/deck_3)
 "keV" = (
@@ -76100,7 +76100,7 @@
 /obj/effect/floor_decal/corner_wide/paleblue{
 	dir = 9
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/machinery/light/floor{
 	dir = 8
 	},
@@ -76990,18 +76990,18 @@
 /area/template_noop)
 "kkT" = (
 /obj/structure/table/steel,
-/obj/item/device/taperecorder{
+/obj/item/taperecorder{
 	pixel_x = 6;
 	pixel_y = 4
 	},
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	pixel_x = -10;
 	pixel_y = 8
 	},
 /obj/effect/floor_decal/corner/red{
 	dir = 9
 	},
-/obj/item/device/radio/intercom/interrogation/broadcasting/west,
+/obj/item/radio/intercom/interrogation/broadcasting/west,
 /turf/simulated/floor/tiled/dark,
 /area/horizon/security/interrogation)
 "kkV" = (
@@ -77402,7 +77402,7 @@
 "knk" = (
 /obj/structure/table/standard,
 /obj/item/stack/packageWrap,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /turf/simulated/floor/tiled,
 /area/merchant_station/warehouse)
 "knm" = (
@@ -77558,8 +77558,8 @@
 /area/horizon/medical/gen_treatment)
 "kof" = (
 /obj/structure/table/standard,
-/obj/item/device/camera_film,
-/obj/item/device/camera,
+/obj/item/camera_film,
+/obj/item/camera,
 /obj/effect/floor_decal/corner/beige{
 	dir = 10
 	},
@@ -77985,7 +77985,7 @@
 /obj/effect/floor_decal/corner/dark_green{
 	dir = 6
 	},
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /turf/simulated/floor/tiled,
 /area/horizon/hallway/primary/deck_2/central)
 "krp" = (
@@ -78076,7 +78076,7 @@
 	name = "Shotgun permit"
 	},
 /obj/machinery/alarm/west,
-/obj/item/device/quikpay,
+/obj/item/quikpay,
 /obj/item/storage/box/fancy/matches,
 /obj/item/flame/lighter/zippo,
 /turf/simulated/floor/tiled/dark,
@@ -78152,7 +78152,7 @@
 	pixel_x = -8
 	},
 /obj/item/reagent_containers/glass/beaker/large,
-/obj/item/device/hand_labeler{
+/obj/item/hand_labeler{
 	pixel_y = -20
 	},
 /obj/machinery/requests_console/west{
@@ -78222,7 +78222,7 @@
 	},
 /obj/structure/table/steel,
 /obj/machinery/cell_charger,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/effect/floor_decal/corner/dark_blue/full{
 	dir = 8
 	},
@@ -79029,7 +79029,7 @@
 /turf/unsimulated/floor,
 /area/centcom/legion/hangar5)
 "kxx" = (
-/obj/item/device/radio/intercom/expedition/north,
+/obj/item/radio/intercom/expedition/north,
 /obj/machinery/computer/ship/engines/terminal{
 	dir = 4
 	},
@@ -79349,7 +79349,7 @@
 /obj/item/pinpointer/advpinpointer,
 /obj/item/rig_module/mounted/plasmacutter,
 /obj/item/rig/ert/assetprotection,
-/obj/item/device/radio/headset/ert,
+/obj/item/radio/headset/ert,
 /obj/item/clothing/under/syndicate/combat,
 /obj/item/gun/energy/rifle/pulse,
 /obj/item/gun/projectile/revolver/mateba,
@@ -79814,7 +79814,7 @@
 	dir = 5
 	},
 /obj/structure/table/standard,
-/obj/item/device/slime_scanner{
+/obj/item/slime_scanner{
 	pixel_x = -11;
 	pixel_y = 4
 	},
@@ -79874,7 +79874,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /turf/simulated/floor/carpet,
 /area/horizon/command/heads/hos)
 "kCt" = (
@@ -79926,7 +79926,7 @@
 "kCM" = (
 /obj/structure/table/standard,
 /obj/item/reagent_containers/glass/beaker/large,
-/obj/item/device/hand_labeler{
+/obj/item/hand_labeler{
 	pixel_y = 10
 	},
 /obj/effect/floor_decal/corner_wide/orange{
@@ -80564,7 +80564,7 @@
 /obj/item/clothing/glasses/sunglasses/sechud,
 /obj/item/clothing/accessory/badge/holo,
 /obj/item/clothing/accessory/holster/hip,
-/obj/item/device/radio/headset/ert,
+/obj/item/radio/headset/ert,
 /obj/item/clothing/head/beret/centcom/captain,
 /obj/item/gun/energy/lawgiver,
 /obj/item/card/id/centcom,
@@ -81450,11 +81450,11 @@
 	pixel_x = 4;
 	pixel_y = 7
 	},
-/obj/item/device/taperecorder{
+/obj/item/taperecorder{
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/device/megaphone/red{
+/obj/item/megaphone/red{
 	pixel_x = -2;
 	pixel_y = 6
 	},
@@ -81778,7 +81778,7 @@
 "kPg" = (
 /obj/structure/platform,
 /obj/structure/table/standard,
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	pixel_y = -7
 	},
 /obj/item/stock_parts/matter_bin,
@@ -83215,7 +83215,7 @@
 	},
 /obj/effect/floor_decal/corner/purple/full,
 /obj/item/stack/packageWrap,
-/obj/item/device/destTagger,
+/obj/item/destTagger,
 /turf/simulated/floor/tiled,
 /area/horizon/service/custodial)
 "kZa" = (
@@ -83732,7 +83732,7 @@
 /obj/structure/table/reinforced/wood,
 /obj/item/folder/blue,
 /obj/item/stack/packageWrap,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /turf/unsimulated/floor{
 	icon_state = "dark_preview"
 	},
@@ -83797,8 +83797,8 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/table/standard,
-/obj/item/device/hand_labeler,
-/obj/item/device/destTagger,
+/obj/item/hand_labeler,
+/obj/item/destTagger,
 /obj/effect/floor_decal/corner/brown{
 	dir = 6
 	},
@@ -85060,7 +85060,7 @@
 /area/horizon/medical/icu)
 "lkN" = (
 /obj/structure/flora/ausbushes/sparsegrass,
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/machinery/portable_atmospherics/hydroponics/soil,
 /obj/machinery/light,
 /turf/simulated/floor/grass/no_edge,
@@ -85107,7 +85107,7 @@
 "llm" = (
 /obj/structure/lattice/catwalk/indoor/grate/dark,
 /obj/structure/table/standard,
-/obj/item/device/geiger,
+/obj/item/geiger,
 /obj/effect/floor_decal/spline/plain/yellow,
 /turf/simulated/floor/plating,
 /area/horizon/engineering/reactor/indra/smes)
@@ -85228,9 +85228,9 @@
 /obj/structure/table/rack,
 /obj/item/storage/secure/briefcase,
 /obj/item/storage/briefcase/aluminium,
-/obj/item/device/camera,
-/obj/item/device/taperecorder,
-/obj/item/device/megaphone/red,
+/obj/item/camera,
+/obj/item/taperecorder,
+/obj/item/megaphone/red,
 /obj/item/clothing/accessory/holster,
 /obj/item/clothing/accessory/holster,
 /obj/item/clothing/accessory/holster/armpit,
@@ -85535,7 +85535,7 @@
 	},
 /area/centcom/legion)
 "loP" = (
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /obj/effect/floor_decal/corner/dark_green{
 	dir = 10
 	},
@@ -85646,7 +85646,7 @@
 /obj/item/clothing/head/bandana/hydro{
 	pixel_x = 5
 	},
-/obj/item/device/analyzer/plant_analyzer{
+/obj/item/analyzer/plant_analyzer{
 	pixel_x = 1;
 	pixel_y = 6
 	},
@@ -85748,12 +85748,12 @@
 	dir = 9
 	},
 /obj/structure/table/rack,
-/obj/item/device/radio/beacon{
+/obj/item/radio/beacon{
 	pixel_x = -4;
 	pixel_y = -4
 	},
-/obj/item/device/radio/beacon,
-/obj/item/device/radio/beacon{
+/obj/item/radio/beacon,
+/obj/item/radio/beacon{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -86229,7 +86229,7 @@
 /turf/unsimulated/floor/wood,
 /area/antag/raider)
 "lse" = (
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/effect/floor_decal/corner/dark_blue{
 	dir = 9
 	},
@@ -86398,7 +86398,7 @@
 /obj/item/stock_parts/subspace/amplifier,
 /obj/item/stock_parts/subspace/amplifier,
 /obj/item/stock_parts/subspace/amplifier,
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/structure/table/reinforced/steel,
 /turf/simulated/floor/carpet/rubber,
 /area/horizon/tcommsat/entrance)
@@ -86475,7 +86475,7 @@
 /area/merchant_station)
 "ltX" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 7;
 	pixel_y = 3
 	},
@@ -86683,7 +86683,7 @@
 /area/horizon/maintenance/deck_2/wing/starboard/near)
 "lvA" = (
 /obj/effect/floor_decal/carpet,
-/obj/item/device/flashlight/lamp/holodeck{
+/obj/item/flashlight/lamp/holodeck{
 	light_color = "#C48A18";
 	light_power = 2;
 	light_range = 14;
@@ -86926,7 +86926,7 @@
 	pixel_x = -4;
 	pixel_y = 18
 	},
-/obj/item/device/pin_extractor,
+/obj/item/pin_extractor,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -87343,7 +87343,7 @@
 	name = "Librarian"
 	},
 /obj/structure/bed/stool/chair/office/light,
-/obj/item/device/radio/intercom/north,
+/obj/item/radio/intercom/north,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
@@ -87375,7 +87375,7 @@
 /area/horizon/hallway/primary/deck_2/starboard)
 "lAw" = (
 /obj/structure/table/wood,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /turf/simulated/floor/carpet,
 /area/horizon/crew/journalistoffice)
 "lAB" = (
@@ -88484,7 +88484,7 @@
 	pixel_y = 30;
 	dir = 1
 	},
-/obj/item/device/quikpay,
+/obj/item/quikpay,
 /obj/item/book/manual/barman_recipes{
 	pixel_x = 4;
 	pixel_y = 5
@@ -88825,7 +88825,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 5
 	},
-/obj/item/device/flashlight/lamp/stage,
+/obj/item/flashlight/lamp/stage,
 /turf/simulated/floor/holofloor/wood,
 /area/horizon/holodeck/source_theatre)
 "lKd" = (
@@ -89340,7 +89340,7 @@
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/engineering/atmos)
 "lNv" = (
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /obj/structure/disposalpipe/junction{
 	dir = 4;
 	icon_state = "pipe-j2"
@@ -89524,27 +89524,27 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/device/flashlight/pen{
+/obj/item/flashlight/pen{
 	pixel_x = -4;
 	pixel_y = -2
 	},
-/obj/item/device/flashlight/pen{
+/obj/item/flashlight/pen{
 	pixel_x = -4;
 	pixel_y = -2
 	},
-/obj/item/device/flashlight/pen{
+/obj/item/flashlight/pen{
 	pixel_x = -4;
 	pixel_y = -2
 	},
-/obj/item/device/flashlight/pen{
+/obj/item/flashlight/pen{
 	pixel_x = -4;
 	pixel_y = -2
 	},
-/obj/item/device/flashlight/pen{
+/obj/item/flashlight/pen{
 	pixel_x = -4;
 	pixel_y = -2
 	},
-/obj/item/device/flashlight/pen{
+/obj/item/flashlight/pen{
 	pixel_x = -4;
 	pixel_y = -2
 	},
@@ -89616,7 +89616,7 @@
 /obj/machinery/newscaster/security_unit/south,
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /obj/machinery/suit_cycler/hos/prepared,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /obj/item/tank/oxygen,
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/command/heads/hos)
@@ -90084,7 +90084,7 @@
 /obj/item/stack/cable_coil,
 /obj/item/wirecutters,
 /obj/item/weldingtool,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/cell/mecha/phoron,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
@@ -91247,8 +91247,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/device/radio/intercom/west,
-/obj/item/device/flashlight/lamp{
+/obj/item/radio/intercom/west,
+/obj/item/flashlight/lamp{
 	on = 0
 	},
 /turf/simulated/floor/tiled/white,
@@ -91373,7 +91373,7 @@
 /turf/unsimulated/floor,
 /area/centcom/bar)
 "mdY" = (
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /obj/effect/floor_decal/corner_wide/green{
 	dir = 6
 	},
@@ -91491,9 +91491,9 @@
 /obj/effect/floor_decal/corner/brown/full{
 	dir = 4
 	},
-/obj/item/device/destTagger,
+/obj/item/destTagger,
 /obj/item/paper_scanner,
-/obj/item/device/quikpay{
+/obj/item/quikpay{
 	destinationact = "Operations"
 	},
 /obj/random/pottedplant_small{
@@ -91845,8 +91845,8 @@
 	pixel_x = -8;
 	pixel_y = 8
 	},
-/obj/item/device/toner,
-/obj/item/device/toner,
+/obj/item/toner,
+/obj/item/toner,
 /obj/item/paper_bin{
 	pixel_x = 5;
 	pixel_y = 9
@@ -92330,27 +92330,27 @@
 	},
 /obj/effect/floor_decal/industrial/outline/grey,
 /obj/structure/table/steel,
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = 6;
 	pixel_y = 5
 	},
@@ -93560,7 +93560,7 @@
 	dir = 8
 	},
 /obj/structure/table/glass,
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	on = 0
 	},
 /turf/simulated/floor/tiled/white,
@@ -93670,16 +93670,16 @@
 /obj/machinery/newscaster/south,
 /obj/effect/floor_decal/corner/dark_blue/full,
 /obj/structure/table/standard,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
 /obj/item/crowbar/red,
 /obj/item/crowbar/red,
 /obj/item/crowbar/red,
 /obj/item/crowbar/red,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight,
 /turf/simulated/floor/tiled,
 /area/horizon/command/bridge/supply)
 "mty" = (
@@ -94109,7 +94109,7 @@
 	name = "adjusted reinforced window"
 	},
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 3
 	},
@@ -94276,7 +94276,7 @@
 /obj/item/reagent_containers/extinguisher_refill/filled,
 /obj/item/reagent_containers/extinguisher_refill/filled,
 /obj/item/reagent_containers/extinguisher_refill/filled,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/effect/floor_decal/corner/yellow/full{
 	dir = 8
 	},
@@ -94413,7 +94413,7 @@
 /obj/item/storage/box/fancy/crayons,
 /obj/item/storage/box/fancy/crayons,
 /obj/item/toy/figure/assistant,
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /obj/effect/floor_decal/corner/beige{
 	dir = 6
 	},
@@ -94763,7 +94763,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced/wood,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -95557,7 +95557,7 @@
 /area/centcom/holding)
 "mHi" = (
 /obj/effect/floor_decal/corner/dark_blue/full,
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/machinery/light/small,
 /obj/machinery/photocopier,
 /turf/simulated/floor/tiled/dark,
@@ -95679,7 +95679,7 @@
 /obj/structure/table/rack/retail_shelf{
 	name = "storage shelf"
 	},
-/obj/item/device/destTagger{
+/obj/item/destTagger{
 	pixel_y = 5
 	},
 /obj/item/stack/packageWrap,
@@ -96226,7 +96226,7 @@
 	},
 /obj/structure/table/rack,
 /obj/item/storage/box/samplebags,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/storage/box/gloves,
 /obj/machinery/camera/network/research{
 	c_tag = "Research - Xenoarchaeology Atrium 1";
@@ -96288,7 +96288,7 @@
 	pixel_x = 15;
 	pixel_y = 10
 	},
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = 5;
 	pixel_y = -1
 	},
@@ -97026,7 +97026,7 @@
 	pixel_y = 32;
 	pixel_x = -4
 	},
-/obj/item/device/hand_labeler{
+/obj/item/hand_labeler{
 	pixel_y = 9;
 	pixel_x = -13
 	},
@@ -97038,7 +97038,7 @@
 	pixel_y = 5;
 	pixel_x = 1
 	},
-/obj/item/device/destTagger{
+/obj/item/destTagger{
 	pixel_x = 5;
 	pixel_y = -3
 	},
@@ -98038,7 +98038,7 @@
 	dir = 6
 	},
 /obj/structure/table/reinforced/steel,
-/obj/item/device/binoculars{
+/obj/item/binoculars{
 	pixel_x = 3;
 	pixel_y = 6
 	},
@@ -98977,7 +98977,7 @@
 /turf/simulated/floor/tiled,
 /area/horizon/operations/break_room)
 "neW" = (
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/effect/floor_decal/corner/dark_blue/full{
 	dir = 8
 	},
@@ -99213,7 +99213,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/device/destTagger{
+/obj/item/destTagger{
 	pixel_x = -2;
 	pixel_y = 7
 	},
@@ -99658,7 +99658,7 @@
 	pixel_x = 3;
 	pixel_y = -5
 	},
-/obj/item/device/hand_labeler{
+/obj/item/hand_labeler{
 	pixel_x = 9;
 	pixel_y = 9
 	},
@@ -99673,7 +99673,7 @@
 	pixel_x = -7;
 	pixel_y = 7
 	},
-/obj/item/device/destTagger{
+/obj/item/destTagger{
 	pixel_x = 4;
 	pixel_y = -7
 	},
@@ -99871,8 +99871,8 @@
 /area/horizon/rnd/xenoarch/atrium)
 "nmh" = (
 /obj/structure/table/wood,
-/obj/item/device/megaphone/sec,
-/obj/item/device/megaphone/sec,
+/obj/item/megaphone/sec,
+/obj/item/megaphone/sec,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -99993,11 +99993,11 @@
 /obj/structure/railing/mapped{
 	dir = 8
 	},
-/obj/item/device/radio/off{
+/obj/item/radio/off{
 	pixel_x = 12;
 	pixel_y = 15
 	},
-/obj/item/device/radio/off{
+/obj/item/radio/off{
 	pixel_x = 12;
 	pixel_y = 7
 	},
@@ -100121,7 +100121,7 @@
 /obj/item/weldingtool/largetank{
 	pixel_y = -12
 	},
-/obj/item/device/radio/intercom/west{
+/obj/item/radio/intercom/west{
 	frequency = 1213;
 	name = "Intercom";
 	subspace_transmission = 1;
@@ -100563,8 +100563,8 @@
 "nsp" = (
 /obj/effect/floor_decal/corner/dark_blue/diagonal,
 /obj/structure/table/steel,
-/obj/item/device/flashlight/lamp,
-/obj/item/device/hand_labeler,
+/obj/item/flashlight/lamp,
+/obj/item/hand_labeler,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -100801,7 +100801,7 @@
 /area/horizon/operations/machinist/surgicalbay)
 "ntL" = (
 /obj/structure/table/standard,
-/obj/item/device/firing_pin/test_range,
+/obj/item/firing_pin/test_range,
 /obj/item/clothing/glasses/safety/goggles/science{
 	pixel_y = 10
 	},
@@ -100964,7 +100964,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm/south,
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /turf/simulated/floor/tiled,
 /area/horizon/stairwell/starboard/deck_2)
 "nuP" = (
@@ -101403,7 +101403,7 @@
 	pixel_x = 2;
 	pixel_y = 11
 	},
-/obj/item/device/hand_labeler{
+/obj/item/hand_labeler{
 	pixel_y = 1;
 	pixel_x = -8
 	},
@@ -102793,19 +102793,19 @@
 	pixel_y = 6
 	},
 /obj/item/storage/box/handcuffs,
-/obj/item/device/radio/headset/syndicate{
+/obj/item/radio/headset/syndicate{
 	pixel_x = 16;
 	pixel_y = 6
 	},
-/obj/item/device/radio/headset/syndicate{
+/obj/item/radio/headset/syndicate{
 	pixel_x = 16;
 	pixel_y = 6
 	},
-/obj/item/device/radio/headset/syndicate{
+/obj/item/radio/headset/syndicate{
 	pixel_x = 16;
 	pixel_y = 6
 	},
-/obj/item/device/radio/headset/syndicate{
+/obj/item/radio/headset/syndicate{
 	pixel_x = 16;
 	pixel_y = 6
 	},
@@ -103429,11 +103429,11 @@
 	pixel_x = 6;
 	pixel_y = 18
 	},
-/obj/item/device/binoculars/high_power{
+/obj/item/binoculars/high_power{
 	pixel_x = 7;
 	pixel_y = 3
 	},
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	pixel_y = 1;
 	pixel_x = -7
 	},
@@ -104291,7 +104291,7 @@
 	icon_state = "plank_shadow";
 	name = "floor planks"
 	},
-/obj/item/device/flashlight/lamp/box{
+/obj/item/flashlight/lamp/box{
 	on = 0
 	},
 /turf/simulated/floor/holofloor/wood{
@@ -105698,7 +105698,7 @@
 /area/horizon/engineering/shields)
 "oci" = (
 /obj/effect/floor_decal/corner/lime/diagonal,
-/obj/item/device/gps/stationary/sccv_intrepid{
+/obj/item/gps/stationary/sccv_intrepid{
 	pixel_x = -10;
 	pixel_y = 25
 	},
@@ -107082,7 +107082,7 @@
 /obj/structure/table/steel,
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /obj/item/hoist_kit,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/structure/railing/mapped{
 	dir = 8
 	},
@@ -107148,7 +107148,7 @@
 	pixel_x = 4;
 	pixel_y = 9
 	},
-/obj/item/device/hand_labeler{
+/obj/item/hand_labeler{
 	pixel_x = -6;
 	pixel_y = -4
 	},
@@ -107158,7 +107158,7 @@
 /turf/unsimulated/floor,
 /area/centcom/bar)
 "olL" = (
-/obj/item/device/radio/intercom/east{
+/obj/item/radio/intercom/east{
 	frequency = 1441;
 	name = "Spec Ops Intercom";
 	pixel_y = 20
@@ -107990,7 +107990,7 @@
 	req_access = null
 	},
 /obj/effect/floor_decal/industrial/outline/grey,
-/obj/item/device/radio/intercom/expedition/west{
+/obj/item/radio/intercom/expedition/west{
 	pixel_y = -24;
 	pixel_x = -10
 	},
@@ -109127,7 +109127,7 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/intercom/west{
+/obj/item/radio/intercom/west{
 	dir = 2;
 	pixel_x = 0;
 	pixel_y = -4
@@ -109405,7 +109405,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/device/camera,
+/obj/item/camera,
 /obj/structure/table/reinforced/steel,
 /obj/effect/floor_decal/corner/grey{
 	dir = 10
@@ -109457,7 +109457,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /turf/simulated/floor/tiled/dark,
 /area/horizon/command/bridge/aibunker)
 "oBl" = (
@@ -109764,7 +109764,7 @@
 /turf/simulated/floor/holofloor/tiled,
 /area/horizon/holodeck/source_combat_training)
 "oDw" = (
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	pixel_x = 6
 	},
 /obj/item/storage/box/syndie_kit/clerical{
@@ -110320,7 +110320,7 @@
 /obj/structure/platform{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 10
 	},
@@ -110730,7 +110730,7 @@
 	pixel_x = -6;
 	pixel_y = 1
 	},
-/obj/item/device/flashlight/lamp/lava/red{
+/obj/item/flashlight/lamp/lava/red{
 	pixel_x = -7;
 	pixel_y = 14
 	},
@@ -111328,7 +111328,7 @@
 "oNI" = (
 /obj/effect/floor_decal/corner_wide/paleblue/full,
 /obj/structure/closet/secure_closet/CMO,
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/machinery/keycard_auth{
 	dir = 4;
 	pixel_x = -27;
@@ -111522,7 +111522,7 @@
 "oOR" = (
 /obj/structure/table/standard,
 /obj/machinery/alarm/north,
-/obj/item/device/destTagger{
+/obj/item/destTagger{
 	pixel_y = 7;
 	pixel_x = -3
 	},
@@ -111742,10 +111742,10 @@
 /obj/structure/closet/secure_closet/evidence{
 	name = "closet"
 	},
-/obj/item/device/camera{
+/obj/item/camera{
 	pixel_x = 5
 	},
-/obj/item/device/camera_film{
+/obj/item/camera_film{
 	pixel_x = 6
 	},
 /obj/item/book/manual/wiki/security_space_law{
@@ -112322,7 +112322,7 @@
 /area/centcom/control)
 "oUe" = (
 /obj/structure/table/standard,
-/obj/item/device/paicard{
+/obj/item/paicard{
 	pixel_x = -5;
 	pixel_y = 4
 	},
@@ -112638,7 +112638,7 @@
 	pixel_x = 6;
 	pixel_y = 7
 	},
-/obj/item/device/geiger,
+/obj/item/geiger,
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/engineering/reactor/indra/monitoring)
 "oWz" = (
@@ -113360,7 +113360,7 @@
 "pbE" = (
 /obj/machinery/firealarm/south,
 /obj/structure/table/standard,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/stamp/denied,
 /obj/effect/floor_decal/corner/beige/full,
 /turf/simulated/floor/tiled,
@@ -113482,7 +113482,7 @@
 /area/horizon/hangar/intrepid)
 "pcV" = (
 /obj/random/hardhat,
-/obj/item/device/hand_labeler{
+/obj/item/hand_labeler{
 	pixel_y = -5
 	},
 /obj/item/folder/yellow{
@@ -113621,7 +113621,7 @@
 /obj/structure/bed/stool/chair/shuttle{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /turf/simulated/floor/shuttle/dark_blue,
 /area/horizon/shuttle/escape_pod/pod2)
 "pdN" = (
@@ -114916,11 +114916,11 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/device/magnetic_lock/security{
+/obj/item/magnetic_lock/security{
 	pixel_x = -6;
 	pixel_y = 2
 	},
-/obj/item/device/magnetic_lock/security{
+/obj/item/magnetic_lock/security{
 	pixel_x = -6;
 	pixel_y = 2
 	},
@@ -115253,7 +115253,7 @@
 /obj/item/stack/rods/full,
 /obj/item/storage/toolbox/mechanical,
 /obj/random/tool,
-/obj/item/device/radio/sci,
+/obj/item/radio/sci,
 /obj/item/tent,
 /obj/machinery/alarm/shuttle/east,
 /turf/simulated/floor/plating,
@@ -115290,7 +115290,7 @@
 /obj/structure/table/standard,
 /obj/item/storage/box/lights/mixed,
 /obj/item/storage/box/lights/tubes,
-/obj/item/device/lightreplacer,
+/obj/item/lightreplacer,
 /turf/simulated/floor/tiled,
 /area/horizon/command/bridge/supply)
 "poS" = (
@@ -115397,7 +115397,7 @@
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/security/investigations_hallway)
 "ppO" = (
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/effect/floor_decal/corner/dark_blue{
 	dir = 9
 	},
@@ -115476,7 +115476,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /obj/effect/floor_decal/corner/dark_blue{
 	dir = 6
 	},
@@ -115984,8 +115984,8 @@
 	pixel_y = 2
 	},
 /obj/item/storage/bag/inflatable,
-/obj/item/device/flashlight/flare/glowstick/red,
-/obj/item/device/flashlight/flare/glowstick/red,
+/obj/item/flashlight/flare/glowstick/red,
+/obj/item/flashlight/flare/glowstick/red,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/unsimulated/floor/plating,
 /area/centcom/distress_prep)
@@ -115997,7 +115997,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/aux{
 	dir = 1
 	},
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	pixel_y = 5;
 	pixel_x = -5
 	},
@@ -117036,7 +117036,7 @@
 	pixel_x = 6;
 	pixel_y = 14
 	},
-/obj/item/device/binoculars{
+/obj/item/binoculars{
 	pixel_x = -4;
 	pixel_y = 10
 	},
@@ -117745,7 +117745,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/horizon/engineering/atmos/propulsion/starboard)
 "pHk" = (
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 5;
 	pixel_y = 14
 	},
@@ -118078,7 +118078,7 @@
 	dir = 9
 	},
 /obj/structure/table/stone/marble,
-/obj/item/device/versebook/tribunal,
+/obj/item/versebook/tribunal,
 /turf/simulated/floor/marble/dark,
 /area/horizon/holodeck/source_tribunal)
 "pJJ" = (
@@ -118798,7 +118798,7 @@
 /obj/item/stack/cable_coil,
 /obj/item/wirecutters,
 /obj/item/weldingtool,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/cell/mecha/phoron,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 4
@@ -118859,13 +118859,13 @@
 /obj/structure/window/reinforced/crescent{
 	dir = 8
 	},
-/obj/item/device/camera{
+/obj/item/camera{
 	desc = "A polaroid camera. This one has 'Kismet' scribled into the casing."
 	},
-/obj/item/device/camera{
+/obj/item/camera{
 	desc = "A polaroid camera. This one has 'Petr' scribled into the casing."
 	},
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	pixel_x = 3;
 	pixel_y = -12
 	},
@@ -119140,28 +119140,28 @@
 	dir = 6
 	},
 /obj/machinery/firealarm/east,
-/obj/item/device/radio/off{
+/obj/item/radio/off{
 	pixel_x = 8
 	},
-/obj/item/device/radio/off{
+/obj/item/radio/off{
 	pixel_x = 8
 	},
-/obj/item/device/radio/off{
+/obj/item/radio/off{
 	pixel_x = 8
 	},
-/obj/item/device/radio/off{
+/obj/item/radio/off{
 	pixel_x = 8
 	},
-/obj/item/device/gps/science{
+/obj/item/gps/science{
 	pixel_x = -4
 	},
-/obj/item/device/gps/science{
+/obj/item/gps/science{
 	pixel_x = -4
 	},
-/obj/item/device/gps/science{
+/obj/item/gps/science{
 	pixel_x = -4
 	},
-/obj/item/device/gps/science{
+/obj/item/gps/science{
 	pixel_x = -4
 	},
 /turf/simulated/floor/tiled/dark,
@@ -119508,7 +119508,7 @@
 /area/horizon/maintenance/deck_3/aft/holodeck)
 "pUg" = (
 /obj/structure/table/standard,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/tape_roll{
 	pixel_x = -14;
 	pixel_y = 10
@@ -120876,7 +120876,7 @@
 	},
 /obj/item/pen/red,
 /obj/item/stack/packageWrap,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/operations/mining_main/refinery)
 "qdZ" = (
@@ -121044,7 +121044,7 @@
 /area/horizon/service/custodial/auxiliary)
 "qeV" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = -4;
 	pixel_y = 12
 	},
@@ -121825,14 +121825,14 @@
 /turf/simulated/floor/tiled,
 /area/horizon/service/hydroponics/lower)
 "qlt" = (
-/obj/item/device/taperecorder{
+/obj/item/taperecorder{
 	pixel_x = 3;
 	pixel_y = 3
 	},
 /obj/item/storage/briefcase,
-/obj/item/device/flash,
+/obj/item/flash,
 /obj/item/storage/secure/briefcase,
-/obj/item/device/eftpos{
+/obj/item/eftpos{
 	eftpos_name = "Internal Affairs EFTPOS scanner"
 	},
 /obj/item/clothing/under/suit_jacket/really_black,
@@ -121840,12 +121840,12 @@
 /obj/item/clothing/shoes/laceup,
 /obj/item/clipboard,
 /obj/item/pen/multi,
-/obj/item/device/camera,
+/obj/item/camera,
 /obj/structure/closet/lawcloset,
 /obj/item/paper_scanner,
 /obj/item/folder/red,
 /obj/item/folder/yellow,
-/obj/item/device/destTagger,
+/obj/item/destTagger,
 /obj/item/stack/packageWrap,
 /turf/simulated/floor/carpet,
 /area/horizon/repoffice/consular_two)
@@ -121865,8 +121865,8 @@
 	pixel_y = 2
 	},
 /obj/item/storage/bag/inflatable,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -122056,20 +122056,20 @@
 /turf/simulated/floor/wood,
 /area/horizon/command/bridge/meeting_room)
 "qmm" = (
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare{
 	pixel_y = 6
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 6
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 6
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 6
 	},
 /obj/structure/table/steel,
@@ -122114,7 +122114,7 @@
 /turf/simulated/floor/plating,
 /area/horizon/engineering/hallway/aft)
 "qmv" = (
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /obj/machinery/camera/network/supply{
 	c_tag = "Operations - Lower Warehouse 4";
 	dir = 1
@@ -122219,7 +122219,7 @@
 /obj/item/stack/packageWrap{
 	pixel_y = 2
 	},
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /turf/simulated/floor/tiled/white,
 /area/horizon/security/forensic_laboratory)
 "qne" = (
@@ -122552,7 +122552,7 @@
 /obj/item/pinpointer/advpinpointer,
 /obj/item/rig_module/mounted/plasmacutter,
 /obj/item/rig/ert/assetprotection,
-/obj/item/device/radio/headset/ert,
+/obj/item/radio/headset/ert,
 /obj/item/clothing/under/syndicate/combat,
 /obj/item/gun/energy/rifle/pulse,
 /obj/item/gun/projectile/revolver/mateba,
@@ -124002,19 +124002,19 @@
 	pixel_x = -2;
 	pixel_y = -4
 	},
-/obj/item/device/binoculars{
+/obj/item/binoculars{
 	pixel_x = 4;
 	pixel_y = 8
 	},
-/obj/item/device/binoculars{
+/obj/item/binoculars{
 	pixel_x = 4;
 	pixel_y = 8
 	},
-/obj/item/device/binoculars{
+/obj/item/binoculars{
 	pixel_x = 4;
 	pixel_y = 8
 	},
-/obj/item/device/binoculars{
+/obj/item/binoculars{
 	pixel_x = 4;
 	pixel_y = 8
 	},
@@ -124679,7 +124679,7 @@
 	dir = 10
 	},
 /obj/structure/window/reinforced,
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /obj/structure/filingcabinet{
 	pixel_x = -9
 	},
@@ -124878,21 +124878,21 @@
 /obj/effect/floor_decal/corner/purple/full{
 	dir = 4
 	},
-/obj/item/device/binoculars/high_power{
+/obj/item/binoculars/high_power{
 	pixel_x = -2;
 	pixel_y = 8
 	},
-/obj/item/device/gps/science{
+/obj/item/gps/science{
 	pixel_y = 4;
 	pixel_x = 2;
 	gpstag = "QRK01"
 	},
-/obj/item/device/gps/science{
+/obj/item/gps/science{
 	pixel_y = 1;
 	pixel_x = 7;
 	gpstag = "QRK02"
 	},
-/obj/item/device/radio/intercom/expedition/east,
+/obj/item/radio/intercom/expedition/east,
 /obj/machinery/recharger{
 	pixel_x = -5;
 	pixel_y = 1
@@ -125847,7 +125847,7 @@
 	pixel_y = 2
 	},
 /obj/effect/decal/fake_object/light_source/invisible,
-/obj/item/device/paint_sprayer{
+/obj/item/paint_sprayer{
 	pixel_y = 9;
 	pixel_x = 7
 	},
@@ -126232,7 +126232,7 @@
 	dir = 4
 	},
 /obj/structure/table/standard,
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /turf/simulated/floor/tiled/white,
 /area/horizon/medical/ward/isolation)
 "qPn" = (
@@ -126557,10 +126557,10 @@
 /obj/item/storage/belt/utility/full,
 /obj/item/storage/belt/utility/full,
 /obj/item/storage/belt/utility/full,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
+/obj/item/multitool,
+/obj/item/multitool,
+/obj/item/multitool,
+/obj/item/multitool,
 /obj/machinery/light,
 /obj/effect/floor_decal/corner/red/diagonal,
 /obj/item/airbubble/syndie{
@@ -127788,8 +127788,8 @@
 /area/horizon/command/bridge/upperdeck)
 "qZS" = (
 /obj/structure/table/rack,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /turf/unsimulated/floor,
 /area/centcom/legion/hangar5)
 "qZU" = (
@@ -127999,7 +127999,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/horizon/engineering/gravity_gen)
 "rbU" = (
-/obj/item/device/megaphone{
+/obj/item/megaphone{
 	pixel_x = -1;
 	pixel_y = 16
 	},
@@ -128079,7 +128079,7 @@
 	pixel_x = 6
 	},
 /obj/item/pen/black,
-/obj/item/device/price_scanner{
+/obj/item/price_scanner{
 	pixel_x = 6
 	},
 /obj/machinery/button/remote/blast_door{
@@ -128677,7 +128677,7 @@
 /turf/simulated/floor/plating,
 /area/horizon/engineering/atmos/air)
 "rgE" = (
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /obj/structure/table/standard,
 /obj/item/storage/toolbox/electrical{
 	pixel_y = 8;
@@ -129265,7 +129265,7 @@
 /area/horizon/engineering/gravity_gen)
 "rks" = (
 /obj/structure/table/standard,
-/obj/item/device/binoculars,
+/obj/item/binoculars,
 /obj/effect/floor_decal/corner/dark_blue{
 	dir = 10
 	},
@@ -129586,7 +129586,7 @@
 "rme" = (
 /obj/structure/table/wood,
 /obj/effect/floor_decal/corner_wide/green/diagonal,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -129815,14 +129815,14 @@
 /turf/simulated/floor/tiled/dark,
 /area/horizon/hangar/auxiliary)
 "rna" = (
-/obj/item/device/taperecorder{
+/obj/item/taperecorder{
 	pixel_x = 3;
 	pixel_y = 3
 	},
 /obj/item/storage/briefcase,
-/obj/item/device/flash,
+/obj/item/flash,
 /obj/item/storage/secure/briefcase,
-/obj/item/device/eftpos{
+/obj/item/eftpos{
 	eftpos_name = "Internal Affairs EFTPOS scanner"
 	},
 /obj/item/clothing/under/suit_jacket/really_black,
@@ -129830,12 +129830,12 @@
 /obj/item/clothing/shoes/laceup,
 /obj/item/clipboard,
 /obj/item/pen/multi,
-/obj/item/device/camera,
+/obj/item/camera,
 /obj/item/paper_scanner,
 /obj/item/folder/red,
 /obj/item/folder/yellow,
 /obj/structure/closet/lawcloset,
-/obj/item/device/destTagger,
+/obj/item/destTagger,
 /obj/item/stack/packageWrap,
 /turf/simulated/floor/carpet,
 /area/horizon/repoffice/consular_one)
@@ -131226,7 +131226,7 @@
 /area/horizon/engineering/reactor/supermatter/waste)
 "rxn" = (
 /obj/structure/table/reinforced/steel,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/item/screwdriver{
 	pixel_x = -1;
 	pixel_y = -12
@@ -131267,7 +131267,7 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/intercom/expedition/north,
+/obj/item/radio/intercom/expedition/north,
 /obj/structure/bed/handrail{
 	pixel_y = 2
 	},
@@ -131759,7 +131759,7 @@
 /obj/structure/bed/stool/chair/shuttle{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/west{
+/obj/item/radio/intercom/west{
 	frequency = 1213;
 	name = "Intercom";
 	subspace_transmission = 1;
@@ -132664,16 +132664,16 @@
 	dir = 4
 	},
 /obj/item/crowbar,
-/obj/item/device/flashlight/heavy{
+/obj/item/flashlight/heavy{
 	pixel_y = 6
 	},
-/obj/item/device/flashlight/heavy{
+/obj/item/flashlight/heavy{
 	pixel_y = 6
 	},
-/obj/item/device/flashlight/heavy{
+/obj/item/flashlight/heavy{
 	pixel_y = 6
 	},
-/obj/item/device/camera,
+/obj/item/camera,
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled/dark,
 /area/horizon/security/checkpoint2)
@@ -132936,7 +132936,7 @@
 /obj/item/storage/bag/inflatable{
 	pixel_y = 13
 	},
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/item/reagent_containers/weldpack{
 	pixel_y = -10
 	},
@@ -133203,10 +133203,10 @@
 /obj/item/crowbar/red{
 	pixel_y = 6
 	},
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_y = 7
 	},
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_y = 2
 	},
 /obj/structure/railing/mapped,
@@ -133702,16 +133702,16 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/device/toner{
+/obj/item/toner{
 	pixel_y = 5
 	},
-/obj/item/device/toner{
+/obj/item/toner{
 	pixel_y = -1
 	},
 /obj/item/paper_scanner,
 /obj/item/stack/packageWrap,
 /obj/item/storage/box/fancy/candle_box,
-/obj/item/device/destTagger,
+/obj/item/destTagger,
 /obj/structure/closet/walllocker{
 	pixel_y = 32
 	},
@@ -133882,7 +133882,7 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/machinery/camera/network/security{
 	c_tag = "Security - Holding Cell A"
 	},
@@ -134521,7 +134521,7 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/device/hand_labeler{
+/obj/item/hand_labeler{
 	pixel_y = 2
 	},
 /turf/simulated/floor/tiled/dark,
@@ -135497,7 +135497,7 @@
 /turf/simulated/floor/tiled/gunmetal,
 /area/horizon/operations/warehouse)
 "rZo" = (
-/obj/item/device/radio/intercom/south{
+/obj/item/radio/intercom/south{
 	pixel_y = 0;
 	pixel_x = 1
 	},
@@ -135716,7 +135716,7 @@
 	pixel_y = -8
 	},
 /obj/structure/table/reinforced/steel,
-/obj/item/device/destTagger{
+/obj/item/destTagger{
 	pixel_y = 6;
 	pixel_x = -4
 	},
@@ -137453,7 +137453,7 @@
 /area/horizon/rnd/xenoarch/atrium)
 "slZ" = (
 /obj/structure/table/standard,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/effect/floor_decal/corner/dark_blue{
 	dir = 5
 	},
@@ -137722,11 +137722,11 @@
 /area/horizon/engineering/atmos/propulsion)
 "snO" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/flare/torch{
+/obj/item/flashlight/flare/torch{
 	pixel_x = 9
 	},
-/obj/item/device/flashlight/flare/torch,
-/obj/item/device/flashlight/flare/torch{
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch{
 	pixel_x = 5
 	},
 /turf/simulated/floor/holofloor/snow,
@@ -138006,7 +138006,7 @@
 /area/antag/actor)
 "sqV" = (
 /obj/structure/table/steel,
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	pixel_y = 2
 	},
 /turf/unsimulated/floor,
@@ -138055,29 +138055,29 @@
 /obj/structure/table/rack{
 	dir = 8
 	},
-/obj/item/device/flash{
+/obj/item/flash{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/device/flash{
+/obj/item/flash{
 	pixel_y = 4
 	},
-/obj/item/device/flash{
+/obj/item/flash{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/device/flash{
+/obj/item/flash{
 	pixel_x = 8;
 	pixel_y = 4
 	},
-/obj/item/device/flash{
+/obj/item/flash{
 	pixel_x = -4
 	},
-/obj/item/device/flash,
-/obj/item/device/flash{
+/obj/item/flash,
+/obj/item/flash{
 	pixel_x = 4
 	},
-/obj/item/device/flash{
+/obj/item/flash{
 	pixel_x = 8
 	},
 /obj/effect/floor_decal/corner/yellow{
@@ -138208,7 +138208,7 @@
 /obj/item/clothing/glasses/sunglasses/sechud,
 /obj/item/clothing/accessory/badge/holo,
 /obj/item/clothing/accessory/holster/hip,
-/obj/item/device/radio/headset/ert,
+/obj/item/radio/headset/ert,
 /obj/item/clothing/head/beret/centcom/officer,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -138222,7 +138222,7 @@
 /obj/effect/floor_decal/corner_wide/orange{
 	dir = 6
 	},
-/obj/item/device/quikpay{
+/obj/item/quikpay{
 	destinationact = "Medical";
 	pixel_y = 7;
 	pixel_x = -5
@@ -138369,7 +138369,7 @@
 /obj/structure/table/standard{
 	no_cargo = 1
 	},
-/obj/item/device/destTagger,
+/obj/item/destTagger,
 /obj/item/stack/packageWrap,
 /obj/effect/floor_decal/corner/brown/full,
 /turf/simulated/floor/tiled/gunmetal/full,
@@ -138432,7 +138432,7 @@
 	c_tag = "Operations -  Machinist Workshop Starboard 2";
 	dir = 1
 	},
-/obj/item/device/paint_sprayer,
+/obj/item/paint_sprayer,
 /obj/structure/platform{
 	dir = 8
 	},
@@ -139414,7 +139414,7 @@
 /obj/structure/table/steel,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /turf/simulated/floor/tiled/dark,
 /area/horizon/hangar/control)
 "szJ" = (
@@ -139640,29 +139640,29 @@
 /area/horizon/hangar/operations)
 "sBb" = (
 /obj/structure/table/rack,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare{
 	pixel_y = 5
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 5
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 5
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 5
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 5
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor,
@@ -139792,19 +139792,19 @@
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = -2
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/item/hoist_kit{
 	pixel_y = 7
 	},
 /obj/structure/table/rack,
-/obj/item/device/binoculars/high_power{
+/obj/item/binoculars/high_power{
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/device/radio,
-/obj/item/device/radio,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
+/obj/item/radio,
+/obj/item/radio,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
 /obj/machinery/recharger/wallcharger{
 	pixel_x = 28;
 	pixel_y = 13
@@ -139818,7 +139818,7 @@
 	dir = 1
 	},
 /obj/item/storage/bag/inflatable,
-/obj/item/device/gps/stationary/sccv_canary{
+/obj/item/gps/stationary/sccv_canary{
 	pixel_x = 23;
 	pixel_y = -9
 	},
@@ -140679,7 +140679,7 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced/steel,
-/obj/item/device/quikpay{
+/obj/item/quikpay{
 	destinationact = "Operations";
 	pixel_y = 3
 	},
@@ -140953,11 +140953,11 @@
 /obj/effect/floor_decal/spline/plain{
 	dir = 10
 	},
-/obj/item/device/integrated_electronics/wirer{
+/obj/item/integrated_electronics/wirer{
 	pixel_x = -3;
 	pixel_y = 10
 	},
-/obj/item/device/integrated_electronics/debugger{
+/obj/item/integrated_electronics/debugger{
 	pixel_x = 5;
 	pixel_y = 9
 	},
@@ -141333,7 +141333,7 @@
 /turf/simulated/floor/plating,
 /area/horizon/maintenance/deck_2/wing/port/nacelle)
 "sLU" = (
-/obj/item/device/radio/intercom/west{
+/obj/item/radio/intercom/west{
 	frequency = 1213;
 	name = "Intercom";
 	subspace_transmission = 1;
@@ -142659,11 +142659,11 @@
 /obj/item/gun/custom_ka/frame01/illegal{
 	pixel_y = -1
 	},
-/obj/item/device/flash{
+/obj/item/flash{
 	pixel_x = -8;
 	pixel_y = -8
 	},
-/obj/item/device/flash{
+/obj/item/flash{
 	pixel_x = -8;
 	pixel_y = -8
 	},
@@ -142700,7 +142700,7 @@
 /obj/item/storage/box/fancy/candle_box,
 /obj/item/storage/box/fancy/candle_box,
 /obj/item/stack/packageWrap,
-/obj/item/device/destTagger,
+/obj/item/destTagger,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/tiled/dark,
 /area/horizon/service/chapel/office)
@@ -142889,7 +142889,7 @@
 /obj/effect/floor_decal/corner/dark_blue/full{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /obj/machinery/button/remote/blast_door{
 	dir = 1;
 	id = "hangarlockdown";
@@ -142964,11 +142964,11 @@
 /area/antag/mercenary)
 "sXl" = (
 /obj/structure/table/standard,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /turf/simulated/floor/tiled/full,
 /area/horizon/engineering/storage_eva)
 "sXm" = (
@@ -143768,7 +143768,7 @@
 /obj/item/clothing/glasses/sunglasses/sechud,
 /obj/item/clothing/accessory/badge/holo,
 /obj/item/clothing/accessory/holster/hip,
-/obj/item/device/radio/headset/ert,
+/obj/item/radio/headset/ert,
 /obj/item/clothing/head/beret/centcom/officer,
 /turf/unsimulated/floor{
 	icon_state = "dark_preview"
@@ -144782,7 +144782,7 @@
 /obj/structure/table/standard{
 	no_cargo = 1
 	},
-/obj/item/device/hand_labeler{
+/obj/item/hand_labeler{
 	pixel_x = -14;
 	pixel_y = 2
 	},
@@ -145286,7 +145286,7 @@
 /turf/simulated/floor,
 /area/horizon/ai/upload_foyer)
 "tnL" = (
-/obj/item/device/radio/intercom/north{
+/obj/item/radio/intercom/north{
 	desc = "Talk through this. Evilly";
 	frequency = 1213;
 	name = "Syndicate Intercom";
@@ -145294,7 +145294,7 @@
 	syndie = 1
 	},
 /obj/item/stack/packageWrap,
-/obj/item/device/hand_labeler{
+/obj/item/hand_labeler{
 	pixel_x = -4;
 	pixel_y = 11
 	},
@@ -146386,7 +146386,7 @@
 /obj/structure/bed/stool/chair/shuttle{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /turf/simulated/floor/shuttle/dark_blue,
 /area/horizon/shuttle/escape_pod/pod4)
 "tvi" = (
@@ -146481,14 +146481,14 @@
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/security/firing_range)
 "tvI" = (
-/obj/item/device/taperecorder{
+/obj/item/taperecorder{
 	pixel_x = 3;
 	pixel_y = 3
 	},
 /obj/item/storage/briefcase,
-/obj/item/device/flash,
+/obj/item/flash,
 /obj/item/storage/secure/briefcase,
-/obj/item/device/eftpos{
+/obj/item/eftpos{
 	eftpos_name = "Internal Affairs EFTPOS scanner"
 	},
 /obj/item/clothing/under/suit_jacket/really_black,
@@ -146497,7 +146497,7 @@
 /obj/item/clipboard,
 /obj/item/pen/multi,
 /obj/structure/closet/lawcloset,
-/obj/item/device/camera,
+/obj/item/camera,
 /obj/item/stamp/denied,
 /obj/item/folder/blue,
 /obj/item/folder/white,
@@ -146505,7 +146505,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/west,
-/obj/item/device/destTagger,
+/obj/item/destTagger,
 /obj/item/stack/packageWrap,
 /turf/simulated/floor/carpet,
 /area/horizon/repoffice/representative_one)
@@ -146707,7 +146707,7 @@
 /obj/effect/floor_decal/corner/brown{
 	dir = 5
 	},
-/obj/item/device/radio/intercom/north,
+/obj/item/radio/intercom/north,
 /turf/simulated/floor/tiled,
 /area/horizon/operations/break_room)
 "txn" = (
@@ -146749,7 +146749,7 @@
 	pixel_x = 5;
 	pixel_y = 13
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/machinery/light{
 	name = "adjusted light fixture";
 	pixel_x = 16
@@ -150401,7 +150401,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /obj/structure/cable/green,
 /turf/simulated/floor/tiled,
 /area/horizon/service/custodial/auxiliary)
@@ -151095,7 +151095,7 @@
 /obj/effect/floor_decal/corner/brown{
 	dir = 5
 	},
-/obj/item/device/radio/intercom/north,
+/obj/item/radio/intercom/north,
 /obj/structure/cable/green{
 	icon_state = "2-4"
 	},
@@ -151577,7 +151577,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /turf/simulated/floor/tiled,
 /area/horizon/medical/paramedic)
 "uhj" = (
@@ -152715,11 +152715,11 @@
 /turf/unsimulated/floor,
 /area/centcom/legion)
 "uoL" = (
-/obj/item/device/flashlight/flare/torch,
-/obj/item/device/flashlight/flare/torch{
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch{
 	pixel_x = 5
 	},
-/obj/item/device/flashlight/flare/torch{
+/obj/item/flashlight/flare/torch{
 	pixel_x = 9
 	},
 /turf/simulated/floor/holofloor/grass{
@@ -152952,7 +152952,7 @@
 	c_tag = "Mining - Locker Room"
 	},
 /obj/structure/table/standard,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/belt/utility,
 /obj/item/stack/rods/full{
@@ -153076,11 +153076,11 @@
 /turf/simulated/floor/tiled/dark,
 /area/horizon/holodeck/source_pool)
 "uqY" = (
-/obj/item/device/radio/intercom/north{
+/obj/item/radio/intercom/north{
 	listening = 0;
 	name = "Custom Channel"
 	},
-/obj/item/device/radio/intercom/north{
+/obj/item/radio/intercom/north{
 	frequency = 1343;
 	name = "Private Channel"
 	},
@@ -153625,7 +153625,7 @@
 	dir = 4
 	},
 /obj/machinery/hologram/holopad,
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /turf/simulated/floor/wood/walnut,
 /area/horizon/medical/smoking)
 "uuv" = (
@@ -154012,7 +154012,7 @@
 /area/horizon/maintenance/deck_1/main/port)
 "uxj" = (
 /obj/structure/closet/secure_closet/engineering_chief,
-/obj/item/device/radio/intercom/south,
+/obj/item/radio/intercom/south,
 /obj/machinery/requests_console/east{
 	announcementConsole = 1;
 	department = "Chief Engineer's Desk";
@@ -154031,7 +154031,7 @@
 /obj/effect/floor_decal/spline/plain/black{
 	dir = 6
 	},
-/obj/item/device/radio/intercom/expedition/north,
+/obj/item/radio/intercom/expedition/north,
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/shuttle/intrepid/starboard_compartment)
 "uxs" = (
@@ -154271,7 +154271,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/north,
+/obj/item/radio/intercom/north,
 /turf/simulated/floor/tiled/white,
 /area/horizon/medical/surgery)
 "uzz" = (
@@ -154592,7 +154592,7 @@
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/device/flashlight/lantern{
+/obj/item/flashlight/lantern{
 	pixel_x = 6;
 	pixel_y = 5
 	},
@@ -154609,7 +154609,7 @@
 /turf/unsimulated/floor,
 /area/antag/mercenary)
 "uBS" = (
-/obj/item/device/geiger,
+/obj/item/geiger,
 /obj/item/storage/box/fancy/med_pouch/radiation,
 /obj/machinery/light/small{
 	dir = 1;
@@ -155227,7 +155227,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/expedition/north,
+/obj/item/radio/intercom/expedition/north,
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/shuttle/intrepid/main_compartment)
 "uFD" = (
@@ -156522,7 +156522,7 @@
 /obj/effect/floor_decal/corner_wide/green{
 	dir = 9
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/machinery/light/floor{
 	dir = 8
 	},
@@ -156945,7 +156945,7 @@
 /area/horizon/ai/upload_foyer)
 "uRk" = (
 /obj/structure/table/standard,
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	pixel_x = -11;
 	pixel_y = 1
 	},
@@ -157204,7 +157204,7 @@
 /obj/structure/window/reinforced/crescent{
 	dir = 1
 	},
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/unsimulated/floor,
 /area/centcom/ferry)
 "uSG" = (
@@ -157518,14 +157518,14 @@
 /obj/item/grenade/chem_grenade,
 /obj/item/grenade/chem_grenade,
 /obj/item/grenade/chem_grenade,
-/obj/item/device/assembly/igniter,
-/obj/item/device/assembly/igniter,
-/obj/item/device/assembly/igniter,
-/obj/item/device/assembly/igniter,
-/obj/item/device/assembly/timer,
-/obj/item/device/assembly/timer,
-/obj/item/device/assembly/timer,
-/obj/item/device/assembly/timer,
+/obj/item/assembly/igniter,
+/obj/item/assembly/igniter,
+/obj/item/assembly/igniter,
+/obj/item/assembly/igniter,
+/obj/item/assembly/timer,
+/obj/item/assembly/timer,
+/obj/item/assembly/timer,
+/obj/item/assembly/timer,
 /obj/structure/closet/crate/drop/grey{
 	desc = "A large, sturdy crate, that stores grenade components.";
 	name = "grenade crate";
@@ -158462,8 +158462,8 @@
 "vbH" = (
 /obj/structure/table/standard,
 /obj/item/storage/bag/circuits/basic,
-/obj/item/device/integrated_electronics/debugger,
-/obj/item/device/integrated_electronics/wirer,
+/obj/item/integrated_electronics/debugger,
+/obj/item/integrated_electronics/wirer,
 /obj/effect/floor_decal/corner/mauve{
 	dir = 6
 	},
@@ -158800,10 +158800,10 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /obj/item/tank/emergency_oxygen/double,
 /obj/item/tank/emergency_oxygen/double,
 /obj/item/tank/emergency_oxygen/double,
@@ -159105,7 +159105,7 @@
 /obj/item/stack/cable_coil,
 /obj/item/wirecutters,
 /obj/item/weldingtool,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/cell/mecha/phoron,
 /obj/effect/floor_decal/industrial/warning,
 /obj/structure/table/rack,
@@ -159113,7 +159113,7 @@
 /area/antag/jockey)
 "vfN" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/box{
+/obj/item/flashlight/lamp/box{
 	on = 0
 	},
 /turf/simulated/floor/holofloor/grass{
@@ -159306,8 +159306,8 @@
 	},
 /obj/structure/table/steel,
 /obj/machinery/power/apc/low/north,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /turf/simulated/floor/tiled/dark,
 /area/horizon/operations/mining_main/eva)
 "vhJ" = (
@@ -159848,14 +159848,14 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/machinery/camera/network/security{
 	c_tag = "Security - Holding Cell B"
 	},
 /turf/simulated/floor/tiled,
 /area/horizon/security/holding_cell_b)
 "vlL" = (
-/obj/item/device/radio/intercom/south{
+/obj/item/radio/intercom/south{
 	frequency = 1443;
 	name = "Spec Ops Intercom"
 	},
@@ -160091,7 +160091,7 @@
 /area/horizon/maintenance/deck_2/wing/starboard)
 "vnE" = (
 /obj/structure/table/fancy,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 13
 	},
@@ -160223,7 +160223,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/lava/pink{
+/obj/item/flashlight/lamp/lava/pink{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -160628,7 +160628,7 @@
 /obj/item/storage/box/fancy/donut{
 	pixel_y = 8
 	},
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /turf/simulated/floor/tiled,
 /area/horizon/security/equipment)
 "vrR" = (
@@ -161040,14 +161040,14 @@
 /obj/effect/floor_decal/corner/dark_blue{
 	dir = 10
 	},
-/obj/item/device/destTagger{
+/obj/item/destTagger{
 	pixel_y = -4
 	},
 /obj/item/clipboard{
 	pixel_x = -6
 	},
 /obj/item/stack/packageWrap,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /turf/simulated/floor/tiled,
 /area/horizon/security/office)
 "vvQ" = (
@@ -161192,7 +161192,7 @@
 /area/horizon/operations/machinist/surgicalbay)
 "vwS" = (
 /obj/structure/table/reinforced/steel,
-/obj/item/device/multitool{
+/obj/item/multitool{
 	pixel_y = 4;
 	pixel_x = 12
 	},
@@ -161775,15 +161775,15 @@
 "vBc" = (
 /obj/effect/floor_decal/industrial/outline/grey,
 /obj/structure/table/steel,
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = -4;
 	pixel_y = 20
 	},
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = 4;
 	pixel_y = 12
 	},
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = -4;
 	pixel_y = 4
 	},
@@ -161877,7 +161877,7 @@
 	},
 /obj/structure/railing/mapped,
 /obj/structure/table/reinforced/steel,
-/obj/item/device/destTagger{
+/obj/item/destTagger{
 	pixel_y = 5
 	},
 /obj/item/stack/packageWrap{
@@ -162152,7 +162152,7 @@
 /obj/structure/table/rack{
 	dir = 8
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/item/cell/high{
 	charge = 100;
 	maxcharge = 15000
@@ -162161,8 +162161,8 @@
 	charge = 100;
 	maxcharge = 15000
 	},
-/obj/item/device/flash,
-/obj/item/device/flash,
+/obj/item/flash,
+/obj/item/flash,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
@@ -162745,7 +162745,7 @@
 /obj/effect/floor_decal/corner/mauve{
 	dir = 5
 	},
-/obj/item/device/destTagger{
+/obj/item/destTagger{
 	pixel_y = 7;
 	pixel_x = -3
 	},
@@ -163097,8 +163097,8 @@
 /area/horizon/engineering/hallway/fore)
 "vKA" = (
 /obj/item/storage/photo_album,
-/obj/item/device/camera_film,
-/obj/item/device/camera,
+/obj/item/camera_film,
+/obj/item/camera,
 /obj/structure/closet/secure_closet{
 	name = "\improper Journalist's closet";
 	req_access = list(70)
@@ -163111,7 +163111,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 5
 	},
-/obj/item/device/radio/microphone,
+/obj/item/radio/microphone,
 /turf/simulated/floor/wood,
 /area/horizon/crew/journalistoffice)
 "vKB" = (
@@ -163365,8 +163365,8 @@
 /obj/random/tech_supply,
 /obj/random/tech_supply,
 /obj/random/tech_supply,
-/obj/item/device/hand_labeler,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
+/obj/item/hand_labeler,
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/tiled,
 /area/horizon/storage/primary)
@@ -163402,7 +163402,7 @@
 /obj/item/stack/material/steel/full,
 /obj/item/stack/material/bronze/full,
 /obj/item/stack/material/glass/full,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /turf/simulated/floor/tiled/white{
 	name = "cooled white floor";
 	temperature = 278.15
@@ -166847,7 +166847,7 @@
 /obj/item/stack/packageWrap{
 	pixel_y = 5
 	},
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /turf/unsimulated/floor{
 	icon_state = "dark_preview"
 	},
@@ -166868,7 +166868,7 @@
 /obj/item/rfd_ammo,
 /obj/item/rfd/construction,
 /obj/item/rfd/construction,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/structure/table/steel,
 /turf/unsimulated/floor/plating,
 /area/centcom/specops)
@@ -167075,7 +167075,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 9
 	},
-/obj/item/device/flashlight/lamp/stage,
+/obj/item/flashlight/lamp/stage,
 /turf/simulated/floor/holofloor/wood,
 /area/horizon/holodeck/source_theatre)
 "wlz" = (
@@ -167085,7 +167085,7 @@
 	pixel_x = -7;
 	pixel_y = 8
 	},
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = 4
 	},
 /turf/simulated/floor/plating,
@@ -167118,7 +167118,7 @@
 /area/horizon/service/hydroponics)
 "wlD" = (
 /obj/structure/table/standard,
-/obj/item/device/paicard{
+/obj/item/paicard{
 	pixel_x = 5
 	},
 /obj/effect/floor_decal/corner/mauve/full{
@@ -168179,7 +168179,7 @@
 /area/horizon/hangar/auxiliary)
 "wrs" = (
 /obj/structure/table/standard,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -168195,24 +168195,24 @@
 /area/horizon/medical/surgery)
 "wrA" = (
 /obj/structure/table/rack,
-/obj/item/device/gps/science{
+/obj/item/gps/science{
 	pixel_x = 4;
 	pixel_y = 11
 	},
-/obj/item/device/gps/science{
+/obj/item/gps/science{
 	pixel_x = 4;
 	pixel_y = 7
 	},
-/obj/item/device/gps/science{
+/obj/item/gps/science{
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/item/device/gps/science{
+/obj/item/gps/science{
 	pixel_y = -1;
 	pixel_x = 4
 	},
 /obj/machinery/alarm/north,
-/obj/item/device/multitool{
+/obj/item/multitool{
 	pixel_x = -8;
 	pixel_y = 10
 	},
@@ -168591,8 +168591,8 @@
 /turf/simulated/floor/plating,
 /area/horizon/maintenance/deck_1/main/starboard)
 "wtM" = (
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /obj/item/rig_module/cooling_unit,
 /obj/item/rig_module/cooling_unit,
 /obj/structure/table/standard,
@@ -170345,7 +170345,7 @@
 	pixel_x = -1;
 	pixel_y = 10
 	},
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = -9;
 	pixel_y = -1
 	},
@@ -171236,7 +171236,7 @@
 	},
 /obj/structure/bed/stool/chair,
 /obj/effect/floor_decal/industrial/outline/security,
-/obj/item/device/radio/intercom/north,
+/obj/item/radio/intercom/north,
 /turf/simulated/floor/tiled,
 /area/horizon/security/hallway)
 "wNh" = (
@@ -173216,17 +173216,17 @@
 /obj/structure/table/rack,
 /obj/item/storage/toolbox/emergency,
 /obj/item/ladder_mobile,
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -4
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = 4
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -173306,7 +173306,7 @@
 /turf/simulated/floor/reinforced/hydrogen,
 /area/horizon/engineering/atmos)
 "wZp" = (
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	on = 0;
 	pixel_x = -3;
 	pixel_y = 2
@@ -173553,7 +173553,7 @@
 /obj/effect/floor_decal/corner_wide/green/full{
 	dir = 8
 	},
-/obj/item/device/mass_spectrometer{
+/obj/item/mass_spectrometer{
 	pixel_x = -7;
 	pixel_y = 1
 	},
@@ -173680,7 +173680,7 @@
 /area/horizon/command/heads/om)
 "xbA" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green,
+/obj/item/flashlight/lamp/green,
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 9
 	},
@@ -173939,7 +173939,7 @@
 	pixel_x = 10;
 	pixel_y = 9
 	},
-/obj/item/device/binoculars{
+/obj/item/binoculars{
 	pixel_x = -6;
 	pixel_y = 7
 	},
@@ -174027,7 +174027,7 @@
 	},
 /obj/machinery/light,
 /obj/item/stack/material/glass/full,
-/obj/item/device/hand_labeler,
+/obj/item/hand_labeler,
 /turf/simulated/floor/tiled/dark,
 /area/horizon/service/chapel/office)
 "xdR" = (
@@ -174395,7 +174395,7 @@
 	pixel_x = -8;
 	pixel_y = 3
 	},
-/obj/item/device/analyzer{
+/obj/item/analyzer{
 	pixel_x = 3;
 	pixel_y = 8
 	},
@@ -174573,11 +174573,11 @@
 /area/horizon/holodeck/source_emptycourt)
 "xhF" = (
 /obj/structure/table/reinforced/steel,
-/obj/item/device/camera_film{
+/obj/item/camera_film{
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/device/camera{
+/obj/item/camera{
 	pixel_x = 4;
 	pixel_y = 1
 	},
@@ -175123,7 +175123,7 @@
 /turf/simulated/floor/carpet/rubber,
 /area/horizon/operations/machinist)
 "xmu" = (
-/obj/item/device/radio/intercom/east,
+/obj/item/radio/intercom/east,
 /obj/effect/floor_decal/corner/dark_blue/full{
 	dir = 1
 	},
@@ -175150,7 +175150,7 @@
 /area/horizon/engineering/atmos/storage)
 "xmB" = (
 /obj/structure/table/steel,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/machinery/camera/network/research{
 	c_tag = "Research - Server Room"
 	},
@@ -175579,7 +175579,7 @@
 	pixel_x = -4;
 	pixel_y = 18
 	},
-/obj/item/device/hand_labeler{
+/obj/item/hand_labeler{
 	pixel_y = 2
 	},
 /turf/simulated/floor/tiled/dark,
@@ -176159,7 +176159,7 @@
 /turf/simulated/floor/carpet/rubber,
 /area/horizon/maintenance/deck_1/workshop)
 "xtJ" = (
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/simulated/floor/holofloor/beach/sand{
 	icon_state = "desert4"
 	},
@@ -176298,10 +176298,10 @@
 	},
 /obj/item/rig_module/cooling_unit,
 /obj/item/rig_module/cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
-/obj/item/device/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
+/obj/item/suit_cooling_unit,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -177392,12 +177392,12 @@
 	locked = 0;
 	opened = 1
 	},
-/obj/item/device/magnetic_lock/security/legion,
-/obj/item/device/magnetic_lock/security/legion,
-/obj/item/device/magnetic_lock/security/legion,
-/obj/item/device/magnetic_lock/security/legion,
-/obj/item/device/magnetic_lock/security/legion,
-/obj/item/device/magnetic_lock/security/legion,
+/obj/item/magnetic_lock/security/legion,
+/obj/item/magnetic_lock/security/legion,
+/obj/item/magnetic_lock/security/legion,
+/obj/item/magnetic_lock/security/legion,
+/obj/item/magnetic_lock/security/legion,
+/obj/item/magnetic_lock/security/legion,
 /obj/machinery/light/spot{
 	dir = 1;
 	icon_state = "tube1"
@@ -177689,7 +177689,7 @@
 /area/horizon/rnd/xenobiology/dissection)
 "xEh" = (
 /obj/structure/table/rack,
-/obj/item/device/paint_sprayer,
+/obj/item/paint_sprayer,
 /obj/random/tech_supply,
 /obj/random/tech_supply,
 /obj/item/hoist_kit{
@@ -177716,7 +177716,7 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/lava/pink{
+/obj/item/flashlight/lamp/lava/pink{
 	pixel_x = -7;
 	pixel_y = 13
 	},
@@ -178228,7 +178228,7 @@
 	dir = 6
 	},
 /obj/structure/table/standard,
-/obj/item/device/taperecorder{
+/obj/item/taperecorder{
 	pixel_x = -4;
 	pixel_y = 5
 	},
@@ -179039,7 +179039,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 4
 	},
-/obj/item/device/versebook/biesel,
+/obj/item/versebook/biesel,
 /turf/simulated/floor/tiled/dark,
 /area/horizon/holodeck/source_biesel)
 "xNo" = (
@@ -180701,8 +180701,8 @@
 /area/horizon/maintenance/deck_2/research)
 "xZO" = (
 /obj/structure/table/standard,
-/obj/item/device/integrated_electronics/wirer,
-/obj/item/device/integrated_electronics/debugger,
+/obj/item/integrated_electronics/wirer,
+/obj/item/integrated_electronics/debugger,
 /obj/item/storage/bag/circuits/basic,
 /obj/machinery/light{
 	dir = 8
@@ -182038,7 +182038,7 @@
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 10
 	},
-/obj/item/device/radio/intercom/west,
+/obj/item/radio/intercom/west,
 /obj/structure/flora/pottedplant{
 	icon_state = "plant-33"
 	},
