@@ -270,7 +270,7 @@
 		for(var/mob/O in GLOB.player_list)
 			if (istype(O.machine, /obj/machinery/computer/security))
 				var/obj/machinery/computer/security/S = O.machine
-				if (S.current_camera == src)
+				if (S.current == src)
 					to_chat(O, "[U] holds \a [itemname] up to one of the cameras ...")
 					O << browse("<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>", "window=[itemname]") //Force people watching to open the page so they can't see it again)
 		return TRUE
@@ -375,7 +375,7 @@
 	for(var/mob/O in GLOB.player_list)
 		if (istype(O.machine, /obj/machinery/computer/security))
 			var/obj/machinery/computer/security/S = O.machine
-			if (S.current_camera == src)
+			if (S.current == src)
 				O.unset_machine()
 				O.reset_view(null)
 				to_chat(O, "The screen bursts into static.")

@@ -15,22 +15,7 @@
 	var/datum/computer_file/program/camera_monitor/camera_monitor_program
 	circuit = /obj/item/circuitboard/security
 
-	/// The turf where the camera was last updated.
-	var/turf/last_camera_turf
-	var/list/concurrent_users = list()
-
-	/// Needed to render the map
-	var/camera_map_name
-
-	var/stay_connected = FALSE
-
 /obj/machinery/computer/security/Initialize()
-	RegisterSignal(src, COMSIG_CAMERA_MAPNAME_ASSIGNED, PROC_REF(camera_mapname_update))
-
-	// camera setup
-	AddComponent(/datum/component/camera_manager)
-	SEND_SIGNAL(src, COMSIG_CAMERA_CLEAR)
-
 	if(!console_networks)
 		console_networks = SSatlas.current_map.station_networks.Copy()
 	. = ..()
@@ -43,21 +28,10 @@
 	camera_monitor_program.monitored_networks = console_networks
 
 /obj/machinery/computer/security/Destroy()
-	if(camera_monitor_program)
-		camera_monitor_program = null
-
-	. = ..()
-
-/obj/machinery/computer/security/Destroy()
-	SStgui.close_uis(src)
 	current = null
-	UnregisterSignal(src, COMSIG_CAMERA_MAPNAME_ASSIGNED)
-	last_camera_turf = null
-	concurrent_users = null
+	camera_monitor_program = null
+	SStgui.close_uis(src)
 	return ..()
-
-/obj/machinery/computer/security/proc/camera_mapname_update(source, value)
-	camera_map_name = value
 
 /obj/machinery/computer/security/attack_ai(var/mob/user as mob)
 	if(!ai_can_interact(user))
@@ -100,9 +74,9 @@
 		// Ghosts shouldn't count towards concurrent users, which produces
 		// an audible terminal_on click.
 		if(is_living)
-			concurrent_users += user_ref
+			camera_monitor_program.concurrent_users += user_ref
 		// Turn on the console
-		if(length(concurrent_users) == 1 && is_living)
+		if(length(camera_monitor_program.concurrent_users) == 1 && is_living)
 			update_use_power(POWER_USE_ACTIVE)
 
 		SEND_SIGNAL(src, COMSIG_CAMERA_REGISTER_UI, user)
@@ -126,10 +100,18 @@
 	if(camera_monitor_program)
 		. = camera_monitor_program.ui_act(action, params, ui, state)
 
+/obj/machinery/computer/security/ui_close(mob/user)
+	var/is_living = isliving(user)
+	// Turn off the console
+	if(length(camera_monitor_program.concurrent_users) == 0 && is_living && !camera_monitor_program.stay_connected)
+		current = null
+		if(use_power)
+			update_use_power(POWER_USE_IDLE)
+
 /obj/machinery/computer/security/attack_hand(var/mob/user as mob)
 	if(stat & (NOPOWER|BROKEN))	return
-
 	ui_interact(user)
+	update_static_data_for_all_viewers()
 
 /obj/machinery/computer/security/proc/switch_to_camera(var/mob/user, var/obj/machinery/camera/C)
 	//don't need to check if the camera works for AI because the AI jumps to the camera location and doesn't actually look through cameras.

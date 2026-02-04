@@ -47,11 +47,38 @@
 	/// Used for camera monitor consoles from which this interface can be launched. If it exists, only provide that console's "console_networks" networks.
 	var/list/monitored_networks = list()
 
+	/// The turf where the camera was last updated.
+	var/turf/last_camera_turf
+	var/list/concurrent_users = list()
+
+	/// Needed to render the map
+	var/camera_map_name
+
+	var/stay_connected = FALSE
+
+/datum/computer_file/program/camera_monitor/New()
+	. = ..()
+	RegisterSignal(src, COMSIG_CAMERA_MAPNAME_ASSIGNED, PROC_REF(camera_mapname_update))
+
+	// camera setup
+	AddComponent(/datum/component/camera_manager)
+	SEND_SIGNAL(src, COMSIG_CAMERA_CLEAR)
+
+/datum/computer_file/program/camera_monitor/Destroy()
+	current_camera = null
+	UnregisterSignal(src, COMSIG_CAMERA_MAPNAME_ASSIGNED)
+	last_camera_turf = null
+	concurrent_users = null
+	return ..()
+
+/datum/computer_file/program/camera_monitor/proc/camera_mapname_update(source, value)
+	camera_map_name = value
+
 /datum/computer_file/program/camera_monitor/ui_data(mob/user)
 	var/list/data = initial_data()
 
-	data["current_camera"] = current_camera ? current_camera.camera_data() : null
-	data["current_network"] = current_network
+	data["activeCamera"] = current_camera ? current_camera.camera_data() : null
+	data["currentNetwork"] = current_network
 
 	var/list/all_networks = list()
 	var/list/available_networks = list()
@@ -74,14 +101,71 @@
 
 	all_networks = modify_networks_list(all_networks)
 
-	data["networks"] = all_networks
+	data["allNetworks"] = all_networks
+
+	return data
+
+/datum/computer_file/program/camera_monitor/ui_static_data(mob/user)
+	var/list/data = list()
+
+	data["mapRef"] = camera_map_name
+	var/list/cameras = get_available_cameras()
+	data["cameras"] = list()
+	for(var/i in cameras)
+		var/obj/machinery/camera/C = cameras[i]
+		data["cameras"] += list(list(
+			name = C.c_tag,
+		))
+	if(current_camera)
+		data["activeCamera"] = list(
+			name = current_camera.c_tag,
+			status = current_camera.status,
+		)
 
 	if(current_network)
 		data["cameras"] = GLOB.camera_repository.cameras_in_network(current_network)
 
 	return data
 
-// Intended to be overriden by subtypes to manually add non-station networks to the list.
+/datum/computer_file/program/camera_monitor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	if(action == "switch_camera")
+		var/c_tag = params["name"]
+		var/list/cameras = get_available_cameras()
+		var/obj/machinery/camera/selected_camera
+		selected_camera = cameras[c_tag]
+		// Unicode breaks c_tags
+		// Currently the only issues with character names comes from the improper or proper tags and so we strip and recheck if not found.
+		if(!selected_camera)
+			for(var/I in cameras)
+				if(sanitize(I) == c_tag)
+					selected_camera = cameras[I]
+					break
+		current_camera = selected_camera
+
+		if(!selected_camera)
+			return TRUE
+
+		SEND_SIGNAL(src, COMSIG_CAMERA_SET_TARGET, selected_camera, selected_camera.view_range, selected_camera.view_range)
+
+		return TRUE
+
+/datum/computer_file/program/camera_monitor/ui_close(mob/user)
+	var/user_ref = WEAKREF(user)
+	var/is_living = isliving(user)
+	// Living creature or not, we remove you anyway.
+	concurrent_users -= user_ref
+	// Unregister map objects
+	SEND_SIGNAL(src, COMSIG_CAMERA_UNREGISTER_UI, user)
+	// Turn off the console
+	if(length(concurrent_users) == 0 && is_living && !stay_connected)
+		current_camera = null
+		SEND_SIGNAL(src, COMSIG_CAMERA_CLEAR)
+		last_camera_turf = null
+
 /datum/computer_file/program/camera_monitor/proc/modify_networks_list(var/list/networks)
 	return networks
 
@@ -108,42 +192,23 @@
 
 	return (check_network_access(user, ACCESS_SECURITY) && GLOB.security_level >= SEC_LEVEL_BLUE) || check_network_access(user, network_access)
 
-/datum/computer_file/program/camera_monitor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return TRUE
+// Returns the list of cameras accessible from this computer
+/datum/computer_file/program/camera_monitor/proc/get_available_cameras()
+	var/list/available_networks = list()
 
-	switch(action)
-		if("switch_camera")
-			var/obj/machinery/camera/C = locate(params["switch_camera"]) in GLOB.cameranet.cameras
-			if(!C)
-				return
-			if(!(current_network in C.network))
-				return
+	// If this UI was generated from a camera monitoring console, then only that console's networks will be available...
+	if(monitored_networks && (length(monitored_networks) >= 1))
+		available_networks = monitored_networks
 
-			var/access_granted = FALSE
-			for(var/network in C.network)
-				if(can_access_network(usr, get_camera_access(network)))
-					access_granted = TRUE //We only need access to one of the networks.
-			if(!access_granted)
-				to_chat(usr, SPAN_WARNING("Access unauthorized."))
-				return
+	// ...otherwise (if it was launched from a standard modular computer), get all networks to which the user has access.
+	else
+		available_networks = SSatlas.current_map.station_networks
 
-			switch_to_camera(usr, C)
-			return TRUE
-
-		if("switch_network")
-			// Either security access, or access to the specific camera network's department is required in order to access the network.
-			if(can_access_network(usr, get_camera_access(params["switch_network"])))
-				current_network = params["switch_network"]
-			else
-				to_chat(usr, SPAN_WARNING("\The [ui_host()] shows an \"Network access denied\" error message."))
-			return TRUE
-
-		if("reset")
-			reset_current()
-			usr.reset_view(current_camera)
-			return TRUE
+	var/list/camera_list = list()
+	for(var/network in available_networks)
+		for(var/obj/machinery/camera/C in GLOB.camera_repository.cameras_in_network(network))
+			camera_list |= C
+	return camera_list
 
 /datum/computer_file/program/camera_monitor/proc/switch_to_camera(var/mob/user, var/obj/machinery/camera/C)
 	//don't need to check if the camera works for AI because the AI jumps to the camera location and doesn't actually look through cameras.
