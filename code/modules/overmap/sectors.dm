@@ -52,7 +52,8 @@ GLOBAL_DATUM(map_overmap, /area/overmap)
 	var/list/obj/effect/landmark/entry_points
 	var/obj/effect/overmap/targeting
 	var/obj/machinery/leviathan_safeguard/levi_safeguard
-	var/obj/machinery/gravity_generator/main/gravity_generator
+	/// Actual object can be gravity_generator or gravity_generatory/large.
+	var/obj/machinery/gravity_generator/gravity_generator
 
 	/// Whether ghostroles attached to this overmap object spawn with comms
 	var/comms_support = FALSE

@@ -136,7 +136,7 @@
 
 	if(centcomm_area)
 		GLOB.centcom_areas[src] = TRUE
-		alwaysgravity = 1
+		alwaysgravity = TRUE
 
 	if(station_area)
 		GLOB.the_station_areas[src] = TRUE
