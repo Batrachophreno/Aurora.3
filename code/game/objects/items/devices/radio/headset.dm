@@ -1,6 +1,6 @@
 /obj/item/radio/headset
 	name = "radio headset"
-	desc = "An updated, modular intercom that fits over the head. Takes encryption keys."
+	desc = "An modern, modular intercom that fits over the head. Takes encryption keys."
 	icon = 'icons/obj/item/radio/headset.dmi'
 	icon_state = "headset"
 	item_state = "headset"
@@ -9,13 +9,9 @@
 	canhear_range = 0 // can't hear headsets from very far away
 
 	slot_flags = SLOT_EARS
-	var/translate_binary = FALSE
-	var/translate_hivenet = FALSE
-	var/obj/item/encryptionkey/keyslot1 = null
-	var/obj/item/encryptionkey/keyslot2 = null
 
-	var/ks1type = /obj/item/encryptionkey
-	var/ks2type = null
+	provision_channels_based_on_id_access = FALSE
+
 	var/radio_sound = null
 
 	var/EarSound = TRUE
@@ -34,13 +30,7 @@
 
 /obj/item/radio/headset/Initialize()
 	. = ..()
-	internal_channels.Cut()
-	if(ks1type)
-		keyslot1 = new ks1type(src)
-	if(ks2type)
-		keyslot2 = new ks2type(src)
 	set_listening(TRUE)
-	recalculateChannels(TRUE)
 	possibly_deactivate_in_loc()
 
 /obj/item/radio/headset/proc/possibly_deactivate_in_loc()
@@ -48,11 +38,6 @@
 		set_listening(should_be_listening)
 	else
 		set_listening(FALSE, actual_setting = FALSE)
-
-/obj/item/radio/headset/Destroy()
-	QDEL_NULL(keyslot1)
-	QDEL_NULL(keyslot2)
-	return ..()
 
 /obj/item/radio/headset/Moved(atom/old_loc, forced)
 	. = ..()
@@ -106,91 +91,6 @@
 			qdel(OE)
 
 	..()
-
-/obj/item/radio/headset/attackby(obj/item/attacking_item, mob/user)
-	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
-		if(keyslot1 || keyslot2)
-			for(var/ch_name in channels)
-				SSradio.remove_object(src, radiochannels[ch_name])
-				secure_radio_connections[ch_name] = null
-
-			if(keyslot1)
-				var/turf/T = get_turf(user)
-				if(T)
-					keyslot1.forceMove(T)
-					keyslot1 = null
-
-			if(keyslot2)
-				var/turf/T = get_turf(user)
-				if(T)
-					keyslot2.forceMove(T)
-					keyslot2 = null
-
-			recalculateChannels(TRUE)
-			to_chat(user, SPAN_NOTICE("You pop out the encryption keys in the headset!"))
-		else
-			to_chat(user, SPAN_WARNING("This headset doesn't have any encryption keys!"))
-
-	else if(istype(attacking_item, /obj/item/encryptionkey))
-		if(keyslot1 && keyslot2)
-			to_chat(user, SPAN_WARNING("The headset can't hold another key!"))
-			return
-
-		if(!keyslot1)
-			user.drop_from_inventory(attacking_item, src)
-			keyslot1 = attacking_item
-		else
-			user.drop_from_inventory(attacking_item, src)
-			keyslot2 = attacking_item
-
-		recalculateChannels(TRUE)
-
-
-/obj/item/radio/headset/proc/recalculateChannels(var/setDescription = FALSE)
-	var/list/old_channel_settings = channels.Copy()
-	channels = list()
-	translate_binary = FALSE
-	translate_hivenet = FALSE
-	syndie = FALSE
-
-	SSradio.remove_object_all(src)
-
-	for(var/keyslot in list(keyslot1, keyslot2))
-		if(!keyslot)
-			continue
-		var/obj/item/encryptionkey/K = keyslot
-
-		for(var/ch_name in K.channels)
-			if(ch_name in channels)
-				continue
-			LAZYSET(channels, ch_name, K.channels[ch_name])
-
-		for(var/ch_name in K.additional_channels)
-			if(ch_name in channels)
-				continue
-			LAZYSET(channels, ch_name, K.additional_channels[ch_name])
-
-		if(K.translate_binary)
-			translate_binary = TRUE
-
-		if(K.translate_hivenet)
-			translate_hivenet = TRUE
-
-		if(K.syndie)
-			syndie = TRUE
-
-		if(K.independent)
-			independent = TRUE
-
-	for (var/ch_name in channels)
-		if(ch_name in old_channel_settings)
-			channels[ch_name] = old_channel_settings[ch_name]
-		secure_radio_connections[ch_name] = SSradio.add_object(src, radiochannels[ch_name], RADIO_CHAT)
-
-	if(setDescription)
-		setupRadioDescription()
-
-	return
 
 /obj/item/radio/headset/alt
 	name = "bowman headset"
@@ -292,7 +192,7 @@
 	desc = "Headset used by the service staff, tasked with keeping the station full, happy and clean."
 	icon_state = "srv_headset"
 	item_state = "srv_headset"
-	ks2type = /obj/item/encryptionkey/headset_service
+	ks2type = /obj/item/encryptionkey/service
 
 /obj/item/radio/headset/headset_service/alt
 	name = "service radio bowman headset"
@@ -304,19 +204,19 @@
 	name = "soundproof service headset"
 	icon_state = "earset_srv"
 	item_state = "earset_srv"
-	ks2type = /obj/item/encryptionkey/headset_service
+	ks2type = /obj/item/encryptionkey/service
 
 /obj/item/radio/headset/wrist/service
 	name = "wristbound service radio"
 	icon_state = "wristset_srv"
 	item_state = "wristset_srv"
-	ks2type = /obj/item/encryptionkey/headset_service
+	ks2type = /obj/item/encryptionkey/service
 
 /obj/item/radio/headset/wrist/clip/service
 	name = "clip-on service radio"
 	icon_state = "clip_srv"
 	item_state = "clip_srv"
-	ks2type = /obj/item/encryptionkey/headset_service
+	ks2type = /obj/item/encryptionkey/service
 
 /obj/item/radio/headset/heads/xo
 	name = "executive officer's headset"
@@ -356,7 +256,7 @@
 	name = "engineering radio headset"
 	desc = "When the engineers wish to chat like girls."
 	icon_state = "eng_headset"
-	ks2type = /obj/item/encryptionkey/headset_eng
+	ks2type = /obj/item/encryptionkey/eng
 
 /obj/item/radio/headset/headset_eng/alt
 	name = "engineering bowman headset"
@@ -368,19 +268,19 @@
 	name = "soundproof engineering headset"
 	icon_state = "earset_eng"
 	item_state = "earset_eng"
-	ks2type = /obj/item/encryptionkey/headset_eng
+	ks2type = /obj/item/encryptionkey/eng
 
 /obj/item/radio/headset/wrist/eng
 	name = "wristbound engineering radio"
 	icon_state = "wristset_eng"
 	item_state = "wristset_eng"
-	ks2type = /obj/item/encryptionkey/headset_eng
+	ks2type = /obj/item/encryptionkey/eng
 
 /obj/item/radio/headset/wrist/clip/eng
 	name = "clip-on engineering radio"
 	icon_state = "clip_eng"
 	item_state = "clip_eng"
-	ks2type = /obj/item/encryptionkey/headset_eng
+	ks2type = /obj/item/encryptionkey/eng
 
 /obj/item/radio/headset/heads/ce
 	name = "chief engineer's headset"
@@ -420,7 +320,7 @@
 	name = "supply radio headset"
 	desc = "A headset used by the operations manager's slaves."
 	icon_state = "cargo_headset"
-	ks2type = /obj/item/encryptionkey/headset_cargo
+	ks2type = /obj/item/encryptionkey/cargo
 
 /obj/item/radio/headset/headset_cargo/alt
 	name = "cargo bowman headset"
@@ -432,25 +332,25 @@
 	name = "soundproof cargo headset"
 	icon_state = "earset_cargo"
 	item_state = "earset_cargo"
-	ks2type = /obj/item/encryptionkey/headset_cargo
+	ks2type = /obj/item/encryptionkey/cargo
 
 /obj/item/radio/headset/wrist/cargo
 	name = "wristbound cargo radio"
 	icon_state = "wristset_cargo"
 	item_state = "wristset_cargo"
-	ks2type = /obj/item/encryptionkey/headset_cargo
+	ks2type = /obj/item/encryptionkey/cargo
 
 /obj/item/radio/headset/wrist/clip/cargo
 	name = "clip-on cargo radio"
 	icon_state = "clip_cargo"
 	item_state = "clip_cargo"
-	ks2type = /obj/item/encryptionkey/headset_cargo
+	ks2type = /obj/item/encryptionkey/cargo
 
 /obj/item/radio/headset/headset_mining
 	name = "mining radio headset"
 	desc = "Headset used by dwarves. It has an inbuilt subspace antenna for better reception."
 	icon_state = "mine_headset"
-	ks2type = /obj/item/encryptionkey/headset_cargo
+	ks2type = /obj/item/encryptionkey/cargo
 
 /obj/item/radio/headset/headset_mining/alt
 	name = "mining bowman radio headset"
@@ -462,7 +362,7 @@
 	name = "soundproof mining headset"
 	icon_state = "earset_mine"
 	item_state = "earset_mine"
-	ks2type = /obj/item/encryptionkey/headset_cargo
+	ks2type = /obj/item/encryptionkey/cargo
 
 /obj/item/radio/headset/wrist/cargo/mining
 	name = "wristbound mining radio"
@@ -478,7 +378,7 @@
 	name = "operations manager's headset"
 	desc = "A headset used by the head honcho of paper pushing."
 	icon_state = "qm_headset"
-	ks2type = /obj/item/encryptionkey/headset_operations_manager
+	ks2type = /obj/item/encryptionkey/heads/om
 
 /obj/item/radio/headset/operations_manager/alt
 	name = "operations manager bowman headset"
@@ -490,19 +390,19 @@
 	name = "soundproof operations manager headset"
 	icon_state = "earset_QM"
 	item_state = "earset_QM"
-	ks2type = /obj/item/encryptionkey/headset_operations_manager
+	ks2type = /obj/item/encryptionkey/heads/om
 
 /obj/item/radio/headset/wrist/cargo/operations_manager
 	name = "wristbound operations manager radio"
 	icon_state = "wristset_QM"
 	item_state = "wristset_QM"
-	ks2type = /obj/item/encryptionkey/headset_operations_manager
+	ks2type = /obj/item/encryptionkey/heads/om
 
 /obj/item/radio/headset/wrist/clip/cargo/operations_manager
 	name = "clip-on operations manager radio"
 	icon_state = "clip_QM"
 	item_state = "clip_QM"
-	ks2type = /obj/item/encryptionkey/headset_operations_manager
+	ks2type = /obj/item/encryptionkey/heads/om
 
 /*
  * Medical
@@ -512,7 +412,7 @@
 	name = "medical radio headset"
 	desc = "A headset for the trained staff of the medbay."
 	icon_state = "med_headset"
-	ks2type = /obj/item/encryptionkey/headset_med
+	ks2type = /obj/item/encryptionkey/med
 
 /obj/item/radio/headset/headset_med/alt
 	name = "medical bowman headset"
@@ -524,19 +424,19 @@
 	name = "soundproof medical headset"
 	icon_state = "earset_med"
 	item_state = "earset_med"
-	ks2type = /obj/item/encryptionkey/headset_med
+	ks2type = /obj/item/encryptionkey/med
 
 /obj/item/radio/headset/wrist/med
 	name = "wristbound medical radio"
 	icon_state = "wristset_med"
 	item_state = "wristset_med"
-	ks2type = /obj/item/encryptionkey/headset_med
+	ks2type = /obj/item/encryptionkey/med
 
 /obj/item/radio/headset/wrist/clip/med
 	name = "clip-on medical radio"
 	icon_state = "clip_med"
 	item_state = "clip_med"
-	ks2type = /obj/item/encryptionkey/headset_med
+	ks2type = /obj/item/encryptionkey/med
 
 /obj/item/radio/headset/heads/cmo
 	name = "chief medical officer's headset"
@@ -576,7 +476,7 @@
 	name = "science radio headset"
 	desc = "A science-y headset. Like usual."
 	icon_state = "sci_headset"
-	ks2type = /obj/item/encryptionkey/headset_sci
+	ks2type = /obj/item/encryptionkey/sci
 
 /obj/item/radio/headset/headset_sci/alt
 	name = "science bowman headset"
@@ -587,25 +487,25 @@
 	name = "soundproof science headset"
 	icon_state = "earset_sci"
 	item_state = "earset_sci"
-	ks2type = /obj/item/encryptionkey/headset_sci
+	ks2type = /obj/item/encryptionkey/sci
 
 /obj/item/radio/headset/wrist/sci
 	name = "wristbound science radio"
 	icon_state = "wristset_sci"
 	item_state = "wristset_sci"
-	ks2type = /obj/item/encryptionkey/headset_sci
+	ks2type = /obj/item/encryptionkey/sci
 
 /obj/item/radio/headset/wrist/clip/sci
 	name = "clip-on science radio"
 	icon_state = "clip_sci"
 	item_state = "clip_sci"
-	ks2type = /obj/item/encryptionkey/headset_sci
+	ks2type = /obj/item/encryptionkey/sci
 
 /obj/item/radio/headset/headset_xenology
 	name = "xenologist radio headset"
 	desc = "A science-y headset for Xenologists."
 	icon_state = "sci_headset"
-	ks2type = /obj/item/encryptionkey/headset_xenology
+	ks2type = /obj/item/encryptionkey/xenology
 
 /obj/item/radio/headset/headset_xenology/alt
 	name = "xenologist bowman headset"
@@ -616,25 +516,25 @@
 	name = "soundproof xenologist headset"
 	icon_state = "earset_sci"
 	item_state = "earset_sci"
-	ks2type = /obj/item/encryptionkey/headset_xenology
+	ks2type = /obj/item/encryptionkey/xenology
 
 /obj/item/radio/headset/wrist/xenology
 	name = "wristbound xenologist radio"
 	icon_state = "wristset_sci"
 	item_state = "wristset_sci"
-	ks2type = /obj/item/encryptionkey/headset_xenology
+	ks2type = /obj/item/encryptionkey/xenology
 
 /obj/item/radio/headset/wrist/clip/xenology
 	name = "clip-on xenologist radio"
 	icon_state = "clip_sci"
 	item_state = "clip_sci"
-	ks2type = /obj/item/encryptionkey/headset_xenology
+	ks2type = /obj/item/encryptionkey/xenology
 
 /obj/item/radio/headset/headset_anom
 	name = "anomalist radio headset"
 	desc = "A science-y headset for Anomalists."
 	icon_state = "sci_headset"
-	ks2type = /obj/item/encryptionkey/headset_xenology
+	ks2type = /obj/item/encryptionkey/xenology
 
 /obj/item/radio/headset/headset_anom/alt
 	name = "anomalist bowman headset"
@@ -645,25 +545,25 @@
 	name = "soundproof anomalist headset"
 	icon_state = "earset_sci"
 	item_state = "earset_sci"
-	ks2type = /obj/item/encryptionkey/headset_xenology
+	ks2type = /obj/item/encryptionkey/xenology
 
 /obj/item/radio/headset/wrist/anom
 	name = "wristbound anomalist radio"
 	icon_state = "wristset_sci"
 	item_state = "wristset_sci"
-	ks2type = /obj/item/encryptionkey/headset_xenology
+	ks2type = /obj/item/encryptionkey/xenology
 
 /obj/item/radio/headset/wrist/clip/anom
 	name = "clip-on anomalist radio"
 	icon_state = "clip_sci"
 	item_state = "clip_sci"
-	ks2type = /obj/item/encryptionkey/headset_xenology
+	ks2type = /obj/item/encryptionkey/xenology
 
 /obj/item/radio/headset/headset_rob
 	name = "robotics radio headset"
 	desc = "Made specifically for the roboticists who cannot decide between departments."
 	icon_state = "rob_headset"
-	ks2type = /obj/item/encryptionkey/headset_rob
+	ks2type = /obj/item/encryptionkey/robotics
 
 /obj/item/radio/headset/heads/rd
 	name = "research director's headset"
@@ -703,7 +603,7 @@
 	name = "security radio headset"
 	desc = "This is used by your elite security force."
 	icon_state = "sec_headset"
-	ks2type = /obj/item/encryptionkey/headset_sec
+	ks2type = /obj/item/encryptionkey/sec
 
 /obj/item/radio/headset/headset_sec/alt
 	name = "security bowman headset"
@@ -715,25 +615,25 @@
 	name = "soundproof security headset"
 	icon_state = "earset_sec"
 	item_state = "earset_sec"
-	ks2type = /obj/item/encryptionkey/headset_sec
+	ks2type = /obj/item/encryptionkey/sec
 
 /obj/item/radio/headset/wrist/sec
 	name = "wristbound security radio"
 	icon_state = "wristset_sec"
 	item_state = "wristset_sec"
-	ks2type = /obj/item/encryptionkey/headset_sec
+	ks2type = /obj/item/encryptionkey/sec
 
 /obj/item/radio/headset/wrist/clip/sec
 	name = "clip-on security radio"
 	icon_state = "clip_sec"
 	item_state = "clip_sec"
-	ks2type = /obj/item/encryptionkey/headset_sec
+	ks2type = /obj/item/encryptionkey/sec
 
 /obj/item/radio/headset/headset_warden
 	name = "warden radio headset"
 	desc = "This is used by your all-powerful overseer."
 	icon_state = "sec_headset"
-	ks2type = /obj/item/encryptionkey/headset_warden
+	ks2type = /obj/item/encryptionkey/warden
 
 /obj/item/radio/headset/headset_warden/alt
 	name = "warden bowman headset"
@@ -743,21 +643,21 @@
 
 /obj/item/radio/headset/alt/double/sec/warden
 	name = "soundproof warden headset"
-	ks2type = /obj/item/encryptionkey/headset_warden
+	ks2type = /obj/item/encryptionkey/warden
 
 /obj/item/radio/headset/wrist/sec/warden
 	name = "wristbound warden radio"
-	ks2type = /obj/item/encryptionkey/headset_warden
+	ks2type = /obj/item/encryptionkey/warden
 
 /obj/item/radio/headset/wrist/clip/sec/warden
 	name = "clip-on warden radio"
-	ks2type = /obj/item/encryptionkey/headset_warden
+	ks2type = /obj/item/encryptionkey/warden
 
 /obj/item/radio/headset/headset_penal
 	name = "penal radio headset"
 	desc = "A headset used by people who have chosen or been chosen to work the fields."
 	icon_state = "mine_headset"
-	ks2type = /obj/item/encryptionkey/headset_penal
+	ks2type = /obj/item/encryptionkey/penal
 
 /obj/item/radio/headset/heads/hos
 	name = "head of security's headset"
@@ -797,7 +697,7 @@
 	name = "command radio headset"
 	desc = "A headset with a commanding channel."
 	icon_state = "com_headset"
-	ks2type = /obj/item/encryptionkey/headset_com
+	ks2type = /obj/item/encryptionkey/command
 
 /obj/item/radio/headset/headset_com/alt
 	name = "command bowman headset"
@@ -809,19 +709,19 @@
 	name = "soundproof command headset"
 	icon_state = "earset_com"
 	item_state = "earset_com"
-	ks2type = /obj/item/encryptionkey/headset_com
+	ks2type = /obj/item/encryptionkey/command
 
 /obj/item/radio/headset/wrist/command
 	name = "wristbound command radio"
 	icon_state = "wristset_com"
 	item_state = "wristset_com"
-	ks2type = /obj/item/encryptionkey/headset_com
+	ks2type = /obj/item/encryptionkey/command
 
 /obj/item/radio/headset/wrist/clip/command
 	name = "clip-on command radio"
 	icon_state = "clip_com"
 	item_state = "clip_com"
-	ks2type = /obj/item/encryptionkey/headset_com
+	ks2type = /obj/item/encryptionkey/command
 
 /obj/item/radio/headset/heads/captain
 	name = "captain's headset"
@@ -861,7 +761,7 @@
 	name = "medical research radio headset"
 	desc = "A headset that is a result of the mating between medical and science."
 	icon_state = "medsci_headset"
-	ks2type = /obj/item/encryptionkey/headset_medsci
+	ks2type = /obj/item/encryptionkey/medsci
 
 /obj/item/radio/headset/hivenet
 	translate_hivenet = 1
@@ -1010,7 +910,7 @@
 	name = "representative headset"
 	desc = "The headset of your worst enemy."
 	icon_state = "com_headset"
-	ks2type = /obj/item/encryptionkey/headset_com
+	ks2type = /obj/item/encryptionkey/command
 
 /obj/item/radio/headset/representative/alt
 	name = "representative bowman headset"
@@ -1028,7 +928,7 @@
 	name = "clip-on representative radio"
 	icon_state = "clip_com"
 	item_state = "clip_com"
-	ks2type = /obj/item/encryptionkey/headset_com
+	ks2type = /obj/item/encryptionkey/command
 
 /obj/item/radio/headset/heads/ai_integrated //No need to care about icons, it should be hidden inside the AI anyway.
 	name = "\improper AI subspace transceiver"

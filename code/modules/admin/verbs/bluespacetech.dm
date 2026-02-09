@@ -359,8 +359,8 @@
 	translate_binary = 1
 	translate_hivenet = 1
 	canremove = 0
-	keyslot1 = new /obj/item/encryptionkey/binary
-	keyslot2 = new /obj/item/encryptionkey/ert
+	keyslot_1 = new /obj/item/encryptionkey/binary
+	keyslot_2 = new /obj/item/encryptionkey/ert
 
 /obj/item/radio/headset/ert/bst/attack_hand()
 	if(!usr)

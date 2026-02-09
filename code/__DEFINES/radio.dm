@@ -186,3 +186,10 @@ var/list/DEPT_FREQS_ASSOC = list(
 #define JAMMER_SYNTHETIC 2
 
 #define DEFAULT_LAW_CHANNEL "Main Frequency"
+
+/// Radio frequency is unlocked and can be ajusted by anyone
+#define RADIO_FREQENCY_UNLOCKED 0
+/// Radio frequency is locked, unchangeable by players
+#define RADIO_FREQENCY_LOCKED 1
+/// Radio frequency is locked and unchangeable, but can be unlocked by an emag
+#define RADIO_FREQENCY_EMAGGABLE_LOCK 2

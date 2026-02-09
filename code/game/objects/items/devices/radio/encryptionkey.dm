@@ -1,3 +1,4 @@
+/// Most basic encryption key. Includes Common, Entertainment, and Expeditionary.
 /obj/item/encryptionkey
 	name = "standard encryption key"
 	desc = "An encryption key for a radio headset. Contains cypherkeys."
@@ -8,8 +9,10 @@
 	slot_flags = SLOT_EARS
 	var/translate_binary = FALSE
 	var/translate_hivenet = FALSE
-	var/syndie = FALSE // Signifies that it de-crypts Syndicate transmissions
-	var/independent = FALSE // Signifies that it lets you talk on the spicy channel
+	/// Signifies that it de-crypts Syndicate transmissions
+	var/syndie = FALSE
+	/// Signifies that it lets you talk on the spicy channel
+	var/independent = FALSE
 	var/list/channels = list(CHANNEL_COMMON = TRUE, CHANNEL_ENTERTAINMENT = TRUE, CHANNEL_EXPED = TRUE)
 	var/list/additional_channels = list()
 
@@ -117,52 +120,52 @@
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "neuralchip"
 
-/obj/item/encryptionkey/headset_sec
+/obj/item/encryptionkey/sec
 	name = "security radio encryption key"
 	icon_state = "sec_cypherkey"
 	channels = list(CHANNEL_SECURITY = TRUE)
 
-/obj/item/encryptionkey/headset_warden
+/obj/item/encryptionkey/warden
 	name = "warden radio encryption key"
 	icon_state = "sec_cypherkey"
 	channels = list(CHANNEL_SECURITY = TRUE, CHANNEL_PENAL = TRUE)
 
-/obj/item/encryptionkey/headset_penal
+/obj/item/encryptionkey/penal
 	name = "penal radio encryption key"
 	icon_state = "cargo_cypherkey"
 	channels = list(CHANNEL_PENAL = TRUE)
 
-/obj/item/encryptionkey/headset_eng
+/obj/item/encryptionkey/eng
 	name = "engineering radio encryption key"
 	icon_state = "eng_cypherkey"
 	channels = list(CHANNEL_ENGINEERING = TRUE)
 
-/obj/item/encryptionkey/headset_rob
+/obj/item/encryptionkey/robotics
 	name = "robotics radio encryption key"
 	icon_state = "rob_cypherkey"
 	channels = list(CHANNEL_ENGINEERING = TRUE, CHANNEL_SCIENCE = TRUE)
 
-/obj/item/encryptionkey/headset_med
+/obj/item/encryptionkey/med
 	name = "medical radio encryption key"
 	icon_state = "med_cypherkey"
 	channels = list(CHANNEL_MEDICAL = TRUE)
 
-/obj/item/encryptionkey/headset_sci
+/obj/item/encryptionkey/sci
 	name = "science radio encryption key"
 	icon_state = "sci_cypherkey"
 	channels = list(CHANNEL_SCIENCE = TRUE)
 
-/obj/item/encryptionkey/headset_xenology
+/obj/item/encryptionkey/xenology
 	name = "xenology radio encryption key"
 	icon_state = "sci_cypherkey"
 	channels = list(CHANNEL_SCIENCE = TRUE, CHANNEL_HAILING = TRUE)
 
-/obj/item/encryptionkey/headset_medsci
+/obj/item/encryptionkey/medsci
 	name = "medical research radio encryption key"
 	icon_state = "medsci_cypherkey"
 	channels = list(CHANNEL_MEDICAL = TRUE, CHANNEL_SCIENCE = TRUE)
 
-/obj/item/encryptionkey/headset_com
+/obj/item/encryptionkey/command
 	name = "command radio encryption key"
 	icon_state = "com_cypherkey"
 	channels = list(CHANNEL_COMMAND = TRUE, CHANNEL_HAILING = TRUE)
@@ -203,17 +206,17 @@
 	icon_state = "hop_cypherkey"
 	channels = list(CHANNEL_SERVICE = TRUE, CHANNEL_COMMAND = TRUE, CHANNEL_SECURITY = TRUE, CHANNEL_PENAL = TRUE, CHANNEL_HAILING = TRUE)
 
-/obj/item/encryptionkey/headset_cargo
-	name = "operations radio encryption key"
-	icon_state = "cargo_cypherkey"
-	channels = list(CHANNEL_SUPPLY = TRUE, CHANNEL_HAILING = TRUE)
-
-/obj/item/encryptionkey/headset_operations_manager
+/obj/item/encryptionkey/heads/om
 	name = "operations manager radio encryption key"
 	icon_state = "cargo_cypherkey"
 	channels = list(CHANNEL_COMMAND = TRUE, CHANNEL_SUPPLY = TRUE, CHANNEL_HAILING = TRUE)
 
-/obj/item/encryptionkey/headset_service
+/obj/item/encryptionkey/cargo
+	name = "operations radio encryption key"
+	icon_state = "cargo_cypherkey"
+	channels = list(CHANNEL_SUPPLY = TRUE, CHANNEL_HAILING = TRUE)
+
+/obj/item/encryptionkey/service
 	name = "service radio encryption key"
 	icon_state = "srv_cypherkey"
 	channels = list(CHANNEL_SERVICE = TRUE)

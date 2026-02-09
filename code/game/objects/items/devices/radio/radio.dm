@@ -93,28 +93,50 @@ var/global/list/default_interrogation_channels = list(
 	/// used in autosay, held by the radio for re-use
 	var/mob/living/announcer/announcer = null
 	var/datum/wires/radio/wires = null
-	var/show_modify_on_examine = TRUE
-	var/b_stat = 0
+	/// Whether wires are accessible. Toggleable by screwdrivering.
+	var/unscrewed = FALSE
+	/// If true, the radio has access to the full spectrum.
+	var/freerange = FALSE
 
-	/// see communications.dm for full list. First non-common, non-entertainment channel is a "default" for :h
-	var/list/channels = list()
+	/// associative list of the encrypted radio channels this radio is currently set to listen/broadcast to, of the form: list(channel name = TRUE or FALSE)
+	var/list/channels
+	/// Current encryption key in first slot
+	var/obj/item/encryptionkey/keyslot_1 = null
+	/// Current encryption key in second slot
+	var/obj/item/encryptionkey/keyslot_2 = null
+	/// Obj path of an encryption key to spawn into this radio on Initialize().
+	var/ks1type = /obj/item/encryptionkey
+	/// Obj path of an encryption key to spawn into this radio on Initialize().
+	var/ks2type = null
+
+	var/translate_binary = FALSE
+	var/translate_hivenet = FALSE
+
+	/// This variable effectively shortcircuits the encryption key behavior. If TRUE, the radio will ignore keyslot behavior and will attempt to read the UI user's ID and access rights to provision channels dynamically.
+	/// This is the behavior of the Horizon's shortwave radios. These are mapped across all depts on the Horizon and will remain as-is. In the future, should we choose, we can make the change to have shortwaves work on keyslots like headsets.
+	var/provision_channels_based_on_id_access = TRUE
+
+	/// Flags for which "special" (antag) radio networks should be accessible
+	var/special_channels = NONE
+	/// lazy associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = channel frequency)
+	var/list/datum/radio_frequency/secure_radio_connections = list()
+	var/datum/radio_frequency/radio_connection
+
 	var/subspace_transmission = FALSE
 	/// Holder to see if it's a syndicate encrypted radio
 	var/syndie = FALSE
 	/// if TRUE, can say/hear on the Special Channel!!! (TBD)
 	var/independent = FALSE
 
-	var/datum/radio_frequency/radio_connection
-	var/list/datum/radio_frequency/secure_radio_connections = list()
+	/// Frequency lock to stop the user from untuning specialist radios.
+	var/freqlock = RADIO_FREQENCY_UNLOCKED
+	/// If true, broadcasts will be large and BOLD.
+	var/use_command = FALSE
+	/// If true, use_command can be toggled at will.
+	var/command = FALSE
 
 /obj/item/radio/feedback_hints(mob/user, distance, is_adjacent)
 	. += ..()
-	if(show_modify_on_examine && (distance <= 1))
-		if (b_stat)
-			. += SPAN_NOTICE("\The [src] can be attached and modified!")
-		else
-			. += SPAN_NOTICE("\The [src] can not be modified or attached!")
-
 	if(radio_desc)
 		. += radio_desc
 
@@ -136,10 +158,19 @@ var/global/list/default_interrogation_channels = list(
 	. = ..()
 
 	wires = new(src)
-	internal_channels = set_internal_channels()
+
+	if(provision_channels_based_on_id_access)
+		internal_channels = set_internal_channels()
+	else
+		internal_channels.Cut()
+		if(ks1type)
+			keyslot_1 = new ks1type(src)
+		if(ks2type)
+			keyslot_2 = new ks2type(src)
+		recalculateChannels(TRUE)
 
 	if(frequency < RADIO_LOW_FREQ || frequency > RADIO_HIGH_FREQ)
-		frequency = sanitize_frequency(frequency, RADIO_LOW_FREQ, RADIO_HIGH_FREQ)
+		frequency = sanitize_frequency(frequency)
 
 	for (var/ch_name in channels)
 		secure_radio_connections[ch_name] = SSradio.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
@@ -151,6 +182,8 @@ var/global/list/default_interrogation_channels = list(
 
 /obj/item/radio/Destroy()
 	SSradio.remove_object_all(src)
+	QDEL_NULL(keyslot_1)
+	QDEL_NULL(keyslot_2)
 	QDEL_NULL(announcer)
 	QDEL_NULL(wires)
 	return ..()
@@ -219,20 +252,50 @@ var/global/list/default_interrogation_channels = list(
 		set_listening(FALSE, actual_setting = FALSE)
 
 /obj/item/radio/attack_self(mob/user as mob)
-	user.set_machine(src)
-	interact(user)
+	if(unscrewed && !provision_channels_based_on_id_access)
+		if(keyslot_1 || keyslot_2)
+			for(var/ch_name in channels)
+				SSradio.remove_object(src, radiochannels[ch_name])
+				secure_radio_connections[ch_name] = null
+
+			if(keyslot_1)
+				var/turf/T = get_turf(user)
+				if(T)
+					keyslot_1.forceMove(T)
+					keyslot_1 = null
+
+			if(keyslot_2)
+				var/turf/T = get_turf(user)
+				if(T)
+					keyslot_2.forceMove(T)
+					keyslot_2 = null
+
+			recalculateChannels(TRUE)
+			to_chat(user, SPAN_NOTICE("You pop out the encryption keys in the radio!"))
+		else
+			to_chat(user, SPAN_WARNING("This radio doesn't have any encryption keys!"))
+	else
+		interact(user)
 
 /obj/item/radio/interact(mob/user)
 	if(!user)
 		return 0
 
-	if(b_stat)
+	if(unscrewed)
 		wires.interact(user)
 
 	return ui_interact(user)
 
-/obj/item/radio/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
-	var/data[0]
+/obj/item/radio/ui_interact(mob/user, datum/tgui/ui, datum/ui_state/state)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Radio", name)
+		if(state)
+			ui.set_state(state)
+		ui.open()
+
+/obj/item/radio/ui_data(mob/user)
+	var/list/data = list()
 
 	data["mic_status"] = broadcasting
 	data["speaker"] = listening
@@ -248,14 +311,108 @@ var/global/list/default_interrogation_channels = list(
 		data["chan_list"] = chanlist
 		data["chan_list_len"] = chanlist.len
 
-	if(syndie)
-		data["useSyndMode"] = 1
+	return data
 
-	ui = SSnanoui.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "radio_basic.tmpl", "[name]", 400, 430)
-		ui.set_initial_data(data)
-		ui.open()
+/obj/item/radio/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
+	var/mob/user = ui.user
+
+	if(clicksound && iscarbon(user))
+		playsound(loc, clicksound, clickvol)
+
+	switch(action)
+		if("frequency")
+			if(freqlock != RADIO_FREQENCY_UNLOCKED)
+				return
+			var/tune = 0
+			var/adjust = text2num(params["adjust"])
+			if(adjust)
+				tune = frequency + adjust * 10
+			else if(tune)
+				tune *= 10
+			if(tune)
+				set_frequency(sanitize_frequency(tune))
+			. = TRUE
+
+		if("tune_to_channel")
+			if(freqlock != RADIO_FREQENCY_UNLOCKED)
+				return
+			var/channel = params["channel"]
+			if(!(channel in channels))
+				return
+			// bypasses frequency range, force tunes to a specific encrypted channel
+			set_frequency(default_frequency)
+			. = TRUE
+
+		if("listen")
+			set_listening(!listening)
+			. = TRUE
+		if("broadcast")
+			set_broadcasting(!broadcasting)
+			. = TRUE
+		if("channel")
+			var/channel = params["channel"]
+			if(!(channel in channels))
+				return
+			if(channels[channel] & FREQ_LISTENING)
+				channels[channel] &= ~FREQ_LISTENING
+			else
+				channels[channel] |= FREQ_LISTENING
+			. = TRUE
+
+/obj/item/radio/Topic(href, href_list)
+	if(..())
+		return TRUE
+
+	usr.set_machine(src)
+	if (href_list["track"])
+		var/mob/target = locate(href_list["track"])
+		var/mob/living/silicon/ai/A = locate(href_list["track2"])
+		if(A && target)
+			A.ai_actual_track(target)
+		. = TRUE
+
+	else if (href_list["freq"])
+		var/new_frequency = (frequency + text2num(href_list["freq"]))
+		if ((new_frequency < PUBLIC_LOW_FREQ || new_frequency > PUBLIC_HIGH_FREQ))
+			new_frequency = sanitize_frequency(new_frequency)
+		set_frequency(new_frequency)
+		if(hidden_uplink)
+			if(hidden_uplink.check_trigger(usr, frequency, traitor_frequency))
+				usr << browse(null, "window=radio")
+		. = TRUE
+	else if (href_list["talk"])
+		set_broadcasting(!broadcasting)
+		. = TRUE
+	else if (href_list["listen"])
+		var/chan_name = href_list["ch_name"]
+		if (!chan_name)
+			set_listening(!listening)
+		else
+			if (channels[chan_name] & FREQ_LISTENING)
+				channels[chan_name] &= ~FREQ_LISTENING
+			else
+				channels[chan_name] |= FREQ_LISTENING
+		. = TRUE
+	else if(href_list["spec_freq"])
+		var freq = href_list["spec_freq"]
+		if(has_channel_access(usr, freq))
+			set_frequency(text2num(freq))
+		. = TRUE
+	else if(href_list["reset_freq"])
+		if(default_frequency)
+			set_frequency(default_frequency)
+			. = TRUE
+
+	if(href_list["nowindow"]) // here for pAIs, maybe others will want it, idk
+		return TRUE
+
+	if(.)
+		SSnanoui.update_uis(src)
+		update_icon()
 
 /obj/item/radio/proc/setupRadioDescription(var/additional_radio_desc)
 	var/radio_text = ""
@@ -313,80 +470,6 @@ var/global/list/default_interrogation_channels = list(
 
 /mob/abstract/ghost/observer/has_internal_radio_channel_access(var/list/req_one_accesses)
 	return can_admin_interact()
-
-/obj/item/radio/proc/text_wires()
-	if (b_stat)
-		return wires.get_status()
-	return
-
-
-/obj/item/radio/proc/text_sec_channel(var/chan_name, var/chan_stat)
-	var/list = !!(chan_stat&FREQ_LISTENING)!=0
-	return {"
-			<B>[chan_name]</B><br>
-			Speaker: <A href='byond://?src=[REF(src)];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
-			"}
-
-/obj/item/radio/CanUseTopic()
-	if(!on)
-		return STATUS_CLOSE
-	return ..()
-
-/obj/item/radio/CouldUseTopic(var/mob/user)
-	..()
-	if(clicksound && iscarbon(user))
-		playsound(loc, clicksound, clickvol)
-
-/obj/item/radio/Topic(href, href_list)
-	if(..())
-		return TRUE
-
-	usr.set_machine(src)
-	if (href_list["track"])
-		var/mob/target = locate(href_list["track"])
-		var/mob/living/silicon/ai/A = locate(href_list["track2"])
-		if(A && target)
-			A.ai_actual_track(target)
-		. = TRUE
-
-	else if (href_list["freq"])
-		var/new_frequency = (frequency + text2num(href_list["freq"]))
-		if ((new_frequency < PUBLIC_LOW_FREQ || new_frequency > PUBLIC_HIGH_FREQ))
-			new_frequency = sanitize_frequency(new_frequency)
-		set_frequency(new_frequency)
-		if(hidden_uplink)
-			if(hidden_uplink.check_trigger(usr, frequency, traitor_frequency))
-				usr << browse(null, "window=radio")
-		. = TRUE
-	else if (href_list["talk"])
-		set_broadcasting(!broadcasting)
-		. = TRUE
-	else if (href_list["listen"])
-		var/chan_name = href_list["ch_name"]
-		if (!chan_name)
-			set_listening(!listening)
-		else
-			if (channels[chan_name] & FREQ_LISTENING)
-				channels[chan_name] &= ~FREQ_LISTENING
-			else
-				channels[chan_name] |= FREQ_LISTENING
-		. = TRUE
-	else if(href_list["spec_freq"])
-		var freq = href_list["spec_freq"]
-		if(has_channel_access(usr, freq))
-			set_frequency(text2num(freq))
-		. = TRUE
-	else if(href_list["reset_freq"])
-		if(default_frequency)
-			set_frequency(default_frequency)
-			. = TRUE
-
-	if(href_list["nowindow"]) // here for pAIs, maybe others will want it, idk
-		return TRUE
-
-	if(.)
-		SSnanoui.update_uis(src)
-		update_icon()
 
 /obj/item/radio/proc/autosay(var/message, var/from, var/channel) //BS12 EDIT
 	var/datum/radio_frequency/connection = null
@@ -546,19 +629,72 @@ var/global/list/default_interrogation_channels = list(
 
 /obj/item/radio/attackby(obj/item/attacking_item, mob/user)
 	..()
-	user.set_machine(src)
-	if (!( attacking_item.tool_behaviour == TOOL_SCREWDRIVER ))
+	/// Beacons only use screwdriver attackby to anchor/unanchor them to turfs.
+	if(istype(src, /obj/item/radio/beacon))
 		return
-	b_stat = !( b_stat )
-	if(!istype(src, /obj/item/radio/beacon))
-		if (b_stat)
-			user.show_message(SPAN_NOTICE("\The [src] can now be attached and modified!"))
+	// Handle opening/closing maint panel
+	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
+		to_chat(user, SPAN_NOTICE("You [unscrewed ? "unscrew" : "screw shut"] the service panel of \the [src]"))
+		unscrewed = !unscrewed
+		return
+	// Handle encryption key insertion
+	if(unscrewed && istype(attacking_item, /obj/item/encryptionkey))
+		if(keyslot_1 && keyslot_2)
+			to_chat(user, SPAN_WARNING("The headset can't hold another key!"))
+			return
+		if(!keyslot_1)
+			user.drop_from_inventory(attacking_item, src)
+			keyslot_1 = attacking_item
 		else
-			user.show_message(SPAN_NOTICE("\The [src] can no longer be modified or attached!"))
-		updateDialog()
-		add_fingerprint(user)
-		return
-	else return
+			user.drop_from_inventory(attacking_item, src)
+			keyslot_2 = attacking_item
+		recalculateChannels(TRUE)
+
+/obj/item/radio/proc/recalculateChannels(var/setDescription = FALSE)
+	var/list/old_channel_settings = channels.Copy()
+	channels = list()
+	translate_binary = FALSE
+	translate_hivenet = FALSE
+	syndie = FALSE
+
+	SSradio.remove_object_all(src)
+
+	for(var/keyslot in list(keyslot_1, keyslot_2))
+		if(!keyslot)
+			continue
+		var/obj/item/encryptionkey/K = keyslot
+
+		for(var/ch_name in K.channels)
+			if(ch_name in channels)
+				continue
+			LAZYSET(channels, ch_name, K.channels[ch_name])
+
+		for(var/ch_name in K.additional_channels)
+			if(ch_name in channels)
+				continue
+			LAZYSET(channels, ch_name, K.additional_channels[ch_name])
+
+		if(K.translate_binary)
+			translate_binary = TRUE
+
+		if(K.translate_hivenet)
+			translate_hivenet = TRUE
+
+		if(K.syndie)
+			syndie = TRUE
+
+		if(K.independent)
+			independent = TRUE
+
+	for (var/ch_name in channels)
+		if(ch_name in old_channel_settings)
+			channels[ch_name] = old_channel_settings[ch_name]
+		secure_radio_connections[ch_name] = SSradio.add_object(src, radiochannels[ch_name], RADIO_CHAT)
+
+	if(setDescription)
+		setupRadioDescription()
+
+	return
 
 /obj/item/radio/emp_act(severity)
 	. = ..()
@@ -638,7 +774,7 @@ var/global/list/default_interrogation_channels = list(
 
 	return
 
-/obj/item/radio/borg/proc/recalculateChannels()
+/obj/item/radio/borg/recalculateChannels()
 	channels = list(CHANNEL_COMMON = TRUE, CHANNEL_ENTERTAINMENT = TRUE, CHANNEL_EXPED = TRUE)
 	syndie = FALSE
 
@@ -824,6 +960,17 @@ var/global/list/default_interrogation_channels = list(
 // Engineering
 /obj/item/radio/eng
 	icon_state = "walkietalkie-eng"
+	ks2type = /obj/item/encryptionkey/eng
+
+// Engineering (Off)
+/obj/item/radio/eng/off/Initialize()
+	. = ..()
+	set_listening(FALSE)
+
+// Engineering
+/obj/item/radio/heads/ce
+	icon_state = "walkietalkie-eng"
+	ks2type = /obj/item/encryptionkey/heads/ce
 
 // Engineering (Off)
 /obj/item/radio/eng/off/Initialize()
@@ -833,6 +980,7 @@ var/global/list/default_interrogation_channels = list(
 // Science
 /obj/item/radio/sci
 	icon_state = "walkietalkie-sci"
+	ks2type = /obj/item/encryptionkey/sci
 
 // Science (Off)
 /obj/item/radio/sci/off/Initialize()

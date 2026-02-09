@@ -5,7 +5,6 @@ GLOBAL_LIST_EMPTY(teleportbeacons)
 	desc = "A sophisticated beacon with integrated bluespace circuitry, capable of being targetted by a teleportation hub for localized jumps."
 	icon_state = "beacon"
 	item_state = "signaler"
-	show_modify_on_examine = FALSE
 	var/code = "electronic"
 	origin_tech = list(TECH_BLUESPACE = 1)
 
@@ -20,7 +19,9 @@ GLOBAL_LIST_EMPTY(teleportbeacons)
 /obj/item/radio/beacon/feedback_hints(mob/user, distance, is_adjacent)
 	. += ..()
 	if(anchored)
-		. += SPAN_NOTICE("It's been secured to the ground with anchoring screws.")
+		. += SPAN_NOTICE("It's been secured to the ground with anchoring <b>screws</b>.")
+	else
+		. += SPAN_NOTICE("It can be secured to the ground by using some anchoring <b>screws</b>.")
 
 /obj/item/radio/beacon/attack_hand(mob/user)
 	if(anchored)

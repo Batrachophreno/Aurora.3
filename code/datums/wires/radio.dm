@@ -15,7 +15,7 @@
 	if(!..())
 		return FALSE
 	var/obj/item/radio/R = holder
-	if(R.b_stat)
+	if(R.unscrewed)
 		return TRUE
 	return FALSE
 

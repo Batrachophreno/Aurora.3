@@ -241,7 +241,7 @@ SUBSYSTEM_DEF(radio)
 	for(var/obj/item/radio/R in RF.devices[RADIO_CHAT])
 		var/obj/item/radio/headset/H = R
 		if(istype(H))
-			for(var/obj/item/encryptionkey/EK in list(H.keyslot1, H.keyslot2))
+			for(var/obj/item/encryptionkey/EK in list(H.keyslot_1, H.keyslot_2))
 				if(old_channel in EK.channels)
 					LAZYREPLACEKEY(EK.channels, old_channel, new_channel)
 
