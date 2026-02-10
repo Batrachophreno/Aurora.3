@@ -152,7 +152,7 @@ SUBSYSTEM_DEF(virtualreality)
 			var/mob/living/simple_animal/spiderbot/SB = target
 			SB.internal_id.access = original_id.access
 		// Update radio
-		var/obj/item/encryptionkey/Key = spider.radio.keyslot
+		var/obj/item/encryptionkey/Key = spider.radio.keyslot_1
 		var/obj/item/radio/Radio = M.get_radio()
 		if(Key && Radio)
 			Key.channels = Radio.channels

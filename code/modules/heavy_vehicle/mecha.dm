@@ -330,7 +330,7 @@
 	dummy.name = dummy.real_name
 	// Give dummy a blank encryption key for later editing if spiderbot
 	if(istype(dummy, /mob/living/simple_animal/spiderbot) && !istype(dummy, /mob/living/simple_animal/spiderbot/ai))
-		dummy.radio.keyslot = new /obj/item/encryptionkey
+		dummy.radio.keyslot_1 = new /obj/item/encryptionkey
 	remove_verb(dummy, /mob/living/proc/ventcrawl)
 	remove_verb(dummy, /mob/living/proc/hide)
 	if(dummy_colour)

@@ -30,20 +30,8 @@ type RadioData = {
 
 export const Radio = (props, context) => {
   const { act, data } = useBackend<RadioData>(context);
-  const {
-    freqlock,
-    frequency,
-    minFrequency,
-    maxFrequency,
-    listening,
-    broadcasting,
-    command,
-    useCommand,
-    subspace,
-    radio_noises,
-  } = data;
   const tunedChannel = RADIO_CHANNELS.find(
-    (channel) => channel.freq === frequency,
+    (channel) => channel.freq === data.frequency,
   );
   const channels = map(data.channels, (value, key) => ({
     name: key,
@@ -53,7 +41,7 @@ export const Radio = (props, context) => {
   let height = 133;
   if (channels.length > 0) {
     height += channels.length * 25 + 8;
-  } else if (subspace) {
+  } else if (data.subspace) {
     height += 24;
   }
   return (
@@ -82,24 +70,24 @@ export const Radio = (props, context) => {
                   />
                 </Stack.Item>
                 <Stack.Item>
-                  {(freqlock && (
+                  {(data.freqlock && (
                     <Box inline color="light-gray">
-                      {`${toFixed(frequency / 10, 1)} kHz`}
+                      {`${toFixed(data.frequency / 10, 1)} kHz`}
                     </Box>
                   )) || (
                     <Slider
-                      value={frequency / 10}
+                      value={data.frequency / 10}
                       animated
                       tickWhileDragging
                       unit="kHz"
                       step={0.2}
                       stepPixelSize={10}
-                      minValue={minFrequency / 10}
-                      maxValue={maxFrequency / 10}
+                      minValue={data.minFrequency / 10}
+                      maxValue={data.maxFrequency / 10}
                       format={(value) => toFixed(value, 1)}
                       onChange={(value) =>
                         act('frequency', {
-                          adjust: value - frequency / 10,
+                          adjust: value - data.frequency / 10,
                         })
                       }
                     />
@@ -136,28 +124,30 @@ export const Radio = (props, context) => {
               <Button
                 textAlign="center"
                 width="37px"
-                icon={listening ? 'volume-up' : 'volume-mute'}
-                selected={listening}
+                color={data.listening ? 'green' : 'red'}
+                icon={data.listening ? 'volume-up' : 'volume-mute'}
+                selected={data.listening}
                 onClick={() => act('listen')}
               />
               <Button
                 textAlign="center"
                 width="37px"
-                icon={broadcasting ? 'microphone' : 'microphone-slash'}
-                selected={broadcasting}
+                color={data.broadcasting ? 'green' : 'red'}
+                icon={data.broadcasting ? 'microphone' : 'microphone-slash'}
+                selected={data.broadcasting}
                 onClick={() => act('broadcast')}
               />
-              {!!command && (
+              {!!data.command && (
                 <Button
                   ml={1}
                   icon="bullhorn"
-                  selected={useCommand}
-                  content={`High volume ${useCommand ? 'ON' : 'OFF'}`}
+                  selected={data.useCommand}
+                  content={`High volume ${data.useCommand ? 'ON' : 'OFF'}`}
                   onClick={() => act('command')}
                 />
               )}
             </LabeledList.Item>
-            {(!!subspace || channels.length > 0) && (
+            {channels.length > 0 && (
               <LabeledList.Item label="Channels">
                 {channels.length === 0 && (
                   <Box inline color="bad">
@@ -177,13 +167,13 @@ export const Radio = (props, context) => {
                           })
                         }
                       />
-                      {!subspace && !freqlock && (
+                      {!data.freqlock && (
                         <Button
                           icon="walkie-talkie"
                           ml={1}
                           disabled={
                             RADIO_CHANNELS.find((c) => c.name === channel.name)
-                              ?.freq === frequency
+                              ?.freq === data.frequency
                           }
                           onClick={() =>
                             act('tune_to_channel', {

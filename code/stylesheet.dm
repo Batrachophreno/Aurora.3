@@ -52,6 +52,7 @@ em						{font-style: normal;font-weight: bold;}
 .radio					{color: #008000;}
 .deptradio				{color: #ff00ff;}	/* when all other department colors fail */
 .newscaster				{color: #750000;}
+.command_transmit		{font-weight: bold;	font-size: 3;}
 
 /* Radio Channels */
 .comradio				{color: #193A7A;}

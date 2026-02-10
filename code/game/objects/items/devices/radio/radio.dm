@@ -299,17 +299,25 @@ var/global/list/default_interrogation_channels = list(
 
 	data["mic_status"] = broadcasting
 	data["speaker"] = listening
-	data["freq"] = format_frequency(frequency)
+	data["frequency"] = format_frequency(frequency)
 	data["default_freq"] = format_frequency(default_frequency)
 	data["rawfreq"] = num2text(frequency)
 
+
+	data["frequency"] = frequency
+	data["broadcasting"] = broadcasting
+	data["listening"] = listening
+	data["minFrequency"] = PUBLIC_LOW_FREQ
+	data["maxFrequency"] = PUBLIC_HIGH_FREQ
+	data["freqlock"] = freqlock != RADIO_FREQENCY_UNLOCKED
+	data["channels"] = list()
+	for(var/channel in channels)
+		data["channels"][channel] = channels[channel] & FREQ_LISTENING
+	data["command"] = command
+	data["useCommand"] = use_command
+	data["subspace"] = subspace_transmission
 	data["mic_cut"] = (wires.is_cut(WIRE_TRANSMIT) || wires.is_cut(WIRE_SIGNAL))
 	data["spk_cut"] = (wires.is_cut(WIRE_RECEIVE) || wires.is_cut(WIRE_SIGNAL))
-
-	var/list/chanlist = list_channels(user)
-	if(islist(chanlist) && chanlist.len)
-		data["chan_list"] = chanlist
-		data["chan_list_len"] = chanlist.len
 
 	return data
 
@@ -634,7 +642,7 @@ var/global/list/default_interrogation_channels = list(
 		return
 	// Handle opening/closing maint panel
 	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, SPAN_NOTICE("You [unscrewed ? "unscrew" : "screw shut"] the service panel of \the [src]"))
+		to_chat(user, SPAN_NOTICE("You [unscrewed ? "screw shut" : "unscrew"] the service panel of \the [src]"))
 		unscrewed = !unscrewed
 		return
 	// Handle encryption key insertion
@@ -710,7 +718,6 @@ var/global/list/default_interrogation_channels = list(
 
 /obj/item/radio/borg
 	var/mob/living/silicon/robot/myborg = null // Cyborg which owns this radio. Used for power checks
-	var/obj/item/encryptionkey/keyslot = null//Borg radios can handle a single encryption key
 	var/shut_up = 1
 	icon = 'icons/obj/robot_component.dmi' // Cyborgs radio icons should look like the component.
 	icon_state = "radio"
@@ -733,81 +740,6 @@ var/global/list/default_interrogation_channels = list(
 		var/mob/living/silicon/robot/R = src.loc
 		var/datum/robot_component/C = R.components["radio"]
 		R.cell_use_power(C.active_usage)
-
-/obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user)
-//	..()
-	user.set_machine(src)
-	if (!( attacking_item.tool_behaviour == TOOL_SCREWDRIVER || (istype(attacking_item, /obj/item/encryptionkey/ ))))
-		return
-
-	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
-		if(keyslot)
-
-
-			for(var/ch_name in channels)
-				SSradio.remove_object(src, radiochannels[ch_name])
-				secure_radio_connections[ch_name] = null
-
-
-			if(keyslot)
-				var/turf/T = get_turf(user)
-				if(T)
-					keyslot.forceMove(T)
-					keyslot = null
-
-			recalculateChannels()
-			to_chat(user, "You pop out the encryption key in the radio!")
-
-		else
-			to_chat(user, "This radio doesn't have any encryption keys!")
-
-	if(istype(attacking_item, /obj/item/encryptionkey/))
-		if(keyslot)
-			to_chat(user, "The radio can't hold another key!")
-			return
-
-		if(!keyslot)
-			user.drop_from_inventory(attacking_item,src)
-			keyslot = attacking_item
-
-		recalculateChannels()
-
-	return
-
-/obj/item/radio/borg/recalculateChannels()
-	channels = list(CHANNEL_COMMON = TRUE, CHANNEL_ENTERTAINMENT = TRUE, CHANNEL_EXPED = TRUE)
-	syndie = FALSE
-
-	if(isrobot(loc))
-		var/mob/living/silicon/robot/D = loc
-		if(D.module)
-			for(var/ch_name in D.module.channels)
-				if(ch_name in channels)
-					continue
-				channels[ch_name] += D.module.channels[ch_name]
-	if(keyslot)
-		for(var/ch_name in keyslot.channels)
-			if(ch_name in channels)
-				continue
-			channels += ch_name
-			channels[ch_name] += keyslot.channels[ch_name]
-
-		if(keyslot.syndie)
-			syndie = TRUE
-
-		if(keyslot.independent)
-			independent = TRUE
-
-	for(var/ch_name in src.channels)
-		if(!SSradio)
-			sleep(30) // Waiting for the SSradio to be created.
-		if(!SSradio)
-			name = "broken radio"
-			return
-		secure_radio_connections[ch_name] = SSradio.add_object(src, radiochannels[ch_name], RADIO_CHAT)
-
-	setupRadioDescription()
-	return
 
 /obj/item/radio/borg/Topic(href, href_list)
 	if(..())
