@@ -7,25 +7,17 @@
 	ckey = key
 
 GLOBAL_LIST_INIT(ai_status_emotions, list(
-	"Very Happy" 				= new /datum/ai_emotion("ai_veryhappy"),
-	"Happy" 					= new /datum/ai_emotion("ai_happy"),
-	"Neutral" 					= new /datum/ai_emotion("ai_neutral"),
-	"Unsure" 					= new /datum/ai_emotion("ai_unsure"),
-	"Confused" 					= new /datum/ai_emotion("ai_confused"),
-	"Sad" 						= new /datum/ai_emotion("ai_sad"),
-	"Surprised" 				= new /datum/ai_emotion("ai_surprised"),
-	"Upset" 					= new /datum/ai_emotion("ai_upset"),
-	"Angry" 					= new /datum/ai_emotion("ai_angry"),
-	"BSOD" 						= new /datum/ai_emotion("ai_bsod"),
-	"Blank" 					= new /datum/ai_emotion("ai_off"),
-	"Problems?" 				= new /datum/ai_emotion("ai_trollface"),
-	"Awesome" 					= new /datum/ai_emotion("ai_awesome"),
-	"Dorfy" 					= new /datum/ai_emotion("ai_urist"),
-	"Facepalm" 					= new /datum/ai_emotion("ai_facepalm"),
+	"Diagnostics" 				= new /datum/ai_emotion("ai_diagnostics"),
+	"Face" 						= new /datum/ai_emotion("ai_face"),
+	"Helios" 					= new /datum/ai_emotion("ai_helios"),
+	"Glitchman" 				= new /datum/ai_emotion("ai_glitchman"),
+	"Tribunal" 					= new /datum/ai_emotion("ai_tribunal"),
+	"Tribunal Malfunctioning"	= new /datum/ai_emotion("ai_tribunal_malf")
+	"Smiley" 					= new /datum/ai_emotion("ai_goon"),
+	"Firewall" 					= new /datum/ai_emotion("ai_magma"),
 	"Friend Computer" 			= new /datum/ai_emotion("ai_friend"),
-	"Diagnostics"				= new /datum/ai_emotion("ai_diagnostics"),
-	"Tribunal" 					= new /datum/ai_emotion("ai_tribunal", "serithi"),
-	"Tribunal Malfunctioning"	= new /datum/ai_emotion("ai_tribunal_malf", "serithi")
+	"BSOD" 						= new /datum/ai_emotion("ai_bsod"),
+	"Fishtank" 					= new /datum/ai_emotion("ai_fishtank"),
 	))
 
 /proc/get_ai_emotions(var/ckey)
@@ -37,7 +29,7 @@ GLOBAL_LIST_INIT(ai_status_emotions, list(
 
 	return emotions
 
-/proc/set_ai_status_displays(mob/user as mob)
+/proc/set_ai_status_displays(mob/user as mob, var/override = FALSE)
 	var/emote = get_ai_emotion(user)
 	for (var/obj/machinery/M in SSmachinery.all_status_displays) //change status
 		if(istype(M, /obj/machinery/ai_status_display))
@@ -45,13 +37,13 @@ GLOBAL_LIST_INIT(ai_status_emotions, list(
 			AISD.emotion = emote
 			AISD.update()
 		//if Friend Computer, change ALL displays
-		else if(istype(M, /obj/machinery/status_display))
+		else if(ai_override && istype(M, /obj/machinery/status_display))
 
 			var/obj/machinery/status_display/SD = M
 			if(emote=="Friend Computer")
-				SD.friendc = 1
+				SD.ai_override = TRUE
 			else
-				SD.friendc = 0
+				SD.ai_override = FALSE
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'

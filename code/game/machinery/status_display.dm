@@ -36,7 +36,8 @@
 
 	var/frequency = 1435		// radio frequency
 
-	var/friendc = 0      // track if Friend Computer mode
+	/// If AI is overriding this status display to project their current image.
+	var/ai_override = FALSE
 	var/ignore_friendc = 0
 
 	/// Normal text color
