@@ -894,7 +894,12 @@
 		src.speak(slogan)
 
 	if(src.shoot_inventory && prob(shoot_inventory_chance))
-		src.throw_item()
+		var/obj/machinery/vending/frontiervend/frontiervend_check = src
+
+		if(istype(src))
+			frontiervend_check.throw_item_frontiervend()
+		else
+			src.throw_item()
 
 	return
 
