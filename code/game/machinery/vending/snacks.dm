@@ -220,9 +220,6 @@
 	var/rage_state = FALSE
 	var/rage_duration = 30
 
-	/// The actual (abstract) speaker of a given battlecry.
-	var/mob/rage_spirit
-
 	var/old_x
 	var/old_y
 
@@ -319,13 +316,11 @@
 /obj/machinery/vending/frontiervend/proc/machine_rage_start(var/mob/living/target, var/obj/item/throw_item, var/battlecry)
 	rage_state = TRUE
 	src.rage_jitters()
-	addtimer(CALLBACK(src, PROC_REF(machine_rage_end), target, throw_item, battlecry), rage_duration)
+	addtimer(CALLBACK(src, PROC_REF(machine_rage_end), target, throw_item, battlecry), rage_duration, TIMER_DELETE_ME)
 
 /obj/machinery/vending/frontiervend/proc/machine_rage_end(var/mob/living/target, var/obj/item/throw_item, var/battlecry)
 	for(var/mob/living/L in get_hearers_in_view(7, src))
-		src.show_message("<FONT size=3>[battlecry]</FONT>")
-
-	QDEL_NULL(rage_spirit)
+		L.show_message("<FONT size=3>[battlecry]</FONT>")
 
 	if(throw_item && target)
 		src.visible_message(SPAN_WARNING("[src] starts launching [throw_item.name]\s at [target.name]!"))
@@ -351,12 +346,18 @@
 /// Somebody cut an important wire and now we're following a new definition of "pitch."
 /// Mostly a copypaste job of the parent proc, but FrontierVend is a special lad.
 /obj/machinery/vending/frontiervend/proc/throw_item_frontiervend()
+	// FrontierVend does NOT give Solarians free product. Only free SUFFERING.
 	var/obj/item/throw_item = /obj/item/material/shard
+	// 30% chance of steel shards instead of glass shards.
+	if(prob(30))
+		throw_item = /obj/item/material/shard
+
 	var/mob/living/target = locate() in view(7,src)
-	var/solarian_target = TRUE
 	if(!target || !target.client)
 		return FALSE
+
 	var/singleton/origin_item/origin/target_origin =  text2path(target.client.prefs.origin)
+
 	var/list/battlecries = list()
 	switch(target_origin.name)
 		if("Sol System")
@@ -450,7 +451,8 @@
 				"JUSTICE FOR OUR PEOPLE!!!"
 			)
 		else
-			solarian_target = FALSE
+			// Non-solarian? Null throw_item so the machine_rage procs ONLY scream.
+			throw_item = null
 			battlecries = list(
 				"BILLIONS OF GADPATHURIANS!!!",
 				"SOL WILL NOT STOP UNTIL IT CONTROLS US ALL!!!",
@@ -462,18 +464,10 @@
 				"TRIUMPH THROUGH UNITY!!!",
 				"OUR STRENGTH IS OUR FORGED STEEL!!!")
 
-	// 30% chance of steel shards instead of glass shards
-	if(prob(30))
-		throw_item = /obj/item/material/shard
-
 	intent_message(MACHINE_SOUND)
 	var/battlecry = pick(battlecries)
-	if(!solarian_target)
-		throw_item = null
 
 	INVOKE_ASYNC(src, PROC_REF(machine_rage_start), target, throw_item, battlecry)
-
-	return TRUE
 
 /obj/item/vending_refill/frontiervend
 	name = "frontiervend resupply canister"
