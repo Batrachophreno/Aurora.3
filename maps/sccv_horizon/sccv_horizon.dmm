@@ -30737,7 +30737,7 @@
 	name = "Airlock Shutters";
 	pixel_x = -27;
 	pixel_y = 11;
-	req_access = list(12,31,73,77)
+	req_one_access = list(12,31,73,77)
 	},
 /turf/simulated/floor/plating,
 /area/horizon/shuttle/canary)
@@ -58217,7 +58217,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start{
-	name = "Engineer"
+	name = "Ship Engineer"
 	},
 /obj/effect/floor_decal/spline/plain/black{
 	dir = 8
@@ -60476,7 +60476,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start{
-	name = "Engineer"
+	name = "Ship Engineer"
 	},
 /obj/effect/floor_decal/spline/plain/black,
 /turf/simulated/floor/carpet/rubber,
@@ -92132,7 +92132,7 @@
 	name = "Airlock Shutters";
 	pixel_x = -26;
 	pixel_y = 11;
-	req_access = list(12,31,73,77)
+	req_one_access = list(12,31,73,77)
 	},
 /turf/simulated/floor/tiled/dark/full,
 /area/horizon/shuttle/mining)
@@ -138863,7 +138863,7 @@
 	name = "Airlock Shutters";
 	pixel_y = 13;
 	pixel_x = 32;
-	req_access = list(12,31,73,77)
+	req_one_access = list(12,31,73,77)
 	},
 /turf/simulated/floor/plating,
 /area/horizon/shuttle/quark/cargo_hold)
@@ -177211,7 +177211,7 @@
 	name = "Airlock Shutters";
 	pixel_x = 32;
 	pixel_y = 12;
-	req_access = list(12,31,73,77)
+	req_one_access = list(12,31,73,77)
 	},
 /turf/simulated/floor/plating,
 /area/horizon/shuttle/intrepid/main_compartment)
@@ -180206,7 +180206,7 @@
 /area/horizon/service/bar)
 "xTM" = (
 /obj/effect/landmark/start{
-	name = "Engineer"
+	name = "Ship Engineer"
 	},
 /obj/structure/bed/stool/chair/office/dark,
 /obj/effect/floor_decal/spline/plain/black{
