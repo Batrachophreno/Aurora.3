@@ -1,13 +1,15 @@
-import { BooleanLike } from '../../common/react';
-import { useBackend, useLocalState } from '../backend';
-import { Button, Input, NoticeBox, Section } from '../components';
+import { BooleanLike, classes } from '../../common/react';
+import { useBackend } from '../backend';
+import { Button, ByondUi, NoticeBox, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 
-export type CameraData = {
-  current_camera: Camera;
-  current_network: string;
-  networks: Network[];
+type Data = {
+  activeCamera: Camera & { status: BooleanLike };
   cameras: Camera[];
+  can_spy: BooleanLike;
+  mapRef: string;
+  currentNetwork: string;
+  allNetworks: string[];
 };
 
 type Camera = {
@@ -19,105 +21,160 @@ type Camera = {
   z: number;
 };
 
-type Network = {
-  tag: string;
-  has_access: BooleanLike;
+/**
+ * Returns previous and next camera names relative to the currently
+ * active camera.
+ */
+const prevNextCamera = (
+  cameras: Camera[],
+  activeCamera: Camera & { status: BooleanLike },
+) => {
+  if (!activeCamera || cameras.length < 2) {
+    return [];
+  }
+
+  const index = cameras.findIndex(
+    (camera) => camera.name === activeCamera.name,
+  );
+
+  switch (index) {
+    case -1: // Current camera is not in the list
+      return [cameras[cameras.length - 1].name, cameras[0].name];
+
+    case 0: // First camera
+      if (cameras.length === 2) return [cameras[1].name, cameras[1].name]; // Only two
+
+      return [cameras[cameras.length - 1].name, cameras[index + 1].name];
+
+    case cameras.length - 1: // Last camera
+      if (cameras.length === 2) return [cameras[0].name, cameras[0].name];
+
+      return [cameras[index - 1].name, cameras[0].name];
+
+    default:
+      // Middle camera
+      return [cameras[index - 1].name, cameras[index + 1].name];
+  }
 };
 
 export const CameraMonitoring = (props, context) => {
-  const { act, data } = useBackend<CameraData>(context);
-
   return (
-    <NtosWindow resizable height={800} width={900}>
-      <NtosWindow.Content scrollable>
-        {data.networks && data.networks.length ? (
-          <ShowNetworks />
-        ) : (
-          <NoticeBox>No networks available.</NoticeBox>
-        )}
-        {data.current_network ? <ShowNetworkCameras /> : ''}
+    <NtosWindow width={850} height={708}>
+      <NtosWindow.Content>
+        <CameraContent />
       </NtosWindow.Content>
     </NtosWindow>
   );
 };
 
-export const ShowNetworks = (props, context) => {
-  const { act, data } = useBackend<CameraData>(context);
+export const CameraContent = (props, context) => {
+  const { act, data } = useBackend<Data>(context);
 
   return (
-    <Section
-      title="Networks"
-      buttons={
-        <Button
-          content="Reset"
-          icon="user-circle"
-          onClick={() => act('reset')}
-        />
-      }
-    >
-      {data.networks
-        .filter((n) => n.has_access)
-        .map((network) => (
-          <Button
-            content={network.tag}
-            selected={data.current_network === network.tag}
-            key={network.tag}
-            onClick={() =>
-              act('switch_network', { switch_network: network.tag })
-            }
-          />
-        ))}
-    </Section>
+    <Stack fill>
+      <Stack.Item grow>
+        Stack 1
+        <CameraSelector />
+      </Stack.Item>
+      <Stack.Item grow={3}>
+        Stack 3
+        <CameraControls />
+      </Stack.Item>
+    </Stack>
   );
 };
 
-export const ShowNetworkCameras = (props, context) => {
-  const { act, data } = useBackend<CameraData>(context);
-  const [searchTerm, setSearchTerm] = useLocalState<string>(
-    context,
-    `searchTerm`,
-    ``,
-  );
+export const CameraSelector = (props, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const { activeCamera } = data;
 
   return (
-    <Section
-      title="Cameras"
-      buttons={
-        <Input
-          autoFocus
-          autoSelect
-          placeholder="Search by name"
-          width="40vw"
-          maxLength={512}
-          onInput={(e, value) => {
-            setSearchTerm(value);
-          }}
-          value={searchTerm}
-        />
-      }
-    >
-      {data.cameras && data.cameras.length ? (
-        data.cameras
-          .filter(
-            (c) => c.name?.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1,
-          )
-          .map((camera) => (
-            <Button
-              content={camera.name}
-              key={camera.camera}
-              disabled={camera.deact}
-              selected={
-                data.current_camera &&
-                data.current_camera.camera === camera.camera
-              } // thanks whoever named this nanoui bit this and then shat it around everywhere
+    <Stack fill vertical>
+      <Stack.Item grow>
+        <Section fill scrollable>
+          {data.cameras.map((camera) => (
+            // We're not using the component here because performance
+            // would be absolutely abysmal (50+ ms for each re-render).
+            <div
+              key={camera.name}
+              title={camera.name}
+              className={classes([
+                'Button',
+                'Button--fluid',
+                'Button--color--transparent',
+                'Button--ellipsis',
+                activeCamera?.name === camera.name
+                  ? 'Button--selected'
+                  : 'candystripe',
+              ])}
               onClick={() =>
-                act('switch_camera', { switch_camera: camera.camera })
+                act('switch_camera', {
+                  name: camera.name,
+                })
               }
-            />
-          ))
-      ) : (
-        <NoticeBox>No cameras detected.</NoticeBox>
-      )}
+            >
+              {camera.name}
+            </div>
+          ))}
+        </Section>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+export const CameraControls = (props, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const { activeCamera, can_spy, mapRef } = data;
+
+  return (
+    <Section fill>
+      <Stack fill vertical>
+        <Stack.Item>
+          <Stack fill>
+            <Stack.Item grow>
+              {activeCamera?.status ? (
+                <NoticeBox info>{activeCamera.name}</NoticeBox>
+              ) : (
+                <NoticeBox danger>No input signal</NoticeBox>
+              )}
+            </Stack.Item>
+
+            <Stack.Item>
+              <Button
+                icon="chevron-left"
+                onClick={() =>
+                  act('switch_camera', {
+                    name: 'filler_prev',
+                  })
+                }
+              />
+            </Stack.Item>
+
+            <Stack.Item>
+              <Button
+                icon="chevron-right"
+                onClick={() =>
+                  act('switch_camera', {
+                    name: 'filler_next',
+                  })
+                }
+              />
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+        <Stack.Item grow>
+          <ByondUi
+            winsetParams={{
+              id: mapRef,
+              type: 'map',
+            }}
+            boxProps={{
+              height: '100%',
+              width: '100%',
+            }}
+          />
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };
