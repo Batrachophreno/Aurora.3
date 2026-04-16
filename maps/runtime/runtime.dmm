@@ -1825,6 +1825,10 @@
 	},
 /turf/simulated/floor/tiled,
 /area/storage/primary)
+"kA" = (
+/obj/structure/dispenser,
+/turf/simulated/floor/plating,
+/area/construction)
 "kI" = (
 /obj/machinery/power/apc/super/critical/west,
 /obj/structure/cable/cyan,
@@ -2128,6 +2132,12 @@
 "oS" = (
 /turf/simulated/wall/r_wall,
 /area/tcommsat/chamber)
+"oT" = (
+/obj/machinery/firealarm/north{
+	pixel_y = -17
+	},
+/turf/simulated/wall/r_wall,
+/area/construction)
 "pd" = (
 /obj/effect/landmark/start{
 	name = "Atmospheric Technician"
@@ -2227,10 +2237,27 @@
 	temperature = 278
 	},
 /area/tcommsat/chamber)
+"qv" = (
+/obj/effect/floor_decal/industrial/warning,
+/obj/machinery/suit_cycler/security/prepared,
+/turf/simulated/floor/tiled,
+/area/construction)
 "qx" = (
 /obj/effect/landmark/entry_point/aft,
 /turf/simulated/wall/r_wall,
 /area/shuttle/runtime)
+"qA" = (
+/obj/structure/table/rack/folding_table,
+/obj/item/tank/jetpack/oxygen{
+	pixel_y = 7;
+	pixel_x = 5
+	},
+/obj/item/tank/jetpack/carbondioxide{
+	pixel_x = -4
+	},
+/obj/item/tank/jetpack/void,
+/turf/simulated/floor/plating,
+/area/construction)
 "qY" = (
 /obj/effect/floor_decal/industrial/warning/corner{
 	dir = 8
@@ -2389,9 +2416,7 @@
 /area/maintenance/maintcentral)
 "tl" = (
 /obj/effect/floor_decal/industrial/warning,
-/obj/effect/landmark/start{
-	name = "Passenger"
-	},
+/obj/machinery/suit_cycler/captain/prepared,
 /turf/simulated/floor/tiled,
 /area/construction)
 "tr" = (
@@ -2501,9 +2526,18 @@
 	},
 /turf/template_noop,
 /area/engineering)
+"vH" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/plating,
+/area/construction)
 "vV" = (
 /turf/simulated/wall/r_wall,
 /area/turret_protected/ai)
+"wc" = (
+/obj/effect/floor_decal/industrial/warning,
+/obj/machinery/suit_cycler/science/prepared,
+/turf/simulated/floor/tiled,
+/area/construction)
 "wi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /obj/machinery/access_button{
@@ -2621,6 +2655,12 @@
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/runtime)
+"yF" = (
+/obj/effect/landmark/start{
+	name = "Passenger"
+	},
+/turf/simulated/floor/plating,
+/area/construction)
 "yY" = (
 /obj/effect/floor_decal/industrial/warning,
 /turf/simulated/floor/tiled,
@@ -3596,6 +3636,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/construction)
+"SK" = (
+/obj/structure/table/rack/folding_table,
+/obj/item/suit_cooling_unit,
+/obj/item/analyzer,
+/turf/simulated/floor/plating,
+/area/construction)
 "SP" = (
 /obj/effect/landmark/start{
 	name = "Engineering Apprentice"
@@ -3735,6 +3781,11 @@
 /obj/machinery/r_n_d/server/advanced/core,
 /turf/simulated/floor/tiled,
 /area/construction/storage)
+"Uw" = (
+/obj/effect/floor_decal/industrial/warning,
+/obj/machinery/suit_cycler/engineering/prepared,
+/turf/simulated/floor/tiled,
+/area/construction)
 "UD" = (
 /obj/machinery/telecomms/broadcaster/preset_right,
 /turf/simulated/floor/bluegrid{
@@ -3804,9 +3855,7 @@
 /area/construction/storage)
 "WH" = (
 /obj/effect/floor_decal/industrial/warning,
-/obj/machinery/firealarm/north{
-	pixel_y = -17
-	},
+/obj/machinery/suit_cycler/engineering/prepared/atmos,
 /turf/simulated/floor/tiled,
 /area/construction)
 "WM" = (
@@ -8047,7 +8096,7 @@ bB
 cN
 cV
 de
-de
+yF
 de
 pT
 de
@@ -8559,9 +8608,9 @@ cx
 bB
 eI
 cK
-cV
+wc
 de
-de
+SK
 de
 yk
 dq
@@ -8816,10 +8865,10 @@ cy
 bB
 bB
 cO
-cV
+qv
 de
+qA
 HD
-de
 yk
 dq
 dq
@@ -9075,8 +9124,8 @@ bB
 cO
 tl
 pM
+kA
 db
-de
 yk
 dq
 dq
@@ -9330,10 +9379,10 @@ cA
 bB
 bB
 cO
-cV
+Uw
 de
+vH
 KR
-de
 yk
 dq
 dq
@@ -9589,8 +9638,8 @@ zQ
 cK
 WH
 de
-iq
 de
+iq
 yk
 dq
 dq
@@ -9846,8 +9895,8 @@ bB
 cN
 cV
 de
-Sj
 de
+Sj
 SA
 Gp
 de
@@ -10103,8 +10152,8 @@ bB
 cN
 cV
 de
-Ex
 de
+Ex
 hI
 de
 de
@@ -10357,11 +10406,11 @@ bs
 ra
 bB
 bB
-cK
+oT
 cW
 df
-KM
 dj
+KM
 em
 jD
 dj
