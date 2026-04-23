@@ -11,7 +11,7 @@
 	network_destination = "atmospheric control system"
 	requires_ntnet_feature = NTNET_SYSTEMCONTROL
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_STATIONBOUND
-	size = 17
+	size = 14
 	color = LIGHT_COLOR_CYAN
 	tgui_id = "AtmosAlarmControl"
 	tgui_theme = "hephaestus"

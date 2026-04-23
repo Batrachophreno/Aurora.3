@@ -4,20 +4,26 @@
 	extended_desc = "Application to Order Items from Cargo."
 	program_icon_state = "request"
 	program_key_icon_state = "yellow_key"
-	size = 10
+	size = 8
 	requires_ntnet = TRUE
 	available_on_ntnet = TRUE
 	usage_flags = PROGRAM_ALL
 	tgui_id = "CargoOrder"
 	ui_auto_update = FALSE
 
-	var/page = "main" //main - Main Menu, order - Order Page, item_details - Item Details Page, tracking - Tracking Page
-	var/selected_category = null // Category that is currently selected
-	var/selected_item = "" // Path of the currently selected item
+	/// main - Main Menu, order - Order Page, item_details - Item Details Page, tracking - Tracking Page
+	var/page = "main"
+	/// Category that is currently selected
+	var/selected_category = null
+	/// Path of the currently selected item
+	var/selected_item = ""
 	var/datum/cargo_order/co
-	var/status_message //Status Message to be displayed to the user
-	var/user_tracking_id = 0 //Tracking id of the user
-	var/user_tracking_code = 0 //Tracking Code of the user
+	/// Status Message to be displayed to the user
+	var/status_message
+	/// Tracking id of the user
+	var/user_tracking_id = 0
+	/// Tracking Code of the user
+	var/user_tracking_code = 0
 
 /datum/computer_file/program/civilian/cargoorder/ui_data(mob/user)	//Check if a cargo order exists. If not create a new one
 	if(!co)

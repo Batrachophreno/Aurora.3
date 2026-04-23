@@ -10,7 +10,7 @@
 	network_destination = "APC Coordinator"
 	requires_ntnet_feature = NTNET_SYSTEMCONTROL
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_STATIONBOUND
-	size = 9
+	size = 5
 	color = LIGHT_COLOR_GREEN
 	tgui_id = "LightingControl"
 	tgui_theme = "hephaestus"

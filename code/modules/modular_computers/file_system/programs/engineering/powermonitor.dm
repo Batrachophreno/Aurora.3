@@ -10,7 +10,7 @@
 	requires_ntnet = TRUE
 	network_destination = "power monitoring system"
 	usage_flags = PROGRAM_ALL
-	size = 9
+	size = 7
 	color = LIGHT_COLOR_ORANGE
 	tgui_id = "PowerMonitor"
 	tgui_theme = "hephaestus"

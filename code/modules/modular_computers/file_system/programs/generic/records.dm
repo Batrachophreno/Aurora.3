@@ -7,7 +7,7 @@
 	program_key_icon_state = "green_key"
 	color = LIGHT_COLOR_BLUE
 	available_on_ntnet = FALSE
-	size = 6
+	size = 5
 
 	requires_ntnet = TRUE
 	requires_ntnet_feature = "NTNET_SYSTEMCONTROL"

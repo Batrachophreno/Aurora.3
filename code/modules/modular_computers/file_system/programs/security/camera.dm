@@ -35,7 +35,7 @@
 	program_icon_state = "cameras"
 	program_key_icon_state = "yellow_key"
 	extended_desc = "This program allows remote access to station's camera system. Some camera networks may have additional access requirements."
-	size = 12
+	size = 10
 	available_on_ntnet = TRUE
 	requires_ntnet = TRUE
 	required_access_download = ACCESS_HEADS

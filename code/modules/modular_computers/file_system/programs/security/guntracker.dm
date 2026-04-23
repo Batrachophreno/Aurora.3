@@ -5,7 +5,7 @@
 	program_icon_state = "security"
 	program_key_icon_state = "yellow_key"
 	color = LIGHT_COLOR_ORANGE
-	size = 8
+	size = 6
 	requires_ntnet = TRUE
 	available_on_ntnet = TRUE
 	required_access_download = ACCESS_HOS

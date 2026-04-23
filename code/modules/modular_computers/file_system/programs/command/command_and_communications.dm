@@ -7,7 +7,7 @@
 	required_access_run = ACCESS_HEADS
 	required_access_download = ACCESS_HEADS
 	requires_ntnet = TRUE
-	size = 12
+	size = 10
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_SILICON_AI
 	network_destination = "station long-range communication array"
 	color = LIGHT_COLOR_BLUE

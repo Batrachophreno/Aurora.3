@@ -4,7 +4,7 @@
 	extended_desc = "Application to Control the Crusher"
 	program_icon_state = "command"
 	program_key_icon_state = "green_key"
-	size = 8
+	size = 6
 	requires_ntnet = FALSE
 	available_on_ntnet = FALSE
 	required_access_run = list(ACCESS_JANITOR, ACCESS_PARAMEDIC)
@@ -12,11 +12,16 @@
 	requires_access_to_run = PROGRAM_ACCESS_LIST_ONE
 	usage_flags = PROGRAM_TELESCREEN
 	tgui_id = "CrusherControl"
-	var/message = "" // Message to return to the user
-	var/extending = FALSE //If atleast one of the pistons is extending
-	var/list/pistons = list() //List of pistons linked to the program
-	var/list/airlocks = list() //List of airlocks linked to the program
-	var/list/status_pistons = list() //Status of the pistons
+	/// Message to return to the user
+	var/message = ""
+	/// If atleast one of the pistons is extending
+	var/extending = FALSE
+	/// List of pistons linked to the program
+	var/list/pistons = list()
+	/// List of airlocks linked to the program
+	var/list/airlocks = list()
+	/// Status of the pistons
+	var/list/status_pistons = list()
 
 /datum/computer_file/program/crushercontrol/ui_data(mob/user)
 	var/list/data = initial_data()

@@ -1,12 +1,13 @@
 /datum/computer_file/program/game/arcade
-	filename = "arcadec"					// File name, as shown in the file browser program.
-	filedesc = "Unknown Game"				// User-Friendly name. In this case, we will generate a random name in constructor.
-	program_icon_state = "game"				// Icon state of this program's screen.
+	filename = "arcadec"
+	/// User-Friendly name. In this case, we will generate a random name in constructor.
+	filedesc = "Unknown Game"
+	program_icon_state = "game"
 	program_key_icon_state = "black_key"
-	extended_desc = "Fun for the whole family! Probably not an AAA title, but at least you can download it on the corporate network.."		// A nice description.
-	size = 2								// Size in GQ. Integers only. Smaller sizes should be used for utility/low use programs (like this one), while large sizes are for important programs.
-	requires_ntnet = FALSE					// This particular program does not require NTNet network conectivity...
-	available_on_ntnet = TRUE				// ... but we want it to be available for download.
+	extended_desc = "Fun for the whole family! Probably not an AAA title, but at least you can download it on the corporate network..."
+	size = 1
+	requires_ntnet = FALSE
+	available_on_ntnet = TRUE
 	color = LIGHT_COLOR_BLUE
 	usage_flags = PROGRAM_ALL_REGULAR
 	tgui_id = "NTOSArcade"

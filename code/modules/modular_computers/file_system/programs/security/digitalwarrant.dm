@@ -5,7 +5,7 @@
 	program_icon_state = "warrant"
 	program_key_icon_state = "red_key"
 	color = LIGHT_COLOR_RED
-	size = 8
+	size = 6
 	requires_ntnet = TRUE
 	available_on_ntnet = TRUE
 	required_access_download = ACCESS_HOS

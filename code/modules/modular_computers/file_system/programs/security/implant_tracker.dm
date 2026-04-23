@@ -7,7 +7,7 @@
 	required_access_run = ACCESS_ARMORY
 	requires_ntnet = TRUE
 	available_on_ntnet = FALSE
-	size = 6
+	size = 5
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_SILICON_AI
 	color = LIGHT_COLOR_ORANGE
 	tgui_id = "ImplantTracker"

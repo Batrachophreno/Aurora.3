@@ -10,7 +10,7 @@
 	network_destination = "RCON remote control system"
 	requires_ntnet_feature = NTNET_SYSTEMCONTROL
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_STATIONBOUND
-	size = 19
+	size = 15
 	color = LIGHT_COLOR_YELLOW
 	tgui_id = "RCON"
 	tgui_theme = "hephaestus"

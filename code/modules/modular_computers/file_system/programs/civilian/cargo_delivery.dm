@@ -4,18 +4,22 @@
 	extended_desc = "Application to Control Delivery and Payment of Cargo orders."
 	program_icon_state = "supply"
 	program_key_icon_state = "yellow_key"
-	size = 6
+	size = 5
 	requires_ntnet = TRUE
 	available_on_ntnet = TRUE
 	required_access_download = ACCESS_CARGO
 	usage_flags = PROGRAM_ALL
 	tgui_id = "CargoDelivery"
 
-	var/page = "overview_main" //overview_main - Main Menu, order_overview - Overview page for a specific order, order_payment - Payment page for a specific order
-	var/status_message //A status message that can be displayed
-	var/list/order_details = list() //Order Details for the order
+	/// overview_main - Main Menu, order_overview - Overview page for a specific order, order_payment - Payment page for a specific order
+	var/page = "overview_main"
+	/// A status message that can be displayed
+	var/status_message
+	/// Order Details for the order
+	var/list/order_details = list()
 	var/datum/cargo_order/co
-	var/mod_mode = TRUE //If it can be used to pay for orders
+	/// If it can be used to pay for orders
+	var/mod_mode = TRUE
 	var/destinationact = "Personal"
 
 /datum/computer_file/program/civilian/cargodelivery/ui_data(mob/user)

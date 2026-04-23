@@ -4,7 +4,7 @@
 	program_icon_state = "comm_monitor"
 	program_key_icon_state = "green_key"
 	extended_desc = "This program monitors stationwide NTNet network, provides access to logging systems, and allows for configuration changes"
-	size = 12
+	size = 10
 	requires_ntnet = TRUE
 	required_access_run = ACCESS_NETWORK
 	required_access_download = ACCESS_HEADS

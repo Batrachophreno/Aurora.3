@@ -9,7 +9,7 @@
 	requires_ntnet = TRUE
 	available_on_ntnet = TRUE
 	network_destination = "penal robotics monitoring system"
-	size = 11
+	size = 10
 	usage_flags = PROGRAM_ALL_REGULAR
 	color = LIGHT_COLOR_ORANGE
 	tgui_id = "PenalMechs"

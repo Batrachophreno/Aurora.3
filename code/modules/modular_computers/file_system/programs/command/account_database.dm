@@ -8,7 +8,7 @@
 	extended_desc = "Access transaction logs, account data and all kinds of other financial records."
 	requires_ntnet = TRUE
 	available_on_ntnet = FALSE
-	size = 4 // primarily cloud computing
+	size = 2 // primarily cloud computing
 	usage_flags = PROGRAM_CONSOLE
 	color = LIGHT_COLOR_BLUE
 	tgui_id = "AccountDatabase"

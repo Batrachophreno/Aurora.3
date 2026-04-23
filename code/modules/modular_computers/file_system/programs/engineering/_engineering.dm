@@ -8,11 +8,13 @@
 	requires_ntnet = TRUE
 	network_destination = "alarm monitoring network"
 	usage_flags = PROGRAM_ALL
-	size = 5
+	size = 4
 	color = LIGHT_COLOR_CYAN
 	tgui_id = "AlarmMonitoring"
-	var/list_cameras = 0						// Whether or not to list camera references. A future goal would be to merge this with the enginering/security camera console. Currently really only for AI-use.
-	var/list/datum/alarm_handler/alarm_handlers // The particular list of alarm handlers this alarm monitor should present to the user.
+	/// Whether or not to list camera references. A future goal would be to merge this with the enginering/security camera console. Currently really only for AI-use.
+	var/list_cameras = 0
+	/// The particular list of alarm handlers this alarm monitor should present to the user.
+	var/list/datum/alarm_handler/alarm_handlers
 	var/has_alert = FALSE
 
 /datum/computer_file/program/alarm_monitor/New()

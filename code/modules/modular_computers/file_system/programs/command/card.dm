@@ -8,7 +8,7 @@
 	required_access_download = ACCESS_CHANGE_IDS
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
 	requires_ntnet = FALSE
-	size = 8
+	size = 6
 	color = LIGHT_COLOR_BLUE
 	tgui_id = "IDCardModification"
 	ui_auto_update = FALSE

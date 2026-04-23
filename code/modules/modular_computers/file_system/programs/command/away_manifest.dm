@@ -5,7 +5,7 @@
 	program_icon_state = "menu"
 	program_key_icon_state = "lightblue_key"
 	color = LIGHT_COLOR_BLUE
-	size = 8
+	size = 6
 	requires_ntnet = TRUE
 	available_on_ntnet = TRUE
 	usage_flags = PROGRAM_ALL_REGULAR | PROGRAM_SILICON

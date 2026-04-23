@@ -5,7 +5,7 @@
 	program_key_icon_state = "green_key"
 	extended_desc = "This program is used by custodial staff to keep track of work-related supplies."
 	usage_flags = PROGRAM_ALL_REGULAR
-	size = 4
+	size = 3
 	required_access_run = ACCESS_JANITOR
 	required_access_download = ACCESS_JANITOR
 	requires_ntnet = TRUE

@@ -4,7 +4,7 @@
 	program_icon_state = "ai-fixer"
 	program_key_icon_state = "purple_key"
 	extended_desc = "This program is capable of reconstructing damaged AI systems. It can also be used to upload basic laws to the AI. Requires direct AI connection via intellicard slot."
-	size = 12
+	size = 10
 	requires_ntnet = FALSE
 	requires_access_to_run = FALSE
 	required_access_download = ACCESS_HEADS

@@ -5,7 +5,7 @@
 	program_key_icon_state = "black_key"
 	extended_desc = "This program is used for viewing the crew manifest."
 	usage_flags = PROGRAM_ALL
-	size = 3
+	size = 2
 	tgui_id = "NTOSManifest"
 
 	requires_ntnet = TRUE

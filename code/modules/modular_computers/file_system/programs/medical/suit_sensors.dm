@@ -8,7 +8,7 @@
 	required_access_download = ACCESS_MEDICAL
 	requires_ntnet = TRUE
 	network_destination = "crew lifesigns monitoring system"
-	size = 11
+	size = 9
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_STATIONBOUND
 	color = LIGHT_COLOR_CYAN
 	tgui_id = "SuitSensors"

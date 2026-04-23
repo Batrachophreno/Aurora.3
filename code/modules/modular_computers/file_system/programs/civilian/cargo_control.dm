@@ -4,7 +4,7 @@
 	extended_desc = "Application to Control Cargo Orders"
 	program_icon_state = "supply"
 	program_key_icon_state = "yellow_key"
-	size = 12
+	size = 8
 	requires_ntnet = TRUE
 	available_on_ntnet = TRUE
 	required_access_download = ACCESS_CARGO
@@ -12,10 +12,14 @@
 	usage_flags = PROGRAM_LAPTOP | PROGRAM_CONSOLE | PROGRAM_TELESCREEN
 	tgui_id = "CargoControl"
 
-	var/page = "overview_main" //overview_main - Main Menu, overview_submitted - Submitted Order Overview, overview_approved - Approved Order Overview, settings - Settings, details - order details, bounties - centcom bounties
-	var/status_message //A status message that can be displayed
-	var/list/order_details = list() //Order Details for the order
-	var/list/shipment_details = list() //Shipment Details for a selected shipment
+	/// overview_main - Main Menu, overview_submitted - Submitted Order Overview, overview_approved - Approved Order Overview, settings - Settings, details - order details, bounties - centcom bounties
+	var/page = "overview_main"
+	/// A status message that can be displayed
+	var/status_message
+	/// Order Details for the order
+	var/list/order_details = list()
+	/// Shipment Details for a selected shipment
+	var/list/shipment_details = list()
 
 /datum/computer_file/program/civilian/cargocontrol/ui_data(mob/user)
 	var/list/data = initial_data()
