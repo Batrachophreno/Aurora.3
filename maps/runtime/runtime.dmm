@@ -2907,6 +2907,11 @@
 /obj/effect/landmark/entry_point/aft,
 /turf/simulated/wall/r_wall,
 /area/maintenance/maintcentral)
+"Ev" = (
+/obj/effect/floor_decal/industrial/warning,
+/obj/machinery/vending/frontiervend,
+/turf/simulated/floor/tiled,
+/area/construction)
 "Ew" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -8816,7 +8821,7 @@ cy
 bB
 bB
 cO
-cV
+Ev
 de
 HD
 de
