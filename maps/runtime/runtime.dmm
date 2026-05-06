@@ -1289,6 +1289,10 @@
 /obj/structure/lattice/catwalk/indoor/grate,
 /turf/simulated/floor/plating,
 /area/construction)
+"dD" = (
+/obj/machinery/door/blast/shutters,
+/turf/simulated/floor/tiled/full,
+/area/construction)
 "dE" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/black,
 /obj/machinery/meter,
@@ -1317,6 +1321,15 @@
 	},
 /turf/simulated/floor/tiled/bitile,
 /area/hallway/primary/central_one)
+"dT" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/construction)
 "dV" = (
 /turf/unsimulated/floor/plating,
 /area/hallway/primary/central_one)
@@ -1448,6 +1461,10 @@
 	},
 /turf/simulated/floor/tiled/full,
 /area/hallway/primary/central_one)
+"fk" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/simulated/floor/tiled/full,
+/area/construction)
 "fm" = (
 /obj/effect/floor_decal/spline/plain/black{
 	dir = 8
@@ -1480,6 +1497,15 @@
 "fu" = (
 /turf/simulated/wall/r_wall,
 /area/construction/storage)
+"fw" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/multi_tile{
+	maxhealth = 100
+	},
+/turf/simulated/floor/tiled/full,
+/area/construction)
 "fy" = (
 /obj/structure/lattice/catwalk/indoor/grate,
 /obj/structure/cable/yellow{
@@ -1793,6 +1819,15 @@
 	},
 /turf/simulated/floor/carpet/rubber,
 /area/shuttle/runtime)
+"hh" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/construction)
 "hi" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
 /obj/machinery/chem_heater,
@@ -2350,6 +2385,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/hallway/primary/central_one)
+"jZ" = (
+/obj/machinery/door/blast/regular{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/full,
+/area/construction)
 "kf" = (
 /obj/effect/floor_decal/corner/dark_blue,
 /obj/effect/floor_decal/corner/yellow{
@@ -2944,6 +2985,15 @@
 	},
 /turf/simulated/floor/tiled/gridded,
 /area/hallway/primary/central_two)
+"nx" = (
+/obj/machinery/power/emitter{
+	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/construction)
 "nA" = (
 /obj/machinery/power/apc/super/critical/west,
 /obj/effect/floor_decal/corner/grey{
@@ -3536,6 +3586,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/multi_tile{
+	dir = 2
+	},
 /turf/unsimulated/floor/dark_monotile,
 /area/construction)
 "rg" = (
@@ -3615,6 +3668,12 @@
 /obj/structure/closet/crate,
 /turf/simulated/floor/tiled/full,
 /area/storage/supply)
+"rK" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/construction)
 "rL" = (
 /obj/structure/bed/handrail{
 	dir = 8
@@ -3959,6 +4018,18 @@
 /obj/effect/floor_decal/corner/dark_blue,
 /turf/simulated/floor/tiled/gridded,
 /area/construction/storage)
+"tX" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/emitter{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/full,
+/area/construction)
 "ua" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -4044,6 +4115,15 @@
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/construction/storage)
+"uw" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/emitter{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/construction)
 "uy" = (
 /obj/machinery/atmospherics/unary/vent_pump/siphon/on/atmos{
 	dir = 8;
@@ -4574,6 +4654,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/hatch,
 /turf/unsimulated/floor/dark_monotile,
 /area/construction/storage)
 "xy" = (
@@ -5895,6 +5976,15 @@
 	},
 /turf/simulated/floor/reinforced/n20,
 /area/construction/storage)
+"FU" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/tiled/full,
+/area/construction)
 "FV" = (
 /turf/simulated/floor/reinforced/n20,
 /area/construction/storage)
@@ -6061,6 +6151,12 @@
 	},
 /turf/simulated/floor/reinforced/hydrogen,
 /area/construction/storage)
+"GI" = (
+/obj/machinery/door/firedoor{
+	req_one_access = list()
+	},
+/turf/simulated/floor/tiled/full,
+/area/construction)
 "GN" = (
 /obj/effect/landmark/start{
 	name = "AI"
@@ -7188,6 +7284,12 @@
 	},
 /turf/simulated/floor/tiled/full,
 /area/construction/storage)
+"NL" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/construction)
 "NM" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -8084,6 +8186,12 @@
 	},
 /turf/simulated/floor/tiled/gridded,
 /area/turret_protected/ai)
+"SK" = (
+/obj/machinery/door/firedoor,
+/obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/airlock/hatch,
+/turf/unsimulated/floor/dark_monotile,
+/area/construction/storage)
 "SP" = (
 /obj/machinery/body_scanconsole{
 	dir = 8
@@ -12975,7 +13083,7 @@ PM
 YE
 kf
 lK
-rP
+SK
 dq
 cH
 cq
@@ -16573,11 +16681,11 @@ fG
 KT
 Jc
 Jc
-Jc
+fw
 Jc
 KR
-Jc
-Jc
+tX
+FU
 Jc
 Jc
 gP
@@ -16829,12 +16937,12 @@ ir
 fG
 dc
 dt
+CB
+CB
+CB
 dt
 dt
-dt
-dt
-dt
-dt
+rK
 dt
 dt
 CB
@@ -17086,12 +17194,12 @@ jp
 fG
 dc
 dt
+CB
+CB
+CB
 dt
 dt
-dt
-dt
-dt
-dt
+rK
 dt
 dt
 CB
@@ -17343,12 +17451,12 @@ ir
 fG
 dc
 dt
+CB
+GI
+CB
 dt
-dt
-dt
-dt
-dt
-dt
+uw
+dT
 dt
 dt
 CB
@@ -17600,12 +17708,12 @@ jp
 fG
 TT
 dt
+CB
+CB
+CB
 dt
 dt
-dt
-dt
-dt
-dt
+rK
 dt
 dt
 CB
@@ -17857,12 +17965,12 @@ ir
 fG
 AC
 dt
-dt
-dt
-dt
+CB
+fk
+CB
 dC
-dt
-dt
+nx
+hh
 dt
 dt
 VN
@@ -18114,12 +18222,12 @@ jp
 fG
 Zm
 dt
+CB
+CB
+CB
 dt
 dt
-dt
-dt
-dt
-dt
+rK
 dt
 dt
 CB
@@ -18371,12 +18479,12 @@ cQ
 fG
 CB
 dt
+CB
+jZ
+CB
 dt
-dt
-dt
-dt
-dt
-dt
+nx
+hh
 dt
 dt
 CB
@@ -18628,12 +18736,12 @@ aT
 fG
 CB
 dt
+CB
+CB
+CB
 dt
 dt
-dt
-dt
-dt
-dt
+rK
 dt
 dt
 CB
@@ -18885,12 +18993,12 @@ aa
 fG
 CB
 dt
+CB
+dD
+CB
 dt
-dt
-dt
-dt
-dt
-dt
+uw
+NL
 dt
 dt
 CB

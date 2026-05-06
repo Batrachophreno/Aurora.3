@@ -108,7 +108,8 @@ Class Procs:
 	var/stat = 0
 	/// Is this machine emagged?
 	var/emagged = 0
-
+	/// Boolean. Is this machine so broken that it may as well be scrap metal? This is for objects so broken that they can only be scrapped, not repaired.
+	var/scrapped = FALSE
 	/// In what power state is this machine? Possible states include being off, idle, or active - see code/__defines/machinery.dm.
 	/// You should not be modifying this directly! Use the procs in power_usage.dm.
 	var/use_power = POWER_USE_IDLE

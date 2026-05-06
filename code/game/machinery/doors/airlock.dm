@@ -5,12 +5,13 @@
 #define BOLTS_EXPOSED 1
 #define BOLTS_CUT 2
 
-#define AIRLOCK_CLOSED	1
-#define AIRLOCK_CLOSING	2
-#define AIRLOCK_OPEN	3
-#define AIRLOCK_OPENING	4
-#define AIRLOCK_DENY	5
-#define AIRLOCK_EMAG	6
+#define AIRLOCK_CLOSED		1
+#define AIRLOCK_CLOSING		2
+#define AIRLOCK_OPEN		3
+#define AIRLOCK_OPENING		4
+#define AIRLOCK_DENY		5
+#define AIRLOCK_EMAG		6
+#define AIRLOCK_DESTROYED	7
 
 /// The main airlock body is paintable.
 #define AIRLOCK_PAINTABLE_MAIN 1
@@ -1035,6 +1036,9 @@ About the new airlock wires panel:
 	if (QDELING(src))
 		return
 
+	if(scrapped)
+		state = AIRLOCK_DESTROYED
+
 	switch(state)
 		if(0)
 			if(density)
@@ -1047,6 +1051,8 @@ About the new airlock wires panel:
 			icon_state = "open"
 		if(AIRLOCK_CLOSED)
 			icon_state = "closed"
+		if(AIRLOCK_DESTROYED)
+			icon_state = "destroyed"
 		if(AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG, AIRLOCK_DENY)
 			icon_state = ""
 
@@ -1956,14 +1962,11 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/set_broken()
 	src.p_open = TRUE
 	stat |= BROKEN
-	if (secured_wires)
+	var/broken_message = "[src.name]'s control panel bursts open, sparks spewing out!"
+	if(!scrapped && secured_wires)
 		lock()
-	for (var/mob/O in viewers(src, null))
-		if ((O.client && !( O.blinded )))
-			O.show_message("[src.name]'s control panel bursts open, sparks spewing out!")
-
+	visible_message(broken_message, "You hear loud mechanical failure and the spraying of sparks!")
 	spark(src, 5, GLOB.alldirs)
-
 	update_icon()
 	return
 
@@ -2007,6 +2010,13 @@ About the new airlock wires panel:
 		if(!arePowerSystemsOn() || isWireCut(WIRE_OPEN))
 			return	0
 	return ..()
+
+/// 50-50 chance to be stuck open or shut.
+/obj/machinery/door/airlock/on_death(damage, damage_flags, damage_type, armor_penetration, obj/weapon)
+	if(prob(50))
+		open()
+		scrapped = TRUE
+	set_broken()
 
 /atom/movable/proc/blocks_airlock()
 	return density
