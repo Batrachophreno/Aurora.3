@@ -25,6 +25,25 @@
 	var/glass = FALSE
 	var/created_name
 	var/width = 1
+	var/scrapped = FALSE
+
+	// Door assemblies use much of the same icon logic as airlocks to handle deconstruction/destruction.
+	// If you update these there, update them here.
+
+	var/frame_color_file = 'icons/obj/doors/basic/single/generic/frame_color.dmi'
+	var/color_file = 'icons/obj/doors/basic/single/generic/color.dmi'
+	var/color_fill_file = 'icons/obj/doors/basic/single/generic/fill_color.dmi'
+	var/stripe_file = 'icons/obj/doors/basic/single/generic/stripe.dmi'
+	var/stripe_fill_file = 'icons/obj/doors/basic/single/generic/fill_stripe.dmi'
+	var/glass_file = 'icons/obj/doors/basic/single/generic/fill_glass.dmi'
+	var/fill_file = 'icons/obj/doors/basic/single/generic/fill_steel.dmi'
+	var/panel_file = 'icons/obj/doors/basic/single/generic/panel.dmi'
+	var/airlock_type = "Standard"
+	var/door_color = "#909299"
+	var/door_frame_color = COLOR_GRAY20
+	var/stripe_color = null
+	var/symbol_color = null
+	var/window_color = null
 
 /obj/structure/door_assembly/assembly_hints(mob/user, distance, is_adjacent)
 	. += ..()
