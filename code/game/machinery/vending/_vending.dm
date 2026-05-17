@@ -365,6 +365,7 @@
 		return 1
 
 /obj/machinery/vending/attackby(obj/item/attacking_item, mob/user)
+	. = ..()
 	if(istype(attacking_item, /obj/item/debugger))
 		if(!shut_up)
 			to_chat(user, SPAN_WARNING("\The [attacking_item] reads, \"Software error detected. Rectifying.\"."))
@@ -445,7 +446,7 @@
 		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 		attacking_item.play_tool_sound(get_turf(src), 50)
 		user.visible_message("<b>[user]</b> begins [anchored? "un" : ""]securing \the [src] [anchored? "from" : "to"] the floor.", SPAN_NOTICE("You start [anchored? "un" : ""]securing \the [src] [anchored? "from" : "to"] the floor."))
-		if(attacking_item.use_tool(src, user, 20, volume = 50))
+		if(attacking_item.use_tool(src, user, 20, volume = 50, skills_req_soft = alist(MECHANICAL_ENGINEERING_SKILL_COMPONENT = SKILL_LEVEL_FAMILIAR)))
 			if(!src) return
 			to_chat(user, SPAN_NOTICE("You [anchored? "un" : ""]secured \the [src]!"))
 			anchored = !anchored
@@ -484,7 +485,6 @@
 				user.remove_from_mob(attacking_item) //Catches gripper duplication
 				qdel(attacking_item)
 				return TRUE
-	return ..()
 
 /**
  *  Receive payment with cashmoney.

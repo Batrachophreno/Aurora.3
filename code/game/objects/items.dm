@@ -1151,7 +1151,23 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		return
 	usr.UnarmedAttack(src)
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, datum/callback/extra_checks)
+/**
+ * Called when a mob tries to use the item as a tool.
+ *
+ * Skill requirement checks expect data in the form of an alist, such as:
+ * * skill_req_soft = alist(MECHANICAL_ENGINEERING_SKILL_COMPONENT = SKILL_LEVEL_TRAINED)
+ *
+ * Parameters:
+ * * target - Self-explanatory.
+ * * user - Need to check various things about the user, like their skill level.
+ * * delay - The BASE time for the use of this tool on this atom. Generally only modified by tool quality and user skill.
+ * * amount - The quantity of a given resource required by this tool action- such as fuel, stack sheets, or charges.
+ * * volume - The volume of the tool's toolsound, if one exists, played at the beginning of tool_usage.
+ * * skills_req_soft - Above or below given skill level(s), your time to perform this tool action will be increased or decreased.
+ * * skills_req_hard - Below given skill level(s), you cannot perform this tool action.
+ * * extra_checks - Creates a callback with checks that will be called every tick by do_after.
+ */
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 50, skills_req_soft = null, skills_req_hard = null, datum/callback/extra_checks)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 
@@ -1161,13 +1177,26 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(!delay && !tool_start_check(user, amount))
 		return
 
+	if(volume)
+		play_tool_sound(target, volume)
+
+	if(toolspeed != 1.0)
+		to_chat(world, "non-standard toolspeed of [toolspeed]! delay changed from [delay / 10] to [delay / toolspeed / 10]")
 	delay /= toolspeed
 
-	// Play tool sound at the beginning of tool usage.
-	play_tool_sound(target, volume)
+	var/skill_diff = 0
+	for(var/skill_type, required_level in skills_req_soft)
+		skill_diff += required_level - GET_SKILL_LEVEL(user, skill_type)
+		to_chat(world, "found skill_diff of [skill_diff]")
 
 	if(delay)
-		// Create a callback with checks that would be called every tick by do_after.
+		delay += delay * ftanh(0.5 * skill_diff)
+		if(skill_diff)
+			to_chat(world, "delay of [delay / 10] modified to [(delay + (delay * ftanh(0.5 * skill_diff))) / 10]")
+
+		// Make sure we don't reduce delay below 1 decisecond.
+		delay = max(delay, 1)
+
 		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks)
 
 		if(ismob(target))
@@ -1193,12 +1222,12 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	return TRUE
 
-// Called before use_tool if there is a delay, or by use_tool if there isn't.
-// Only ever used by welding tools and stacks, so it's not added on any other use_tool checks.
+/// Called before [obj/item/proc/use_tool] if there is a delay, or by [obj/item/proc/use_tool] if there isn't.
+/// Only ever used by welding tools and stacks, so it's not added on any other [obj/item/proc/use_tool] checks.
 /obj/item/proc/tool_start_check(mob/living/user, amount=0)
 	return tool_use_check(user, amount)
 
-// A check called by tool_start_check once, and by use_tool on every tick of delay.
+/// A check called by tool_start_check once, and by use_tool on every tick of delay.
 /obj/item/proc/tool_use_check(mob/living/user, amount)
 	return TRUE
 
@@ -1218,12 +1247,12 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		//playsound(target, played_sound, VOL_EFFECTS_MASTER, volume) implement sound channel system in future
 		playsound(target, played_sound, volume, TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
-// Generic use proc. Depending on the item, it uses up fuel, charges, sheets, etc.
-// Returns TRUE on success, FALSE on failure.
+/// Generic use proc. Depending on the item, it uses up fuel, charges, sheets, etc.
+/// Returns TRUE on success, FALSE on failure.
 /obj/item/proc/use(used, mob/M = null)
 	return !used
 
-// Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
+/// Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
 	return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
 

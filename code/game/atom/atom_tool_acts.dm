@@ -1,13 +1,14 @@
 /**
  * ## Item interaction
  *
- * Handles non-combat interactions of a tool on this atom,
- * such as using a tool on a wall to deconstruct it,
- * or scanning someone with a health analyzer
+ * Handles non-combat interactions of a tool on this atom, such as using a tool on a wall
+ * to deconstruct it, or scanning someone with a health analyzer.
  */
 /atom/proc/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
+
+	to_chat(world, "base_item_interaction([user],[tool])")
 
 	if(!user.a_intent == I_HURT)
 		var/tool_return = tool_act(user, tool, modifiers)
@@ -62,7 +63,6 @@
 	return NONE
 
 /**
- *
  * ## Tool Act
  *
  * Handles using specific tools on this atom directly.

@@ -55,6 +55,14 @@ This calls [atom/proc/tool_act], among others.
 		return TRUE
 	return FALSE
 
+/**
+ * Handles HARM intent attackbys, handling click cooldown, attack anim, visible messaging, and any sounds.
+ *
+ * When executed without the HARM intent, it calls base_item_interaction(), which generally handles tool use.
+ *
+ * This proc will always return FALSE, letting us proceed to execute child attackby code, except in the case of
+ * an ITEM_INTERACT_SUCCESS result. That is to say, if we successfully used a tool, we don't do anything else.
+ */
 /atom/movable/attackby(obj/item/attacking_item, mob/user, params)
 	if(..())
 		return TRUE
