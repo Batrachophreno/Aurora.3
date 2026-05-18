@@ -1,7 +1,12 @@
-// Tool types, as used by the obj/item variable 'tool_behaviour'. These are strings and not bitfields, because even
-// though some objects logically could function as multiple tools simultaneously, the 'tool_behaviour' variable describes
-// current intention, not functionality. For an item that can function as multiple tools, it must have a mechanism to switch
-// between intended tool types.
+/**
+ * Tool types, as used by the obj/item variable 'tool_behaviour'. These are strings and not bitfields, because even
+ * though some objects logically could function as multiple tools simultaneously, the 'tool_behaviour' variable describes
+ * current intention, not functionality. For an item that can function as multiple tools, it must have a mechanism to switch
+ * between intended tool types.
+ *
+ * Although these tools are all (roughly) grouped by application, note that there is often crossover.
+ */
+// 'Traditional' tools
 #define TOOL_CROWBAR "crowbar"
 #define TOOL_MULTITOOL "multitool"
 #define TOOL_SCREWDRIVER "screwdriver"
@@ -12,6 +17,11 @@
 #define TOOL_ANALYZER "analyzer"
 #define TOOL_MINING "mining"
 #define TOOL_SHOVEL "shovel"
+#define TOOL_CABLECOIL "cable coil"
+#define TOOL_HAMMER "hammer"
+#define TOOL_PEN "pen"
+
+// Surgical tools
 #define TOOL_RETRACTOR "retractor"
 #define TOOL_HEMOSTAT "hemostat"
 #define TOOL_CAUTERY "cautery"
@@ -19,12 +29,12 @@
 #define TOOL_SCALPEL "scalpel"
 #define TOOL_SAW "saw"
 #define TOOL_BONESET "bonesetter"
-#define TOOL_KNIFE "knife"
 #define TOOL_BLOODFILTER "bloodfilter"
+
+// Cooking tools
 #define TOOL_ROLLINGPIN "rolling pin"
-#define TOOL_CABLECOIL "cable coil"
-#define TOOL_HAMMER "hammer"
-#define TOOL_PEN "pen"
+#define TOOL_KNIFE "knife"
+
 
 /**
  * The "default value" a tool quality should be. Lower than this means a worse tool, higher than this means a better tool.

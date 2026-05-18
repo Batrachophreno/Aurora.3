@@ -112,6 +112,8 @@
 			act_result = is_left_clicking ? screwdriver_act(user, tool) : screwdriver_act_alt(user, tool)
 		if(TOOL_WRENCH)
 			act_result = is_left_clicking ? wrench_act(user, tool) : wrench_act_alt(user, tool)
+		if(TOOL_PIPEWRENCH)
+			act_result = is_left_clicking ? pipewrench_act(user, tool) : pipewrench_act_alt(user, tool)
 		if(TOOL_WIRECUTTER)
 			act_result = is_left_clicking ? wirecutter_act(user, tool) : wirecutter_act_alt(user, tool)
 		if(TOOL_WELDER)
@@ -120,6 +122,10 @@
 			act_result = is_left_clicking ? analyzer_act(user, tool) : analyzer_act_alt(user, tool)
 		if(TOOL_CABLECOIL)
 			act_result = is_left_clicking ? cablecoil_act(user, tool) : cablecoil_act_alt(user, tool)
+		if(TOOL_HAMMER)
+			act_result = is_left_clicking ? hammer_act(user, tool) : hammer_act_alt(user, tool)
+		if(TOOL_SHOVEL)
+			act_result = is_left_clicking ? shovel_act(user, tool) : shovel_act_alt(user, tool)
 
 	if(!act_result)
 		return NONE
@@ -303,6 +309,14 @@
 /atom/proc/wrench_act_alt(mob/living/user, obj/item/tool)
 	return
 
+/// Called on an object when a tool with pipe wrench capabilities is used to left click an object
+/atom/proc/pipewrench_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with pipe wrench capabilities is used to alt-left click an object
+/atom/proc/pipewrench_act_alt(mob/living/user, obj/item/tool)
+	return
+
 /// Called on an object when a tool with wirecutter capabilities is used to left click an object
 /atom/proc/wirecutter_act(mob/living/user, obj/item/tool)
 	return
@@ -333,4 +347,20 @@
 
 /// Called on an object when a tool that functions as a cable is used to alt-left click an object
 /atom/proc/cablecoil_act_alt(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with hammer capabilities is used to left click an object
+/atom/proc/hammer_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with hammer capabilities is used to alt-left click an object
+/atom/proc/hammer_act_alt(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with shovel capabilities is used to left click an object
+/atom/proc/shovel_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with shovel capabilities is used to alt-left click an object
+/atom/proc/shovel_act_alt(mob/living/user, obj/item/tool)
 	return
