@@ -977,65 +977,85 @@ pixel_x = 10;
 		apply_danger_level(0)
 	update_icon()
 
+/**
+ * Alarm construction (by buildstage)::
+ * * use obj/item/frame/air_alarm on free wall
+ * * 0 - attack frame with airalarm_electronics -> 1
+ * * 1 - use 5 cable coils -> 2
+ *
+ * Alarm deconstruction (by buildstage)
+ * * 2 - open panel with screwdriver
+ * * 2 - use wirecutter -> 1
+ * * 1 - use crowbar -> 0
+ * * 0 - use wrench to remove from wall (qdeling it and creating obj/item/frame/air_alarm)
+ */
 /obj/machinery/alarm/attackby(obj/item/attacking_item, mob/user)
 	if(!istype(attacking_item, /obj/item/forensics))
 		src.add_fingerprint(user)
 
-	switch(buildstage)
-		if(2)
-			if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)  // Opening that Air Alarm up.
-				panel_open = !panel_open
-				to_chat(user, SPAN_NOTICE("You [panel_open ? "open" : "close"] the maintenance panel."))
-				update_icon()
-				return TRUE
-
-			if (panel_open && attacking_item.tool_behaviour == TOOL_WIRECUTTER)
-				user.visible_message(SPAN_WARNING("[user] has cut the wires inside \the [src]!"), "You cut the wires inside \the [src].")
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				new/obj/item/stack/cable_coil(get_turf(src), 5)
-				buildstage = 1
-				update_icon()
-				return TRUE
-
-		if(1)
-			if(attacking_item.tool_behaviour == TOOL_CABLECOIL)
-				var/obj/item/stack/cable_coil/C = attacking_item
-				if (C.use(5))
-					to_chat(user, SPAN_NOTICE("You wire \the [src]."))
-					buildstage = 2
-					update_icon()
-					first_run()
-					set_frequency(frequency)
-				else
-					to_chat(user, SPAN_WARNING("You need 5 pieces of cable to do wire \the [src]."))
-				return TRUE
-
-			else if(attacking_item.tool_behaviour == TOOL_CROWBAR)
-				to_chat(user, "You start prying out the circuit.")
-				if(attacking_item.use_tool(src, user, 20, volume = 50))
-					to_chat(user, "You pry out the circuit!")
-					var/obj/item/airalarm_electronics/circuit = new /obj/item/airalarm_electronics()
-					circuit.forceMove(user.loc)
-					buildstage = 0
-					update_icon()
-				return TRUE
-
-		if(0)
-			if(istype(attacking_item, /obj/item/airalarm_electronics))
-				to_chat(user, "You insert the circuit!")
-				qdel(attacking_item)
-				buildstage = 1
-				update_icon()
-				return TRUE
-
-			else if(attacking_item.tool_behaviour == TOOL_WRENCH)
-				to_chat(user, "You remove the air alarm assembly from the wall!")
-				new /obj/item/frame/air_alarm(get_turf(user))
-				attacking_item.play_tool_sound(src.loc, 50)
-				qdel(src)
-				return TRUE
+	if(buildstage == 0 && istype(attacking_item, /obj/item/airalarm_electronics))
+		to_chat(user, "You insert the circuit!")
+		qdel(attacking_item)
+		buildstage = 1
+		update_icon()
+		return TRUE
 
 	return ..()
+
+/obj/machinery/alarm/cablecoil_act(mob/living/user, obj/item/tool)
+	if(buildstage != 1)
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/cable_coil/C = tool
+	if(C.use(5))
+		to_chat(user, SPAN_NOTICE("You wire \the [src]."))
+		buildstage = 2
+		update_icon()
+		first_run()
+		set_frequency(frequency)
+	else
+		to_chat(user, SPAN_WARNING("You need 5 pieces of cable to do wire \the [src]."))
+		return ITEM_INTERACT_BLOCKING
+
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/alarm/screwdriver_act(mob/living/user, obj/item/tool)
+	if(buildstage < 2)
+		return ITEM_INTERACT_BLOCKING
+
+	if(tool.use_tool(src, user, 10, volume = 50))
+		panel_open = !panel_open
+		user.visible_message(SPAN_NOTICE("[user] has [panel_open ? "opened" : "closed"] the maintenance panel on the \the [src]!"), "You [panel_open ? "open" : "close"] the maintenance panel on \the [src].")
+		update_icon()
+		return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/alarm/wirecutter_act(mob/living/user, obj/item/tool)
+	if(buildstage < 2 || !panel_open)
+		return ITEM_INTERACT_BLOCKING
+
+	if(tool.use_tool(src, user, 20, volume = 50))
+		user.visible_message(SPAN_WARNING("[user] has cut the wires inside \the [src]!"), "You cut the wires inside \the [src].")
+		playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+		new/obj/item/stack/cable_coil(get_turf(src), 5)
+		buildstage = 1
+		update_icon()
+		return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/alarm/wrench_act(mob/user, obj/item/tool)
+	if(buildstage > 0)
+		return ITEM_INTERACT_BLOCKING
+
+	if(tool.use_tool(src, user, 30, volume = 50))
+		to_chat(user, "You remove the air alarm assembly from the wall!")
+		new /obj/item/frame/air_alarm(get_turf(user))
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/alarm/AltClick(mob/user)
 	if(Adjacent(user))

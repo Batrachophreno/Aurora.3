@@ -475,20 +475,22 @@ Class Procs:
 			if(temp_apc && temp_apc.terminal && temp_apc.terminal.powernet)
 				temp_apc.terminal.powernet.trigger_warning()
 		if(user.stunned)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
+/// Checks if the machine's maintenance panel is open. If so, dismantle the object.
 /obj/machinery/proc/default_deconstruction_crowbar(var/mob/user, var/obj/item/C)
 	if(!istype(C) || C.tool_behaviour != TOOL_CROWBAR)
-		return 0
+		return FALSE
 	if(!panel_open)
-		return 0
+		return FALSE
 	. = dismantle()
 
-/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/obj/item/S)
-	if(!istype(S) || S.tool_behaviour != TOOL_SCREWDRIVER)
+/// Toggles the machine's maintenance panel open or closed.
+/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/obj/item/tool)
+	if(!istype(tool) || tool.tool_behaviour != TOOL_SCREWDRIVER)
 		return FALSE
-	S.play_tool_sound(get_turf(src), 50)
+	tool.play_tool_sound(get_turf(src), 50)
 	panel_open = !panel_open
 	to_chat(user, SPAN_NOTICE("You [panel_open ? "open" : "close"] the maintenance hatch of [src]."))
 	update_icon()

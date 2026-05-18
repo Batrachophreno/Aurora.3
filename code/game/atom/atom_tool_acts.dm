@@ -1,9 +1,8 @@
 /**
  * ## Item interaction
  *
- * Handles non-combat interactions of a tool on this atom,
- * such as using a tool on a wall to deconstruct it,
- * or scanning someone with a health analyzer
+ * Handles non-combat interactions of a tool on this atom, such as using a tool on a
+ * wall to deconstruct it, or scanning someone with a health analyzer.
  */
 /atom/proc/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	SHOULD_CALL_PARENT(TRUE)
@@ -62,7 +61,6 @@
 	return NONE
 
 /**
- *
  * ## Tool Act
  *
  * Handles using specific tools on this atom directly.
@@ -120,6 +118,8 @@
 			act_result = is_left_clicking ? welder_act(user, tool) : welder_act_alt(user, tool)
 		if(TOOL_ANALYZER)
 			act_result = is_left_clicking ? analyzer_act(user, tool) : analyzer_act_alt(user, tool)
+		if(TOOL_CABLECOIL)
+			act_result = is_left_clicking ? cablecoil_act(user, tool) : cablecoil_act_alt(user, tool)
 
 	if(!act_result)
 		return NONE
@@ -325,4 +325,12 @@
 
 /// Called on an object when a tool with analyzer capabilities is used to alt-left click an object
 /atom/proc/analyzer_act_alt(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool that functions as a cable is used to left click an object
+/atom/proc/cablecoil_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool that functions as a cable is used to alt-left click an object
+/atom/proc/cablecoil_act_alt(mob/living/user, obj/item/tool)
 	return
