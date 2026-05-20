@@ -1037,7 +1037,6 @@ pixel_x = 10;
 
 	if(tool.use_tool(src, user, 20, volume = 50))
 		user.visible_message(SPAN_WARNING("[user] has cut the wires inside \the [src]!"), "You cut the wires inside \the [src].")
-		playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 		new/obj/item/stack/cable_coil(get_turf(src), 5)
 		buildstage = 1
 		update_icon()
