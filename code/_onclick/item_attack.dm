@@ -1,23 +1,26 @@
-/*
-=== Item Click Call Sequences ===
-These are the default click code call sequences used when clicking on stuff with an item.
-Atoms:
-mob/ClickOn() calls the item's resolve_attackby() proc.
-item/resolve_attackby() calls the target atom's attackby() proc.
-Mobs:
-mob/living/attackby() after checking for surgery, calls the item's attack() proc.
-item/attack() generates attack logs, sets click cooldown and calls the mob's attacked_with_item() proc. If you override this, consider whether you need to set a click cooldown, play attack animations, and generate logs yourself.
-mob/attacked_with_item() should then do mob-type specific stuff (like determining hit/miss, handling shields, etc) and then possibly call the item's apply_hit_effect() proc to actually apply the effects of being hit.
-Item Hit Effects:
-item/apply_hit_effect() can be overriden to do whatever you want. However "standard" physical damage based weapons should make use of the target mob's hit_with_weapon() proc to
-avoid code duplication. This includes items that may sometimes act as a standard weapon in addition to having other effects (e.g. stunbatons on harm intent).
+/**
+ * === Item Click Call Sequences ===
+ * These are the default click code call sequences used when clicking on stuff with an item. Note that this is not a comprehensive flowchart-level breakdown. Remember to review the procs themselves.
+ *
+ * Atoms:
+ * * mob/ClickOn() calls the item's resolve_attackby() proc.
+ * * item/resolve_attackby() calls the target atom's pre_attack() proc.
+ * * item/attackby() calls the target atom's afterattack() proc.
+ *
+ * Mobs:
+ * * mob/living/attackby() after checking for surgery, calls the item's attack() proc.
+ * * item/attack() generates attack logs, sets click cooldown and calls the mob's attacked_with_item() proc. If you override this, consider whether you need to set a click cooldown, play attack animations, and generate logs yourself.
+ * * mob/attacked_with_item() should then do mob-type specific stuff (like determining hit/miss, handling shields, etc) and then possibly call the item's apply_hit_effect() proc to actually apply the effects of being hit.
+ *
+ * Item Hit Effects:
+ * * item/apply_hit_effect() can be overriden to do whatever you want. However "standard" physical damage based weapons should make use of the target mob's hit_with_weapon() proc to
+ *   avoid code duplication. This includes items that may sometimes act as a standard weapon in addition to having other effects (e.g. stunbatons on harm intent).
+ *
+ * Other Notable Procs:
+ * * obj/item/proc/base_item_interaction() is called by attackby() if not on HARM intent, and calls the atom's [tool]_act() proc based on the tool being used.
+ */
 
-[obj/item/proc/base_item_interaction] handles all non-combat interactions of an item with an atom.
-This calls [atom/proc/tool_act], among others.
-
-*/
-
-// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
+/// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user, modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
@@ -28,11 +31,11 @@ This calls [atom/proc/tool_act], among others.
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF_SECONDARY, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 
-// Called at the start of resolve_attackby(), before the actual attack.
+/// Called at the start of resolve_attackby(), before the actual attack.
 /obj/item/proc/pre_attack(atom/a, mob/user)
 	return
 
-//I would prefer to rename this to attack(), but that would involve touching hundreds of files.
+/// I would prefer to rename this to attack(), but that would involve touching hundreds of files.
 /obj/item/proc/resolve_attackby(atom/A, mob/user, var/click_parameters)
 	pre_attack(A, user)
 	add_fingerprint(user)
@@ -40,7 +43,7 @@ This calls [atom/proc/tool_act], among others.
 	return A.attackby(src, user, click_parameters)
 
 /**
- * Called on an object being hit by an item
+ * Called on an object being hit by an item. This is called by resolve_attackby() after pre_attack(), IF conditions are met during ClickOn().
  *
  * Returns `TRUE` if all desired actions are resolved from that attack
  *
