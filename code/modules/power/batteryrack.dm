@@ -40,28 +40,34 @@
 /obj/machinery/power/smes/batteryrack/chargedisplay()
 	return round(4 * charge/(capacity ? capacity : 5e6))
 
+/obj/machinery/power/smes/batteryrack/crowbar_act(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		return ITEM_INTERACT_BLOCKING
 
-/obj/machinery/power/smes/batteryrack/attackby(obj/item/attacking_item, mob/user) //these can only be moved by being reconstructed, solves having to remake the powernet.
-	..() //SMES attackby for now handles screwdriver, cable coils and wirecutters, no need to repeat that here
-	if(open_hatch)
-		if(attacking_item.tool_behaviour == TOOL_CROWBAR)
-			if (charge < (capacity / 100))
-				if (!output_attempt && !input_attempt)
-					attacking_item.play_tool_sound(get_turf(src), 50)
-					var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-					M.state = 2
-					M.icon_state = "box_1"
-					for(var/obj/I in component_parts)
-						I.forceMove(src.loc)
-					qdel(src)
-					return 1
-				else
-					to_chat(user, SPAN_WARNING("Turn off the [src] before dismantling it."))
-			else
-				to_chat(user, SPAN_WARNING("Better let [src] discharge before dismantling it."))
-		else if ((istype(attacking_item, /obj/item/stock_parts/capacitor) && (capacitors_amount < 5)) || (istype(attacking_item, /obj/item/cell) && (cells_amount < 5)))
-			if (charge < (capacity / 100))
-				if (!output_attempt && !input_attempt)
+	if(charge > (capacity / 100))
+		to_chat(user, SPAN_WARNING("Better let [src] discharge before dismantling it."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(output_attempt || input_attempt)
+		to_chat(user, SPAN_WARNING("Turn off the [src] before dismantling it."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(tool.use_tool(src, user, delay = 20, volume = 50))
+		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+		M.state = WIRING_STATE
+		M.icon_state = "box_1"
+		for(var/obj/I in component_parts)
+			I.forceMove(src.loc)
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/power/smes/batteryrack/attackby(obj/item/attacking_item, mob/user)
+	if(panel_open)
+		if((istype(attacking_item, /obj/item/stock_parts/capacitor) && (capacitors_amount < 5)) || (istype(attacking_item, /obj/item/cell) && (cells_amount < 5)))
+			if(charge < (capacity / 100))
+				if(!output_attempt && !input_attempt)
 					user.drop_from_inventory(attacking_item,src)
 					component_parts += attacking_item
 					RefreshParts()
@@ -74,7 +80,8 @@
 			user.set_machine(src)
 			interact(user)
 			return 1
-	return
+
+	. = ..()
 
 
 //The shitty one that will blow up.

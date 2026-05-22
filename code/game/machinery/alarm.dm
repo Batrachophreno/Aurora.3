@@ -1007,7 +1007,7 @@ pixel_x = 10;
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/stack/cable_coil/C = tool
-	if(C.use(5))
+	if(C.use_tool(src, user, delay = 20, amount = 5, volume = 50))
 		to_chat(user, SPAN_NOTICE("You wire \the [src]."))
 		buildstage = 2
 		update_icon()

@@ -86,15 +86,17 @@
 	/// Set by gridcheck event, temporarily disables the SMES.
 	var/failure_timer = 0
 	var/target_load = 0
-	var/open_hatch = 0
+	var/panel_open = 0
 	var/name_tag = null
 	///Suggestions about how to avoid clickspam building several terminals accepted!
-	var/building_terminal = 0
+	var/building_terminal = FALSE
 	var/obj/machinery/power/terminal/terminal = null
 	/// If this is set to 0 it will send out warning on New()
 	var/should_be_mapped = 0
 	var/datum/effect_system/sparks/big_spark
 	var/datum/effect_system/sparks/small_spark
+
+	dismantles_into = /obj/machinery/constructable_frame/machine_frame
 
 	var/time = 0
 	var/charge_mode = 0
@@ -109,7 +111,7 @@
 	. += ..()
 	if(is_badly_damaged())
 		. += SPAN_DANGER("\The [src] is damaged to the point of non-function!")
-	if(open_hatch)
+	if(panel_open)
 		. += "The maintenance hatch is open."
 		if (max_coils > 1 && Adjacent(user))
 			var/list/coils = list()
@@ -173,6 +175,8 @@
 
 /obj/machinery/power/smes/proc/is_badly_damaged()
 	if(health < initial(health) / 5)
+		panel_open = TRUE
+		update_icon()
 		return TRUE
 	return FALSE
 
@@ -180,8 +184,8 @@
 	if(terminal)
 		terminal.master = null
 		terminal = null
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/power/smes/update_icon()
 	ClearOverlays()
@@ -324,34 +328,31 @@
 		update_icon()
 	return
 
-//Will return 1 on failure
+/// Checks if you can build a terminal in a spot described by the location of the user, and creates it if so.
 /obj/machinery/power/smes/proc/make_terminal(const/mob/user)
-	if (user.loc == loc)
+	if(user.loc == loc)
 		to_chat(user, SPAN_WARNING("You must not be on the same tile as the [src]."))
-		return 1
-
-	//Direction the terminal will face to
+		return FALSE
+	// Direction the terminal will face
 	var/tempDir = get_dir(user, src)
 	switch(tempDir)
-		if (NORTHEAST, SOUTHEAST)
+		if(NORTHEAST, SOUTHEAST)
 			tempDir = EAST
-		if (NORTHWEST, SOUTHWEST)
+		if(NORTHWEST, SOUTHWEST)
 			tempDir = WEST
 	var/turf/tempLoc = get_step(src, REVERSE_DIR(tempDir))
-	if (istype(tempLoc, /turf/space))
+	if(istype(tempLoc, /turf/space))
 		to_chat(user, SPAN_WARNING("You can't build a terminal on space."))
-		return 1
-	else if (istype(tempLoc))
+		return FALSE
+	else if(istype(tempLoc))
 		if(!tempLoc.is_plating())
 			to_chat(user, SPAN_WARNING("You must remove the floor plating first."))
-			return 1
-	to_chat(user, SPAN_NOTICE("You start adding cable to the [src]."))
-	if(do_after(user, 5 SECONDS, src, DO_REPAIR_CONSTRUCT))
-		terminal = new /obj/machinery/power/terminal(tempLoc)
-		terminal.set_dir(tempDir)
-		terminal.master = src
-		return 0
-	return 1
+			return FALSE
+
+	terminal = new /obj/machinery/power/terminal(location)
+	terminal.set_dir(direction)
+	terminal.master = src
+	return TRUE
 
 /obj/machinery/power/smes/attack_ai(mob/user)
 	if(!ai_can_interact(user))
@@ -363,71 +364,74 @@
 	add_fingerprint(user)
 	ui_interact(user)
 
-/obj/machinery/power/smes/attackby(obj/item/attacking_item, mob/user)
-	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!open_hatch)
-			if(is_badly_damaged())
-				to_chat(user, SPAN_WARNING("\The [src]'s maintenance panel is broken open!"))
-				return
-			open_hatch = 1
-			user.visible_message(\
-				SPAN_NOTICE("\The [user] opens the maintenance hatch of \the [src]."),\
-				SPAN_NOTICE("You open the maintenance hatch of \the [src]."),\
-				range = 4)
-			return 0
-		else
-			open_hatch = 0
-			user.visible_message(\
-				SPAN_NOTICE("\The [user] closes the maintenance hatch of \the [src]."),\
-				SPAN_NOTICE("You close the maintenance hatch of \the [src]."),\
-				range = 4)
-			return 0
+/// Handle creating a cable terminal if one doesn't exist.
+/obj/machinery/power/smes/cablecoil_act(mob/living/user, obj/item/tool)
+	if(terminal || building_terminal)
+		return ITEM_INTERACT_BLOCKING
 
-	if (!open_hatch)
-		to_chat(user, SPAN_WARNING("You need to open access hatch on [src] first!"))
-		return 0
+	building_terminal = TRUE
+	var/obj/item/stack/cable_coil/coil = attacking_item
 
-	if(attacking_item.tool_behaviour == TOOL_CABLECOIL && !terminal && !building_terminal)
-		building_terminal = 1
-		var/obj/item/stack/cable_coil/CC = attacking_item
-		if (CC.get_amount() <= 10)
-			to_chat(user, SPAN_WARNING("You need more cables."))
-			building_terminal = 0
-			return 0
-		if (make_terminal(user))
-			building_terminal = 0
-			return 0
-		building_terminal = 0
-		CC.use(10)
+	if(coil.get_amount() <= 10)
+		to_chat(user, SPAN_WARNING("You need 10 cables."))
+		building_terminal = FALSE
+		return ITEM_INTERACT_BLOCKING
+
+	if(coil.use_tool(src, user, volume = 50))
+		if(make_terminal(user))
+			building_terminal = FALSE
+			coil.use(10)
+			user.visible_message(\
+			SPAN_NOTICE("[user.name] added cables to \the [src]."),\
+			SPAN_NOTICE("You added cables to \the [src]."))
+			terminal.connect_to_network()
+			stat = 0
+			return ITEM_INTERACT_SUCCESS
+
+	building_terminal = FALSE
+	return ITEM_INTERACT_BLOCKING
+
+/// Dismantle handling. Checks for charge and on/off states before being handled by parent proc.
+/obj/machinery/power/smes/crowbar_act(mob/living/user, obj/item/tool)
+	if(charge > (capacity / 100))
+		to_chat(user, SPAN_WARNING("Better let [src] discharge before dismantling it."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(output_attempt || input_attempt)
+		to_chat(user, SPAN_WARNING("Turn off the [src] before dismantling it."))
+		return ITEM_INTERACT_BLOCKING
+
+	return ..()
+
+/// Toggle panel open/shut.
+/obj/machinery/power/smes/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		if(is_badly_damaged())
+			to_chat(user, SPAN_WARNING("\The [src]'s maintenance panel is broken open!"))
+			return ITEM_INTERACT_BLOCKING
+		panel_open = TRUE
 		user.visible_message(\
-			SPAN_NOTICE("[user.name] has added cables to the [src]."),\
-			SPAN_NOTICE("You added cables to the [src]."))
-		terminal.connect_to_network()
-		stat = 0
-		return 0
+			SPAN_NOTICE("\The [user] opens the maintenance hatch of \the [src]."),\
+			SPAN_NOTICE("You open the maintenance hatch of \the [src]."),\
+			range = 4)
+		return ITEM_INTERACT_SUCCESS
+	else
+		panel_open = FALSE
+		user.visible_message(\
+			SPAN_NOTICE("\The [user] closes the maintenance hatch of \the [src]."),\
+			SPAN_NOTICE("You close the maintenance hatch of \the [src]."),\
+			range = 4)
+		return ITEM_INTERACT_SUCCESS
 
-	else if(attacking_item.tool_behaviour == TOOL_WIRECUTTER && terminal && !building_terminal)
-		building_terminal = 1
-		var/turf/tempTDir = terminal.loc
-		if (istype(tempTDir))
-			if(!tempTDir.is_plating())
-				to_chat(user, SPAN_WARNING("You must remove the floor plating first."))
-			else
-				to_chat(user, SPAN_NOTICE("You begin to cut the cables..."))
-				if(attacking_item.use_tool(src, user, 50, volume = 50))
-					if (prob(50) && electrocute_mob(usr, terminal.powernet, terminal))
-						big_spark.queue()
-						building_terminal = 0
-						if(usr.stunned)
-							return 0
-					new /obj/item/stack/cable_coil(loc,10)
-					user.visible_message(\
-						SPAN_NOTICE("[user.name] cut the cables and dismantled the power terminal."),\
-						SPAN_NOTICE("You cut the cables and dismantle the power terminal."))
-					qdel(terminal)
-		building_terminal = 0
-		return 0
-	return 1
+/obj/machinery/power/smes/wirecutter_act(mob/living/user, obj/item/tool)
+	if(terminal && !building_terminal)
+		if(!panel_open)
+			to_chat(user, SPAN_WARNING("You need to open access hatch on [src] first!"))
+			return ITEM_INTERACT_BLOCKING
+
+
+
+
 
 /obj/machinery/power/smes/ui_data(mob/user)
 	var/list/data = list()

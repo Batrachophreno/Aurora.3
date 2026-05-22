@@ -24,9 +24,9 @@
 ///////////////////////////////
 // General procedures
 //////////////////////////////
-// Proc: power_wattage_readable()
-// Parameters: 1 (amount - Power in Watts to be converted to W, kW or MW)
-// Description: Helper proc that converts reading in Watts to kW or MW (returns string version of amount parameter)
+/// Proc: power_wattage_readable()
+/// Parameters: 1 (amount - Power in Watts to be converted to W, kW or MW)
+/// Description: Helper proc that converts reading in Watts to kW or MW (returns string version of amount parameter)
 /obj/machinery/proc/power_wattage_readable(var/amount = 0)
 	var/units = ""
 	// 10kW and less - Watts
@@ -45,57 +45,52 @@
 	else
 		return "[amount] [units]"
 
-/obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
+/// Machines without a terminal will just return, no harm no foul.
+/obj/machinery/power/proc/disconnect_terminal()
 	return
 
-// connect the machine to a powernet if a node cable is present on the turf
+/// Connect the machine to a powernet if a node cable is present on the turf.
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
 	if(!T || !istype(T))
-		return 0
+		return FALSE
 
 	var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
 	if(!C || !C.powernet)
-		return 0
+		return FALSE
 
 	C.powernet.add_machine(src)
-	return 1
+	return TRUE
 
-// remove and disconnect the machine from its current powernet
+/// Remove and disconnect the machine from its current powernet.
 /obj/machinery/power/proc/disconnect_from_network()
 	if(!powernet)
-		return 0
+		return FALSE
 	powernet.remove_machine(src)
-	return 1
+	return TRUE
 
-// attach a wire to a power machine - leads from the turf you are standing on
-//almost never called, overwritten by all power machines but terminal and generator
-/obj/machinery/power/attackby(obj/item/attacking_item, mob/user)
+/// Attach a wire to a power machine - leads from the turf you are standing on.
+/// Almost never called, overwritten by all power machines but terminal and generator.
+/obj/machinery/power/cablecoil_act(mob/living/user, obj/item/tool)
+	var/obj/item/stack/cable_coil/coil = tool
+	var/turf/T = user.loc
 
-	if(attacking_item.tool_behaviour == TOOL_CABLECOIL)
+	if(!T.is_plating() || !istype(T, /turf/simulated/floor))
+		return ITEM_INTERACT_BLOCKING
 
-		var/obj/item/stack/cable_coil/coil = attacking_item
+	if(get_dist(src, user) > 1)
+		return ITEM_INTERACT_BLOCKING
 
-		var/turf/T = user.loc
+	coil.turf_place(T, user)
+	return ITEM_INTERACT_SUCCESS
 
-		if(!T.is_plating() || !istype(T, /turf/simulated/floor))
-			return
-
-		if(get_dist(src, user) > 1)
-			return
-
-		coil.turf_place(T, user)
-		return
-	else
-		..()
-	return
 
 ///////////////////////////////////////////
 // Powernet handling helpers
 //////////////////////////////////////////
 
-//returns all the cables WITHOUT a powernet in neighbors turfs,
-//pointing towards the turf the machine is located at
+/// Returns all the cables WITHOUT a powernet in neighbors turfs,
+/// pointing towards the turf the machine is located at.
 /obj/machinery/power/proc/get_connections()
 
 	. = list()
@@ -113,8 +108,8 @@
 				. += C
 	return .
 
-//returns all the cables in neighbors turfs,
-//pointing towards the turf the machine is located at
+/// Returns all the cables in neighbors turfs,
+/// pointing towards the turf the machine is located at.
 /obj/machinery/power/proc/get_marked_connections()
 
 	. = list()
@@ -131,7 +126,7 @@
 				. += C
 	return .
 
-//returns all the NODES (O-X) cables WITHOUT a powernet in the turf the machine is located at
+/// Returns all the NODES (O-X) cables WITHOUT a powernet in the turf the machine is located at.
 /obj/machinery/power/proc/get_indirect_connections()
 	. = list()
 	for(var/obj/structure/cable/C in loc)
@@ -145,9 +140,9 @@
 //////////////////////////////////////////
 
 
-// returns a list of all power-related objects (nodes, cable, junctions) in turf,
-// excluding source, that match the direction d
-// if unmarked==1, only return those with no powernet
+/// Returns a list of all power-related objects (nodes, cable, junctions) in turf,
+/// excluding source, that match the direction d.
+/// If unmarked==1, only return those with no powernet.
 /proc/power_list(var/turf/T, var/source, var/d, var/unmarked=0, var/cable_only = 0)
 	. = list()
 	var/fdir = (!d)? 0 : turn(d, 180)			// the opposite direction to d (or 0 if d==0)
@@ -183,7 +178,7 @@
 					. += C
 	return .
 
-//remove the old powernet and replace it with a new one throughout the network.
+/// Remove the old powernet and replace it with a new one throughout the network.
 /proc/propagate_network(var/obj/O, var/datum/powernet/PN)
 	//world.log <<  "propagating new network"
 	var/list/worklist = list()
@@ -216,7 +211,7 @@
 			PM.disconnect_from_network() //... so disconnect if already on a powernet
 
 
-//Merge two powernets, the bigger (in cable length term) absorbing the other
+/// Merge two powernets, the bigger (in cable length term) absorbing the other.
 /proc/merge_powernets(var/datum/powernet/net1, var/datum/powernet/net2)
 	if(!net1 || !net2) //if one of the powernet doesn't exist, return
 		return

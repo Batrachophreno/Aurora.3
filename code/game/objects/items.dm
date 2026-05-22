@@ -1203,6 +1203,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	// Use tool's fuel, stack sheets or charges if amount is set.
 	if(amount && !use(amount))
+		balloon_alert(user, "insufficient resource!")
 		return
 
 	// Play tool sound at the end of tool usage,

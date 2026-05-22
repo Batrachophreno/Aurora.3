@@ -99,12 +99,14 @@
 		addtimer(CALLBACK(src, PROC_REF(reset_locked)), 600)
 	busy = 0
 
-/obj/machinery/power/breakerbox/attackby(obj/item/attacking_item, mob/user)
-	if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
-		var/newtag = input(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system") as text
-		if(newtag)
-			RCon_tag = newtag
-			to_chat(user, SPAN_NOTICE("You changed the RCON tag to: [newtag]"))
+/obj/machinery/power/breakerbox/multitool_act(mob/living/user, obj/item/tool)
+	var/newtag = tgui_input_text(user, "Enter new RCON tag; leave blank to remove RCON tag.", "SMES RCON System", RCon_tag) as text
+	if(!newtag || newtag == "")
+		RCon_tag = null
+		to_chat(user, SPAN_NOTICE("You de-tagged the unit, removing it from RCON."))
+		return TRUE
+	RCon_tag = newtag
+	to_chat(user, SPAN_NOTICE("You changed the RCON tag to: [newtag]"))
 
 /obj/machinery/power/breakerbox/proc/set_state(var/state)
 	on = state

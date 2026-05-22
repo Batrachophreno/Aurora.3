@@ -188,8 +188,8 @@
 		qdel(src)
 	else if(is_badly_damaged() && !busted)
 		busted = TRUE
-		open_hatch = TRUE
-		visible_message(SPAN_DANGER("\The [src]'s maintenance hatch [open_hatch ? "releases a torrent of sparks" : "blows open with a flurry of sparks"]!"))
+		panel_open = TRUE
+		visible_message(SPAN_DANGER("\The [src]'s maintenance hatch [panel_open ? "releases a torrent of sparks" : "blows open with a flurry of sparks"]!"))
 
 // Proc: process()
 // Parameters: None
@@ -216,7 +216,7 @@
 		to_chat(usr, SPAN_WARNING("Connection error: Destination Unreachable."))
 
 	// Cyborgs standing next to the SMES can play with the wiring.
-	if(istype(usr, /mob/living/silicon/robot) && Adjacent(usr) && open_hatch)
+	if(istype(usr, /mob/living/silicon/robot) && Adjacent(usr) && panel_open)
 		wires.interact(usr)
 
 // Proc: Initialize()
@@ -242,7 +242,7 @@
 // Description: Opens the UI as usual, and if cover is removed opens the wiring panel.
 /obj/machinery/power/smes/buildable/attack_hand()
 	..()
-	if(open_hatch)
+	if(panel_open)
 		wires.interact(usr)
 
 // Proc: recalc_coils()
@@ -406,43 +406,15 @@
 	else
 		..()
 
-// Proc: attackby()
-// Description: Handles tool interaction. Allows deconstruction/upgrading/fixing.
 /obj/machinery/power/smes/buildable/attackby(obj/item/attacking_item, mob/user)
 	// No more disassembling of overloaded SMESs. You broke it, now enjoy the consequences.
-	if (failing)
+	if(failing)
 		to_chat(user, SPAN_WARNING("The [src]'s screen is flashing with alerts. It seems to be overloaded! Touching it now is probably not a good idea."))
 		return
 	// If parent returned 1:
 	// - Hatch is open, so we can modify the SMES
 	// - No action was taken in parent function (terminal de/construction atm).
-	if (..())
-		if(attacking_item.tool_behaviour == TOOL_WELDER)
-			if(health == initial(health))
-				to_chat(user, SPAN_WARNING("\The [src] is already repaired."))
-				return
-			var/obj/item/weldingtool/WT = attacking_item
-			if(!WT.welding)
-				to_chat(user, SPAN_WARNING("\The [src] isn't lit."))
-				return
-			if(WT.get_fuel() < 2)
-				to_chat(user, SPAN_WARNING("You don't have enough fuel to repair \the [src]."))
-				return
-			if(WT.use_tool(src, user, 50, volume = 50) && WT.use(2, user))
-				health = min(health + 100, initial(health))
-				to_chat(user, SPAN_NOTICE("You repair \the [src], it is now [round((health / initial(health)) * 100)]% repaired."))
-				if(health == initial(health))
-					busted = FALSE
-				return
-		// Multitool - change RCON tag
-		if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
-			var/newtag = input(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system") as text
-			if(newtag)
-				RCon_tag = newtag
-				to_chat(user, SPAN_NOTICE("You changed the RCON tag to: [newtag]"))
-				if(RCon_tag != "NO_TAG")
-					SSmachinery.build_rcon_lists()
-			return
+
 		// Charged above 1% and safeties are enabled.
 		if((charge > (capacity/100)) && safeties_enabled)
 			to_chat(user, SPAN_WARNING("Safety circuit of [src] is preventing modifications while it's charged!"))
@@ -499,30 +471,54 @@
 			else
 				to_chat(usr, SPAN_WARNING("You can't insert more coils to this SMES unit!"))
 
-// Proc: toggle_input()
-// Parameters: None
-// Description: Switches the input on/off depending on previous setting
+	. = ..()
+
+/// WIP
+/obj/machinery/power/smes/buildable/welder_act(mob/living/user, obj/item/tool)
+	if (..())
+		if(attacking_item.tool_behaviour == TOOL_WELDER)
+			if(health == initial(health))
+				to_chat(user, SPAN_WARNING("\The [src] is already repaired."))
+				return
+			var/obj/item/weldingtool/WT = attacking_item
+			if(!WT.welding)
+				to_chat(user, SPAN_WARNING("\The [src] isn't lit."))
+				return
+			if(WT.get_fuel() < 2)
+				to_chat(user, SPAN_WARNING("You don't have enough fuel to repair \the [src]."))
+				return
+			if(WT.use_tool(src, user, 50, volume = 50) && WT.use(2, user))
+				health = min(health + 100, initial(health))
+				to_chat(user, SPAN_NOTICE("You repair \the [src], it is now [round((health / initial(health)) * 100)]% repaired."))
+				if(health == initial(health))
+					busted = FALSE
+				return
+		// Multitool - change RCON tag
+		if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
+			var/newtag = input(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system") as text
+			if(newtag)
+				RCon_tag = newtag
+				to_chat(user, SPAN_NOTICE("You changed the RCON tag to: [newtag]"))
+				if(RCon_tag != "NO_TAG")
+					SSmachinery.build_rcon_lists()
+			return
+
+/// Switches the input on/off depending on previous setting
 /obj/machinery/power/smes/buildable/proc/toggle_input()
 	inputting(!input_attempt)
 	update_icon()
 
-// Proc: toggle_output()
-// Parameters: None
-// Description: Switches the output on/off depending on previous setting
+/// Switches the output on/off depending on previous setting
 /obj/machinery/power/smes/buildable/proc/toggle_output()
 	outputting(!output_attempt)
 	update_icon()
 
-// Proc: set_input()
-// Parameters: 1 (new_input - New input value in Watts)
-// Description: Sets input setting on this SMES. Trims it if limits are exceeded.
+/// Sets input setting on this SMES. Trims it if limits are exceeded.
 /obj/machinery/power/smes/buildable/proc/set_input(var/new_input = 0)
 	input_level = between(0, new_input, input_level_max)
 	update_icon()
 
-// Proc: set_output()
-// Parameters: 1 (new_output - New output value in Watts)
-// Description: Sets output setting on this SMES. Trims it if limits are exceeded.
+/// Sets output setting on this SMES. Trims it if limits are exceeded.
 /obj/machinery/power/smes/buildable/proc/set_output(var/new_output = 0)
 	output_level = between(0, new_output, output_level_max)
 	update_icon()

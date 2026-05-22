@@ -397,6 +397,7 @@ Class Procs:
 /obj/machinery/proc/crowbar_act(var/mob/user, var/obj/item/tool)
 	if(dismantles_into)
 		if(!panel_open)
+			to_chat(user, SPAN_WARNING("You need to open the maintenance panel on \the [src] first!"))
 			return ITEM_INTERACT_BLOCKING
 		else if(tool.use_tool(src, user, delay = 60, volume = 50))
 			if(dismantle())
@@ -569,7 +570,6 @@ Class Procs:
 	else return FALSE
 
 /obj/machinery/proc/dismantle()
-	playsound(loc, SFX_CROWBAR, 50, 1)
 	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
 	M.set_dir(src.dir)
 	M.state = 3
