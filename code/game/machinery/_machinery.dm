@@ -121,6 +121,7 @@ Class Procs:
 	/// What power channel does this fall under in APCs? Possible channels include: AREA_USAGE_EQUIP, AREA_USAGE_ENVIRON or AREA_USAGE_LIGHT
 	var/power_channel = AREA_USAGE_EQUIP
 
+	var/obj/machinery/constructable_frame/machine_frame/dismantles_into = null
 	/* List of types that should be spawned as component_parts for this machine.
 		Structure:
 			type -> num_objects
@@ -142,6 +143,7 @@ Class Procs:
 	var/parts_power_usage = 0
 
 	var/uid
+	/// Machine panels must always be openable/closeable by screwdriver.
 	var/panel_open = 0
 	var/global/gl_uid = 1
 	/// Can the machine be interacted with while de-powered?
@@ -388,11 +390,47 @@ Class Procs:
 			user.visible_message("<b>[user]</b> attaches \the [S] to \the [src].", SPAN_NOTICE("You attach \the [S] to \the [src]."), range = 3)
 			log_and_message_admins("has attached a signaler to \the [src].", user, get_turf(src))
 			return TRUE
-		else if(attacking_item.tool_behaviour == TOOL_WIRECUTTER && signaler)
+
+	return ..()
+
+/// Checks if the machine's maintenance panel is open. If so, dismantle the object.
+/obj/machinery/proc/crowbar_act(var/mob/user, var/obj/item/tool)
+	if(dismantles_into)
+		if(!panel_open)
+			return ITEM_INTERACT_BLOCKING
+		else if(tool.use_tool(src, user, delay = 60, volume = 50))
+			if(dismantle())
+				return ITEM_INTERACT_SUCCESS
+			return ITEM_INTERACT_BLOCKING
+
+	return FALSE
+
+/// Toggles the machine's maintenance panel open or closed.
+/obj/machinery/proc/screwdriver_act(var/mob/user, var/obj/item/tool)
+	if(tool.use_tool(src, user, delay = 20, volume = 50))
+		if(panel_open)
+			balloon_alert(user, "panel closed")
+			panel_open = FALSE
+		else
+			balloon_alert(user, "panel open")
+			panel_open = TRUE
+		update_icon()
+		return ITEM_INTERACT_SUCCESS
+	else
+		return ITEM_INTERACT_BLOCKING
+
+	return FALSE
+
+/// Removes a signaler, if one is present.
+/obj/machinery/wirecutter_act(mob/living/user, obj/item/tool)
+	if(signaler)
+		if(tool.use_tool(src, user, delay = 20, volume = 50))
 			user.visible_message("<b>[user]</b> removes \the [signaler] from \the [src].", SPAN_NOTICE("You remove \the [signaler] from \the [src]."), range = 3)
 			user.put_in_hands(detach_signaler())
-			return TRUE
-	return ..()
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+
+	return FALSE
 
 /obj/machinery/proc/detach_signaler(var/turf/detach_turf)
 	if(!signaler)
@@ -477,24 +515,6 @@ Class Procs:
 		if(user.stunned)
 			return TRUE
 	return FALSE
-
-/// Checks if the machine's maintenance panel is open. If so, dismantle the object.
-/obj/machinery/proc/default_deconstruction_crowbar(var/mob/user, var/obj/item/C)
-	if(!istype(C) || C.tool_behaviour != TOOL_CROWBAR)
-		return FALSE
-	if(!panel_open)
-		return FALSE
-	. = dismantle()
-
-/// Toggles the machine's maintenance panel open or closed.
-/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/obj/item/tool)
-	if(!istype(tool) || tool.tool_behaviour != TOOL_SCREWDRIVER)
-		return FALSE
-	tool.play_tool_sound(get_turf(src), 50)
-	panel_open = !panel_open
-	to_chat(user, SPAN_NOTICE("You [panel_open ? "open" : "close"] the maintenance hatch of [src]."))
-	update_icon()
-	return TRUE
 
 /obj/machinery/proc/default_part_replacement(var/mob/user, var/obj/item/storage/part_replacer/R)
 	if(!LAZYLEN(component_parts))

@@ -10,8 +10,8 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "bbox_off"
 	//directwired = 0
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/on = 0
 	var/busy = 0
 	var/directions = list(1,2,4,8,5,6,9,10)

@@ -3,7 +3,7 @@
 #define CIRCUITBOARD_STATE 3
 #define COMPONENT_STATE 4
 
-//Circuit boards are in /code/game/objects/items/weapons/circuitboards/machinery
+/// Circuit boards are in /code/game/objects/items/weapons/circuitboards/machinery
 /obj/machinery/constructable_frame //Made into a seperate type to make future revisions easier.
 	name = "machine blueprint"
 	desc = "A holo-blueprint for a machine."

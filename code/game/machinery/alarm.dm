@@ -1023,13 +1023,7 @@ pixel_x = 10;
 	if(buildstage < 2)
 		return ITEM_INTERACT_BLOCKING
 
-	if(tool.use_tool(src, user, 10, volume = 50))
-		panel_open = !panel_open
-		user.visible_message(SPAN_NOTICE("[user] has [panel_open ? "opened" : "closed"] the maintenance panel on the \the [src]!"), "You [panel_open ? "open" : "close"] the maintenance panel on \the [src].")
-		update_icon()
-		return ITEM_INTERACT_SUCCESS
-
-	return ITEM_INTERACT_BLOCKING
+	. = ..()
 
 /obj/machinery/alarm/wirecutter_act(mob/living/user, obj/item/tool)
 	if(buildstage < 2 || !panel_open)
