@@ -498,8 +498,6 @@
 		playsound(src.loc, 'sound/items/wrench.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE)
 		is_loose = !is_loose
 		return TRUE
-	if(default_deconstruction_screwdriver(user, attacking_item))
-		return TRUE
 	if(default_part_replacement(user, attacking_item))
 		return TRUE
 	return ..()

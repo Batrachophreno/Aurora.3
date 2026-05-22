@@ -338,12 +338,19 @@
 			take_occupant(G.affecting,usr)
 			qdel(attacking_item)
 		return TRUE
-	if(default_deconstruction_screwdriver(user, attacking_item))
-		return TRUE
-	if(default_deconstruction_crowbar(user, attacking_item))
-		return TRUE
+
 	if(default_part_replacement(user, attacking_item))
 		return TRUE
+
+	. = ..()
+
+/// Disallow deconstruction with someone on it.
+/obj/machinery/optable/crowbar_act(mob/living/user, obj/item/tool)
+	if(!isnull(occupant))
+		balloon_alert(user, "remove occupant!")
+		return ITEM_INTERACT_BLOCKING
+
+	. = ..()
 
 /obj/machinery/optable/robotics
 	name = "machinery chair"

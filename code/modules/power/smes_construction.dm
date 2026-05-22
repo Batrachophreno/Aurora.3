@@ -455,6 +455,16 @@
 				qdel(src)
 				return
 
+		// Multitool - change RCON tag
+		if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
+			var/newtag = input(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system") as text
+			if(newtag)
+				RCon_tag = newtag
+				to_chat(user, SPAN_NOTICE("You changed the RCON tag to: [newtag]"))
+				if(RCon_tag != "NO_TAG")
+					SSmachinery.build_rcon_lists()
+			return
+
 		// Superconducting Magnetic Coil - Upgrade the SMES
 		else if(istype(attacking_item, /obj/item/smes_coil))
 			if (cur_coils < max_coils)
@@ -475,12 +485,11 @@
 
 /// WIP
 /obj/machinery/power/smes/buildable/welder_act(mob/living/user, obj/item/tool)
-	if (..())
-		if(attacking_item.tool_behaviour == TOOL_WELDER)
+		if(tool.tool_behaviour == TOOL_WELDER)
 			if(health == initial(health))
 				to_chat(user, SPAN_WARNING("\The [src] is already repaired."))
 				return
-			var/obj/item/weldingtool/WT = attacking_item
+			var/obj/item/weldingtool/WT = tool
 			if(!WT.welding)
 				to_chat(user, SPAN_WARNING("\The [src] isn't lit."))
 				return
@@ -493,15 +502,6 @@
 				if(health == initial(health))
 					busted = FALSE
 				return
-		// Multitool - change RCON tag
-		if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
-			var/newtag = input(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system") as text
-			if(newtag)
-				RCon_tag = newtag
-				to_chat(user, SPAN_NOTICE("You changed the RCON tag to: [newtag]"))
-				if(RCon_tag != "NO_TAG")
-					SSmachinery.build_rcon_lists()
-			return
 
 /// Switches the input on/off depending on previous setting
 /obj/machinery/power/smes/buildable/proc/toggle_input()

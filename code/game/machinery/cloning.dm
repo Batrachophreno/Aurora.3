@@ -257,6 +257,7 @@
 /// Disallow deconstruction with someone inside.
 /obj/machinery/clonepod/crowbar_act(mob/living/user, obj/item/tool)
 	if(!isnull(occupant))
+		balloon_alert(user, "remove occupant!")
 		return ITEM_INTERACT_BLOCKING
 
 	. = ..()

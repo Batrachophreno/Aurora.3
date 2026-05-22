@@ -194,10 +194,6 @@
 
 /obj/machinery/recharge_station/attackby(obj/item/attacking_item, mob/user)
 	if(!occupant)
-		if(default_deconstruction_screwdriver(user, attacking_item))
-			return TRUE
-		else if(default_deconstruction_crowbar(user, attacking_item))
-			return TRUE
 		else if(default_part_replacement(user, attacking_item))
 			return TRUE
 
@@ -214,6 +210,14 @@
 		move_ipc(grab.affecting)
 		qdel(attacking_item)
 	return ..()
+
+/// Disallow deconstruction with someone inside it.
+/obj/machinery/recharge_station/crowbar_act(mob/living/user, obj/item/tool)
+	if(!isnull(occupant))
+		balloon_alert(user, "remove occupant!")
+		return ITEM_INTERACT_BLOCKING
+
+	. = ..()
 
 /obj/machinery/recharge_station/RefreshParts()
 	..()

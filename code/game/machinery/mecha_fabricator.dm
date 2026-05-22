@@ -218,47 +218,44 @@
 	if(build_callback_timer)
 		to_chat(user, SPAN_NOTICE("\The [src] is busy. Please wait for completion of previous operation."))
 		return TRUE
-	if(default_deconstruction_screwdriver(user, attacking_item))
-		return TRUE
-	if(default_deconstruction_crowbar(user, attacking_item))
-		return TRUE
 	if(default_part_replacement(user, attacking_item))
 		return TRUE
 
-	if(!istype(attacking_item, /obj/item/stack/material))
-		return ..()
+	if(istype(attacking_item, /obj/item/stack/material))
+		var/obj/item/stack/material/M = attacking_item
+		if(!M.material)
+			return ..()
+		if(!(M.material.name in list(MATERIAL_STEEL, MATERIAL_GLASS, MATERIAL_GOLD, MATERIAL_SILVER, MATERIAL_DIAMOND, MATERIAL_PHORON, MATERIAL_URANIUM, MATERIAL_PLASTEEL, MATERIAL_ALUMINIUM, MATERIAL_LEAD)))
+			to_chat(user, SPAN_WARNING("\The [src] cannot hold [M.material.name]."))
+			return TRUE
 
-	var/obj/item/stack/material/M = attacking_item
-	if(!M.material)
-		return ..()
-	if(!(M.material.name in list(MATERIAL_STEEL, MATERIAL_GLASS, MATERIAL_GOLD, MATERIAL_SILVER, MATERIAL_DIAMOND, MATERIAL_PHORON, MATERIAL_URANIUM, MATERIAL_PLASTEEL, MATERIAL_ALUMINIUM, MATERIAL_LEAD)))
-		to_chat(user, SPAN_WARNING("\The [src] cannot hold [M.material.name]."))
-		return TRUE
+		var/sname = "[M.name]"
+		if(materials[M.material.name] + SHEET_MATERIAL_AMOUNT <= res_max_amount)
+			if(M.amount >= 1)
+				var/count = 0
+				var/mutable_appearance/MA = mutable_appearance(icon, "material_insertion")
+				MA.color = M.material.icon_colour
+				//first play the insertion animation
+				flick_overlay_view(MA, 1 SECONDS)
 
-	var/sname = "[M.name]"
-	if(materials[M.material.name] + SHEET_MATERIAL_AMOUNT <= res_max_amount)
-		if(M.amount >= 1)
-			var/count = 0
-			var/mutable_appearance/MA = mutable_appearance(icon, "material_insertion")
-			MA.color = M.material.icon_colour
-			//first play the insertion animation
-			flick_overlay_view(MA, 1 SECONDS)
+				//now play the progress bar animation
+				flick_overlay_view(mutable_appearance(icon, "fab_progress"), 1 SECONDS)
 
-			//now play the progress bar animation
-			flick_overlay_view(mutable_appearance(icon, "fab_progress"), 1 SECONDS)
+				while(materials[M.material.name] + SHEET_MATERIAL_AMOUNT <= res_max_amount && M.amount >= 1)
+					materials[M.material.name] += M.perunit
+					M.use(1)
+					count++
+				to_chat(user, SPAN_NOTICE("You insert [count] [sname] into \the [src]."))
 
-			while(materials[M.material.name] + SHEET_MATERIAL_AMOUNT <= res_max_amount && M.amount >= 1)
-				materials[M.material.name] += M.perunit
-				M.use(1)
-				count++
-			to_chat(user, SPAN_NOTICE("You insert [count] [sname] into \the [src]."))
+				//Wake up, we have things to do (maybe)
+				handle_queue()
+				return TRUE
 
-			//Wake up, we have things to do (maybe)
-			handle_queue()
+		else
+			to_chat(user, SPAN_NOTICE("\The [src] cannot hold more [sname]."))
+			return FALSE
 
-	else
-		to_chat(user, SPAN_NOTICE("\The [src] cannot hold more [sname]."))
-	return TRUE
+	. = ..()
 
 /obj/machinery/mecha_part_fabricator/mouse_drop_receive(atom/dropped, mob/user, params)
 	var/mob/living/carbon/human/target = dropped

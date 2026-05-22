@@ -181,10 +181,6 @@
 	power_rating = max_power_rating * (power_setting/100)
 
 /obj/machinery/atmospherics/unary/freezer/attackby(obj/item/attacking_item, mob/user)
-	if(default_deconstruction_screwdriver(user, attacking_item))
-		return TRUE
-	if(default_deconstruction_crowbar(user, attacking_item))
-		return TRUE
 	if(default_part_replacement(user, attacking_item))
 		return TRUE
 

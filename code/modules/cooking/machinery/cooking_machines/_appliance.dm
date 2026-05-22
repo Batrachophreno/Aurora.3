@@ -194,7 +194,7 @@
 	else if(istype(I, /obj/item/reagent_containers/glass))
 		to_chat(user, SPAN_WARNING("That would probably break [I]."))
 		return CANNOT_INSERT
-	else if(I.tool_behaviour == TOOL_CROWBAR || I.tool_behaviour == TOOL_SCREWDRIVER || istype(I, /obj/item/storage/part_replacer))
+	else if(I.tool_behaviour || istype(I, /obj/item/storage/part_replacer))
 		return CANNOT_INSERT
 	else if(!istype(check) && !istype(I, /obj/item/holder))
 		to_chat(user, SPAN_WARNING("That's not edible."))
@@ -209,30 +209,26 @@
 	return TRUE
 
 /obj/machinery/appliance/attackby(obj/item/attacking_item, mob/user)
-	if(!cook_type || (stat & (BROKEN)))
-		to_chat(user, SPAN_WARNING("[src] is not working."))
-		return
-
 	var/result = can_insert(attacking_item, user)
 	if(result == CANNOT_INSERT)
-		if(default_deconstruction_screwdriver(user, attacking_item))
-			return
-		else if(default_part_replacement(user, attacking_item))
-			return
-		else if(default_deconstruction_crowbar(user, attacking_item))
-			return
-		return
+		if(default_part_replacement(user, attacking_item))
+			return TRUE
+		else
+			return ..()
+
+	if(!cook_type || (stat & (BROKEN)))
+		to_chat(user, SPAN_WARNING("[src] is not working."))
+		return FALSE
 
 	if(result == INSERT_GRABBED)
 		var/obj/item/grab/G = attacking_item
 		if (G && istype(G) && G.affecting)
 			cook_mob(G.affecting, user)
-			return
+			return TRUE
 
 	//From here we can start cooking food
 	add_content(attacking_item, user)
 	update_icon()
-
 
 //Override for container mechanics
 /obj/machinery/appliance/proc/add_content(var/obj/item/I, var/mob/user)

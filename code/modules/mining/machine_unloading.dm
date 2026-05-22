@@ -22,10 +22,6 @@
 	setup_io()
 
 /obj/machinery/mineral/unloading_machine/attackby(obj/item/attacking_item, mob/user)
-	if(default_deconstruction_screwdriver(user, attacking_item))
-		return
-	if(default_deconstruction_crowbar(user, attacking_item))
-		return
 	if(default_part_replacement(user, attacking_item))
 		return
 	return ..()

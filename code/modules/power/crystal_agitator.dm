@@ -105,10 +105,7 @@
 /obj/machinery/power/crystal_agitator/attackby(obj/item/attacking_item, mob/user, params)
 	if(default_part_replacement(user, attacking_item))
 		return
-	else if(default_deconstruction_screwdriver(user, attacking_item))
-		return
-	else if(default_deconstruction_crowbar(user, attacking_item))
-		return
+
 	return ..()
 
 /obj/item/circuitboard/crystal_agitator

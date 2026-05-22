@@ -267,7 +267,14 @@
 	else if(default_part_replacement(user, attacking_item))
 		return TRUE
 
-	return TRUE
+	. ..()
+
+/obj/machinery/atmospherics/unary/cryo_cell/crowbar_act(mob/living/user, obj/item/tool)
+	if(!isnull(occupant))
+		balloon_alert(user, "remove occupant!")
+		return ITEM_INTERACT_BLOCKING
+
+	. = ..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/mouse_drop_receive(atom/dropped, mob/user, params)
 	if(!istype(user))

@@ -52,10 +52,6 @@
 	return machine
 
 /obj/machinery/mineral/stacking_unit_console/attackby(obj/item/attacking_item, mob/user)
-	if(default_deconstruction_screwdriver(user, attacking_item))
-		return
-	if(default_deconstruction_crowbar(user, attacking_item))
-		return
 	if(default_part_replacement(user, attacking_item))
 		return
 	return ..()
@@ -150,10 +146,6 @@
 	return ..()
 
 /obj/machinery/mineral/stacking_machine/attackby(obj/item/attacking_item, mob/user)
-	if(default_deconstruction_screwdriver(user, attacking_item))
-		return
-	if(default_deconstruction_crowbar(user, attacking_item))
-		return
 	if(default_part_replacement(user, attacking_item))
 		return
 	return ..()

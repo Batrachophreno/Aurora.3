@@ -169,11 +169,6 @@ ABSTRACT_TYPE(/obj/machinery/fabricator)
 		to_chat(user, SPAN_NOTICE("\The [src] is busy. Please wait for the completion of previous operation."))
 		return TRUE
 
-	if(default_deconstruction_screwdriver(user, attacking_item))
-		SStgui.update_uis(src)
-		return TRUE
-	if(default_deconstruction_crowbar(user, attacking_item))
-		return TRUE
 	if(default_part_replacement(user, attacking_item))
 		return TRUE
 
@@ -189,6 +184,9 @@ ABSTRACT_TYPE(/obj/machinery/fabricator)
 				to_chat(user, SPAN_WARNING("\The [src]'s wires aren't exposed."))
 			return TRUE
 
+	if(..())
+		return TRUE
+
 	if(attacking_item.loc != user && !istype(attacking_item, /obj/item/stack))
 		return FALSE
 
@@ -196,7 +194,11 @@ ABSTRACT_TYPE(/obj/machinery/fabricator)
 		return FALSE
 
 	load_lathe(attacking_item, user)
-	return TRUE
+
+/obj/machinery/fabricator/screwdriver_act(mob/living/user, obj/item/tool)
+	SStgui.update_uis(src)
+
+	..()
 
 /obj/machinery/fabricator/attack_hand(mob/user)
 	user.set_machine(src)

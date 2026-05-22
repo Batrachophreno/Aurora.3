@@ -125,10 +125,6 @@
 	return machine
 
 /obj/machinery/mineral/processing_unit_console/attackby(obj/item/attacking_item, mob/user)
-	if(default_deconstruction_screwdriver(user, attacking_item))
-		return
-	if(default_deconstruction_crowbar(user, attacking_item))
-		return
 	if(default_part_replacement(user, attacking_item))
 		return
 	return ..()
@@ -430,14 +426,9 @@ GLOBAL_LIST_EMPTY_TYPED(alloy_data, /datum/alloy)
 	console = null
 
 /obj/machinery/mineral/processing_unit/attackby(obj/item/attacking_item, mob/user)
-	if(default_deconstruction_screwdriver(user, attacking_item))
-		return
-	if(default_deconstruction_crowbar(user, attacking_item))
-		return
 	if(default_part_replacement(user, attacking_item))
 		return
 	return ..()
-
 
 /obj/machinery/mineral/processing_unit/process(seconds_per_tick)
 	..()
