@@ -16,6 +16,7 @@
 	clicksound = 'sound/machines/buttonbeep.ogg'
 	clickvol = 30
 
+	dismantles_into = /obj/machinery/constructable_frame/machine_frame
 	component_types = list(
 		/obj/item/circuitboard/cryotube,
 		/obj/item/stock_parts/scanning_module,
@@ -263,10 +264,6 @@
 				qdel(attacking_item)
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2.5 SECONDS)
 
-	else if(default_deconstruction_screwdriver(user, attacking_item))
-		return TRUE
-	else if(default_deconstruction_crowbar(user, attacking_item))
-		return TRUE
 	else if(default_part_replacement(user, attacking_item))
 		return TRUE
 

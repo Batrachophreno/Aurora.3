@@ -420,8 +420,6 @@ Class Procs:
 	else
 		return ITEM_INTERACT_BLOCKING
 
-	return FALSE
-
 /// Removes a signaler, if one is present.
 /obj/machinery/wirecutter_act(mob/living/user, obj/item/tool)
 	if(signaler)

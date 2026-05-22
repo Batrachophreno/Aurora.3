@@ -19,6 +19,7 @@
 	var/max_temperature = 600
 	var/slow_mode = FALSE
 
+	dismantles_into = /obj/machinery/constructable_frame/machine_frame
 	component_types = list(
 		/obj/item/circuitboard/chem_heater,
 		/obj/item/stock_parts/manipulator,
@@ -36,10 +37,6 @@
 	interact(user)
 
 /obj/machinery/chem_heater/attackby(obj/item/attacking_item, mob/user)
-	if(default_deconstruction_screwdriver(user, attacking_item))
-		return TRUE
-	if(default_deconstruction_crowbar(user, attacking_item))
-		return TRUE
 	if(default_part_replacement(user, attacking_item))
 		return TRUE
 	if(istype(attacking_item, /obj/item/reagent_containers/glass) || istype(attacking_item, /obj/item/reagent_containers/food))

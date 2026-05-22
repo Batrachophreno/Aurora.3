@@ -43,6 +43,7 @@
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 	var/biomass = CLONE_BIOMASS * 3
 
+	dismantles_into = /obj/machinery/constructable_frame/machine_frame
 	component_types = list(
 		/obj/item/circuitboard/clonepod,
 		/obj/item/stock_parts/manipulator = 2,
@@ -214,10 +215,6 @@
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/attacking_item, mob/user)
 	if(isnull(occupant))
-		if(default_deconstruction_screwdriver(user, attacking_item))
-			return TRUE
-		if(default_deconstruction_crowbar(user, attacking_item))
-			return TRUE
 		if(default_part_replacement(user, attacking_item))
 			return TRUE
 	if(attacking_item.GetID())
@@ -256,6 +253,16 @@
 		return TRUE
 	else
 		return ..()
+
+/// Disallow deconstruction with someone inside.
+/obj/machinery/clonepod/crowbar_act(mob/living/user, obj/item/tool)
+	if(!isnull(occupant))
+		return ITEM_INTERACT_BLOCKING
+
+	. = ..()
+
+/obj/machinery/clonepod/screwdriver_act(mob/living/user, obj/item/tool)
+	return FALSE
 
 /obj/machinery/clonepod/emag_act(var/remaining_charges, var/mob/user)
 	if(isnull(occupant))

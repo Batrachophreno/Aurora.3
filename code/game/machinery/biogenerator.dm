@@ -38,6 +38,7 @@
 
 	var/ref_for_ui
 
+	dismantles_into = /obj/machinery/constructable_frame/machine_frame
 	component_types = list(
 		/obj/item/circuitboard/biogenerator,
 		/obj/item/stock_parts/matter_bin,
@@ -610,10 +611,6 @@ EMAG/ILLEGAL
 		icon_state = "[initial(icon_state)]-work"
 
 /obj/machinery/biogenerator/attackby(obj/item/attacking_item, mob/user)
-	if(default_deconstruction_screwdriver(user, attacking_item))
-		return TRUE
-	if(default_deconstruction_crowbar(user, attacking_item))
-		return TRUE
 	if(default_part_replacement(user, attacking_item))
 		return TRUE
 	if(istype(attacking_item, /obj/item/reagent_containers/glass))

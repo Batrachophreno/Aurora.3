@@ -50,6 +50,7 @@
 
 	var/process_lock = 0 //If the call to process is locked because it is still running
 
+	dismantles_into = /obj/machinery/constructable_frame/machine_frame
 	component_types = list(
 		/obj/item/circuitboard/crusher,
 		/obj/item/stock_parts/matter_bin = 4,
@@ -95,10 +96,6 @@
 
 		M.say("*scream")
 		return TRUE
-	if(default_deconstruction_screwdriver(user, attacking_item))
-		return TRUE
-	if(default_deconstruction_crowbar(user, attacking_item))
-		return TRUE
 	if(default_part_replacement(user, attacking_item))
 		return TRUE
 
@@ -115,12 +112,11 @@
 			return TRUE
 	return ..()
 
-/obj/machinery/crusher_base/default_deconstruction_crowbar(var/mob/user, var/obj/item/crowbar/C)
-	if(!istype(C))
-		return 0
+/obj/machinery/crusher_base/crowbar_act(mob/living/act, obj/item/tool)
 	if(num_progress != 0) //Piston needs to be retracted before you are able to deconstruct it
 		to_chat(user, SPAN_NOTICE("You can not deconstruct [src] while the piston is extended."))
-		return 0
+		return ITEM_INTERACT_BLOCKING
+
 	return ..()
 
 /obj/machinery/crusher_base/proc/change_neighbor_base_icons()

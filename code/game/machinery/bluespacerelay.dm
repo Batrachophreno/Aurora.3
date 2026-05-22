@@ -11,6 +11,7 @@
 	idle_power_usage = 15000
 	active_power_usage = 15000
 
+	dismantles_into = /obj/machinery/constructable_frame/machine_frame
 	component_types = list(
 		/obj/item/circuitboard/bluespacerelay,
 		/obj/item/stock_parts/manipulator = 2,
@@ -38,10 +39,6 @@
 		on = 1
 
 /obj/machinery/bluespacerelay/attackby(obj/item/attacking_item, mob/user)
-	if(default_deconstruction_screwdriver(user, attacking_item))
-		return TRUE
-	if(default_deconstruction_crowbar(user, attacking_item))
-		return TRUE
 	if(default_part_replacement(user, attacking_item))
 		return TRUE
 

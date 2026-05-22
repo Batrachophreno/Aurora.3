@@ -5,8 +5,8 @@ GLOBAL_LIST_INIT_TYPED(bluespace_inhibitors, /obj/machinery/anti_bluespace, null
 	desc = "Scrambles any bluespace related activity and displaces it away from the beacon's area of effect."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "nopad"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	active_power_usage = 5000
 	idle_power_usage = 1000
 
@@ -44,16 +44,10 @@ GLOBAL_LIST_INIT_TYPED(bluespace_inhibitors, /obj/machinery/anti_bluespace, null
 	update_icon()
 
 /obj/machinery/anti_bluespace/dismantle()
-	return 0
+	return FALSE
 
 /obj/machinery/anti_bluespace/default_part_replacement()
-	return 0
-
-/obj/machinery/anti_bluespace/default_deconstruction_screwdriver(var/mob/user, var/obj/item/screwdriver/S)
-	return 0
-
-/obj/machinery/anti_bluespace/default_deconstruction_crowbar(var/mob/user, var/obj/item/crowbar/C)
-	return 0
+	return FALSE
 
 /obj/machinery/anti_bluespace/proc/do_break()
 	if(stat & BROKEN)
@@ -61,7 +55,7 @@ GLOBAL_LIST_INIT_TYPED(bluespace_inhibitors, /obj/machinery/anti_bluespace, null
 	playsound(src.loc, 'sound/effects/grillehit.ogg', 100, 1)
 	visible_message(SPAN_WARNING("\The [src] breaks!"))
 	stat |= BROKEN
-	anchored = 0
+	anchored = FALSE
 	update_icon()
 
 /obj/machinery/anti_bluespace/attackby(obj/item/attacking_item, mob/user)
