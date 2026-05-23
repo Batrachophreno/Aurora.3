@@ -1151,20 +1151,39 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		return
 	usr.UnarmedAttack(src)
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, datum/callback/extra_checks)
-	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
-	// Run the start check here so we wouldn't have to call it manually.
+/**
+ * Begin performing a tool's given function against a target. Handles sound, delay modifiers, sounds, etc.
+ *
+ * Parameters:
+ * * atom/target - The target atom. Must exist.
+ * * mob/living/user - The user performing the tool action. Must exist.
+ * * delay - Integer. The time, in deciseconds, that using the tool takes. This is what gets modified by tool quality, skill, etc. Minimum 1 decisecond.
+ * * amount - Integer. The quantity of a resource (be it fuel, stack sheets, energy, charges, etc.) consumed by the use of the tool.
+ * * volume - Integer. The volume at which to play the tool's toolsound.
+ * * instant - Boolean. Whether or not any do_mob/do_after procs are performed instantly. Needs to be set to TRUE to bypass the 1 decisecond minimum.
+ * * datum/callback/extra_checks - A callback proc to use, executed once every tick by do_after. For example, ensuring a welder is lit the entire time.
+ */
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay = 1, amount = 0, volume = 50, instant = FALSE, datum/callback/extra_checks)
+	if(!user || !target)
+		stack_trace("use_tool called without either a user or a target!")
+		return FALSE
 
 	//if(user.is_busy()) to be ported in future if we ever need it
 	//	return
 
-	if(!delay && !tool_start_check(user, amount))
-		return
-
-	delay /= toolspeed
+	if(!tool_start_check(user, amount))
+		return FALSE
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
+
+	// Minimum delay time is 1 decisecond. Instant tool use behavior needs to be explicitly set in the original proc call.
+	if(!instant)
+		delay /= toolspeed
+		if(delay < 1)
+			delay = 1
+	else
+		delay = null
 
 	if(delay)
 		// Create a callback with checks that would be called every tick by do_after.
@@ -1184,6 +1203,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	// Use tool's fuel, stack sheets or charges if amount is set.
 	if(amount && !use(amount))
+		balloon_alert(user, "insufficient resource!")
 		return
 
 	// Play tool sound at the end of tool usage,
@@ -1193,16 +1213,16 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	return TRUE
 
-// Called before use_tool if there is a delay, or by use_tool if there isn't.
-// Only ever used by welding tools and stacks, so it's not added on any other use_tool checks.
+/// Called before use_tool if there is a delay, or by use_tool if there isn't.
+/// Only ever used by welding tools and stacks, so it's not added on any other use_tool checks.
 /obj/item/proc/tool_start_check(mob/living/user, amount=0)
 	return tool_use_check(user, amount)
 
-// A check called by tool_start_check once, and by use_tool on every tick of delay.
+/// A check called by tool_start_check once, and by use_tool on every tick of delay.
 /obj/item/proc/tool_use_check(mob/living/user, amount)
 	return TRUE
 
-/// Plays item's usesound, if any
+/// Plays item's usesound, if any.
 /obj/item/proc/play_tool_sound(atom/target, volume=null) // null, so default value of this proc won't override default value of the playsound.
 	if(target && volume)
 		var/played_sound
@@ -1218,12 +1238,12 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		//playsound(target, played_sound, VOL_EFFECTS_MASTER, volume) implement sound channel system in future
 		playsound(target, played_sound, volume, TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
-// Generic use proc. Depending on the item, it uses up fuel, charges, sheets, etc.
-// Returns TRUE on success, FALSE on failure.
+/// Generic use proc. Depending on the item, it uses up fuel, charges, sheets, etc.
+/// Returns TRUE on success, FALSE on failure.
 /obj/item/proc/use(used, mob/M = null)
 	return !used
 
-// Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
+/// Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
 	return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
 
