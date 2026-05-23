@@ -71,18 +71,19 @@ GLOBAL_LIST_INIT(mimic_defines, list("ZM_MIMIC_BELOW",
 #define CRITICAL_ATOM FLAG(20)
 
 // Obj flags
-
+/// Can this object be anchored?
+#define OBJ_FLAG_ANCHORABLE FLAG(0)
 /// Can this object be rotated?
-#define OBJ_FLAG_ROTATABLE FLAG(0)
+#define OBJ_FLAG_ROTATABLE FLAG(1)
 /// This object can be rotated even while anchored
-#define OBJ_FLAG_ROTATABLE_ANCHORED FLAG(1)
+#define OBJ_FLAG_ROTATABLE_ANCHORED FLAG(2)
 /// Can this take a signaler? only in use for machinery
-#define OBJ_FLAG_SIGNALER FLAG(2)
+#define OBJ_FLAG_SIGNALER FLAG(3)
 /// Will prevent mobs from falling
-#define OBJ_FLAG_NOFALL FLAG(3)
+#define OBJ_FLAG_NOFALL FLAG(4)
 /// Object moves with shuttle transition even if turf below is a background turf.
-#define OBJ_FLAG_MOVES_UNSUPPORTED FLAG(4)
-#define OBJ_FLAG_CONDUCTABLE FLAG(5)
+#define OBJ_FLAG_MOVES_UNSUPPORTED FLAG(5)
+#define OBJ_FLAG_CONDUCTABLE FLAG(6)
 
 // Item flags
 /// When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
