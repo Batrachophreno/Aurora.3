@@ -48,25 +48,26 @@
  * is receiving it.
  * The most common are:
  * * [mob/proc/UnarmedAttack] (atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
- * * [atom/proc/attackby] (item,user) - used only when adjacent
+ * * [atom/proc/attackby] (item,user) - used only when adjacent. Calls resolve_attackby(), which first runs pre_attack() before executing the atom's attackby() code.
+ *   Note that attackby() also eventually calls base_item_interaction() when not executed with the HARM intent, which is used for various tool_act() procs.
  * * [obj/item/proc/afterattack] (atom,user,adjacent,params) - used both ranged and adjacent
  * * [mob/proc/RangedAttack] (atom,modifiers) - used only ranged, only used for tk and laser eyes but could be changed
  */
-/mob/proc/ClickOn(atom/A, params)
+/mob/proc/ClickOn(atom/target_atom, params)
 	if(world.time <= next_click) // Hard check, before anything else, to avoid crashing
 		return
 	next_click = world.time + 1
 
 	var/list/modifiers = params2list(params)
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, target_atom, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
 	/* START Aurora snowflake */
 
-	if(istype(loc, /mob/living/heavy_vehicle) && !(A in src.contents))
+	if(istype(loc, /mob/living/heavy_vehicle) && !(target_atom in src.contents))
 		var/mob/living/heavy_vehicle/M = loc
-		return M.ClickOn(A, params, src)
+		return M.ClickOn(target_atom, params, src)
 
 	// pAI handling
 	if(istype(loc.loc, /mob/living/bot))
@@ -74,43 +75,43 @@
 		if(!B.on)
 			to_chat(src, SPAN_WARNING("\The [B] isn't turned on!"))
 			return
-		return B.ClickOn(A, params)
+		return B.ClickOn(target_atom, params)
 
 	/* END Aurora snowflake */
 
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-			ShiftMiddleClickOn(A)
+			ShiftMiddleClickOn(target_atom)
 			return
 		if(LAZYACCESS(modifiers, CTRL_CLICK))
-			CtrlShiftClickOn(A)
+			CtrlShiftClickOn(target_atom)
 			return
-		ShiftClickOn(A)
+		ShiftClickOn(target_atom)
 		return
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		if(LAZYACCESS(modifiers, CTRL_CLICK))
-			CtrlMiddleClickOn(A)
+			CtrlMiddleClickOn(target_atom)
 		else
-			MiddleClickOn(A, params)
+			MiddleClickOn(target_atom, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			AltClickSecondaryOn(A)
+			AltClickSecondaryOn(target_atom)
 		else
-			AltClickOn(A)
+			AltClickOn(target_atom)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
-		CtrlClickOn(A)
+		CtrlClickOn(target_atom)
 		return
 
 	if(stat || paralysis || stunned || weakened) // In TG it's if(INCAPACITATED_IGNORING(src, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 		return
 
-	face_atom(A) // change direction to face what you clicked on
+	face_atom(target_atom) // change direction to face what you clicked on
 
 	/* START Aurora snowflake */
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		RightClickOn(A)
+		RightClickOn(target_atom)
 		return TRUE
 	/* END Aurora snowflake */
 
@@ -119,19 +120,19 @@
 
 	if(restrained())
 		setClickCooldown(10)
-		RestrainedClickOn(A)
+		RestrainedClickOn(target_atom)
 		return 1
 
-	if(in_throw_mode && (isturf(A) || isturf(A.loc)) && throw_item(A))
+	if(in_throw_mode && (isturf(target_atom) || isturf(target_atom.loc)) && throw_item(target_atom))
 		trigger_aiming(TARGET_CAN_CLICK)
 		throw_mode_off()
 		return TRUE
 
-	var/obj/item/W = get_active_hand()
+	var/obj/item/wielded_item = get_active_hand()
 
-	if(W == A)
+	if(wielded_item == target_atom)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			W.attack_self_secondary(src, modifiers)
+			wielded_item.attack_self_secondary(src, modifiers)
 			/* START Aurora snowflake */
 			trigger_aiming(TARGET_CAN_CLICK)
 			if(hand)
@@ -141,7 +142,7 @@
 			/* END Aurora snowflake */
 			return
 		else
-			W.attack_self(src, modifiers)
+			wielded_item.attack_self(src, modifiers)
 			/* START Aurora snowflake */
 			trigger_aiming(TARGET_CAN_CLICK)
 			if(hand)
@@ -155,17 +156,17 @@
 	/* START AURORA SNOWFLAKE CODE */
 
 	//Atoms on your person
-	// A is your location but is not a turf; or is on you (backpack); or is on something on you (box in backpack); sdepth is needed here because contents depth does not equate inventory storage depth.
-	var/sdepth = A.storage_depth(src)
-	if((!isturf(A) && A == loc) || (sdepth != -1 && sdepth <= 1))
-		if(W)
-			var/resolved = W.resolve_attackby(A, src, params)
-			if(!resolved && A && W)
-				W.afterattack(A, src, 1, params) // 1 indicates adjacency
+	// target_atom is your location but is not a turf; or is on you (backpack); or is on something on you (box in backpack); sdepth is needed here because contents depth does not equate inventory storage depth.
+	var/sdepth = target_atom.storage_depth(src)
+	if((!isturf(target_atom) && target_atom == loc) || (sdepth != -1 && sdepth <= 1))
+		if(wielded_item)
+			var/resolved = wielded_item.resolve_attackby(target_atom, src, params)
+			if(!resolved && target_atom && wielded_item)
+				wielded_item.afterattack(target_atom, src, 1, params) // 1 indicates adjacency
 		else
-			if(ismob(A)) // No instant mob attacking
+			if(ismob(target_atom)) // No instant mob attacking
 				setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-			UnarmedAttack(A, TRUE, modifiers)
+			UnarmedAttack(target_atom, TRUE, modifiers)
 
 		trigger_aiming(TARGET_CAN_CLICK)
 		return 1
@@ -175,27 +176,27 @@
 
 	var/mob/living/simple_animal/simple_mob = istype(src, /mob/living/simple_animal) ? src : null
 	//Atoms on turfs (not on your person)
-	// A is a turf or is on a turf, or in something on a turf (pen in a box); but not something in something on a turf (pen in a box in a backpack)
-	sdepth = A.storage_depth_turf()
-	if(isturf(A) || isturf(A.loc) || (sdepth != -1 && sdepth <= 1))
-		if(A.Adjacent(src) || (W && W.attack_can_reach(src, A, W.reach)) || (simple_mob && simple_mob.attack_can_reach(src, A, simple_mob.melee_reach))) // see adjacent.dm
-			if(W)
+	// target_atom is a turf or is on a turf, or in something on a turf (pen in a box); but not something in something on a turf (pen in a box in a backpack)
+	sdepth = target_atom.storage_depth_turf()
+	if(isturf(target_atom) || isturf(target_atom.loc) || (sdepth != -1 && sdepth <= 1))
+		if(target_atom.Adjacent(src) || wielded_item?.attack_can_reach(src, target_atom, wielded_item.reach) || simple_mob?.attack_can_reach(src, target_atom, simple_mob.melee_reach)) // see adjacent.dm
+			if(wielded_item)
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = W.resolve_attackby(A,src, params)
-				if(!resolved && A && W)
-					W.afterattack(A, src, 1, params) // 1: clicking something Adjacent
+				var/resolved = wielded_item.resolve_attackby(target_atom, src, params)
+				if(!resolved && target_atom && wielded_item)
+					wielded_item.afterattack(target_atom, src, 1, params) // 1: clicking something Adjacent
 			else
-				if(ismob(A)) // No instant mob attacking
+				if(ismob(target_atom)) // No instant mob attacking
 					setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-				UnarmedAttack(A, TRUE, modifiers)
+				UnarmedAttack(target_atom, TRUE, modifiers)
 
 			trigger_aiming(TARGET_CAN_CLICK)
 			return
 		else // non-adjacent click
-			if(W)
-				W.afterattack(A, src, 0, params) // 0: not Adjacent
+			if(wielded_item)
+				wielded_item.afterattack(target_atom, src, 0, params) // 0: not Adjacent
 			else
-				RangedAttack(A, params)
+				RangedAttack(target_atom, params)
 
 			trigger_aiming(TARGET_CAN_CLICK)
 	return 1
