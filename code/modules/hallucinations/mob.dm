@@ -1,6 +1,8 @@
 /mob/living/carbon
-	var/next_hallucination = 0		//Hallucination spam limit var
-	var/list/hallucinations = list()	//Hallucinations currently affecting the mob. Not to be confused with singular "hallucination" which is a NUM variable like confused/drowsy/eye_blind etc
+	/// Hallucination spam limit var
+	var/next_hallucination = 0
+	/// Hallucinations currently affecting the mob. Not to be confused with singular "hallucination" which is a NUM variable like confused/drowsy/eye_blind etc
+	var/list/hallucinations = list()
 
 //Hallucinated Hearing
 /mob/living/carbon/hear_say(var/message, var/verb = "says", var/datum/language/language, var/alt_name = "",var/italics = 0, var/mob/speaker, var/sound/speech_sound, var/sound_vol)
@@ -17,7 +19,7 @@
 		log_say("Hallucination level changed [orig_message] by [speaker] to [message] for [key_name(src)].")
 	..()
 
-//Main handling proc, called in life()
+/// Main handling proc, called in life()
 /mob/living/carbon/proc/handle_hallucinations()
 	hallucination -= 1	//Tick down the duration
 
@@ -59,7 +61,7 @@
 	H.holder = src
 	H.activate()
 
-//This is called on every end() so usually occurs a few times. Grants a thought to the user from thoughts list.
+/// This is called on every end() so usually occurs a few times. Grants a thought to the user from thoughts list.
 /mob/living/carbon/proc/hallucination_thought()
 	if(prob(min(hallucination/2, 50)))
 		addtimer(CALLBACK(src, PROC_REF(hal_thought_give)), rand(30,90))

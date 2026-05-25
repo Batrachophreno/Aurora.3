@@ -1,4 +1,5 @@
-/datum/hallucination/announcement	//fake AI announcements, complete with sound. Text is weirder than normal, but easy to glaze over.
+/// Fake AI announcements, complete with sound. Text is weirder than normal, but easy to glaze over.
+/datum/hallucination/announcement
 	min_power = HAL_POWER_LOW
 	duration = 1200		//this duration length + not allowing duplicates prevents spamming announcements on every valid handle_hallucination() which can get VERY annoying if rng decides to give you 3 in a row
 	allow_duplicates = FALSE
@@ -71,7 +72,7 @@
 			to_chat(holder, SPAN_ALERT(pick(body)))
 			to_chat(holder, SPAN_ALERT("-[pick(hal_sender)]"))
 
-//for REALLY selling that fake delamination
+/// For REALLY selling that fake delamination
 /datum/hallucination/announcement/proc/delam_call()
 	var/list/people = list()
 	for(var/mob/living/carbon/human/M in GLOB.living_mob_list)
@@ -85,8 +86,8 @@
 
 	to_chat(holder, "[requester.get_accent_icon(null, holder)] <span class='radio'><b>[requester]</b> says, \"[radio_exclaim]\"</span>")
 
-
-/datum/hallucination/pda	//fake PDA messages. this only plays the beep and sends something to chat; it won't show up in the PDA.
+/// Fake PDA messages. this only plays the beep and sends something to chat; it won't show up in the PDA.
+/datum/hallucination/pda
 	min_power = 20
 	duration = 900		//this duration length + not allowing duplicates prevents spamming messages on every valid handle_hallucination() which can get VERY annoying if rng decides to give you 3 in a row
 	allow_duplicates = FALSE
@@ -99,7 +100,7 @@
 	to_chat(holder, FONT_SMALL("<i>[pick(sender)]</i>: [pick(SShallucinations.hallucinated_phrases)] (<FONT color = blue><u>reply</u></FONT>)"))
 	sound_to(holder, 'sound/machines/twobeep.ogg')
 
-//hallucinate someone else doing something.
+/// hallucinate someone else doing something.
 /datum/hallucination/paranoia
 	var/list/hal_target = list()	//The potential mob you're going to imagine doing this
 
@@ -151,7 +152,7 @@
 			. = null //This does nothing, it's to avoid a dreamchecker error
 	..()
 
-//the prick feeling but you actually imagine someone injecting you
+/// the prick feeling but you actually imagine someone injecting you
 /datum/hallucination/prick/by_person
 	min_power = HAL_POWER_LOW
 	max_power = INFINITY
@@ -192,7 +193,7 @@
 		to_chat(holder, SPAN_WARNING(pick("You see something moving under your skin!", "Whatever it is, it's definitely alive!", "If you don't get it out soon...", "It's moving towards your mouth!")))
 	..()
 
-//Pain. Picks a random type of pain, and severity is based on their level of hallucination.
+/// Pain. Picks a random type of pain, and severity is based on their level of hallucination.
 /datum/hallucination/pain
 	special_flags = NO_EMOTE
 
@@ -246,7 +247,7 @@
 					to_chat(holder, SPAN_DANGER("It feels like your [O.name] is being burnt to the bone!"))
 					holder.emote(pick("whimper", "twitch_v", "gasp"))
 
-//sort of like the vampire friend messages.
+/// sort of like the vampire friend messages.
 /datum/hallucination/friendly
 	max_power = 45
 	special_flags = NO_THOUGHT
@@ -338,7 +339,7 @@
 				holder.remove_client_color(/datum/client_color/monochrome)
 	..()
 
-//imagining someone hits you.
+/// imagining someone hits you.
 /datum/hallucination/fakeattack
 	min_power = HAL_POWER_LOW
 	var/list/attacker_candidates = list()
@@ -387,7 +388,7 @@
 		if(!M.stat)
 			return TRUE
 
-//Unique activate() since we are not adding the end() callback here; we're handling it in start() since it can loop
+/// Unique activate() since we are not adding the end() callback here; we're handling it in start() since it can loop
 /datum/hallucination/talking/activate()
 	if(!holder || !holder.client)
 		return
@@ -396,7 +397,7 @@
 		repeats = 3
 	start()
 
-////Talking about you. Most of it from Bay//////
+/// Talking about you. Most of it from Bay
 /datum/hallucination/talking/start()
 	if(!can_affect(holder) || !holder || !repeats)	//sanity check
 		end()
@@ -457,7 +458,7 @@
 	else
 		end()
 
-//Thinking people are whispering messages to you.
+/// Thinking people are whispering messages to you.
 /datum/hallucination/whisper
 	special_flags = HEARING_DEPENDENT
 
@@ -481,7 +482,7 @@
 		else
 			to_chat(holder, "<B>[whisperer]</B> [pick("gently nudges", "pokes at", "taps", "looks at", "pats")] [holder], trying to get their attention.")
 
-//whispers that don't depend on a person's proximity
+/// whispers that don't depend on a person's proximity
 /datum/hallucination/whisper/no_entity
 	min_power = HAL_POWER_LOW
 

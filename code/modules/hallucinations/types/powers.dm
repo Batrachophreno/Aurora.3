@@ -14,7 +14,7 @@
 	..()
 	addtimer(CALLBACK(src, PROC_REF(mind_give)), rand(30, 50))
 
-//set duration, foreshadow powers
+/// set duration, foreshadow powers
 /datum/hallucination/mindread/start()
 	duration = rand(2, 4) MINUTES
 	switch(rand(1, 3))
@@ -34,7 +34,7 @@
 				var/obj/item/organ/external/O = H.get_organ(BP_HEAD)
 				O.add_pain(25)
 
-//grant powers
+/// grant powers
 /datum/hallucination/mindread/proc/mind_give()
 	to_chat(holder, SPAN_NOTICE(FONT_LARGE("<B>You have developed a psionic gift!</B>")))
 	to_chat(holder, SPAN_NOTICE("You can feel your mind surging with power! Check the abilities tab to use your new power!"))
@@ -85,7 +85,7 @@
 		to_chat(usr, SPAN_WARNING("You need to stay still to focus your energy!"))
 
 
-//Fake telepathy, inspired by and mostly ported from Bay's
+/// Fake telepathy, inspired by and mostly ported from Bay's
 /datum/hallucination/telepathy
 	min_power = HAL_POWER_HIGH
 	allow_duplicates = FALSE
@@ -121,7 +121,7 @@
 				var/obj/item/organ/external/O = H.get_organ(BP_HEAD)
 				O.add_pain(25)
 
-//grant powers
+/// grant powers
 /datum/hallucination/telepathy/proc/tele_give()
 	to_chat(holder, SPAN_NOTICE(FONT_LARGE("<B>You have developed a psionic gift!</B>")))
 	to_chat(holder, SPAN_NOTICE("You can feel your mind surging with power! Check the abilities tab to use your new power!"))

@@ -1,10 +1,16 @@
 /datum/hallucination
-	var/mob/living/carbon/holder	//Who is hallucinating?
-	var/allow_duplicates = TRUE		//This is set to false for hallucinations with long durations or ones we do not want repeated for a time
-	var/duration = 10				//how long before we call end()
-	var/min_power = 0 				//mobs only get this hallucination at this threshold
-	var/max_power = INFINITY		//mobs don't get this hallucination if it's above this threshold. Used to weed out more common ones if you're super fucked up
-	var/special_flags				//Any special flags, defined above
+	/// Who is hallucinating?
+	var/mob/living/carbon/holder
+	/// This is set to false for hallucinations with long durations or ones we do not want repeated for a time
+	var/allow_duplicates = TRUE
+	/// How long before we call end()
+	var/duration = 10
+	/// Mobs only get this hallucination at this threshold
+	var/min_power = 0
+	/// Mobs don't get this hallucination if it's above this threshold. Used to weed out more common ones if you're super fucked up
+	var/max_power = INFINITY
+	/// Any special flags, defined above
+	var/special_flags
 
 /datum/hallucination/proc/start()
 
@@ -17,7 +23,7 @@
 		holder.hallucinations -= src
 	qdel(src)
 
-//Used to verify if a hallucination can be added to the list of candidates
+/// Used to verify if a hallucination can be added to the list of candidates
 /datum/hallucination/proc/can_affect(mob/living/carbon/C)
 	if(!C.client)
 		return FALSE
@@ -33,7 +39,7 @@
 	holder = null
 	return ..()
 
-//The actual kickoff to each effect
+/// The actual kickoff to each effect
 /datum/hallucination/proc/activate()
 	if(!holder || !holder.client)
 		return
@@ -41,7 +47,7 @@
 	start()
 	addtimer(CALLBACK(src, PROC_REF(end)), duration)
 
-//You emoting to others involuntarily. This happens mostly in end()
+/// You emoting to others involuntarily. This happens mostly in end()
 /datum/hallucination/proc/hallucination_emote()
 	if(prob(min(holder.hallucination - 5, 80)) && !holder.stat)
 		var/chosen_emote = pick(SShallucinations.hal_emote)
@@ -51,6 +57,6 @@
 			for(var/mob/M in oviewers(world.view, holder))	//Only shows to others, not you; you're not aware of what you're doing. Could prompt others to ask if you're okay, and lead to confusion.
 				to_chat(M, "<B>[holder]</B> [chosen_emote]")
 
-//For adding accent tags when you imagine people talking to you. This will be a forced accent. If there is no accent (simplemobs), give them a random one from a list
+/// For adding accent tags when you imagine people talking to you. This will be a forced accent. If there is no accent (simplemobs), give them a random one from a list
 /datum/hallucination/proc/get_hallucinated_accent(var/mob/living/talker)
 	return talker.accent ? talker.accent : pick(ACCENTS_ALL_IPC)
