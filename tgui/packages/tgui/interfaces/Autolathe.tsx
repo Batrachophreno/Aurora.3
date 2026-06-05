@@ -24,6 +24,7 @@ export type AutolatheData = {
   materials: Material[];
   recipes: Recipe[];
   categories: string[];
+  show_category: string | null;
   queue: QueueItem[];
   currently_printing: string;
 };
@@ -59,8 +60,10 @@ type QueueItem = {
 };
 
 export const Autolathe = (props) => {
-  const { act, data } = useBackend<AutolatheData>();
-  const [tab, setTab] = useLocalState('tab', 'All');
+  const { data } = useBackend<AutolatheData>();
+  const initialTab = data.show_category || 'All';
+  const [tab, setTab] = useLocalState<string>('tab', initialTab);
+  const selectedTab = data.categories.includes(tab) ? tab : initialTab;
 
   return (
     <Window theme={data.manufacturer} width={1000} height={700}>
@@ -107,7 +110,7 @@ export const Autolathe = (props) => {
                 {data.categories.map((category) => (
                   <Tabs.Tab
                     textAlign="center"
-                    selected={category === tab}
+                    selected={category === selectedTab}
                     key={category}
                     onClick={() => setTab(category)}
                   >
@@ -117,7 +120,11 @@ export const Autolathe = (props) => {
               </Tabs>
             </Stack.Item>
             <Stack.Item grow>
-              {tab ? <CategoryData /> : 'No category selected.'}
+              {selectedTab ? (
+                <CategoryData tab={selectedTab} />
+              ) : (
+                'No category selected.'
+              )}
             </Stack.Item>
             <Stack.Item grow>
               <QueueData />
@@ -129,11 +136,10 @@ export const Autolathe = (props) => {
   );
 };
 
-export const CategoryData = (props) => {
+export const CategoryData = (props: { tab: string }) => {
   const { act, data } = useBackend<AutolatheData>();
-  const [tab, setTab] = useLocalState('tab', 'All');
+  const { tab } = props;
   const [searchTerm, setSearchTerm] = useLocalState<string>(`searchTerm`, ``);
-  const [amount, setAmount] = useLocalState('amount', 1);
 
   return (
     <Section
@@ -161,141 +167,138 @@ export const CategoryData = (props) => {
           .filter(
             (c) => c.name?.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1,
           )
-          .map((recipe) =>
-            recipe.category === tab || tab === 'All' ? (
-              <Table.Row key={tab}>
-                <Table.Cell py={0.25}>
-                  <Button
-                    content={
-                      <Box bold color={recipe.hack_only ? 'red' : ''}>
-                        {capitalizeAll(recipe.name)}
-                      </Box>
-                    }
-                    tooltip={
-                      !recipe.enabled
-                        ? `Security Level Needed: ${recipe.security_level}`
-                        : ''
-                    }
-                    className={
-                      !recipe.enabled || recipe.can_make
-                        ? 'color-disabled'
-                        : 'color-default'
-                    }
-                    backgroundColor={
-                      !recipe.enabled || recipe.can_make ? '#9c0000' : null
-                    }
-                    textColor={
-                      !recipe.enabled || recipe.can_make ? '#9e9e9e' : null
-                    }
-                    onClick={() =>
-                      !recipe.enabled || recipe.can_make
-                        ? null
-                        : act('make', { multiplier: 1, recipe: recipe.recipe })
-                    }
-                  />
-                  {recipe.max_sheets ? (
+          .filter((recipe) => recipe.category === tab || tab === 'All')
+          .map((recipe) => (
+            <Table.Row key={recipe.recipe}>
+              <Table.Cell py={0.25}>
+                <Button
+                  content={
+                    <Box bold color={recipe.hack_only ? 'red' : ''}>
+                      {capitalizeAll(recipe.name)}
+                    </Box>
+                  }
+                  tooltip={
+                    !recipe.enabled
+                      ? `Security Level Needed: ${recipe.security_level}`
+                      : ''
+                  }
+                  className={
+                    !recipe.enabled || recipe.can_make
+                      ? 'color-disabled'
+                      : 'color-default'
+                  }
+                  backgroundColor={
+                    !recipe.enabled || recipe.can_make ? '#9c0000' : null
+                  }
+                  textColor={
+                    !recipe.enabled || recipe.can_make ? '#9e9e9e' : null
+                  }
+                  onClick={() =>
+                    !recipe.enabled || recipe.can_make
+                      ? null
+                      : act('make', { multiplier: 1, recipe: recipe.recipe })
+                  }
+                />
+                {recipe.max_sheets ? (
+                  <>
+                    {' '}
+                    <Button
+                      content={
+                        <Box bold color={recipe.hack_only ? 'red' : ''}>
+                          [x5]
+                        </Box>
+                      }
+                      className={
+                        !recipe.enabled || recipe.can_make
+                          ? 'color-disabled'
+                          : 'color-default'
+                      }
+                      backgroundColor={
+                        !recipe.enabled || recipe.can_make ? '#9c0000' : null
+                      }
+                      textColor={
+                        !recipe.enabled || recipe.can_make ? '#9e9e9e' : null
+                      }
+                      onClick={() =>
+                        !recipe.enabled || recipe.can_make
+                          ? null
+                          : act('make', {
+                              multiplier: 5,
+                              recipe: recipe.recipe,
+                            })
+                      }
+                    />
+                    <Button
+                      content={
+                        <Box bold color={recipe.hack_only ? 'red' : ''}>
+                          [x10]
+                        </Box>
+                      }
+                      className={
+                        !recipe.enabled || recipe.can_make
+                          ? 'color-disabled'
+                          : 'color-default'
+                      }
+                      backgroundColor={
+                        !recipe.enabled || recipe.can_make ? '#9c0000' : null
+                      }
+                      textColor={
+                        !recipe.enabled || recipe.can_make ? '#9e9e9e' : null
+                      }
+                      onClick={() =>
+                        !recipe.enabled || recipe.can_make
+                          ? null
+                          : act('make', {
+                              multiplier: 10,
+                              recipe: recipe.recipe,
+                            })
+                      }
+                    />
+                    <Button
+                      content={
+                        <Box bold color={recipe.hack_only ? 'red' : ''}>
+                          [x{recipe.max_sheets}]
+                        </Box>
+                      }
+                      className={
+                        !recipe.enabled || recipe.can_make
+                          ? 'color-disabled'
+                          : 'color-default'
+                      }
+                      backgroundColor={
+                        !recipe.enabled || recipe.can_make ? '#9c0000' : null
+                      }
+                      textColor={
+                        !recipe.enabled || recipe.can_make ? '#9e9e9e' : null
+                      }
+                      onClick={() =>
+                        !recipe.enabled || recipe.can_make
+                          ? null
+                          : act('make', {
+                              multiplier: recipe.max_sheets,
+                              recipe: recipe.recipe,
+                            })
+                      }
+                    />
+                  </>
+                ) : (
+                  ''
+                )}
+              </Table.Cell>
+              <Table.Cell collapsing>
+                <Button
+                  color="transparent"
+                  tooltip={
                     <>
-                      {' '}
-                      <Button
-                        content={
-                          <Box bold color={recipe.hack_only ? 'red' : ''}>
-                            [x5]
-                          </Box>
-                        }
-                        className={
-                          !recipe.enabled || recipe.can_make
-                            ? 'color-disabled'
-                            : 'color-default'
-                        }
-                        backgroundColor={
-                          !recipe.enabled || recipe.can_make ? '#9c0000' : null
-                        }
-                        textColor={
-                          !recipe.enabled || recipe.can_make ? '#9e9e9e' : null
-                        }
-                        onClick={() =>
-                          !recipe.enabled || recipe.can_make
-                            ? null
-                            : act('make', {
-                                multiplier: 5,
-                                recipe: recipe.recipe,
-                              })
-                        }
-                      />
-                      <Button
-                        content={
-                          <Box bold color={recipe.hack_only ? 'red' : ''}>
-                            [x10]
-                          </Box>
-                        }
-                        className={
-                          !recipe.enabled || recipe.can_make
-                            ? 'color-disabled'
-                            : 'color-default'
-                        }
-                        backgroundColor={
-                          !recipe.enabled || recipe.can_make ? '#9c0000' : null
-                        }
-                        textColor={
-                          !recipe.enabled || recipe.can_make ? '#9e9e9e' : null
-                        }
-                        onClick={() =>
-                          !recipe.enabled || recipe.can_make
-                            ? null
-                            : act('make', {
-                                multiplier: 10,
-                                recipe: recipe.recipe,
-                              })
-                        }
-                      />
-                      <Button
-                        content={
-                          <Box bold color={recipe.hack_only ? 'red' : ''}>
-                            [x{recipe.max_sheets}]
-                          </Box>
-                        }
-                        className={
-                          !recipe.enabled || recipe.can_make
-                            ? 'color-disabled'
-                            : 'color-default'
-                        }
-                        backgroundColor={
-                          !recipe.enabled || recipe.can_make ? '#9c0000' : null
-                        }
-                        textColor={
-                          !recipe.enabled || recipe.can_make ? '#9e9e9e' : null
-                        }
-                        onClick={() =>
-                          !recipe.enabled || recipe.can_make
-                            ? null
-                            : act('make', {
-                                multiplier: recipe.max_sheets,
-                                recipe: recipe.recipe,
-                              })
-                        }
-                      />
+                      <div>{recipe.resources}</div>
+                      <div>{recipe.build_time} seconds</div>
                     </>
-                  ) : (
-                    ''
-                  )}
-                </Table.Cell>
-                <Table.Cell collapsing>
-                  <Button
-                    color="transparent"
-                    tooltip={
-                      <>
-                        <div>{recipe.resources}</div>
-                        <div>{recipe.build_time} seconds</div>
-                      </>
-                    }
-                    icon="question"
-                  />
-                </Table.Cell>
-              </Table.Row>
-            ) : (
-              ''
-            ),
-          )}
+                  }
+                  icon="question"
+                />
+              </Table.Cell>
+            </Table.Row>
+          ))}
       </Table>
     </Section>
   );

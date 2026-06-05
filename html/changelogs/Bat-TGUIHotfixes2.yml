@@ -6,3 +6,4 @@ changes:
   - bugfix: "Fixes status composer not allowing AIs to view TGUIs."
   - bugfix: "Fixes inline icons in alt-click atom viewer."
   - bugfix: "Fixes PDA light toggle icon not appearing."
+  - bugfix: "Fixes autolathe category view not filtering items."
