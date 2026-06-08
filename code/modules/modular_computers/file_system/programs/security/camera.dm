@@ -44,13 +44,42 @@
 	tgui_id = "CameraMonitoring"
 	var/obj/structure/machinery/camera/current_camera
 	var/current_network
+	var/camera_map_name
 	/// Used for camera monitor consoles from which this interface can be launched. If it exists, only provide that console's "console_networks" networks.
 	var/list/monitored_networks = list()
 
+/datum/computer_file/program/camera_monitor/New(obj/item/modular_computer/comp)
+	. = ..()
+	RegisterSignal(src, COMSIG_CAMERA_MAPNAME_ASSIGNED, PROC_REF(camera_mapname_update))
+	AddComponent(/datum/component/camera_manager)
+	SEND_SIGNAL(src, COMSIG_CAMERA_CLEAR)
+
+/datum/computer_file/program/camera_monitor/Destroy()
+	UnregisterSignal(src, COMSIG_CAMERA_MAPNAME_ASSIGNED)
+	. = ..()
+
+/datum/computer_file/program/camera_monitor/proc/camera_mapname_update(source, value)
+	SIGNAL_HANDLER
+	camera_map_name = value
+
+/datum/computer_file/program/camera_monitor/ui_static_data(mob/user)
+	var/list/data = list()
+	data["mapRef"] = camera_map_name
+	return data
+
 /datum/computer_file/program/camera_monitor/ui_data(mob/user)
+	SEND_SIGNAL(src, COMSIG_CAMERA_REGISTER_UI, user)
+	SEND_SIGNAL(src, COMSIG_CAMERA_REFRESH)
+
 	var/list/data = initial_data()
 
 	data["current_camera"] = current_camera ? current_camera.nano_structure() : null
+	data["activeCamera"] = null
+	if(current_camera)
+		data["activeCamera"] = list(
+			"name" = current_camera.c_tag,
+			"status" = current_camera.can_use()
+		)
 	data["current_network"] = current_network
 
 	var/list/all_networks = list()
@@ -142,7 +171,7 @@
 
 		if("reset")
 			reset_current()
-			usr.reset_view(current_camera)
+			SEND_SIGNAL(src, COMSIG_CAMERA_CLEAR)
 			return TRUE
 
 /datum/computer_file/program/camera_monitor/proc/switch_to_camera(var/mob/user, var/obj/structure/machinery/camera/C)
@@ -165,11 +194,7 @@
 	var/obj/host = ui_host()
 	if(host)
 		user.set_machine(host)
-	user.reset_view(current_camera)
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.handle_vision()
+	SEND_SIGNAL(src, COMSIG_CAMERA_SET_TARGET, current_camera, current_camera.view_range, current_camera.view_range)
 
 	return TRUE
 
@@ -208,6 +233,13 @@
 		if(istype(L))
 			L.tracking_cancelled()
 	current_camera = null
+
+/datum/computer_file/program/camera_monitor/ui_interact(mob/user, datum/tgui/ui)
+	SEND_SIGNAL(src, COMSIG_CAMERA_REGISTER_UI, user)
+	SEND_SIGNAL(src, COMSIG_CAMERA_REFRESH)
+
+/datum/computer_file/program/camera_monitor/ui_close(mob/user)
+	SEND_SIGNAL(src, COMSIG_CAMERA_UNREGISTER_UI, user)
 
 // ERT Variant of the program
 /datum/computer_file/program/camera_monitor/ert

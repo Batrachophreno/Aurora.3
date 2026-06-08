@@ -35,6 +35,10 @@
 		get_asset_datum(/datum/asset/simple/ntos),
 	)
 
+/obj/item/modular_computer/ui_close(mob/user)
+	if(active_program)
+		active_program.ui_close(user)
+
 /obj/item/modular_computer/proc/get_header_data(list/data)
 	LAZYINITLIST(data)
 	data["PC_batteryicon"] = battery_module ? get_battery_icon() : null

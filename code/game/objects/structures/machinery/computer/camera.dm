@@ -82,6 +82,12 @@
 		data += camera_monitor_program.ui_data(user)
 		return data
 
+/obj/structure/machinery/computer/security/ui_static_data(mob/user)
+	var/list/data = list()
+	if(camera_monitor_program)
+		data += camera_monitor_program.ui_static_data(user)
+		return data
+
 /obj/structure/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -89,6 +95,10 @@
 
 	if(camera_monitor_program)
 		. = camera_monitor_program.ui_act(action, params, ui, state)
+
+/obj/structure/machinery/computer/security/ui_close(mob/user)
+	if(camera_monitor_program)
+		camera_monitor_program.ui_close(user)
 
 /obj/structure/machinery/computer/security/attack_hand(var/mob/user as mob)
 	if (!(src.z in GetConnectedZlevels(starting_z_level)))
@@ -98,7 +108,6 @@
 
 	if(!isAI(user))
 		user.set_machine(src)
-		user.reset_view(current_camera)
 	ui_interact(user)
 
 /obj/structure/machinery/computer/security/proc/switch_to_camera(var/mob/user, var/obj/structure/machinery/camera/C)

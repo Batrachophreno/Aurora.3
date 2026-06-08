@@ -17,6 +17,14 @@
 /// from datum ui_act (usr, action)
 #define COMSIG_UI_ACT "COMSIG_UI_ACT"
 
+/// Camera map manager signals.
+#define COMSIG_CAMERA_MAPNAME_ASSIGNED "camera_manager_mapname_assigned"
+#define COMSIG_CAMERA_REGISTER_UI "camera_manager_register_ui"
+#define COMSIG_CAMERA_UNREGISTER_UI "camera_manager_unregister_ui"
+#define COMSIG_CAMERA_SET_TARGET "camera_manager_set_target"
+#define COMSIG_CAMERA_CLEAR "camera_manager_clear_target"
+#define COMSIG_CAMERA_REFRESH "camera_manager_refresh"
+
 /// fires on the target datum when an element is attached to it (/datum/element)
 #define COMSIG_ELEMENT_ATTACH "element_attach"
 /// fires on the target datum when an element is attached to it  (/datum/element)

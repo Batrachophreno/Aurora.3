@@ -1,5 +1,6 @@
-import { Button, Input, NoticeBox, Section } from 'tgui-core/components';
+import { Box, Button, ByondUi, Input, NoticeBox, Section, Stack } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
+import { classes } from 'tgui-core/react';
 import { useBackend, useLocalState } from '../backend';
 import { NtosWindow } from '../layouts';
 
@@ -8,6 +9,11 @@ export type CameraData = {
   current_network: string;
   networks: Network[];
   cameras: Camera[];
+  activeCamera: {
+    name: string;
+    status: BooleanLike;
+  };
+  mapRef: string;
 };
 
 type Camera = {
@@ -25,17 +31,30 @@ type Network = {
 };
 
 export const CameraMonitoring = (props) => {
-  const { act, data } = useBackend<CameraData>();
+  const { data } = useBackend<CameraData>();
 
   return (
-    <NtosWindow resizable height={800} width={900}>
-      <NtosWindow.Content scrollable>
-        {data.networks?.length ? (
-          <ShowNetworks />
-        ) : (
-          <NoticeBox>No networks available.</NoticeBox>
-        )}
-        {data.current_network ? <ShowNetworkCameras /> : ''}
+    <NtosWindow resizable height={800} width={1100}>
+      <NtosWindow.Content>
+        <Stack fill>
+          <Stack.Item width="390px">
+            <Stack fill vertical>
+              <Stack.Item>
+                {data.networks?.length ? (
+                  <ShowNetworks />
+                ) : (
+                  <NoticeBox>No networks available.</NoticeBox>
+                )}
+              </Stack.Item>
+              <Stack.Item grow basis={0}>
+                {data.current_network ? <ShowNetworkCameras /> : ''}
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+          <Stack.Item grow>
+            <CameraFeed />
+          </Stack.Item>
+        </Stack>
       </NtosWindow.Content>
     </NtosWindow>
   );
@@ -77,13 +96,15 @@ export const ShowNetworkCameras = (props) => {
 
   return (
     <Section
+      fill
+      scrollable
       title="Cameras"
       buttons={
         <Input
           autoFocus
           autoSelect
           placeholder="Search by name"
-          width="40vw"
+          width="20vw"
           maxLength={512}
           onChange={(value) => {
             setSearchTerm(value);
@@ -98,22 +119,108 @@ export const ShowNetworkCameras = (props) => {
             (c) => c.name?.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1,
           )
           .map((camera) => (
-            <Button
-              content={camera.name}
+            <div
               key={camera.camera}
-              disabled={camera.deact}
-              selected={
+              title={camera.name}
+              className={classes([
+                'Button',
+                'Button--fluid',
+                'Button--color--transparent',
+                'Button--ellipsis',
                 data.current_camera &&
                 data.current_camera.camera === camera.camera
-              } // thanks whoever named this nanoui bit this and then shat it around everywhere
-              onClick={() =>
-                act('switch_camera', { switch_camera: camera.camera })
-              }
-            />
+                  ? 'Button--selected'
+                  : 'candystripe',
+                camera.deact && 'Button--disabled',
+              ])}
+              onClick={() => {
+                if (!camera.deact) {
+                  act('switch_camera', { switch_camera: camera.camera });
+                }
+              }}
+            >
+              {camera.name}
+            </div>
           ))
       ) : (
         <NoticeBox>No cameras detected.</NoticeBox>
       )}
+    </Section>
+  );
+};
+
+const getAdjacentCameras = (cameras: Camera[], currentCamera?: Camera) => {
+  if (!currentCamera || cameras.length < 2) {
+    return [];
+  }
+
+  const index = cameras.findIndex((camera) => camera.camera === currentCamera.camera);
+  if (index < 0) {
+    return [cameras[cameras.length - 1], cameras[0]];
+  }
+
+  return [
+    cameras[index === 0 ? cameras.length - 1 : index - 1],
+    cameras[index === cameras.length - 1 ? 0 : index + 1],
+  ];
+};
+
+const CameraFeed = (props) => {
+  const { act, data } = useBackend<CameraData>();
+  const cameras = data.cameras?.filter((camera) => !camera.deact) || [];
+  const [previousCamera, nextCamera] = getAdjacentCameras(cameras, data.current_camera);
+
+  return (
+    <Section fill>
+      <Stack fill vertical>
+        <Stack.Item>
+          <Stack align="center">
+            <Stack.Item grow>
+              {data.activeCamera?.status ? (
+                <NoticeBox info>{data.activeCamera.name}</NoticeBox>
+              ) : (
+                <NoticeBox danger>No input signal</NoticeBox>
+              )}
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                disabled={!previousCamera}
+                icon="chevron-left"
+                onClick={() =>
+                  act('switch_camera', {
+                    switch_camera: previousCamera.camera,
+                  })
+                }
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                disabled={!nextCamera}
+                icon="chevron-right"
+                onClick={() =>
+                  act('switch_camera', {
+                    switch_camera: nextCamera.camera,
+                  })
+                }
+              />
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+        <Stack.Item grow>
+          {data.mapRef ? (
+            <ByondUi
+              height="100%"
+              width="100%"
+              params={{
+                id: data.mapRef,
+                type: 'map',
+              }}
+            />
+          ) : (
+            <Box height="100%" />
+          )}
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };
