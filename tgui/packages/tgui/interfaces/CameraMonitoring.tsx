@@ -1,8 +1,9 @@
-import { Box, Button, ByondUi, Input, NoticeBox, Section, Stack } from 'tgui-core/components';
+import { Box, Button, ByondUi, NoticeBox, Section, Stack } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 import { classes } from 'tgui-core/react';
 import { useBackend, useLocalState } from '../backend';
 import { NtosWindow } from '../layouts';
+import { SearchBar } from './common/SearchBar';
 
 export type CameraData = {
   current_camera: Camera;
@@ -100,16 +101,14 @@ export const ShowNetworkCameras = (props) => {
       scrollable
       title="Cameras"
       buttons={
-        <Input
+        <SearchBar
           autoFocus
-          autoSelect
+          query={searchTerm}
           placeholder="Search by name"
-          width="20vw"
-          maxLength={512}
-          onChange={(value) => {
+          onSearch={(value) => {
             setSearchTerm(value);
           }}
-          value={searchTerm}
+          style={{ width: '40vw' }}
         />
       }
     >
