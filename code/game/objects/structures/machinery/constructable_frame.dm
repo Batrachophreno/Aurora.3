@@ -51,6 +51,12 @@
 		if(COMPONENT_STATE)
 			. += "Use a crowbar to pry out the circuitboard and the components out."
 
+/obj/structure/machinery/constructable_frame/machine_frame/assembly_hints(mob/user, distance, is_adjacent)
+	return render_interaction_hints(user, INTERACTION_CATEGORY_CONSTRUCTION)
+
+/obj/structure/machinery/constructable_frame/machine_frame/disassembly_hints(mob/user, distance, is_adjacent)
+	return render_interaction_hints(user, INTERACTION_CATEGORY_DECONSTRUCTION)
+
 /obj/structure/machinery/constructable_frame/feedback_hints(mob/user, distance, is_adjacent)
 	. += ..()
 	if(machine_description)
@@ -67,6 +73,268 @@
 				component_list += "<b>[num2text(req_components[I])] [req_component_names[I]]\s</b>"
 		D = "Requires [english_list(component_list)]."
 	components_description = D
+
+/obj/structure/machinery/constructable_frame/machine_frame/gather_local_interaction_steps(datum/interaction_context/context, list/steps)
+	..()
+	switch(state)
+		if(BLUEPRINT_STATE)
+			steps += new /datum/interaction_step/machine_frame/finalize_blueprint
+			steps += new /datum/interaction_step/machine_frame/scrap_blueprint/wirecutters
+			steps += new /datum/interaction_step/machine_frame/scrap_blueprint/plasma_cutter
+		if(WIRING_STATE)
+			steps += new /datum/interaction_step/machine_frame/add_cable
+			steps += new /datum/interaction_step/machine_frame/dismantle_wired/wrench
+			steps += new /datum/interaction_step/machine_frame/dismantle_wired/plasma_cutter
+		if(CIRCUITBOARD_STATE)
+			steps += new /datum/interaction_step/machine_frame/add_circuitboard
+			steps += new /datum/interaction_step/machine_frame/remove_cables
+		if(COMPONENT_STATE)
+			steps += new /datum/interaction_step/machine_frame/add_component
+			steps += new /datum/interaction_step/machine_frame/complete_machine
+			steps += new /datum/interaction_step/machine_frame/remove_board_and_components
+
+/proc/machine_frame_requirement_typepath(requirement_key)
+	if(ispath(requirement_key))
+		return requirement_key
+	return text2path(requirement_key)
+
+/datum/interaction_requirement/machine_frame_component
+	id = "machine_frame_component"
+	name = "a required component"
+	failure_status = INTERACTION_RESULT_MISSING_ACTIVE_ITEM
+	failure_message = "You need a required component."
+
+/datum/interaction_requirement/machine_frame_component/is_met(datum/interaction_context/context)
+	if(!istype(context?.target, /obj/structure/machinery/constructable_frame/machine_frame) || !context?.active_item)
+		return FALSE
+	var/obj/structure/machinery/constructable_frame/machine_frame/frame = context.target
+	for(var/component_key in frame.req_components)
+		if(frame.req_components[component_key] <= 0)
+			continue
+		var/component_path = machine_frame_requirement_typepath(component_key)
+		if(component_path && istype(context.active_item, component_path))
+			return TRUE
+	return FALSE
+
+/datum/interaction_requirement/machine_frame_components_installed
+	id = "machine_frame_components_installed"
+	name = "all required components installed"
+	failure_status = INTERACTION_RESULT_MISSING_ACTIVE_ITEM
+	failure_message = "The machine still needs components."
+
+/datum/interaction_requirement/machine_frame_components_installed/is_met(datum/interaction_context/context)
+	if(!istype(context?.target, /obj/structure/machinery/constructable_frame/machine_frame))
+		return FALSE
+	var/obj/structure/machinery/constructable_frame/machine_frame/frame = context.target
+	for(var/component_key in frame.req_components)
+		if(frame.req_components[component_key] > 0)
+			return FALSE
+	return TRUE
+
+/datum/interaction_step/machine_frame
+	query_only = TRUE
+	var/required_state
+
+/datum/interaction_step/machine_frame/New()
+	..()
+	add_requirement(new /datum/interaction_requirement/target_var_equals("state", required_state, "the correct machine frame state"))
+	add_requirement(new /datum/interaction_requirement/adjacent)
+
+/datum/interaction_step/machine_frame/proc/get_frame(datum/interaction_context/context)
+	RETURN_TYPE(/obj/structure/machinery/constructable_frame/machine_frame)
+	if(!istype(context?.target, /obj/structure/machinery/constructable_frame/machine_frame))
+		return
+	var/obj/structure/machinery/constructable_frame/machine_frame/frame = context.target
+	return frame
+
+/datum/interaction_step/machine_frame/is_visible(datum/interaction_context/context)
+	var/obj/structure/machinery/constructable_frame/machine_frame/frame = get_frame(context)
+	return frame && frame.state == required_state
+
+/datum/interaction_step/machine_frame/finalize_blueprint
+	id = "machine_frame_finalize_blueprint"
+	name = "finalize blueprint"
+	category = INTERACTION_CATEGORY_CONSTRUCTION
+	priority = 100
+	required_state = BLUEPRINT_STATE
+
+/datum/interaction_step/machine_frame/finalize_blueprint/New()
+	..()
+	add_requirement(new /datum/interaction_requirement/active_item_empty)
+
+/datum/interaction_step/machine_frame/finalize_blueprint/render_hint(datum/interaction_context/context)
+	return "Click on \the [context.target] to finalize its direction."
+
+/datum/interaction_step/machine_frame/scrap_blueprint
+	name = "scrap blueprint"
+	category = INTERACTION_CATEGORY_DECONSTRUCTION
+	priority = 90
+	required_state = BLUEPRINT_STATE
+
+/datum/interaction_step/machine_frame/scrap_blueprint/wirecutters
+	id = "machine_frame_scrap_blueprint_wirecutters"
+
+/datum/interaction_step/machine_frame/scrap_blueprint/wirecutters/New()
+	..()
+	add_requirement(new /datum/interaction_requirement/active_tool(TOOL_WIRECUTTER, "wirecutters"))
+
+/datum/interaction_step/machine_frame/scrap_blueprint/wirecutters/render_hint(datum/interaction_context/context)
+	return "Use wirecutters to disassemble \the [context.target]."
+
+/datum/interaction_step/machine_frame/scrap_blueprint/plasma_cutter
+	id = "machine_frame_scrap_blueprint_plasma_cutter"
+
+/datum/interaction_step/machine_frame/scrap_blueprint/plasma_cutter/New()
+	..()
+	add_requirement(new /datum/interaction_requirement/active_type(/obj/item/gun/energy/plasmacutter, "a plasma cutter"))
+
+/datum/interaction_step/machine_frame/scrap_blueprint/plasma_cutter/render_hint(datum/interaction_context/context)
+	return "Use a plasma cutter to disassemble \the [context.target]."
+
+/datum/interaction_step/machine_frame/add_cable
+	id = "machine_frame_add_cable"
+	name = "wire blueprint"
+	category = INTERACTION_CATEGORY_CONSTRUCTION
+	priority = 100
+	required_state = WIRING_STATE
+
+/datum/interaction_step/machine_frame/add_cable/New()
+	..()
+	add_requirement(new /datum/interaction_requirement/active_tool(TOOL_CABLECOIL, "cable coil"))
+	add_requirement(new /datum/interaction_requirement/active_stack_amount(5, "lengths of cable"))
+
+/datum/interaction_step/machine_frame/add_cable/render_hint(datum/interaction_context/context)
+	return "Add five lengths of cable coil to wire \the [context.target]."
+
+/datum/interaction_step/machine_frame/dismantle_wired
+	name = "dismantle wired blueprint"
+	category = INTERACTION_CATEGORY_DECONSTRUCTION
+	priority = 90
+	required_state = WIRING_STATE
+
+/datum/interaction_step/machine_frame/dismantle_wired/wrench
+	id = "machine_frame_dismantle_wired_wrench"
+
+/datum/interaction_step/machine_frame/dismantle_wired/wrench/New()
+	..()
+	add_requirement(new /datum/interaction_requirement/active_tool(TOOL_WRENCH, "a wrench"))
+
+/datum/interaction_step/machine_frame/dismantle_wired/wrench/render_hint(datum/interaction_context/context)
+	return "Use a wrench to disassemble \the [context.target]."
+
+/datum/interaction_step/machine_frame/dismantle_wired/plasma_cutter
+	id = "machine_frame_dismantle_wired_plasma_cutter"
+
+/datum/interaction_step/machine_frame/dismantle_wired/plasma_cutter/New()
+	..()
+	add_requirement(new /datum/interaction_requirement/active_type(/obj/item/gun/energy/plasmacutter, "a plasma cutter"))
+
+/datum/interaction_step/machine_frame/dismantle_wired/plasma_cutter/render_hint(datum/interaction_context/context)
+	return "Use a plasma cutter to disassemble \the [context.target]."
+
+/datum/interaction_step/machine_frame/add_circuitboard
+	id = "machine_frame_add_circuitboard"
+	name = "add machine circuit board"
+	category = INTERACTION_CATEGORY_CONSTRUCTION
+	priority = 100
+	required_state = CIRCUITBOARD_STATE
+
+/datum/interaction_step/machine_frame/add_circuitboard/New()
+	..()
+	add_requirement(new /datum/interaction_requirement/active_circuitboard(BOARD_MACHINE, "a machine circuit board"))
+
+/datum/interaction_step/machine_frame/add_circuitboard/render_hint(datum/interaction_context/context)
+	return "Add the desired machine circuit board."
+
+/datum/interaction_step/machine_frame/remove_cables
+	id = "machine_frame_remove_cables"
+	name = "remove cables"
+	category = INTERACTION_CATEGORY_DECONSTRUCTION
+	priority = 90
+	required_state = CIRCUITBOARD_STATE
+
+/datum/interaction_step/machine_frame/remove_cables/New()
+	..()
+	add_requirement(new /datum/interaction_requirement/active_tool(TOOL_WIRECUTTER, "wirecutters"))
+
+/datum/interaction_step/machine_frame/remove_cables/render_hint(datum/interaction_context/context)
+	return "Use wirecutters to remove the cables."
+
+/datum/interaction_step/machine_frame/add_component
+	id = "machine_frame_add_component"
+	name = "add required component"
+	category = INTERACTION_CATEGORY_CONSTRUCTION
+	priority = 100
+	required_state = COMPONENT_STATE
+
+/datum/interaction_step/machine_frame/add_component/New()
+	..()
+	add_requirement(new /datum/interaction_requirement/machine_frame_component)
+
+/datum/interaction_step/machine_frame/add_component/is_visible(datum/interaction_context/context)
+	if(!..())
+		return FALSE
+	var/obj/structure/machinery/constructable_frame/machine_frame/frame = get_frame(context)
+	for(var/component_key in frame.req_components)
+		if(frame.req_components[component_key] > 0)
+			return TRUE
+	return FALSE
+
+/datum/interaction_step/machine_frame/add_component/proc/get_component_list(datum/interaction_context/context)
+	. = list()
+	var/obj/structure/machinery/constructable_frame/machine_frame/frame = get_frame(context)
+	if(!frame)
+		return
+	for(var/component_key in frame.req_components)
+		if(frame.req_components[component_key] <= 0)
+			continue
+		var/component_name = frame.req_component_names[component_key] || "[component_key]"
+		. += "<b>[num2text(frame.req_components[component_key])] [component_name]\s</b>"
+
+/datum/interaction_step/machine_frame/add_component/render_hint(datum/interaction_context/context)
+	var/list/component_list = get_component_list(context)
+	if(!length(component_list))
+		return
+	return "Add the required components: [english_list(component_list)]."
+
+/datum/interaction_step/machine_frame/complete_machine
+	id = "machine_frame_complete_machine"
+	name = "complete machine"
+	category = INTERACTION_CATEGORY_CONSTRUCTION
+	priority = 80
+	required_state = COMPONENT_STATE
+
+/datum/interaction_step/machine_frame/complete_machine/New()
+	..()
+	add_requirement(new /datum/interaction_requirement/active_tool(TOOL_SCREWDRIVER, "a screwdriver"))
+	add_requirement(new /datum/interaction_requirement/machine_frame_components_installed)
+
+/datum/interaction_step/machine_frame/complete_machine/render_hint(datum/interaction_context/context)
+	var/obj/structure/machinery/constructable_frame/machine_frame/frame = get_frame(context)
+	if(!frame)
+		return
+	var/all_components_installed = TRUE
+	for(var/component_key in frame.req_components)
+		if(frame.req_components[component_key] > 0)
+			all_components_installed = FALSE
+			break
+	if(all_components_installed)
+		return "Use a screwdriver to complete the machine."
+	return "Use a screwdriver to complete the machine once all required components are installed."
+
+/datum/interaction_step/machine_frame/remove_board_and_components
+	id = "machine_frame_remove_board_and_components"
+	name = "remove circuit board and components"
+	category = INTERACTION_CATEGORY_DECONSTRUCTION
+	priority = 90
+	required_state = COMPONENT_STATE
+
+/datum/interaction_step/machine_frame/remove_board_and_components/New()
+	..()
+	add_requirement(new /datum/interaction_requirement/active_tool(TOOL_CROWBAR, "a crowbar"))
+
+/datum/interaction_step/machine_frame/remove_board_and_components/render_hint(datum/interaction_context/context)
+	return "Use a crowbar to pry out the circuit board and the components."
 
 /obj/structure/machinery/constructable_frame/machine_frame/attack_hand(mob/user)
 	if(state == BLUEPRINT_STATE)

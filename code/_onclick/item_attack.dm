@@ -71,6 +71,7 @@ This calls [atom/proc/tool_act], among others.
 				playsound(src, attacking_item.hitsound, attacking_item.get_clamped_volume(), 1, falloff_distance = 0)
 			return FALSE
 
+	var/list/modifiers = click_params_to_modifiers(params)
 	var/item_interact_result = src.base_item_interaction(user, attacking_item, modifiers)
 	if(item_interact_result & ITEM_INTERACT_SUCCESS)
 		return TRUE

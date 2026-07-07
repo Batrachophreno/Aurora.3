@@ -60,3 +60,7 @@
 
 /// Sent from [atom/proc/item_interaction], when this atom is used as a tool and an event occurs
 #define COMSIG_ITEM_TOOL_ACTED "tool_item_acted"
+
+/// Sent from [atom/proc/gather_interaction_steps], allowing attached systems to append queryable interaction steps.
+/// Args: (datum/interaction_context/context, list/steps)
+#define COMSIG_ATOM_GATHER_INTERACTION_STEPS "atom_gather_interaction_steps"

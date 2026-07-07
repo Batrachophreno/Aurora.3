@@ -11,3 +11,11 @@
 
 	return list("icon-x" = clamp(text2num(.["icon-x"]), 0, lim_x),
 				"icon-y" = clamp(text2num(.["icon-y"]), 0, lim_y))
+
+/**
+ * Normalizes BYOND click params into the modifiers list used by item interaction procs.
+ */
+/proc/click_params_to_modifiers(params)
+	if(islist(params))
+		return params
+	return params2list(params)
