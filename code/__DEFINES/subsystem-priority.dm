@@ -37,7 +37,7 @@
 #define SS_PRIORITY_LIGHTING    25	// Queued lighting engine updates.
 #define SS_PRIORITY_MACHINERY   25	// Machinery + powernet ticks.
 #define SS_PRIORITY_ELECTRONICS 20	// Integrated Electronics processing.
-#define SS_PRIORITY_CALAMITY    20	// Singularity, Tesla, Nar'sie, blob, etc.
+#define SS_PRIORITY_CALAMITY    20	// Singularity, Tesla, Nar'sie, etc.
 #define SS_PRIORITY_EVENT       20
 #define SS_PRIORITY_DISEASE     20	// Disease ticks.
 #define SS_PRIORITY_RADIATION   20  // Radiation processing and cache updates.

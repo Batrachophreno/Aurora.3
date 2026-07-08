@@ -10,11 +10,12 @@
 	for(var/mob/living/L in get_hearers_in_view(7, src))
 		bang(T, L)
 
-	// Damage blobs.
-	for(var/obj/effect/blob/B in get_hear(8,get_turf(src)))
-		var/damage = round(30/(get_dist(B,get_turf(src))+1))
-		B.health -= damage
-		B.update_icon()
+	// Damage spreading infestations.
+	for(var/atom/A in get_hear(8,get_turf(src)))
+		if(!A.is_neoblob())
+			continue
+		var/damage = round(30/(get_dist(A,get_turf(src))+1))
+		A.add_damage(damage, null, DAMAGE_BURN)
 
 	single_spark(T)
 	new /obj/effect/smoke/illumination(T, brightness=15)
@@ -121,4 +122,3 @@
 	var/dettime = rand(15,60)
 	addtimer(CALLBACK(src, PROC_REF(prime)), dettime)
 	..()
-

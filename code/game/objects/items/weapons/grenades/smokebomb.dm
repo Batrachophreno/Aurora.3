@@ -25,10 +25,11 @@
 	smoke.attach(src)
 	smoke.set_up(10, 0, get_turf(src))
 	START_PROCESSING(SSprocessing, src)
-	for(var/obj/effect/blob/B in view(8,src))
-		var/damage = round(30/(get_dist(B,src)+1))
-		B.health -= damage
-		B.update_icon()
+	for(var/atom/A in view(8,src))
+		if(!A.is_neoblob())
+			continue
+		var/damage = round(30/(get_dist(A,src)+1))
+		A.add_damage(damage, null, DAMAGE_BURN)
 	QDEL_IN(src, 8 SECONDS)
 
 /obj/item/grenade/smokebomb/process()

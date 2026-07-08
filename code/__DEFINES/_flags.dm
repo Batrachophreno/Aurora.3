@@ -3,12 +3,12 @@
 
 GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
 
-// for /datum/var/datum_flags
+// For /datum/var/datum_flags
 #define DF_USE_TAG (1<<0)
 #define DF_VAR_EDITED (1<<1)
 #define DF_ISPROCESSING (1<<2)
 
-///Whether /atom/Initialize() has already run for the object
+/// Whether /atom/Initialize() has already run for the object
 #define INITIALIZED_1 (1<<5)
 
 /// If the thing can reflect light (lasers/energy)
@@ -27,8 +27,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSGLASS (1<<1)
 /// Allows you to pass over grilles.
 #define PASSGRILLE (1<<2)
-/// Allows you to pass over blob tiles.
-#define PASSBLOB (1<<3)
+/// Allows you to pass over neoblob tiles. Probably needs removed and replaced with subtype-specific checks, but for now this is what we've got.
+#define PASSNEOBLOB (1<<3)
 /// Allows you to pass over mobs.
 #define PASSMOB (1<<4)
 /// Allows you to pass over closed turfs, ie. walls.
@@ -54,7 +54,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 /* AURORA SNOWFLAKE CODE */
 #define PASSDOORHATCH	(1<<15)
-#define PASSTRACE	(1<<16) //Used by turrets in the check_trajectory proc to target mobs hiding behind certain things (such as closets)
+/// Used by turrets in the check_trajectory proc to target mobs hiding behind certain things (such as closets)
+#define PASSTRACE	(1<<16)
 #define PASSRAILING	(1<<17)
 /// Allows you to pass over energy shields, these also have additional handling for blocking projectiles in their on_hit().
 #define PASSSHIELD (1<<18)

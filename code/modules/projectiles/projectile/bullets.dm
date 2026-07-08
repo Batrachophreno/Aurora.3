@@ -553,7 +553,7 @@
 	anti_materiel_potential = 6
 	embed = FALSE
 	penetrating = 1
-	projectile_piercing = PASSMOB|PASSDOORS|PASSGLASS|PASSCLOSEDTURF|PASSWINDOW|PASSMACHINE|PASSBLOB|PASSFLAPS|PASSVEHICLE //It's designed to penetrate mechs.
+	projectile_piercing = PASSMOB|PASSDOORS|PASSGLASS|PASSCLOSEDTURF|PASSWINDOW|PASSMACHINE|PASSNEOBLOB|PASSFLAPS|PASSVEHICLE //It's designed to penetrate mechs.
 
 	var/devastation_range = -1
 	var/heavy_impact_range = -1

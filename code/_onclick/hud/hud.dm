@@ -135,8 +135,6 @@ GLOBAL_LIST(global_huds)
 		IN DIFFERENT FILES ENTIRELY. IF YOU ARE ADDING A NEW HUD ELEMENT TO THIS, PUT IT IN THIS FILE UNDER THIS LIST,
 		AND INCLUDE A QDEL_NULL() FOR IT IN THE DESTROY PROC.
 																														*/
-	var/atom/movable/screen/blobpwrdisplay
-	var/atom/movable/screen/blobhealthdisplay
 	var/atom/movable/screen/r_hand_hud_object
 	var/atom/movable/screen/l_hand_hud_object
 	var/atom/movable/screen/action_intent
@@ -181,8 +179,6 @@ GLOBAL_LIST(global_huds)
 
 /datum/hud/Destroy()
 	mymob = null
-	QDEL_NULL(blobpwrdisplay)
-	QDEL_NULL(blobhealthdisplay)
 	QDEL_NULL(r_hand_hud_object)
 	QDEL_NULL(l_hand_hud_object)
 	QDEL_NULL(action_intent)

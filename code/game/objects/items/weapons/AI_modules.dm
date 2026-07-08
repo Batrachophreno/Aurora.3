@@ -34,7 +34,7 @@ AI MODULES
 			to_chat(usr, "You haven't selected an AI to transmit laws to!")
 			return
 
-		if(SSticker.mode && SSticker.mode.name == "blob")
+		if(SSticker.mode && SSticker.mode.disable_ai_law_uploads)
 			to_chat(usr, "Law uploads have been disabled by [SSatlas.current_map.company_name]!")
 			return
 

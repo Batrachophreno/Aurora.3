@@ -18,7 +18,7 @@
 				if(1)
 					override = input(src,"mode = ?","Enter Parameter",null) as anything in list("mercenary","no override")
 				if(0)
-					override = input(src,"mode = ?","Enter Parameter",null) as anything in list("blob","mercenary","AI malfunction","no override")
+					override = input(src,"mode = ?","Enter Parameter",null) as anything in list("mercenary","AI malfunction","no override")
 			SSticker.station_explosion_cinematic(parameter,override)
 
 	log_admin("[key_name(src)] launched cinematic \"[cinematic]\"")

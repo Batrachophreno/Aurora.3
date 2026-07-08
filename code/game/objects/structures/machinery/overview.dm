@@ -249,7 +249,7 @@
 							else
 								colour = rgb(255,128,128)
 
-						//if(istype(AM, /obj/effect/blob))
+						//if(istype(AM, /obj/effect/neoblob))
 						//	colour = rgb(255,0,255)
 
 				var/area/A = T.loc

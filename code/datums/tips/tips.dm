@@ -163,7 +163,7 @@ GLOBAL_LIST_EMPTY(tips_by_category)
 /datum/tip/medical
 	category = CATEGORY_MEDICAL
 	messages = list(
-		"As the Chief Medical Officer, coordinate and communicate with your doctors, chemists, and paramedics during a pirate raid, blob infestation, or some other crisis to keep people alive and fighting.",
+		"As the Chief Medical Officer, coordinate and communicate with your doctors, chemists, and paramedics during a pirate raid, astroclast infestation, or some other crisis to keep people alive and fighting.",
 		"As a Physician, you can attempt to draw blood from a husk with a syringe to determine the cause. If you can extract blood, it was caused by extreme temperatures or lasers, if there is no blood to extract, it was caused by something unnatural.",
 		"As a Physician, remember to target the correct limb and be on help intent when trying to perform surgery on someone.",
 		"As a Surgeon, washing your hands and changing your gloves is deeply important. Don't rely on antibiotics to fix what hot water and soap prevents.",
@@ -223,7 +223,7 @@ GLOBAL_LIST_EMPTY(tips_by_category)
 /datum/tip/security
 	category = CATEGORY_SECURITY
 	messages = list(
-		"As the Head of Security, you are expected to coordinate your security force to handle any threat that comes to the ship. Sometimes it means making use of the armory to handle a blob, sometimes it means being ruthless during a revolution or cult.",
+		"As the Head of Security, you are expected to coordinate your security force to handle any threat that comes to the ship. Sometimes it means making use of the armory to handle an astroclast, sometimes it means being ruthless during a revolution or cult.",
 		"As the Head of Security, don't let the power go to your head. You may have high access, great equipment, and a miniature army at your side, but being a terrible person without a good reason is grounds for a bwoink.",
 		"As the Warden, your duty is to be the watchdog of the brig and handler of prisoners when little is happening, and to hand out equipment and weapons to the security officers when a crisis strikes.",
 		"As the Warden, keep a close eye on the armory at all times, as it is a favored strike point of mercenaries and cocky traitors.",

@@ -356,7 +356,7 @@ GLOBAL_LIST_INIT(severity_to_string, alist(EVENT_LEVEL_MUNDANE = "Mundane", EVEN
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Nothing", /datum/event/nothing,
 			135),
 
-		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Blob", /datum/event/blob,
+		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Astroclast", /datum/event/astroclast,
 			5, list(ASSIGNMENT_ENGINEER = 10), TRUE, minimum_job_requirement_list = list(ASSIGNMENT_ENGINEER = 2),
 			pop_needed = 10),
 

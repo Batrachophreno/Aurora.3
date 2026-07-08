@@ -444,8 +444,9 @@
 	return
 
 /obj/structure/machinery/door/firedoor/can_close()
-	if(locate(/obj/effect/blob) in get_turf(src))
-		return FALSE
+	for(var/atom/A in get_turf(src))
+		if(A.is_neoblob())
+			return FALSE
 	if(locate(/mob/living) in get_turf(src))
 		return FALSE
 	return ..()

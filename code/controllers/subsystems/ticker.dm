@@ -720,12 +720,6 @@ SUBSYSTEM_DEF(ticker)
 					flick("station_explode_fade_red",cinematic)
 					sound_to(world, sound('sound/effects/explosionfar.ogg'))
 					cinematic.icon_state = "summary_malf"
-				if("blob") //Station nuked (nuke,explosion,summary)
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					flick("station_explode_fade_red",cinematic)
-					sound_to(world, sound('sound/effects/explosionfar.ogg'))
-					cinematic.icon_state = "summary_selfdes"
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)

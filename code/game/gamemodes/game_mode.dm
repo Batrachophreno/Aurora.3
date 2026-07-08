@@ -8,31 +8,52 @@ GLOBAL_LIST_EMPTY(additional_antag_types)
 	var/votable = 1
 	var/probability = 0
 
-	var/required_players = 0                 // Minimum players for round to start if voted in.
-	var/max_players = 0			 			// Maximum players for round to start for secret voting. 0 means "doesn't matter"
-	var/required_enemies = 0                 // Minimum antagonists for round to start.
+	/// Minimum players for round to start if voted in.
+	var/required_players = 0
+	/// Maximum players for round to start for secret voting. 0 means "doesn't matter"
+	var/max_players = 0
+	/// Minimum antagonists for round to start.
+	var/required_enemies = 0
 	var/newscaster_announcements = null
-	var/ert_disabled = 0                     // ERT cannot be called.
-	var/deny_respawn = 0	                 // Disable respawn during this round.
+	/// ERT cannot be called.
+	var/ert_disabled = 0
+	/// Disable respawn during this round.
+	var/deny_respawn = 0
 
-	var/list/disabled_jobs = list()           // Mostly used for Malf.  This check is performed in job_controller so it doesn't spawn a regular AI.
+	/// Disable AI law uploads; previously, behavior was hardcoded for only "blob" gamemode, but is a generic var now for any gamemode that wants to disable it.
+	var/disable_ai_law_uploads = FALSE
+	/// Also legacy. Mostly used for Malf. This check is performed in job_controller so it doesn't spawn a regular AI.
+	var/list/disabled_jobs = list()
 
-	var/shuttle_delay = 1                    // Shuttle transit time is multiplied by this.
-	var/auto_recall_shuttle = 0              // Will the shuttle automatically be recalled?
+	/// Shuttle transit time is multiplied by this.
+	var/shuttle_delay = 1
+	/// Will the shuttle automatically be recalled?
+	var/auto_recall_shuttle = 0
 
-	var/list/antag_tags = list()             // Core antag templates to spawn.
-	var/list/antag_templates                 // Extra antagonist types to include.
-	var/round_autoantag = 0                  // Will this round attempt to periodically spawn more antagonists?
-	var/antag_scaling_coeff = 5              // Coefficient for scaling max antagonists to player count.
-	var/require_all_templates = 0            // Will only start if all templates are checked and can spawn.
+	/// Core antag templates to spawn.
+	var/list/antag_tags = list()
+	/// Extra antagonist types to include.
+	var/list/antag_templates
+	/// Will this round attempt to periodically spawn more antagonists?
+	var/round_autoantag = 0
+	/// Coefficient for scaling max antagonists to player count.
+	var/antag_scaling_coeff = 5
+	/// Will only start if all templates are checked and can spawn.
+	var/require_all_templates = 0
 
-	var/station_was_nuked = 0                // See nuclearbomb.dm and malfunction.dm.
-	var/explosion_in_progress = 0            // Sit back and relax
-	var/waittime_l = 60 SECONDS                     // Lower bound on time before intercept arrives (in tenths of seconds)
-	var/waittime_h = 180 SECONDS                    // Upper bound on time before intercept arrives (in tenths of seconds)
+	/// See nuclearbomb.dm and malfunction.dm.
+	var/station_was_nuked = 0
+	/// Sit back and relax
+	var/explosion_in_progress = 0
+	/// Lower bound on time before intercept arrives (in tenths of seconds)
+	var/waittime_l = 60 SECONDS
+	/// Upper bound on time before intercept arrives (in tenths of seconds)
+	var/waittime_h = 180 SECONDS
 
-	var/event_delay_mod_moderate             // Modifies the timing of random events.
-	var/event_delay_mod_major                // As above.
+	/// Modifies the timing of random events.
+	var/event_delay_mod_moderate
+	/// Modifies the timing of random events.
+	var/event_delay_mod_major
 
 /datum/game_mode/New()
 	..()
