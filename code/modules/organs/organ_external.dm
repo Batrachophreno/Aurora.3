@@ -10,6 +10,9 @@
 
 #define FRACTURE_AND_TENDON_DAM_THRESHOLD 30 // if a weapon does more than this amount of damage, it's powerful enough to sever the tendon AND fracture the bone, if it's a sharp weapon
 
+///How long before a wound starts autohealing without treatment
+#define HEALING_DELAY 60 SECONDS
+
 /obj/item/organ/external
 	name = "external"
 	min_broken_damage = 30
@@ -437,6 +440,9 @@
 	if((brute <= 0) && (burn <= 0))
 		return 0
 
+	if(damage_flags & DAMAGE_FLAG_IGNORE_PROSTHETICS && BP_IS_ROBOTIC(src))
+		return 0
+
 	var/laser = (damage_flags & DAMAGE_FLAG_LASER)
 	var/sharp = (damage_flags & DAMAGE_FLAG_SHARP)
 	var/edge = (damage_flags & DAMAGE_FLAG_EDGE)
@@ -499,7 +505,7 @@
 	add_pain(0.6 * burn + 0.4 * brute)
 
 	if(owner)
-		SEND_SIGNAL(owner, COMSIG_EXTERNAL_ORGAN_DAMAGE, burn + brute)
+		SEND_SIGNAL(owner, COMSIG_DAMAGE_TO_ENDOSKELETON, burn + brute)
 
 	//If there are still hurties to dispense
 	if (spillover)
@@ -588,13 +594,13 @@
 					if(W.w_class >= w_class && (dam_flags & DAMAGE_FLAG_EDGE))
 						edge_eligible = TRUE
 
-				if(!blunt_eligible && edge_eligible && (brute >= max_damage / (DROPLIMB_THRESHOLD_EDGE + maim_bonus_to_add)))
+				if(!blunt_eligible && edge_eligible && (brute >= max_damage / max((DROPLIMB_THRESHOLD_EDGE + maim_bonus_to_add), 0.1)))
 					droplimb(0, DROPLIMB_EDGE)
-				else if(burn >= max_damage / ((dam_flags & DAMAGE_FLAG_LASER ? DROPLIMB_THRESHOLD_DESTROY_PROJECTILE :  DROPLIMB_THRESHOLD_DESTROY) + maim_bonus_to_add))
+				else if(burn >= max_damage / max((dam_flags & DAMAGE_FLAG_LASER ? DROPLIMB_THRESHOLD_DESTROY_PROJECTILE :  DROPLIMB_THRESHOLD_DESTROY) + maim_bonus_to_add, 0.1))
 					droplimb(0, DROPLIMB_BURN)
-				else if(blunt_eligible && brute >= max_damage / ((dam_flags & DAMAGE_FLAG_BULLET ? DROPLIMB_THRESHOLD_DESTROY_PROJECTILE :  DROPLIMB_THRESHOLD_DESTROY) + maim_bonus_to_add))
+				else if(blunt_eligible && brute >= max_damage / max((dam_flags & DAMAGE_FLAG_BULLET ? DROPLIMB_THRESHOLD_DESTROY_PROJECTILE :  DROPLIMB_THRESHOLD_DESTROY) + maim_bonus_to_add, 0.1))
 					droplimb(0, DROPLIMB_BLUNT)
-				else if(brute >= max_damage / (DROPLIMB_THRESHOLD_TEAROFF + maim_bonus_to_add))
+				else if(brute >= max_damage / max((DROPLIMB_THRESHOLD_TEAROFF + maim_bonus_to_add), 0.1))
 					droplimb(0, DROPLIMB_EDGE)
 
 /obj/item/organ/external/heal_damage(brute, burn, internal = 0, robo_repair = 0)
@@ -993,8 +999,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/heal_amt = 0
 
 		// if damage >= 50 AFTER treatment then it's probably too severe to heal within the timeframe of a round.
+		// Only autoheal if wound was created or enlarged more than 10 seconds ago, this is so damage over time effects don't need to be larger than the autoheal speed
 		if (updatehud && brute_ratio < 50 && burn_ratio < 50 && W.can_autoheal())
-			heal_amt += 0.5
+			if (W.created + HEALING_DELAY <= world.time || W.bandaged || W.salved)
+				heal_amt += 0.5
 
 		//we only update wounds once in [wound_update_accuracy] ticks so have to emulate realtime
 		heal_amt *= wound_update_accuracy
@@ -1118,20 +1126,20 @@ Note that amputating the affected organ does in fact remove the infection from t
 				var/gore_sound = "[(status & ORGAN_ROBOT) ? "tortured metal" : "ripping tendons and flesh"]"
 				owner.visible_message(
 					SPAN_DANGER("\The [owner]'s [src.name] flies off in an arc!"),\
-					"<span class='moderate'><b><font size=2>Your [src.name] goes flying off!</font></b></span>",\
+					"<span class='moderate'><b><font size=5>Your [src.name] goes flying off!</font></b></span>",\
 					SPAN_DANGER("You hear the terrible sound of [gore_sound]."))
 		if(DROPLIMB_BURN)
 			var/gore = "[(status & ORGAN_ROBOT) ? "": " of burning flesh"]"
 			owner.visible_message(
 				SPAN_DANGER("\The [owner]'s [src.name] flashes away into ashes!"),\
-				"<span class='moderate'><b><font size=2>Your [src.name] flashes away into ashes!</font></b></span>",\
+				"<span class='moderate'><b><font size=5>Your [src.name] flashes away into ashes!</font></b></span>",\
 				SPAN_DANGER("You hear the crackling sound[gore]."))
 		if(DROPLIMB_BLUNT)
 			var/gore = "[(status & ORGAN_ROBOT) ? "": " in a shower of gore"]"
 			var/gore_sound = "[(status & ORGAN_ROBOT) ? "rending sound of tortured metal" : "sickening splatter of gore"]"
 			owner.visible_message(
 				SPAN_DANGER("\The [owner]'s [src.name] explodes[gore]!"),\
-				"<span class='moderate'><b><font size=3>Your [src.name] explodes[gore]!</font></b></span>",\
+				"<span class='moderate'><b><font size=5>Your [src.name] explodes[gore]!</font></b></span>",\
 				SPAN_DANGER("You hear the [gore_sound]."))
 
 	var/mob/living/carbon/human/victim = owner //Keep a reference for post-removed().
@@ -1288,8 +1296,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(!silent)
 		var/message = pick("broke in half", "shattered")
 		owner.visible_message(\
-			SPAN_WARNING("<font size=2>You hear a loud cracking sound coming from \the [owner]!</font>"),\
-			SPAN_DANGER("<font size=3>Something feels like it [message] in your [name]!</font>"),\
+			SPAN_WARNING("<font size=4>You hear a loud cracking sound coming from \the [owner]!</font>"),\
+			SPAN_DANGER("<font size=5>Something feels like it [message] in your [name]!</font>"),\
 			"You hear a sickening crack!")
 		if(owner.species && owner.can_feel_pain())
 			owner.emote("scream")

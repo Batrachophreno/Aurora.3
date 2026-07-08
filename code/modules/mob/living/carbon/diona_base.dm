@@ -370,15 +370,14 @@ and some alternative things that are toxic to other life, such as radium and mut
 
 	updatehealth()
 
-/mob/living/carbon/human/proc/diona_regen_progress(var/datum/dionastats/DS)
+/mob/living/carbon/human/proc/diona_regen_progress(datum/dionastats/DS)
 	if(!DS)
 		return
 	if(DS.regen_limb_progress > LIMB_REGROW_REQUIREMENT)
-		DS.regen_limb.Invoke()
+		DS.regen_limb?.Invoke()
 		DS.regen_limb = null
-		if(DS.regen_extra)
-			DS.regen_extra.Invoke()
-			DS.regen_extra = null
+		DS.regen_extra?.Invoke()
+		DS.regen_extra = null
 	var/progress = nutrition * 0.45
 	adjustNutritionLoss(nutrition * 0.15)
 	progress += DS.stored_energy * 0.3
@@ -637,7 +636,8 @@ Most of these values are calculated from information configured at authortime in
 	last_location = null
 	regen_limb = null
 	regen_extra = null
-	. = ..()
+	nym = null
+	return ..()
 
 /datum/dionastats/proc/do_blood_suck(var/mob/living/carbon/user, var/mob/living/carbon/human/H)
 	user.visible_message(SPAN_DANGER("[user] is trying to bite [H.name]."), SPAN_DANGER("You start biting \the [H], you both must stay still!"))

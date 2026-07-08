@@ -128,6 +128,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /obj/item/organ/proc/die()
 	if(status & ORGAN_ROBOT)
+		damage = max_damage
+		STOP_PROCESSING(SSprocessing, src)
 		return
 	damage = max_damage
 	status |= ORGAN_DEAD
@@ -204,6 +206,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		die()
 
 /obj/item/organ/proc/tick_surge_damage(seconds_per_tick)
+	ENFORCE_CALCULUS(seconds_per_tick)
+
 	if(!surge_damage)
 		clear_surge_effects()
 		return

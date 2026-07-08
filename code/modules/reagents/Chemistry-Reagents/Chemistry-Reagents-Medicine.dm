@@ -347,7 +347,7 @@
 	M.notify_message(SPAN_GOOD(pick(joy_messages)), rand(20 SECONDS, 40 SECONDS), key = "morta_affect_blood")
 
 	if(check_min_dose(M))
-		M.add_chemical_effect(CE_PAINKILLER, 50)
+		M.add_chemical_effect(CE_PAINKILLER, 70)
 		if(!M.chem_effects[CE_CLEARSIGHT])
 			M.eye_blurry = max(M.eye_blurry, 5)
 		if(!M.chem_effects[CE_STRAIGHTWALK])
@@ -527,7 +527,7 @@
 		to_chat(M, SPAN_GOOD(pick("You feel soothed and at ease.", "You feel content and at peace.", "You feel a pleasant emptiness.", "You feel like sharing the wonderful memories and feelings you're experiencing.", "All your anxieties fade away.", "You feel like you're floating off the ground.", "You don't want this feeling to end.")))
 
 	if(check_min_dose(M))
-		M.add_chemical_effect(CE_PAINKILLER, 200)
+		M.add_chemical_effect(CE_PAINKILLER, 210)
 		M.add_chemical_effect(CE_SLOWDOWN, 2)
 		if(!M.chem_effects[CE_CLEARSIGHT])
 			M.eye_blurry = max(M.eye_blurry, 5)
@@ -587,9 +587,8 @@
 	if(.)
 		M.add_chemical_effect(CE_CLEARSIGHT)
 		M.add_chemical_effect(CE_STRAIGHTWALK)
-		M.add_chemical_effect(CE_PAINKILLER, 30)
+		M.add_chemical_effect(CE_PAINKILLER, 10)
 		M.add_chemical_effect(CE_HALLUCINATE, -1)
-		M.add_up_to_chemical_effect(CE_ADRENALINE, 1)
 		M.add_chemical_effect(CE_BLOODTHIN, 25)
 
 /singleton/reagent/synaptizine/overdose(var/mob/living/carbon/M, var/alien, var/datum/reagents/holder)
@@ -798,7 +797,7 @@
 		to_chat(M, SPAN_DANGER(pick("Your heart is beating rapidly!", "Your chest hurts!", "You've totally over-exerted yourself!")))
 	if(prob(M.chem_doses[type] / 3))
 		M.visible_message("<b>[M]</b> twitches violently, grimacing.", "You twitch violently and feel yourself sprain a joint.")
-		M.take_organ_damage(5 * removed, 0)
+		M.take_organ_damage(5 * removed, 0, used_weapon = "Hyperzine overdose", damage_flags = DAMAGE_FLAG_IGNORE_PROSTHETICS, silent = TRUE)
 		M.adjustHalLoss(15)
 
 /singleton/reagent/hyperzine/final_effect(mob/living/carbon/M, datum/reagents/holder)
@@ -892,7 +891,7 @@
 
 /singleton/reagent/hyronalin/overdose(var/mob/living/carbon/M, var/alien, var/removed, var/datum/reagents/holder)
 	if(prob(60))
-		M.take_organ_damage(4 * removed, 0) //Hyronaline OD deals brute damage to the same degree as Arithrazine
+		M.take_organ_damage(8 * removed, 0, used_weapon = "Hyronaline overdose", damage_flags = DAMAGE_FLAG_IGNORE_PROSTHETICS, silent = TRUE)
 
 /singleton/reagent/arithrazine
 	name = "Arithrazine"
@@ -922,11 +921,11 @@
 		M.apply_radiation(-280 * removed)
 		M.add_chemical_effect(CE_ITCH, M.chem_doses[type]/2)
 		if(prob(60))
-			M.take_organ_damage(8 * removed, 0)
+			M.take_organ_damage(8 * removed, 0, used_weapon = "Arithrazine tissue damage", damage_flags = DAMAGE_FLAG_IGNORE_PROSTHETICS, silent = TRUE)
 
 /singleton/reagent/arithrazine/overdose(var/mob/living/carbon/M, var/alien, var/removed, var/datum/reagents/holder)
 	if(prob(50))
-		M.take_organ_damage(6 * removed, 0) //Even more collateral damage dealt by arithrazine when overdosed.
+		M.take_organ_damage(6 * removed, 0, used_weapon = "Arithrazine overdose", damage_flags = DAMAGE_FLAG_IGNORE_PROSTHETICS, silent = TRUE) //Even more collateral damage dealt by arithrazine when overdosed.
 
 /singleton/reagent/thetamycin
 	name = "Thetamycin"
@@ -1273,6 +1272,7 @@
 	messagedelay = MEDICATION_MESSAGE_DELAY * 0.75
 	goodmessage = list("You feel good.","You feel relaxed.","You feel alert and focused.")
 	value = 2
+	alchohol_affected = FALSE
 
 /singleton/reagent/mental/nicotine/overdose(var/mob/living/carbon/M, var/alien, var/removed, var/scale, var/datum/reagents/holder)
 	..()
@@ -1972,7 +1972,6 @@
 		M.add_chemical_effect(CE_STRAIGHTWALK)
 		M.add_chemical_effect(CE_PAINKILLER, 30)
 		M.add_chemical_effect(CE_HALLUCINATE, -1)
-		M.add_up_to_chemical_effect(CE_ADRENALINE, 1)
 
 /singleton/reagent/kilosemine/overdose(mob/living/carbon/M, alien, removed, scale, datum/reagents/holder)
 	if(!ishuman(M))
@@ -2081,7 +2080,7 @@
 		to_chat(M, SPAN_WARNING(pick("You have a headache!", "Energy, energy, energy - so much energy!", "You can't sit still!", "It's difficult to focus right now... but that's not important!", "Your heart is beating rapidly!", "Your chest hurts!", "You've totally over-exerted yourself!")))
 	if(prob(M.chem_doses[type] / 3))
 		M.emote(pick("twitch", "blink_r", "shiver"))
-		M.take_organ_damage(5 * removed, 0)
+		M.take_organ_damage(5 * removed, 0, used_weapon = "Caffeine overdose", damage_flags = DAMAGE_FLAG_IGNORE_PROSTHETICS, silent = TRUE)
 		M.adjustHalLoss(15)
 
 /singleton/reagent/caffeine/final_effect(mob/living/carbon/M, alien, removed, datum/reagents/holder)

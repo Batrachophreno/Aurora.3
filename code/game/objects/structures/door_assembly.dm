@@ -17,12 +17,6 @@
 	var/state = STATE_UNWIRED
 	var/base_name = "airlock"
 	var/obj/item/airlock_electronics/electronics
-	/// The type path of the airlock once completed.
-	var/airlock_type
-	/// Glass version of this airlock.
-	var/glass_type
-	/// If glass is installed.
-	var/glass = FALSE
 	var/created_name
 	var/width = 1
 	var/scrapped = FALSE
@@ -38,9 +32,14 @@
 	var/glass_file = 'icons/obj/doors/basic/single/generic/fill_glass.dmi'
 	var/fill_file = 'icons/obj/doors/basic/single/generic/fill_steel.dmi'
 	var/panel_file = 'icons/obj/doors/basic/single/generic/panel.dmi'
+	/// The type path of the airlock once completed.
 	var/airlock_type = "Standard"
 	var/door_color = "#909299"
 	var/door_frame_color = COLOR_GRAY20
+	/// Glass version of this airlock.
+	var/glass_type
+	/// If glass is installed.
+	var/glass = FALSE
 	var/stripe_color = null
 	var/symbol_color = null
 	var/window_color = null
@@ -94,32 +93,32 @@
 
 /obj/structure/door_assembly/door_assembly_generic
 	base_name = "airlock"
-	airlock_type = /obj/machinery/door/airlock
-	glass_type = /obj/machinery/door/airlock/glass
+	airlock_type = /obj/structure/machinery/door/airlock
+	glass_type = /obj/structure/machinery/door/airlock/glass
 
 /obj/structure/door_assembly/door_assembly_mai
 	base_name = "maintenance airlock"
-	airlock_type = /obj/machinery/door/airlock/maintenance
+	airlock_type = /obj/structure/machinery/door/airlock/maintenance
 
 /obj/structure/door_assembly/door_assembly_ext
 	base_name = "external airlock"
 	icon = 'icons/obj/doors/basic/single/external/door.dmi'
-	airlock_type = /obj/machinery/door/airlock/external
+	airlock_type = /obj/structure/machinery/door/airlock/external
 
 /obj/structure/door_assembly/door_assembly_hatch
 	base_name = "airtight hatch"
 	icon = 'icons/obj/doors/basic/single/external/door.dmi'
-	airlock_type = /obj/machinery/door/airlock/hatch
+	airlock_type = /obj/structure/machinery/door/airlock/hatch
 
 /obj/structure/door_assembly/door_assembly_mhatch
 	base_name = "maintenance hatch"
 	icon = 'icons/obj/doors/basic/single/hatch/door.dmi'
-	airlock_type = /obj/machinery/door/airlock/maintenance_hatch
+	airlock_type = /obj/structure/machinery/door/airlock/maintenance_hatch
 
 /obj/structure/door_assembly/door_assembly_highsecurity
 	base_name = "high security airlock"
 	icon = 'icons/obj/doors/basic/single/secure/door.dmi'
-	airlock_type = /obj/machinery/door/airlock/highsecurity
+	airlock_type = /obj/structure/machinery/door/airlock/highsecurity
 
 /obj/structure/door_assembly/multi_tile
 	icon = 'icons/obj/doors/basic/double/generic/door.dmi'
@@ -127,8 +126,8 @@
 	pixel_x = -32
 	pixel_y = -32
 	width = 2
-	airlock_type = /obj/machinery/door/airlock/multi_tile
-	glass_type = /obj/machinery/door/airlock/multi_tile/glass
+	airlock_type = /obj/structure/machinery/door/airlock/multi_tile
+	glass_type = /obj/structure/machinery/door/airlock/multi_tile/glass
 
 /obj/structure/door_assembly/multi_tile/Initialize()
 	. = ..()
