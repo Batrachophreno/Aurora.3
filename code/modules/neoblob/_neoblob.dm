@@ -1,3 +1,8 @@
+/**
+ * 'Neoblobs' are the catchall term for the new blob system. They are the parent object of
+ * all blob-like entities, including both classic SS13 blobs (now labeled Astroclasts), as well
+ * as any other enemy types which use a 'cluster'-like growth system.
+ */
 /datum/neoblob_type
 	var/name = "infestation"
 	var/color = COLOR_WHITE
@@ -5,6 +10,15 @@
 	var/icon = 'icons/mob/neoblob/astroclast.dmi'
 	var/faction = "infestation"
 	var/attack_weapon = "writhing mass"
+
+	var/mass_path = /obj/effect/neoblob
+	var/core_path = /obj/effect/neoblob/core
+	var/secondary_core_path = /obj/effect/neoblob/core/secondary
+	var/shield_path = /obj/effect/neoblob/shield
+	var/ravaging_path = /obj/effect/neoblob/ravaging
+	var/node_path
+	var/factory_path
+	var/resource_path
 
 	var/mass_name = "spreading mass"
 	var/mass_desc = "A spreading mass."
@@ -63,6 +77,32 @@
 /datum/neoblob_type/proc/on_expand(var/obj/effect/neoblob/growth, var/obj/effect/neoblob/new_growth, var/turf/target)
 	return
 
+/datum/neoblob_type/proc/can_expand_to(var/obj/effect/neoblob/growth, var/turf/target)
+	return !isnull(target)
+
+/datum/neoblob_type/proc/on_blocked_turf(var/obj/effect/neoblob/growth, var/turf/target)
+	return FALSE
+
+/datum/neoblob_type/proc/on_contact_atom(var/obj/effect/neoblob/growth, var/atom/target)
+	return FALSE
+
+/datum/neoblob_type/proc/get_default_growth_path(var/obj/effect/neoblob/growth)
+	switch(growth.neoblob_role)
+		if(NEOBLOB_ROLE_CORE, NEOBLOB_ROLE_SECONDARY_CORE)
+			return shield_path
+		if(NEOBLOB_ROLE_SHIELD)
+			return ravaging_path
+	return mass_path
+
+/datum/neoblob_type/proc/choose_growth_path(var/obj/effect/neoblob/growth, var/turf/target)
+	var/secondary_path = secondary_core_path || growth.secondary_core_growth_type
+	if(!growth.has_nearby_core(target) && secondary_path && prob(growth.secondary_core_growth_chance))
+		return secondary_path
+	return get_default_growth_path(growth) || growth.expandType
+
+/datum/neoblob_type/proc/after_expand(var/obj/effect/neoblob/growth, var/obj/effect/neoblob/new_growth, var/turf/target)
+	on_expand(growth, new_growth, target)
+
 /datum/neoblob_type/proc/on_core_process(var/obj/effect/neoblob/growth)
 	return
 
@@ -75,6 +115,12 @@
 	complementary_color = "#57787B"
 	faction = "astroclast"
 	attack_weapon = "astroclast tendril"
+
+	mass_path = /obj/effect/neoblob
+	core_path = /obj/effect/neoblob/core
+	secondary_core_path = /obj/effect/neoblob/core/secondary
+	shield_path = /obj/effect/neoblob/shield
+	ravaging_path = /obj/effect/neoblob/ravaging
 
 	mass_name = "pulsating mass"
 	mass_desc = "A pulsating mass of interwoven tendrils."
@@ -91,6 +137,83 @@
 	target.visible_message(SPAN_WARNING("A tendril flies out from \the [growth] and smashes into \the [target]!"), SPAN_DANGER("A tendril flies out from \the [growth] and smashes into you!"))
 	playsound(get_turf(growth), 'sound/effects/attackblob.ogg', 50, TRUE)
 
+/datum/neoblob_type/astroclast/can_expand_to(var/obj/effect/neoblob/growth, var/turf/target)
+	if(!target)
+		return FALSE
+	if(istype(target, /turf/space) || (isopenturf(target)) || (istype(target, /turf/simulated/mineral) && target.density))
+		return FALSE
+	if(istype(target, /turf/simulated/wall))
+		return FALSE
+	return TRUE
+
+/datum/neoblob_type/astroclast/on_blocked_turf(var/obj/effect/neoblob/growth, var/turf/target)
+	if(istype(target, /turf/simulated/wall))
+		var/turf/simulated/wall/SW = target
+		SW.add_damage(80)
+		return TRUE
+	return FALSE
+
+/datum/neoblob_type/astroclast/on_contact_atom(var/obj/effect/neoblob/growth, var/atom/target)
+	var/turf/target_turf = get_turf(target)
+	if(!target_turf)
+		return FALSE
+
+	var/obj/structure/girder/G = locate() in target_turf
+	if(G)
+		G.add_damage(rand(40, 80))
+		return TRUE
+	var/obj/structure/window/W = locate() in target_turf
+	if(W)
+		W.shatter()
+		return TRUE
+	var/obj/structure/grille/GR = locate() in target_turf
+	if(GR)
+		qdel(GR)
+		return TRUE
+	var/obj/structure/tank_wall/TW = locate() in target_turf
+	if(TW)
+		TW.add_damage(rand(5,20))
+		return TRUE
+	for(var/obj/structure/machinery/door/D in target_turf) // There can be several - and some of them can be open, locate() is not suitable.
+		if(D.density)
+			growth.attack_door(D)
+			if(D.health <= 0)
+				if(!D.open(TRUE))
+					D.visible_message(SPAN_WARNING("\The [growth] bashes through \the [D], demolishing it!"))
+					qdel(D)
+			return TRUE
+	var/obj/structure/foamedmetal/F = locate() in target_turf
+	if(F)
+		F.visible_message(SPAN_WARNING("\The [growth] lashes into \the [F], tearing it apart!"))
+		qdel(F)
+		return TRUE
+	var/obj/structure/reagent_dispensers/RT = locate() in target_turf
+	if(RT)
+		RT.visible_message(SPAN_WARNING("\The [growth] pierces into \the [RT], blowing it apart!"))
+		RT.ex_act(2)
+		return TRUE
+	var/obj/structure/inflatable/I = locate() in target_turf
+	if(I)
+		I.visible_message(SPAN_WARNING("\The [growth] rips into \the [I], tearing a hole into it!"))
+		I.deflate(TRUE)
+		return TRUE
+	var/obj/vehicle/V = locate() in target_turf
+	if(V)
+		V.ex_act(2)
+		return TRUE
+	var/obj/structure/machinery/camera/CA = locate() in target_turf
+	if(CA && !(CA.stat & BROKEN))
+		CA.add_damage(30)
+		return TRUE
+
+	for(var/mob/living/L in target_turf)
+		if(L.stat == DEAD)
+			continue
+		growth.attack_living(L)
+
+	return FALSE
+
+/// Neoblobs
 /obj/effect/neoblob
 	name = "spreading mass"
 	desc = "A spreading mass."
@@ -116,6 +239,7 @@
 	/// Special resist for laser based weapons - Emitters or handheld energy weaponry. Damage is divided by this and THEN by fire_resist.
 	var/laser_resist = 2
 
+	/// Compatibility fallback while growth paths migrate to /datum/neoblob_type.
 	var/expandType = /obj/effect/neoblob
 	/// % chance to grow a secondary neoblob core instead of whatever was supposed to grow. Secondary cores are considerably weaker, but still nasty.
 	var/secondary_core_growth_chance = 5
@@ -134,6 +258,7 @@
 	var/neoblob_role = NEOBLOB_ROLE_MASS
 	var/neoblob_type = /datum/neoblob_type
 	var/datum/neoblob_type/strain
+	/// Compatibility fallback while growth paths migrate to /datum/neoblob_type
 	var/secondary_core_growth_type
 
 /obj/effect/neoblob
@@ -243,81 +368,28 @@
 	return FALSE
 
 /obj/effect/neoblob/proc/expand(var/turf/T)
-	if(istype(T, /turf/space) || (isopenturf(T)) || (istype(T, /turf/simulated/mineral) && T.density))
+	var/datum/neoblob_type/current_strain = ensure_strain()
+	if(!current_strain)
 		return
-	if(istype(T, /turf/simulated/wall))
-		var/turf/simulated/wall/SW = T
-		SW.add_damage(80)
+	if(!current_strain.can_expand_to(src, T))
+		current_strain.on_blocked_turf(src, T)
 		return
-	var/obj/structure/girder/G = locate() in T
-	if(G)
-		G.add_damage(rand(40, 80))
+	if(current_strain.on_contact_atom(src, T))
 		return
-	var/obj/structure/window/W = locate() in T
-	if(W)
-		W.shatter()
-		return
-	var/obj/structure/grille/GR = locate() in T
-	if(GR)
-		qdel(GR)
-		return
-	var/obj/structure/tank_wall/TW = locate() in T
-	if(TW)
-		TW.add_damage(rand(5,20))
-		return
-	for(var/obj/structure/machinery/door/D in T) // There can be several - and some of them can be open, locate() is not suitable
-		if(D.density)
-			attack_door(D)
-			if(D.health <= 0)
-				if(!D.open(TRUE))
-					D.visible_message(SPAN_WARNING("\The [src] bashes through \the [D], demolishing it!"))
-					qdel(D)
-			return
-	var/obj/structure/foamedmetal/F = locate() in T
-	if(F)
-		F.visible_message(SPAN_WARNING("\The [src] lashes into \the [F], tearing it apart!"))
-		qdel(F)
-		return
-	var/obj/structure/reagent_dispensers/RT = locate() in T
-	if(RT)
-		RT.visible_message(SPAN_WARNING("\The [src] pierces into \the [RT], blowing it apart!"))
-		RT.ex_act(2)
-		return
-	var/obj/structure/inflatable/I = locate() in T
-	if(I)
-		I.visible_message(SPAN_WARNING("\The [src] rips into \the [F], tearing a hole into it!"))
-		I.deflate(TRUE)
-		return
-	var/obj/vehicle/V = locate() in T
-	if(V)
-		V.ex_act(2)
-		return
-	var/obj/structure/machinery/camera/CA = locate() in T
-	if(CA && !(CA.stat & BROKEN))
-		CA.add_damage(30)
-		return
-
-	// Above things, we destroy completely and thus can use locate. Mobs are different.
-	for(var/mob/living/L in T)
-		if(L.stat == DEAD)
-			continue
-		attack_living(L)
 
 	var/obj/effect/neoblob/inherited_core = parent_core
 	if(is_core)
 		inherited_core = src
 
-	var/datum/neoblob_type/current_strain = ensure_strain()
-	if(!has_nearby_core(T) && secondary_core_growth_type && prob(secondary_core_growth_chance))
-		var/obj/effect/neoblob/S = new secondary_core_growth_type(T, null, current_strain)
-		S.parent_core = inherited_core
-		if(current_strain)
-			current_strain.on_expand(src, S, T)
-	else
-		var/obj/effect/neoblob/B = new expandType(T, min(health, 30), current_strain)
-		B.parent_core = inherited_core
-		if(current_strain)
-			current_strain.on_expand(src, B, T)
+	var/growth_path = current_strain.choose_growth_path(src, T)
+	if(!growth_path)
+		return
+	var/growth_health = min(health, 30)
+	if(growth_path == current_strain.secondary_core_path || growth_path == secondary_core_growth_type)
+		growth_health = null
+	var/obj/effect/neoblob/new_growth = new growth_path(T, growth_health, current_strain)
+	new_growth.parent_core = inherited_core
+	current_strain.after_expand(src, new_growth, T)
 
 /obj/effect/neoblob/proc/pulse(var/forceLeft, var/list/dirs, var/bad_dir)
 	sleep(4)
