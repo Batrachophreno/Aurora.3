@@ -1,6 +1,6 @@
 /datum/neoblob_cluster
 	var/datum/neoblob_type/neoblob_type
-	var/obj/effect/neoblob/core/core
+	var/obj/structure/neoblob/core/core
 	var/list/growths
 	var/list/cores
 	var/list/nodes
@@ -10,7 +10,6 @@
 	var/faction
 	var/spawned_at
 	var/last_activity
-	var/destroyed = FALSE
 	var/expansion_paused = FALSE
 	var/destroying_cluster = FALSE
 
@@ -30,18 +29,17 @@
 
 /datum/neoblob_cluster/Destroy()
 	SStgui.close_uis(src)
-	destroyed = TRUE
-	core = null
 	neoblob_type = null
-	growths = null
-	cores = null
-	nodes = null
-	factories = null
-	resources = null
-	minions = null
+	core = null
+	QDEL_LIST(growths)
+	QDEL_LIST(cores)
+	QDEL_LIST(nodes)
+	QDEL_LIST(factories)
+	QDEL_LIST(resources)
+	QDEL_LIST(minions)
 	return ..()
 
-/datum/neoblob_cluster/proc/register_growth(var/obj/effect/neoblob/growth)
+/datum/neoblob_cluster/proc/register_growth(var/obj/structure/neoblob/growth)
 	if(!growth || QDELETED(growth))
 		return FALSE
 	if(growth.cluster && growth.cluster != src && !QDELETED(growth.cluster))
@@ -51,7 +49,7 @@
 	switch(growth.neoblob_role)
 		if(NEOBLOB_ROLE_CORE)
 			cores |= growth
-			if(istype(growth, /obj/effect/neoblob/core))
+			if(istype(growth, /obj/structure/neoblob/core))
 				core = growth
 		if(NEOBLOB_ROLE_SECONDARY_CORE)
 			cores |= growth
@@ -70,7 +68,7 @@
 	last_activity = world.time
 	return TRUE
 
-/datum/neoblob_cluster/proc/unregister_growth(var/obj/effect/neoblob/growth)
+/datum/neoblob_cluster/proc/unregister_growth(var/obj/structure/neoblob/growth)
 	if(!growth)
 		return FALSE
 	growths -= growth
@@ -105,34 +103,9 @@
 	if(destroying_cluster)
 		return FALSE
 	destroying_cluster = TRUE
-	destroyed = TRUE
-	core = null
-	if(growths)
-		for(var/obj/effect/neoblob/growth in growths.Copy())
-			if(!growth || QDELETED(growth))
-				continue
-			if(growth.cluster == src)
-				growth.cluster = null
-			qdel(growth)
-		growths.Cut()
-	if(cores)
-		cores.Cut()
-	if(nodes)
-		nodes.Cut()
-	if(factories)
-		factories.Cut()
-	if(resources)
-		resources.Cut()
-	if(minions)
-		minions.Cut()
+	if(!QDELETED(core))
+		qdel(core)
 	qdel(src)
-	return TRUE
-
-/datum/neoblob_cluster/proc/on_core_destroyed(var/obj/effect/neoblob/core/dead_core)
-	if(dead_core != core)
-		return
-	destroyed = TRUE
-	core = null
 
 /datum/neoblob_cluster/proc/toggle_expansion_paused()
 	expansion_paused = !expansion_paused

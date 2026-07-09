@@ -23,7 +23,7 @@
 
 		log_and_message_admins("Astroclast spawned at \the [get_area(T)]", location = T)
 		// Spawn the astroclast in.
-		var/obj/effect/neoblob/core/astroclast = new /obj/effect/neoblob/core(T)
+		var/obj/structure/neoblob/core/astroclast = new /obj/structure/neoblob/core/astroclast(T)
 
 		// Astroclasts receive a burst of growth from the moment they spawn!
 		for(var/int = 1 to rand(3, 4))

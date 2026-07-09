@@ -8,11 +8,11 @@
 	faction = "astroclast"
 	attack_weapon = "astroclast tendril"
 
-	mass_path = /obj/effect/neoblob/astroclast
-	core_path = /obj/effect/neoblob/astroclast/core
-	secondary_core_path = /obj/effect/neoblob/astroclast/core/secondary
-	shield_path = /obj/effect/neoblob/astroclast/shield
-	ravaging_path = /obj/effect/neoblob/astroclast/ravaging
+	mass_path = /obj/structure/neoblob/astroclast
+	core_path = /obj/structure/neoblob/core/astroclast
+	secondary_core_path = /obj/structure/neoblob/core/secondary/astroclast
+	shield_path = /obj/structure/neoblob/shield/astroclast
+	ravaging_path = /obj/structure/neoblob/ravaging/astroclast
 
 	mass_name = "pulsating mass"
 	mass_desc = "A pulsating mass of interwoven tendrils."
@@ -26,21 +26,21 @@
 	ravaging_desc = "A mass of interwoven tendrils. They thrash around haphazardly at anything in reach."
 
 // Object defines
-/obj/effect/neoblob/astroclast
+/obj/structure/neoblob/astroclast
 
-/obj/effect/neoblob/astroclast/core
+/obj/structure/neoblob/core/astroclast
 
-/obj/effect/neoblob/astroclast/core/secondary
+/obj/structure/neoblob/core/secondary/astroclast
 
-/obj/effect/neoblob/astroclast/shield
+/obj/structure/neoblob/shield/astroclast
 
-/obj/effect/neoblob/astroclast/ravaging
+/obj/structure/neoblob/ravaging/astroclast
 
-/datum/neoblob_type/astroclast/attack_msg(var/obj/effect/neoblob/growth, var/atom/target)
+/datum/neoblob_type/astroclast/attack_msg(var/obj/structure/neoblob/growth, var/atom/target)
 	target.visible_message(SPAN_WARNING("A tendril flies out from \the [growth] and smashes into \the [target]!"), SPAN_DANGER("A tendril flies out from \the [growth] and smashes into you!"))
 	playsound(get_turf(growth), 'sound/effects/attackblob.ogg', 50, TRUE)
 
-/datum/neoblob_type/astroclast/can_expand_to(var/obj/effect/neoblob/growth, var/turf/target)
+/datum/neoblob_type/astroclast/can_expand_to(var/obj/structure/neoblob/growth, var/turf/target)
 	if(!target)
 		return FALSE
 	if(istype(target, /turf/space) || (istype(target, /turf/simulated/mineral) && target.density))
@@ -49,14 +49,15 @@
 		return FALSE
 	return TRUE
 
-/datum/neoblob_type/astroclast/on_blocked_turf(var/obj/effect/neoblob/growth, var/turf/target)
+/datum/neoblob_type/astroclast/on_blocked_turf(var/obj/structure/neoblob/growth, var/turf/target)
 	if(istype(target, /turf/simulated/wall))
 		var/turf/simulated/wall/SW = target
 		SW.add_damage(rand(60, 120))
 		return TRUE
 	return FALSE
 
-/datum/neoblob_type/astroclast/on_contact_atom(var/obj/effect/neoblob/growth, var/atom/target)
+// NEOBLOB_TODO - not sure the best way to store this behavior yet. hivebots are going to be this destructive... but in different ways. maybe bite the bullet and duplicate a bunch of logic.
+/datum/neoblob_type/astroclast/on_contact_atom(var/obj/structure/neoblob/growth, var/atom/target)
 	var/turf/target_turf = get_turf(target)
 	if(!target_turf)
 		return FALSE

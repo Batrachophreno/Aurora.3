@@ -5,7 +5,7 @@
 			continue
 		var/datum/neoblob_type/neoblob_type = type_path
 		var/core_path = initial(neoblob_type.core_path)
-		if(!ispath(core_path, /obj/effect/neoblob/core))
+		if(!ispath(core_path, /obj/structure/neoblob/core))
 			continue
 		spawnable_types += type_path
 	return spawnable_types
@@ -18,11 +18,11 @@
 
 	var/datum/neoblob_type/neoblob_type = new neoblob_type_path()
 	var/core_path = neoblob_type.core_path
-	if(!ispath(core_path, /obj/effect/neoblob/core))
+	if(!ispath(core_path, /obj/structure/neoblob/core))
 		qdel(neoblob_type)
 		return null
 
-	var/obj/effect/neoblob/core/spawned_core = new core_path(spawn_turf, null, neoblob_type)
+	var/obj/structure/neoblob/core/spawned_core = new core_path(spawn_turf, null, neoblob_type)
 	return spawned_core
 
 /client/proc/spawn_neoblob()
@@ -47,7 +47,7 @@
 		to_chat(src, SPAN_WARNING("Unable to find a valid turf to spawn the neoblob."))
 		return
 
-	var/obj/effect/neoblob/core/spawned_core = spawn_neoblob_type_at_turf(spawn_turf, neoblob_type_path)
+	var/obj/structure/neoblob/core/spawned_core = spawn_neoblob_type_at_turf(spawn_turf, neoblob_type_path)
 	if(!spawned_core)
 		to_chat(src, SPAN_WARNING("Failed to spawn [neoblob_type_path]."))
 		return
@@ -65,7 +65,7 @@
 
 	var/list/cluster_choices = list()
 	var/list/cluster_by_choice = list()
-	for(var/obj/effect/neoblob/core/master_core in world)
+	for(var/obj/structure/neoblob/core/master_core in world)
 		if(master_core.neoblob_role != NEOBLOB_ROLE_CORE)
 			continue
 		if(!master_core.cluster || QDELETED(master_core.cluster))
