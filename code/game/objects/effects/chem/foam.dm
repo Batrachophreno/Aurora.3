@@ -144,21 +144,22 @@
 /obj/structure/foamedmetal
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "metalfoam"
-	density = 1
-	opacity = 1 // changed in New()
-	anchored = 1
+	density = TRUE
+	opacity = TRUE // changed in New()
+	anchored = TRUE
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	var/metal = 1 // 1 = aluminum, 2 = iron
+	should_use_health = TRUE
 
 /obj/structure/foamedmetal/New()
 	..()
 	update_nearby_tiles(1)
 
 /obj/structure/foamedmetal/Destroy()
-	density = 0
+	density = FALSE
 	update_nearby_tiles(1)
-	set_opacity(0)
+	set_opacity(FALSE)
 	return ..()
 
 /obj/structure/foamedmetal/update_icon()

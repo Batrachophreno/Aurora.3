@@ -8,6 +8,8 @@
 /atom/var/hitsound
 /// The sound played when this object is destroyed.
 /atom/var/destroy_sound
+/// The atom should use the health system, but it should not be destroyed when health reaches 0. This is useful for things like the cult crystal, which has a health system but does not get destroyed when it reaches 0 health.
+/atom/var/override_death = FALSE
 
 /**
  * This proc is called to add damage to an atom. If there is no health left, it calls on_death().
@@ -54,6 +56,8 @@
 /atom/proc/on_death(damage, damage_flags, damage_type, armor_penetration, obj/weapon)
 	if(!should_use_health)
 		return FALSE
+	if(override_death)
+		return TRUE
 	qdel(src)
 
 /**

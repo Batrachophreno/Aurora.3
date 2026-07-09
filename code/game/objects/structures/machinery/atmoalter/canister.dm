@@ -6,6 +6,8 @@
 	density = TRUE
 	light_system = MOVABLE_LIGHT
 	maxhealth = OBJECT_HEALTH_LOW
+	/// On 'death', we don't actually qdel the canister- it does custom stuff.
+	override_death = TRUE
 	obj_flags = OBJ_FLAG_SIGNALER | OBJ_FLAG_CONDUCTABLE
 	w_class = WEIGHT_CLASS_HUGE
 
