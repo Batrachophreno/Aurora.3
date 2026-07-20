@@ -64,3 +64,10 @@
 	your personal chemical warfare. Make sure the wind blows in the right direction, and wear the appropriate PPEs."
 	telecrystal_cost = 5
 	path = /obj/structure/machinery/portable_atmospherics/canister/chlorine/antag
+
+/datum/uplink_item/item/bioweapons/golemjuice
+	name = "Bluespace Sapio-Inducer"
+	desc = "A kit containing a single vial of highly experimental, phoron-based Bluespace-adjacent complex organics. Someone with a little technical know-how could probably make some crude servants out of this."
+	telecrystal_cost = 4
+	bluecrystal_cost = 4
+	path = /obj/item/storage/box/syndie_kit/golem

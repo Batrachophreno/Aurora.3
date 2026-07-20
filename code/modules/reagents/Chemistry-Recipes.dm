@@ -1592,13 +1592,13 @@
 
 //Adamantine
 /datum/chemical_reaction/slime/golem
-	name = "Slime Golem"
+	name = "Slime Eigenform"
 	id = "m_golem"
 	result = null
-	required_reagents = list(/singleton/reagent/toxin/phoron = 5)
+	required_reagents = list(/singleton/reagent/toxin/phoron/golemjuice = 5)
 	result_amount = 1
 	required = /obj/item/slime_extract/adamantine
-	mix_message = "A soft fizzle is heard within the slime extract, and mystic runes suddenly appear on the floor beneath it!"
+	mix_message = "A soft fizzle is heard within the slime extract, a runny condensate forming into complex geometrical shapes around it!"
 
 /datum/chemical_reaction/slime/golem/on_reaction(var/datum/reagents/holder)
 	..()

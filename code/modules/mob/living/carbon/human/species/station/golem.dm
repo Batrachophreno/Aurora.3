@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 /datum/species/golem
 	name = SPECIES_GOLEM_COAL
 	short_name = "gol"
-	name_plural = "coal golems"
+	name_plural = "coal eigenforms"
 
 	icobase = 'icons/mob/human_races/golem/r_coal.dmi'
 	deform = 'icons/mob/human_races/golem/r_coal.dmi'
@@ -107,14 +107,14 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/handle_post_spawn(var/mob/living/carbon/human/H)
 	if(H.mind)
-		H.mind.assigned_role = "Golem"
-		H.mind.special_role = "Golem"
+		H.mind.assigned_role = "Eigenform"
+		H.mind.special_role = "Eigenform"
 	H.gender = NEUTER
 	..()
 
 /datum/species/golem/get_random_name()
 	var/static/list/golem_descriptors = list("Lumbering", "Ponderous", "Slow", "Rumbling", "Sleek", "Solid", "Ephemeral", "Dense", "Shimmering", "Dull", "Glittering", "Shining", "Sluggish", "Quiet", "Ominious", "Lightweight", "Weighty", "Honest", "Watchful", "Short", "Tall", "Mysterious", "Curious", "Dimwitted")
-	return "[pick(golem_descriptors)] [golem_designation] Golem"
+	return "[pick(golem_descriptors)] [golem_designation] Eigenform"
 
 /datum/species/golem/handle_death(var/mob/living/carbon/human/H)
 	if(turn_into_materials)
@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/iron
 	name = SPECIES_GOLEM_IRON
-	name_plural = "iron golems"
+	name_plural = "iron eigenforms"
 
 	siemens_coefficient = 1.2
 
@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 /datum/species/golem/bronze
 	name = SPECIES_GOLEM_BRONZE
 	short_name = null
-	name_plural = "bronze golems"
+	name_plural = "bronze eigenforms"
 
 	icobase = 'icons/mob/human_races/golem/r_bronze.dmi'
 	deform = 'icons/mob/human_races/golem/r_bronze.dmi'
@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/steel
 	name = SPECIES_GOLEM_STEEL
-	name_plural = "steel golems"
+	name_plural = "steel eigenforms"
 
 	siemens_coefficient = 1.3
 
@@ -231,7 +231,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/plasteel
 	name = SPECIES_GOLEM_PLASTEEL
-	name_plural = "plasteel golems"
+	name_plural = "plasteel eigenforms"
 
 	siemens_coefficient = 1.2
 
@@ -271,7 +271,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/titanium
 	name = SPECIES_GOLEM_TITANIUM
-	name_plural = "titanium golems"
+	name_plural = "titanium eigenforms"
 
 	siemens_coefficient = 0.5
 
@@ -313,7 +313,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 /datum/species/golem/cloth
 	name = SPECIES_GOLEM_CLOTH
 	short_name = null
-	name_plural = "cloth golems"
+	name_plural = "cloth eigenforms"
 
 	icobase = 'icons/mob/human_races/golem/r_cloth.dmi'
 	deform = 'icons/mob/human_races/golem/r_cloth.dmi'
@@ -340,7 +340,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/cardboard
 	name = SPECIES_GOLEM_CARDBOARD
-	name_plural = "cardboard golems"
+	name_plural = "cardboard eigenforms"
 
 	icobase = 'icons/mob/human_races/golem/r_cardboard.dmi'
 	deform = 'icons/mob/human_races/golem/r_cardboard.dmi'
@@ -365,7 +365,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/glass
 	name = SPECIES_GOLEM_GLASS
-	name_plural = "glass golems"
+	name_plural = "glass eigenforms"
 
 	fall_mod = 2
 
@@ -425,7 +425,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/phoron
 	name = SPECIES_GOLEM_PHORON
-	name_plural = "phoron golems"
+	name_plural = "phoron eigenforms"
 
 	brute_mod = 1
 	burn_mod = 2
@@ -462,7 +462,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/silver
 	name = SPECIES_GOLEM_SILVER
-	name_plural = "silver golems"
+	name_plural = "silver eigenforms"
 
 	siemens_coefficient = 2.5
 
@@ -489,7 +489,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/gold
 	name = SPECIES_GOLEM_GOLD
-	name_plural = "gold golems"
+	name_plural = "gold eigenforms"
 
 	siemens_coefficient = 2
 
@@ -516,7 +516,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/mhydrogen
 	name = SPECIES_GOLEM_HYDROGEN
-	name_plural = "metallic hydrogen golems"
+	name_plural = "metallic hydrogen eigenforms"
 
 	siemens_coefficient = 3
 
@@ -547,7 +547,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/wood
 	name = SPECIES_GOLEM_WOOD
-	name_plural = "wood golems"
+	name_plural = "wood eigenforms"
 
 	icobase = 'icons/mob/human_races/golem/r_wood.dmi'
 	deform = 'icons/mob/human_races/golem/r_wood.dmi'
@@ -572,7 +572,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/diamond
 	name = SPECIES_GOLEM_DIAMOND
-	name_plural = "diamond golems"
+	name_plural = "diamond eigenforms"
 
 	siemens_coefficient = 0
 
@@ -618,7 +618,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/marble
 	name = SPECIES_GOLEM_MARBLE
-	name_plural = "marble golems"
+	name_plural = "marble eigenforms"
 
 	siemens_coefficient = 0.3
 
@@ -648,7 +648,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/sand
 	name = SPECIES_GOLEM_SAND
-	name_plural = "sand golems"
+	name_plural = "sand eigenforms"
 
 	siemens_coefficient = 0.2
 
@@ -701,7 +701,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/plastic
 	name = SPECIES_GOLEM_PLASTIC
-	name_plural = "plastic golems"
+	name_plural = "plastic eigenforms"
 
 	siemens_coefficient = 0.4
 
@@ -731,7 +731,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 
 /datum/species/golem/uranium
 	name = SPECIES_GOLEM_URANIUM
-	name_plural = "uranium golems"
+	name_plural = "uranium eigenforms"
 
 	siemens_coefficient = 1.3
 
@@ -834,7 +834,7 @@ GLOBAL_LIST_INIT(golem_types, list(
 /datum/species/golem/adamantine
 	name = SPECIES_GOLEM_ADAMANTINE
 	short_name = "ada"
-	name_plural = "adamantine golems"
+	name_plural = "adamantine eigenforms"
 
 	icobase = 'icons/mob/human_races/r_golem.dmi'
 	deform = 'icons/mob/human_races/r_golem.dmi'

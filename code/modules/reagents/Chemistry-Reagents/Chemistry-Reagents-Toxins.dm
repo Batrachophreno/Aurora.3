@@ -204,6 +204,11 @@
 	T.assume_gas(GAS_PHORON, amount, T20C)
 	remove_self(amount, holder)
 
+/singleton/reagent/toxin/phoron/golemjuice
+	name = "Exotic Organic Phoronics"
+	description = "A highly illegal and dubiously sensical admixture of phoron-doped complex organics. One could do remarkable things with this and the right supplies."
+	color = "#9D14DB"
+
 /singleton/reagent/toxin/cardox
 	name = "Cardox"
 	description = "Cardox is a mildly toxic, expensive, NanoTrasen designed cleaner intended to eliminate liquid phoron stains from suits."

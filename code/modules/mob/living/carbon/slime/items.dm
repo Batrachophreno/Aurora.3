@@ -1,6 +1,6 @@
 /obj/item/slime_extract
 	name = "slime extract"
-	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
+	desc = "Goo extracted from a slime. Highly divisive in the scientific world, they have properties and behaviors that run adjunct to the strange subdomains of Bluespace research."
 	icon = 'icons/mob/npc/slimes.dmi'
 	icon_state = "grey slime extract"
 	force = 1
@@ -286,19 +286,19 @@
 	icon_state = "golem"
 	unacidable = TRUE
 	layer = TURF_LAYER
-	var/golem_type = "Adamantine Golem"
+	var/golem_type = "Adamantine Eigenform"
 
 /obj/effect/golemrune/Initialize()
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
-	SSghostroles.add_spawn_atom("golem", src)
+	SSghostroles.add_spawn_atom("eigenform", src)
 
 /obj/effect/golemrune/random_type/Initialize()
 	. = ..()
 	golem_type = pick(GLOB.golem_types)
 
 /obj/effect/golemrune/Destroy()
-	SSghostroles.remove_spawn_atom("golem", src)
+	SSghostroles.remove_spawn_atom("eigenform", src)
 	return ..()
 
 /obj/effect/golemrune/process()
@@ -338,7 +338,7 @@
 	G.preEquipOutfit(/obj/outfit/admin/golem, FALSE)
 	G.equipOutfit(/obj/outfit/admin/golem, FALSE)
 	G.client.init_verbs()
-	to_chat(G, SPAN_NOTICE("You are a golem. Serve your master, and assist them in completing their goals at any cost."))
+	to_chat(G, SPAN_NOTICE("You are an eigenform. Serve your master, and assist them in completing their goals at any cost."))
 
 	qdel(src)
 

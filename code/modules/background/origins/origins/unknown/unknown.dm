@@ -13,15 +13,15 @@
 	possible_religions = list(RELIGION_NONE)
 
 /singleton/origin_item/culture/golem
-	name = "Golem"
-	desc = "You are a Golem."
+	name = "Eigenform"
+	desc = "You are an Eigenform."
 	possible_origins = list(
 		/singleton/origin_item/origin/unknown
 	)
 
 /singleton/origin_item/origin/golem
-	name = "Golem"
-	desc = "You're a Golem."
+	name = "Eigenform"
+	desc = "You're an Eigenform."
 	possible_accents = list(ACCENT_BLUESPACE)
 	possible_citizenships = list(CITIZENSHIP_NONE)
 	possible_religions = list(RELIGION_NONE)

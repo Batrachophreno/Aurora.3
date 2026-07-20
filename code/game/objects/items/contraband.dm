@@ -190,3 +190,13 @@
 			qdel(src)
 		return TRUE
 	return ..()
+
+/obj/item/reagent_containers/glass/beaker/vial/golemjuice
+
+/obj/item/reagent_containers/glass/beaker/vial/golemjuice/Initialize()
+	. = ..()
+	if(is_open_container())
+		atom_flags ^= ATOM_FLAG_OPEN_CONTAINER
+	reagents.add_reagent(/singleton/reagent/toxin/phoron/golemjuice, 5)
+	desc = "<b>BIOHAZARDOUS! - Experimental Bluespace Phoronic Eigenvector.</b> Purchased from <i>SciSupply Eridani</i>, recently incorporated into <i>Zeng-Hu Pharmaceuticals' Keiretsu</i>!"
+	update_icon()
