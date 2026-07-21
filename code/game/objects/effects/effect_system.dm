@@ -118,6 +118,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/smoke/Destroy()
+	animate(src)
 	if(opacity)
 		set_opacity(FALSE)
 	return ..()
@@ -271,6 +272,9 @@ would spawn and follow the beaker, even if it is carried or thrown.
 		direction = direct
 
 /datum/effect/effect/system/smoke_spread/start()
+	if(GLOB.running_create_and_destroy)
+		return
+
 	var/i = 0
 	for(i=0, i<src.number, i++)
 		if(src.total_smoke > 20)

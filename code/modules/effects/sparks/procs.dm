@@ -1,5 +1,7 @@
 // -- Spark Procs --
 /proc/spark(var/atom/movable/loc, var/amount = 1, var/spread_dirs = GLOB.cardinals)
+	if(GLOB.running_create_and_destroy)
+		return
 	new /datum/effect_system/sparks(get_turf(loc), TRUE, amount, spread_dirs)
 
 /proc/bind_spark(var/atom/movable/loc, var/amount = 1, var/spread_dirs = GLOB.cardinals)

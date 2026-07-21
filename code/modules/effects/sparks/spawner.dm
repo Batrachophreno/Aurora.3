@@ -23,6 +23,9 @@
 /datum/effect_system/sparks/process()
 	. = ..()
 
+	if(GLOB.running_create_and_destroy)
+		return
+
 	var/total_sparks = 1
 	if (location)
 		var/obj/effect/visual/sparks/S = new(location, src, 0) //Trigger one on the tile it's on

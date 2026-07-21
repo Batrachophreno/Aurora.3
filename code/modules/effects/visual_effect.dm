@@ -29,5 +29,6 @@
 	return EFFECT_CONTINUE
 
 /obj/effect/visual/Destroy()
+	animate(src)
 	STOP_VISUAL(src)
 	return ..()

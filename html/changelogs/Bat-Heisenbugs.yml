@@ -1,0 +1,4 @@
+author: Batrachophrenoboocosmomachia
+delete-after: True
+changes:
+  - bugfix: "Adds extra safeties to visual effect spawners, changes process() behavior to remove unit test heisenbugs."

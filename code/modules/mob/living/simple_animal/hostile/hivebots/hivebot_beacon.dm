@@ -113,7 +113,7 @@
 		total_hivebots_to_spawn = total_hivebots_to_spawn + (length(GLOB.player_list) * total_hivebots_to_spawn_to_playing_players_scaling_factor)
 		maximum_linked_and_alive_hivebots = maximum_linked_and_alive_hivebots + (length(GLOB.player_list) * maximum_linked_and_alive_hivebots_to_playing_players_scaling_factor)
 
-	if(!mapload)
+	if(!mapload && !GLOB.running_create_and_destroy)
 		var/datum/effect/effect/system/smoke_spread/S = new /datum/effect/effect/system/smoke_spread()
 		S.set_up(5, 0, src.loc)
 		S.start()
@@ -123,7 +123,8 @@
 
 	latest_area = get_area(src)
 	icon_state = "hivebotbeacon_off"
-	addtimer(CALLBACK(src, PROC_REF(generate_warp_destinations)), 10) //So we don't sleep during init
+	if(!GLOB.running_create_and_destroy)
+		addtimer(CALLBACK(src, PROC_REF(generate_warp_destinations)), 10) //So we don't sleep during init
 	set_light(6,0.5,LIGHT_COLOR_GREEN)
 
 /mob/living/simple_animal/hostile/hivebotbeacon/Destroy()
@@ -198,8 +199,12 @@
 			visible_message(SPAN_WARNING("[src] suddenly activates!"))
 			icon_state = "hivebotbeacon_raising"
 			sleep(16)
+			if(QDELETED(src) || activated == -1)
+				return
 			icon_state = "hivebotbeacon_active"
 			sleep(4)
+			if(QDELETED(src) || activated == -1)
+				return
 			activated = 1
 			warpbots()
 

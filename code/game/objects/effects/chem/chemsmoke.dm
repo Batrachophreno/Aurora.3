@@ -172,6 +172,9 @@
 // Also calculates target locations to spawn the visual smoke effect on, so the whole area
 // is covered fairly evenly.
 /datum/effect/effect/system/smoke_spread/chem/start()
+	if(GLOB.running_create_and_destroy)
+		return
+
 	if(!location)
 		return
 
@@ -229,6 +232,9 @@
 					spawnSmoke(T, I, duration)
 
 /datum/effect/effect/system/smoke_spread/chem/spores/start()
+	if(GLOB.running_create_and_destroy)
+		return
+
 	..()
 	if(seed && GET_SEED_TRAIT(seed, TRAIT_SPREAD))
 		var/sporecount = 0
