@@ -53,8 +53,9 @@
 	SSarrivals.failreturnnumber = 0
 	launch(SSarrivals)
 
-/datum/shuttle/autodock/ferry/arrival/arrived()
+/datum/shuttle/autodock/ferry/arrival/arrived(var/user)
 	SSarrivals.shuttle_arrived()
+	return ..(user)
 
 /datum/shuttle/autodock/ferry/arrival/proc/forbidden_atoms_check()
 	for(var/area/subarea in shuttle_area)

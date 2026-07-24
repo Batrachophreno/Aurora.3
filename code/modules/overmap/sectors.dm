@@ -176,28 +176,44 @@ GLOBAL_DATUM(map_overmap, /area/overmap)
 
 //If shuttle_name is false, will add to generic waypoints; otherwise will add to restricted. Does not do checks.
 /obj/effect/overmap/visitable/proc/add_landmark(obj/effect/shuttle_landmark/landmark, shuttle_name)
+	if(QDELETED(landmark))
+		return FALSE
 	landmark.sector_set(src, shuttle_name)
 	if(shuttle_name)
-		LAZYADD(restricted_waypoints[shuttle_name], landmark)
+		LAZYDISTINCTADD(restricted_waypoints[shuttle_name], landmark)
 	else
-		generic_waypoints += landmark
+		generic_waypoints |= landmark
+	return TRUE
 
 /obj/effect/overmap/visitable/proc/remove_landmark(obj/effect/shuttle_landmark/landmark, shuttle_name)
 	if(shuttle_name)
 		var/list/shuttles = restricted_waypoints[shuttle_name]
 		LAZYREMOVE(shuttles, landmark)
+		if(!length(shuttles))
+			restricted_waypoints -= shuttle_name
 	else
 		generic_waypoints -= landmark
+	if(!QDELETED(landmark))
+		landmark.sector_unset(src)
 
 /obj/effect/overmap/visitable/proc/get_waypoints(var/shuttle_name)
 	. = list()
 	for(var/obj/effect/overmap/visitable/contained in src)
 		. += contained.get_waypoints(shuttle_name)
-	for(var/thing in generic_waypoints)
+	for(var/obj/effect/shuttle_landmark/thing as anything in generic_waypoints.Copy())
+		if(QDELETED(thing))
+			generic_waypoints -= thing
+			continue
 		.[thing] = name
 	if(shuttle_name in restricted_waypoints)
-		for(var/thing in restricted_waypoints[shuttle_name])
+		var/list/shuttle_waypoints = restricted_waypoints[shuttle_name]
+		for(var/obj/effect/shuttle_landmark/thing as anything in shuttle_waypoints.Copy())
+			if(QDELETED(thing))
+				shuttle_waypoints -= thing
+				continue
 			.[thing] = name
+		if(!length(shuttle_waypoints))
+			restricted_waypoints -= shuttle_name
 
 /obj/effect/overmap/visitable/proc/generate_skybox()
 	return

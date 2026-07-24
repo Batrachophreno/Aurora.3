@@ -3,7 +3,7 @@
 // Multiz shuttles currently not supported. Non-autodock shuttles currently not supported.
 
 /obj/effect/overmap/visitable/ship/landable
-	var/shuttle                                         // Name of associated shuttle. Must be autodock.
+	var/shuttle                                         // Immutable ID of associated shuttle. Must be autodock.
 	var/obj/effect/shuttle_landmark/ship/landmark       // Record our open space landmark for easy reference.
 	var/multiz = 0										// Index of multi-z levels, starts at 0
 	var/status = SHIP_STATUS_LANDED
@@ -107,7 +107,7 @@
 	landmark_tag = "ship"
 	landmark_flags = SLANDMARK_FLAG_AUTOSET | SLANDMARK_FLAG_ZERO_G
 	base_turf = /turf/space
-	var/shuttle_name
+	var/shuttle_name // Immutable shuttle ID; legacy variable name retained for map compatibility.
 	var/list/visitors // landmark -> visiting shuttle stationed there
 
 /obj/effect/shuttle_landmark/ship/Initialize(mapload, shuttle_name)

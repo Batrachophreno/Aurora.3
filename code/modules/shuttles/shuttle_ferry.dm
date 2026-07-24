@@ -28,13 +28,15 @@
 		return waypoint_station
 	return waypoint_offsite
 
-/datum/shuttle/autodock/ferry/short_jump(var/destination)
-	direction = !location
-	..()
+/datum/shuttle/autodock/ferry/short_jump(var/destination, datum/callback/completion_callback)
+	. = ..(destination, completion_callback)
+	if(.)
+		direction = !location
 
-/datum/shuttle/autodock/ferry/long_jump(var/obj/effect/shuttle_landmark/destination, var/obj/effect/shuttle_landmark/interim, var/travel_time)
-	direction = !location
-	..()
+/datum/shuttle/autodock/ferry/long_jump(var/obj/effect/shuttle_landmark/destination, var/obj/effect/shuttle_landmark/interim, var/travel_time, datum/callback/completion_callback)
+	. = ..(destination, interim, travel_time, completion_callback)
+	if(.)
+		direction = !location
 
 /datum/shuttle/autodock/ferry/shuttle_moved()
 	..()

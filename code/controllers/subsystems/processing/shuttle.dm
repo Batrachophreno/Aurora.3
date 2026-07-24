@@ -11,7 +11,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	/// Map of shuttle landmark `landmark_tag` to the actual landmark object.
 	var/list/registered_shuttle_landmarks = list()
-	var/last_landmark_registration_time
+	/// Monotonic cache invalidation generation, incremented for every registry mutation.
+	var/landmark_registry_generation = 0
 	var/list/docking_registry = list()           //Docking controller tag -> docking controller program, mostly for init purposes.
 	var/list/shuttle_areas = list()              //All the areas of all shuttles.
 
@@ -32,7 +33,6 @@ SUBSYSTEM_DEF(shuttle)
 	var/obj/effect/landmark/destination_helper/cargo_elevator/cargo_dest_helper
 
 /datum/controller/subsystem/shuttle/Initialize()
-	last_landmark_registration_time = world.time
 	for(var/shuttle_type in subtypesof(/datum/shuttle)) // This accounts for most shuttles, though away maps can queue up more.
 		var/datum/shuttle/shuttle = shuttle_type
 		if(!(shuttle in SSatlas.current_map.map_shuttles))
@@ -51,6 +51,9 @@ SUBSYSTEM_DEF(shuttle)
 	while(working_shuttles.len)
 		var/datum/shuttle/shuttle = working_shuttles[working_shuttles.len]
 		working_shuttles.len--
+		if(QDELETED(shuttle))
+			process_shuttles -= shuttle
+			continue
 		if(shuttle.process_state && (shuttle.process() == PROCESS_KILL))
 			process_shuttles -= shuttle
 
@@ -94,11 +97,14 @@ SUBSYSTEM_DEF(shuttle)
 	sectors_to_initialize = null
 
 /datum/controller/subsystem/shuttle/proc/register_landmark(shuttle_landmark_tag, obj/effect/shuttle_landmark/shuttle_landmark)
-	if (registered_shuttle_landmarks[shuttle_landmark_tag])
+	var/obj/effect/shuttle_landmark/existing_landmark = registered_shuttle_landmarks[shuttle_landmark_tag]
+	if(QDELETED(existing_landmark))
+		unregister_landmark(shuttle_landmark_tag, existing_landmark)
+	else if(existing_landmark)
 		CRASH("Attempted to register shuttle landmark with tag [shuttle_landmark_tag], but it is already registered!")
-	if (istype(shuttle_landmark))
+	if(istype(shuttle_landmark) && !QDELETED(shuttle_landmark))
 		registered_shuttle_landmarks[shuttle_landmark_tag] = shuttle_landmark
-		last_landmark_registration_time = world.time
+		landmark_registry_generation++
 
 		var/obj/effect/overmap/visitable/O = landmarks_still_needed[shuttle_landmark_tag]
 		if(O) //These need to be added to sectors, which we handle.
@@ -111,12 +117,25 @@ SUBSYSTEM_DEF(shuttle)
 			else
 				landmarks_awaiting_sector += shuttle_landmark
 
+/datum/controller/subsystem/shuttle/proc/unregister_landmark(shuttle_landmark_tag, obj/effect/shuttle_landmark/shuttle_landmark)
+	if(registered_shuttle_landmarks[shuttle_landmark_tag] != shuttle_landmark)
+		return FALSE
+	registered_shuttle_landmarks -= shuttle_landmark_tag
+	landmark_registry_generation++
+	return TRUE
+
 /datum/controller/subsystem/shuttle/proc/get_landmark(var/shuttle_landmark_tag)
-	return registered_shuttle_landmarks[shuttle_landmark_tag]
+	var/obj/effect/shuttle_landmark/shuttle_landmark = registered_shuttle_landmarks[shuttle_landmark_tag]
+	if(QDELETED(shuttle_landmark))
+		unregister_landmark(shuttle_landmark_tag, shuttle_landmark)
+		return null
+	return shuttle_landmark
 
 //Checks if the given sector's landmarks have initialized; if so, registers them with the sector, if not, marks them for assignment after they come in.
 //Also adds automatic landmarks that were waiting on their sector to spawn.
 /datum/controller/subsystem/shuttle/proc/initialize_sector(obj/effect/overmap/visitable/given_sector)
+	if(QDELETED(given_sector))
+		return
 	given_sector.populate_sector_objects() // This is a late init operation that sets up the sector's map_z and does non-overmap-related init tasks.
 
 	for(var/landmark_tag in given_sector.initial_generic_waypoints)
@@ -131,6 +150,9 @@ SUBSYSTEM_DEF(shuttle)
 	var/landmarks_to_check = landmarks_awaiting_sector.Copy()
 	for(var/thing in landmarks_to_check)
 		var/obj/effect/shuttle_landmark/automatic/landmark = thing
+		if(QDELETED(landmark))
+			landmarks_awaiting_sector -= landmark
+			continue
 		if(landmark.z in given_sector.map_z)
 			given_sector.add_landmark(landmark, landmark.shuttle_restricted)
 			landmarks_awaiting_sector -= landmark
@@ -138,6 +160,8 @@ SUBSYSTEM_DEF(shuttle)
 	initialized_sectors |= given_sector
 
 /datum/controller/subsystem/shuttle/proc/try_add_landmark_tag(landmark_tag, obj/effect/overmap/visitable/given_sector)
+	if(QDELETED(given_sector))
+		return FALSE
 	var/obj/effect/shuttle_landmark/landmark = get_landmark(landmark_tag)
 	if(!landmark)
 		return FALSE

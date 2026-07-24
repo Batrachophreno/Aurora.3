@@ -3,21 +3,23 @@
 	/// Can contain nested lists, as it is flattened before use.
 	var/list/destination_tags
 	var/list/destinations_cache = list()
-	var/last_cache_rebuild_time = 0
+	var/last_cache_rebuild_generation = -1
 	category = /datum/shuttle/autodock/multi
 
 /datum/shuttle/autodock/multi/proc/set_destination(var/destination_key, mob/user)
-	if(moving_status != SHUTTLE_IDLE)
+	if(moving_status != SHUTTLE_IDLE || process_state != IDLE_STATE || in_use)
 		return
-	next_location = destinations_cache[destination_key]
+	var/obj/effect/shuttle_landmark/destination = destinations_cache[destination_key]
+	if(destination && !QDELETED(destination))
+		next_location = destination
 
 /datum/shuttle/autodock/multi/proc/get_destinations()
-	if (last_cache_rebuild_time < SSshuttle.last_landmark_registration_time)
+	if(last_cache_rebuild_generation != SSshuttle.landmark_registry_generation)
 		build_destinations_cache()
 	return destinations_cache
 
 /datum/shuttle/autodock/multi/proc/build_destinations_cache()
-	last_cache_rebuild_time = world.time
+	last_cache_rebuild_generation = SSshuttle.landmark_registry_generation
 	destinations_cache.Cut()
 	destination_tags = flatten_list(destination_tags)
 	for(var/destination_tag in destination_tags)
@@ -54,16 +56,17 @@
 		announce_departure()
 	..()
 
-/datum/shuttle/autodock/multi/antag/arrived()
+/datum/shuttle/autodock/multi/antag/arrived(var/user)
 	if(current_location == home_waypoint)
 		returned = TRUE
+	return ..(user)
 
 /datum/shuttle/autodock/multi/antag/launch(var/user)
 	if(returned)
 		if(user)
 			to_chat(user, SPAN_WARNING("You don't have enough fuel for another launch!"))
-		return //Nada, can't go back.
-	..(user)
+		return FALSE //Nada, can't go back.
+	return ..(user)
 
 /datum/shuttle/autodock/multi/antag/proc/announce_departure()
 	if(cloaked || isnull(departure_message))

@@ -28,12 +28,18 @@
 	var/area/base_area
 	//Will also leave this type of turf behind if set.
 	var/turf/base_turf
-	//Name of the shuttle, null for generic waypoint
+	//Immutable ID of the shuttle, null for a generic waypoint.
 	var/shuttle_restricted
 	var/landmark_flags = 0
 
 	/// Effects that show where the shuttle will land, to prevent unfair squishing
 	var/list/landing_indicators
+
+	/// Overmap sectors that have registered this landmark as a waypoint.
+	var/list/registered_sectors
+
+	/// Shuttles whose next movement should announce departure from this landmark.
+	var/list/departure_observation_sources
 
 	/// List of ghostspawners to activate on shuttle arrival.
 	/// Arrival, means any shuttle that arrives and calls `shuttle_arrived()`.
@@ -59,6 +65,30 @@
 	SSshuttle.register_landmark(landmark_tag, src)
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/effect/shuttle_landmark/Destroy()
+	clear_landing_indicators()
+
+	SSshuttle.unregister_landmark(landmark_tag, src)
+	SSshuttle.landmarks_awaiting_sector -= src
+
+	for(var/obj/effect/overmap/visitable/sector as anything in registered_sectors)
+		if(QDELETED(sector))
+			continue
+		sector.generic_waypoints -= src
+		for(var/shuttle_name in sector.restricted_waypoints)
+			var/list/waypoints = sector.restricted_waypoints[shuttle_name]
+			waypoints -= src
+			if(!length(waypoints))
+				sector.restricted_waypoints -= shuttle_name
+	registered_sectors = null
+
+	for(var/datum/shuttle/shuttle as anything in departure_observation_sources)
+		GLOB.shuttle_moved_event.unregister(shuttle, src)
+	departure_observation_sources = null
+
+	docking_controller = null
+	. = ..()
+
 /obj/effect/shuttle_landmark/LateInitialize()
 	if(landmark_flags & SLANDMARK_FLAG_AUTOSET)
 		base_area = get_area(src)
@@ -79,22 +109,36 @@
 /obj/effect/shuttle_landmark/forceMove(atom/destination)
 	var/obj/effect/overmap/visitable/map_origin = GLOB.map_sectors["[z]"]
 	. = ..()
+	if(QDELETED(src))
+		return
 	var/obj/effect/overmap/visitable/map_destination = GLOB.map_sectors["[z]"]
 	if(map_origin != map_destination)
-		if(map_origin)
+		if(map_origin && !QDELETED(map_origin))
 			map_origin.remove_landmark(src, shuttle_restricted)
-		if(map_destination)
+		if(map_destination && !QDELETED(map_destination))
 			map_destination.add_landmark(src, shuttle_restricted)
 
 //Called when the landmark is added to an overmap sector.
-/obj/effect/shuttle_landmark/proc/sector_set(var/obj/effect/overmap/visitable/O, shuttle_name)
-	shuttle_restricted = shuttle_name
+/obj/effect/shuttle_landmark/proc/sector_set(var/obj/effect/overmap/visitable/O, shuttle_id)
+	if(QDELETED(src) || QDELETED(O))
+		return
+	LAZYDISTINCTADD(registered_sectors, O)
+	shuttle_restricted = shuttle_id
+
+/obj/effect/shuttle_landmark/proc/sector_unset(var/obj/effect/overmap/visitable/O)
+	LAZYREMOVE(registered_sectors, O)
 
 /obj/effect/shuttle_landmark/proc/is_valid(var/datum/shuttle/shuttle)
+	if(QDELETED(src) || QDELETED(shuttle) || QDELETED(shuttle.current_location))
+		return FALSE
 	if(shuttle.current_location == src)
 		return FALSE
+	var/turf/current_turf = get_turf(shuttle.current_location)
+	var/turf/destination_turf = get_turf(src)
+	if(!current_turf || !destination_turf)
+		return FALSE
 	for(var/area/A in shuttle.shuttle_area)
-		var/list/translation = get_turf_translation(get_turf(shuttle.current_location), get_turf(src), A.contents)
+		var/list/translation = get_turf_translation(current_turf, destination_turf, A.contents)
 		if(check_collision(list_values(translation)))
 			return FALSE
 	var/conn = GetConnectedZlevels(z)
@@ -104,27 +148,40 @@
 	return TRUE
 
 /obj/effect/shuttle_landmark/proc/deploy_landing_indicators(var/datum/shuttle/shuttle)
+	clear_landing_indicators()
+	if(QDELETED(src) || QDELETED(shuttle) || QDELETED(shuttle.current_location))
+		return FALSE
+	var/turf/current_turf = get_turf(shuttle.current_location)
+	var/turf/destination_turf = get_turf(src)
+	if(!current_turf || !destination_turf)
+		return FALSE
 	LAZYINITLIST(landing_indicators)
 	for(var/area/A in shuttle.shuttle_area)
-		var/list/translation = get_turf_translation(get_turf(shuttle.current_location), get_turf(src), A.contents)
+		var/list/translation = get_turf_translation(current_turf, destination_turf, A.contents)
 		for(var/target_turf in list_values(translation))
+			if(!target_turf)
+				clear_landing_indicators()
+				return FALSE
 			landing_indicators += new /obj/effect/shuttle_warning(target_turf)
+	return TRUE
 
 /obj/effect/shuttle_landmark/proc/clear_landing_indicators()
-	QDEL_LIST(landing_indicators) // lazyclear but we delete the effects as well
+	QDEL_NULL_LIST(landing_indicators)
 
 /obj/effect/shuttle_landmark/proc/cannot_depart(datum/shuttle/shuttle)
 	return FALSE
 
 /obj/effect/shuttle_landmark/proc/activate_ghostroles()
-	if(!islist(ghostspawners_to_activate_on_shuttle_arrival))
+	if(QDELETED(src) || !islist(ghostspawners_to_activate_on_shuttle_arrival))
 		return
 	for(var/spawner_name in ghostspawners_to_activate_on_shuttle_arrival)
 		var/datum/ghostspawner/spawner = SSghostroles.spawners[spawner_name]
-		if(istype(spawner))
+		if(istype(spawner) && !QDELETED(spawner))
 			spawner.enable()
 
 /obj/effect/shuttle_landmark/proc/shuttle_arrived(datum/shuttle/shuttle)
+	if(QDELETED(src) || QDELETED(shuttle))
+		return
 	clear_landing_indicators()
 	activate_ghostroles()
 	if(announce_docking)
@@ -135,8 +192,12 @@
 			var/message = "[shuttle.name] has docked at [src.clean_name]."
 			GLOB.global_announcer.autosay(message, "Docking Oversight", announce_channel)
 	GLOB.shuttle_moved_event.register(shuttle, src, PROC_REF(announce_departure))
+	LAZYDISTINCTADD(departure_observation_sources, shuttle)
+	return TRUE
 
 /obj/effect/shuttle_landmark/proc/announce_departure(datum/shuttle/shuttle)
+	if(QDELETED(src))
+		return
 	if(announce_docking)
 		var/datum/shuttle/autodock/multi/antag/antag_shuttle
 		if(istype(shuttle, /datum/shuttle/autodock/multi/antag))
@@ -145,7 +206,15 @@
 			var/message = "[shuttle.name] has undocked from [src.clean_name]."
 			GLOB.global_announcer.autosay(message, "Docking Oversight", announce_channel)
 	GLOB.shuttle_moved_event.unregister(shuttle, src)
+	LAZYREMOVE(departure_observation_sources, shuttle)
 
+/**
+ * Returns TRUE when a shuttle landing footprint is obstructed.
+ *
+ * Mobs and non-dense movables remain subject to the existing landing warning and
+ * squish behavior. Dense objects block landing regardless of anchoring, unless
+ * they explicitly opt into deletion during shuttle movement.
+ */
 /proc/check_collision(list/target_turfs)
 	for(var/target_turf in target_turfs)
 		var/turf/target = target_turf
@@ -163,6 +232,13 @@
 		if(target.density)
 			return TRUE //dense turf
 
+		for(var/obj/obstacle in target)
+			if(QDELETED(obstacle) || !obstacle.density)
+				continue
+			if(obstacle.movable_flags & MOVABLE_FLAG_DEL_SHUTTLE)
+				continue
+			return TRUE //dense object without an explicit shuttle-deletion policy
+
 	return FALSE
 
 //Self-naming/numbering ones.
@@ -175,21 +251,21 @@
 	landmark_tag += "-[x]-[y]-[z]"
 	return ..()
 
-/obj/effect/shuttle_landmark/automatic/sector_set(var/obj/effect/overmap/visitable/O)
-	..()
+/obj/effect/shuttle_landmark/automatic/sector_set(var/obj/effect/overmap/visitable/O, shuttle_id)
+	..(O, shuttle_id)
 	name = "[initial(name)] ([x],[y])"
 
 //Subtypes for exclusively Horizon shuttles
-/obj/effect/shuttle_landmark/automatic/intrepid/sector_set(var/obj/effect/overmap/visitable/O)
-	..()
+/obj/effect/shuttle_landmark/automatic/intrepid/sector_set(var/obj/effect/overmap/visitable/O, shuttle_id)
+	..(O, shuttle_id)
 	name = "SCCV Intrepid Landing Beacon ([x],[y])"
 
-/obj/effect/shuttle_landmark/automatic/spark/sector_set(var/obj/effect/overmap/visitable/O)
-	..()
+/obj/effect/shuttle_landmark/automatic/spark/sector_set(var/obj/effect/overmap/visitable/O, shuttle_id)
+	..(O, shuttle_id)
 	name = "SCCV Spark Landing Beacon ([x],[y])"
 
-/obj/effect/shuttle_landmark/automatic/canary/sector_set(var/obj/effect/overmap/visitable/O)
-	..()
+/obj/effect/shuttle_landmark/automatic/canary/sector_set(var/obj/effect/overmap/visitable/O, shuttle_id)
+	..(O, shuttle_id)
 	name = "SCCV Canary Landing Beacon ([x],[y])"
 
 //Subtype that calls explosion on init to clear space for shuttles
@@ -311,6 +387,8 @@
 	. = ..()
 
 /obj/effect/shuttle_landmark/automatic/spaceflare/proc/update_beacon_moved(atom/movable/moving_instance, atom/old_loc, atom/new_loc)
+	if(QDELETED(src) || QDELETED(beacon))
+		return
 	if(!isturf(new_loc) || isspaceturf(new_loc) || isopenturf(new_loc))
 		stack_trace("\A [src]'s beacon was moved to a non-turf or unacceptable location.")
 		beacon.deactivate()
@@ -321,16 +399,27 @@
 //This one activates away site ghostroles on the z-level.
 /obj/effect/shuttle_landmark/automatic/ghostrole_activation
 	var/triggered_away_sites = FALSE
-	var/landmark_position
 
 /obj/effect/shuttle_landmark/automatic/ghostrole_activation/shuttle_arrived(datum/shuttle/shuttle)
 	. = ..()
-	if(!triggered_away_sites && !is_station_level(loc.z))
-		for(var/s in SSghostroles.spawners)
-			var/datum/ghostspawner/G = SSghostroles.spawners[s]
-			for(var/obj/effect/ghostspawpoint/L in SSghostroles.spawnpoints[s])
-				landmark_position = L.loc.z
-			if(landmark_position == src.loc.z)
-				if(!(G.enabled))
-					G.enable()
+	if(!.)
+		return
+	var/turf/destination_turf = get_turf(src)
+	if(!destination_turf)
+		return
+	if(!triggered_away_sites && !is_station_level(destination_turf.z))
+		for(var/spawner_name in SSghostroles.spawners)
+			var/datum/ghostspawner/spawner = SSghostroles.spawners[spawner_name]
+			if(!istype(spawner) || QDELETED(spawner) || spawner.enabled)
+				continue
+			var/has_matching_spawnpoint = FALSE
+			for(var/obj/effect/ghostspawpoint/spawnpoint in SSghostroles.spawnpoints[spawner_name])
+				if(QDELETED(spawnpoint))
+					continue
+				var/turf/spawn_turf = get_turf(spawnpoint)
+				if(spawn_turf?.z == destination_turf.z)
+					has_matching_spawnpoint = TRUE
+					break
+			if(has_matching_spawnpoint)
+				spawner.enable()
 		triggered_away_sites = TRUE

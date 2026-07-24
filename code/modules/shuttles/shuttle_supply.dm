@@ -85,58 +85,64 @@
 	NW.forceMove(locate(target_dest_x, target_dest_y, target_dest_z))
 	NE.forceMove(locate(target_dest_x + SHAFT_WIDTH, target_dest_y, target_dest_z))
 
-/datum/shuttle/autodock/ferry/supply/short_jump(var/area/destination)
-	if(moving_status != SHUTTLE_IDLE)
-		return
-
+/datum/shuttle/autodock/ferry/supply/short_jump(var/obj/effect/shuttle_landmark/destination, datum/callback/completion_callback)
 	if(isnull(location))
+		return FALSE
+
+	var/generation = begin_movement(destination, null, completion_callback)
+	if(!generation)
+		return FALSE
+	direction = !location
+	warmup_timer = addtimer(CALLBACK(src, PROC_REF(complete_supply_jump), generation, destination), warmup_time, TIMER_STOPPABLE)
+	return TRUE
+
+/datum/shuttle/autodock/ferry/supply/proc/complete_supply_jump(generation, obj/effect/shuttle_landmark/destination)
+	if(generation != launch_generation || movement_result != SHUTTLE_MOVE_PENDING)
+		return
+	warmup_timer = null
+	if(at_station() && forbidden_atoms_check())
+		finish_movement(SHUTTLE_MOVE_REJECTED, "Forbidden cargo or passenger prevented departure.")
 		return
 
-	//it would be cool to play a sound here
-	moving_status = SHUTTLE_WARMUP
-	spawn(warmup_time*10)
-		if (moving_status == SHUTTLE_IDLE)
-			return	//someone cancelled the launch
-
-		if (at_station() && forbidden_atoms_check())
-			//cancel the launch because of forbidden atoms. announce over supply channel?
-			moving_status = SHUTTLE_IDLE
+	if(!at_station())
+		if(!SScargo.buy())
+			finish_movement(SHUTTLE_MOVE_REJECTED, "Cargo purchase failed.")
 			return
+		flip_rotating_alarms()
+		playsound(locate(target_dest_x + SHAFT_CENTER_OFFSET, target_dest_y - SHAFT_CENTER_OFFSET, target_dest_z), 'sound/machines/warning-buzzer-2.ogg', 60, FALSE)
 
-		if (!at_station()) //at centcom
-			if(!SScargo.buy()) //Check if the shuttle can be sent
-				moving_status = SHUTTLE_IDLE //Dont move the shuttle
+	var/obj/effect/shuttle_landmark/away_waypoint = get_location_waypoint(away_location)
+	moving_status = SHUTTLE_INTRANSIT
+	movement_phase = "supply transit"
+
+	if(next_location == away_waypoint)
+		if(!attempt_move(away_waypoint))
+			finish_movement(SHUTTLE_MOVE_REJECTED, movement_error)
+			return
+		play_elevator_animation(TRUE)
+
+	arrive_time = launch_estimate()
+	while(world.time <= arrive_time)
+		if(generation != launch_generation || movement_result != SHUTTLE_MOVE_PENDING)
+			return
+		sleep(5)
+
+	if(next_location != away_waypoint)
+		if(prob(late_chance))
+			sleep(rand(0, max_late_time))
+			if(generation != launch_generation || movement_result != SHUTTLE_MOVE_PENDING)
 				return
 
-			flip_rotating_alarms() // elevator is coming up, prepare the lights
-			playsound(locate(target_dest_x + SHAFT_CENTER_OFFSET, target_dest_y - SHAFT_CENTER_OFFSET, target_dest_z), 'sound/machines/warning-buzzer-2.ogg', 60, FALSE)
+		play_elevator_animation()
+		if(generation != launch_generation || movement_result != SHUTTLE_MOVE_PENDING)
+			return
+		if(!attempt_move(destination))
+			finish_movement(SHUTTLE_MOVE_REJECTED, movement_error)
+			return
 
-		//We pretend it's a long_jump by making the shuttle stay at centcom for the "in-transit" period.
-		var/obj/effect/shuttle_landmark/away_waypoint = get_location_waypoint(away_location)
-		moving_status = SHUTTLE_INTRANSIT
-
-		//If we are at the away_landmark then we are just pretending to move, otherwise actually do the move
-		if (next_location == away_waypoint)
-			attempt_move(away_waypoint)
-			play_elevator_animation(TRUE) // returning to CC, play the animation after elevator physically leaves
-
-		//wait ETA here.
-		arrive_time = launch_estimate()
-		while (world.time <= arrive_time)
-			sleep(5)
-
-		if (next_location != away_waypoint)
-			//late
-			if (prob(late_chance))
-				sleep(rand(0,max_late_time))
-
-			play_elevator_animation() // coming from CC, play the animation before elevator physically arrives, delay the process
-			attempt_move(destination)
-
-		moving_status = SHUTTLE_IDLE
-
-		if (!at_station())	//at centcom
-			SScargo.sell()
+	if(!at_station())
+		SScargo.sell()
+	finish_movement(SHUTTLE_MOVE_SUCCESS)
 
 // returns 1 if the supply shuttle should be prevented from moving because it contains forbidden atoms
 /datum/shuttle/autodock/ferry/supply/proc/forbidden_atoms_check()

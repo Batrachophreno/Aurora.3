@@ -12,6 +12,15 @@
 
 #define SHUTTLE_TRANSIT_BORDER 16
 
+// Shuttle movement operation results.
+#define SHUTTLE_MOVE_IDLE        0
+#define SHUTTLE_MOVE_PENDING     1
+#define SHUTTLE_MOVE_SUCCESS     2
+#define SHUTTLE_MOVE_REJECTED    3
+#define SHUTTLE_MOVE_CANCELLED   4
+#define SHUTTLE_MOVE_ROLLED_BACK 5
+#define SHUTTLE_MOVE_STRANDED    6
+
 //Landmarks.
 #define SLANDMARK_FLAG_AUTOSET 1    // If set, will set base area and turf type to same as where it was spawned at
 #define SLANDMARK_FLAG_ZERO_G  2    // Zero-G shuttles moved here will lose gravity unless the area has ambient gravity.

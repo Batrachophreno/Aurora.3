@@ -1,5 +1,5 @@
 /datum/shuttle/autodock/overmap
-	warmup_time = 10
+	warmup_time = 10 SECONDS
 
 	var/range = 0	//how many overmap tiles can shuttle go, for picking destinations and returning.
 	var/fuel_consumption = 0 //Amount of moles of gas consumed per trip; If zero, then shuttle is magic and does not need fuel
@@ -23,13 +23,15 @@
 			fuel_ports |= fuel_port_in_area
 
 /datum/shuttle/autodock/overmap/fuel_check(var/check_only = FALSE) // "check_only" lets you check the fuel levels without using any.
-	if(!src.try_consume_fuel(check_only)) //insufficient fuel
-		for(var/area/A in shuttle_area)
-			for(var/mob/living/M in A)
-				M.show_message(SPAN_WARNING("You hear the shuttle engines sputter... perhaps it doesn't have enough fuel?"), 2,
-								SPAN_WARNING("The shuttle shakes but fails to take off."), 1)
-				return 0 //failure!
-	return 1 //sucess, continue with launch
+	var/fuel_check_passed = src.try_consume_fuel(check_only)
+	if(fuel_check_passed)
+		return TRUE
+
+	for(var/area/A in shuttle_area)
+		for(var/mob/living/M in A)
+			M.show_message(SPAN_WARNING("You hear the shuttle engines sputter... perhaps it doesn't have enough fuel?"), 2,
+							SPAN_WARNING("The shuttle shakes but fails to take off."), 1)
+	return FALSE
 
 /datum/shuttle/autodock/overmap/proc/can_go()
 	if(!next_location)
@@ -49,13 +51,13 @@
 	return move_time * (1 + distance_mod)
 
 /datum/shuttle/autodock/overmap/proc/set_destination(var/obj/effect/shuttle_landmark/A)
-	if(A != current_location)
+	if(moving_status == SHUTTLE_IDLE && process_state == IDLE_STATE && !in_use && A != current_location && !QDELETED(A))
 		next_location = A
 
 /datum/shuttle/autodock/overmap/proc/get_possible_destinations()
 	var/list/res = list()
 	for (var/obj/effect/overmap/visitable/S in range(get_turf(waypoint_sector(current_location)), range))
-		var/list/waypoints = S.get_waypoints(name)
+		var/list/waypoints = S.get_waypoints(shuttle_id)
 		for(var/obj/effect/shuttle_landmark/LZ in waypoints)
 			if(LZ.is_valid(src))
 				res["[waypoints[LZ]] - [LZ.name]"] = LZ

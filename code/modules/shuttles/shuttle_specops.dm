@@ -28,7 +28,11 @@
 
 /datum/shuttle/autodock/ferry/specops/launch(var/user)
 	if (!can_launch())
-		return
+		return FALSE
+
+	// Own the shuttle for the full special countdown, before the normal undock sequence begins.
+	in_use = user ? user : src
+	launch_prep = 1
 
 	if (istype(user, /obj/structure/machinery/computer))
 		var/obj/structure/machinery/computer/C = user
@@ -39,7 +43,9 @@
 				C.visible_message(SPAN_NOTICE("[-((world.time - reset_time)/10)/60] minutes remain!"))
 			else
 				C.visible_message(SPAN_NOTICE("[-(world.time - reset_time)/10] seconds remain!"))
-			return
+			in_use = null
+			launch_prep = 0
+			return FALSE
 
 		C.visible_message(SPAN_NOTICE("The Special Operations shuttle will depart in [(specops_countdown_time/10)] seconds."))
 
@@ -49,6 +55,9 @@
 		radio_announce("THE SPECIAL OPERATIONS SHUTTLE IS PREPARING FOR LAUNCH")
 
 	sleep_until_launch()
+	if(cancel_countdown)
+		in_use = null
+		return FALSE
 
 	if (location)
 		var/obj/structure/machinery/light/small/readylight/light = locate() in shuttle_area
@@ -56,7 +65,8 @@
 
 	//launch
 	radio_announce("ALERT: INITIATING LAUNCH SEQUENCE")
-	..(user)
+	in_use = null
+	return ..(user)
 
 /datum/shuttle/autodock/ferry/specops/shuttle_moved()
 	. = ..()
@@ -75,9 +85,9 @@
 				var/obj/structure/machinery/light/small/readylight/light = locate() in T
 				if(light) light.set_state(1)
 
-/datum/shuttle/autodock/ferry/specops/cancel_launch()
+/datum/shuttle/autodock/ferry/specops/cancel_launch(var/user)
 	if (!can_cancel())
-		return
+		return FALSE
 
 	cancel_countdown = 1
 	radio_announce("ALERT: LAUNCH SEQUENCE ABORTED")
@@ -85,7 +95,9 @@
 		var/obj/structure/machinery/computer/C = in_use
 		C.visible_message(SPAN_WARNING("Launch sequence aborted."))
 
-	..()
+	if(launch_prep)
+		return TRUE
+	return ..(user)
 
 /datum/shuttle/autodock/ferry/specops/can_launch()
 	if(launch_prep)

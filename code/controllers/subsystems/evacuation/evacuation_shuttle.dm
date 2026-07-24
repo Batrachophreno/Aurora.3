@@ -67,7 +67,7 @@
 	if(..())
 		autopilot = 1
 		shuttle_launch_time = evac_no_return
-		evac_ready_time += shuttle.warmup_time*10
+		evac_ready_time += shuttle.warmup_time
 		return 1
 	return 0
 
@@ -113,9 +113,9 @@
 
 /datum/evacuation_controller/shuttle/proc/get_long_jump_time()
 	if (shuttle.location)
-		return round(evac_prep_delay/10)/2
+		return round(evac_prep_delay / 2)
 	else
-		return round(evac_transit_delay/10)
+		return evac_transit_delay
 
 //begins the launch countdown and sets the amount of time left until launch
 /datum/evacuation_controller/proc/set_force_countdown(var/seconds)

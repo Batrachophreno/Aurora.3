@@ -1,6 +1,6 @@
 //Used to create small industrial-esque lifts used between two floors
 /datum/shuttle/autodock/ferry/lift
-	warmup_time = 3
+	warmup_time = 3 SECONDS
 	knockdown = FALSE
 	squishes = FALSE
 	ceiling_type = null
@@ -19,14 +19,14 @@
 	assigned_controller = null
 	..()
 
-/datum/shuttle/autodock/ferry/lift/short_jump(var/obj/effect/shuttle_landmark/destination)
+/datum/shuttle/autodock/ferry/lift/short_jump(var/obj/effect/shuttle_landmark/destination, datum/callback/completion_callback)
 	var/obj/effect/shuttle_landmark/start_location = current_location
 	if(!obstruction_check(start_location, destination))
 		if(assigned_controller)
 			assigned_controller.audible_message("\The [assigned_controller] buzzes loudly: <i>Obstruction detected!</i>")
 			playsound(assigned_controller.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 		return FALSE
-	..()
+	return ..(destination, completion_callback)
 
 /datum/shuttle/autodock/ferry/lift/proc/obstruction_check(var/obj/effect/shuttle_landmark/start, var/obj/effect/shuttle_landmark/destination)
 	var/list/translation = list()

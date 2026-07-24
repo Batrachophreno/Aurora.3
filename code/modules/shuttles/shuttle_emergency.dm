@@ -12,21 +12,21 @@
 		CRASH("An emergency shuttle has already been created.")
 	emergency_controller.shuttle = src
 
-/datum/shuttle/autodock/ferry/emergency/arrived()
-	. = ..()
+/datum/shuttle/autodock/ferry/emergency/arrived(var/user)
+	. = ..(user)
 
 	if(!emergency_controller.has_evacuated())
 		emergency_controller.finish_preparing_evac()
 
-	if (istype(in_use, /obj/structure/machinery/computer/shuttle_control/emergency))
-		var/obj/structure/machinery/computer/shuttle_control/emergency/C = in_use
+	if (istype(user, /obj/structure/machinery/computer/shuttle_control/emergency))
+		var/obj/structure/machinery/computer/shuttle_control/emergency/C = user
 		C.reset_authorization()
 
 	if((current_location == waypoint_offsite) && emergency_controller.has_evacuated())
 		emergency_controller.shuttle_evacuated()
 
-/datum/shuttle/autodock/ferry/emergency/long_jump(var/obj/effect/shuttle_landmark/destination, var/obj/effect/shuttle_landmark/interim, var/travel_time)
-	..(destination, interim, emergency_controller.get_long_jump_time(), direction)
+/datum/shuttle/autodock/ferry/emergency/long_jump(var/obj/effect/shuttle_landmark/destination, var/obj/effect/shuttle_landmark/interim, var/travel_time, datum/callback/completion_callback)
+	return ..(destination, interim, emergency_controller.get_long_jump_time(), completion_callback)
 
 /datum/shuttle/autodock/ferry/emergency/shuttle_moved()
 	if(next_location != waypoint_station)
@@ -68,7 +68,7 @@
 
 /datum/shuttle/autodock/ferry/emergency/launch(var/user)
 	if (!can_launch(user))
-		return
+		return FALSE
 
 	if (istype(user, /obj/structure/machinery/computer/shuttle_control/emergency))	//if we were given a command by an emergency shuttle console
 		if (emergency_controller.autopilot)
@@ -79,11 +79,11 @@
 		log_admin("[key_name(usr)] has overridden the shuttle autopilot and activated launch sequence")
 		message_admins("[key_name_admin(usr)] has overridden the shuttle autopilot and activated launch sequence")
 
-	..(user)
+	return ..(user)
 
 /datum/shuttle/autodock/ferry/emergency/force_launch(var/user)
 	if (!can_force(user))
-		return
+		return FALSE
 
 	if (istype(user, /obj/structure/machinery/computer/shuttle_control/emergency))	//if we were given a command by an emergency shuttle console
 		if (emergency_controller.autopilot)
@@ -94,11 +94,11 @@
 		log_admin("[key_name(usr)] has overridden the shuttle autopilot and forced immediate launch")
 		message_admins("[key_name_admin(usr)] has overridden the shuttle autopilot and forced immediate launch")
 
-	..(user)
+	return ..(user)
 
 /datum/shuttle/autodock/ferry/emergency/cancel_launch(var/user)
 	if (!can_cancel(user))
-		return
+		return FALSE
 
 	if (istype(user, /obj/structure/machinery/computer/shuttle_control/emergency))	//if we were given a command by an emergency shuttle console
 		if (emergency_controller.autopilot)
@@ -109,7 +109,7 @@
 		log_admin("[key_name(usr)] has overridden the shuttle autopilot and cancelled launch sequence")
 		message_admins("[key_name_admin(usr)] has overridden the shuttle autopilot and cancelled launch sequence")
 
-	..(user)
+	return ..(user)
 
 /obj/structure/machinery/computer/shuttle_control/emergency
 	shuttle_tag = "Escape Shuttle"

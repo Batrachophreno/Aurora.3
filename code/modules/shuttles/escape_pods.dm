@@ -4,7 +4,7 @@ GLOBAL_LIST_EMPTY(escape_pods_by_name)
 /datum/shuttle/autodock/ferry/escape_pod
 	var/datum/computer/file/embedded_program/docking/simple/escape_pod/arming_controller
 	category = /datum/shuttle/autodock/ferry/escape_pod
-	move_time = 100
+	move_time = 100 SECONDS
 
 /datum/shuttle/autodock/ferry/escape_pod/New()
 	..()
@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(escape_pods_by_name)
 
 	GLOB.escape_pods += src
 	GLOB.escape_pods_by_name[name] = src
-	move_time = GLOB.evacuation_controller.evac_transit_delay + rand(-30, 60)
+	move_time = GLOB.evacuation_controller.evac_transit_delay + (rand(-30, 60) SECONDS)
 	if(dock_target)
 		var/datum/computer/file/embedded_program/docking/simple/own_target = SSshuttle.docking_registry[dock_target]
 		if(own_target)
@@ -225,7 +225,7 @@ AURORA_ESCAPE_POD(4)
 	category = /datum/shuttle/autodock/ferry/escape_pod/pod
 	sound_takeoff = 'sound/effects/rocket.ogg'
 	sound_landing = 'sound/effects/rocket_backwards.ogg'
-	warmup_time = 10
+	warmup_time = 10 SECONDS
 
 /obj/effect/shuttle_landmark/escape_pod/start
 	name = "Docked"
@@ -245,7 +245,7 @@ AURORA_ESCAPE_POD(4)
 /datum/shuttle/autodock/ferry/emergency/aurora
 	name = "Escape Shuttle"
 	location = 1
-	warmup_time = 10
+	warmup_time = 10 SECONDS
 	shuttle_area = /area/shuttle/escape
 	dock_target = "escape_shuttle"
 	waypoint_station = "nav_emergency_dock"
@@ -275,9 +275,9 @@ AURORA_ESCAPE_POD(4)
 /datum/shuttle/autodock/ferry/arrival/aurora
 	name = "Arrival Shuttle"
 	location = 1
-	warmup_time = 10
+	warmup_time = 10 SECONDS
 	shuttle_area = /area/shuttle/arrival
-	move_time = 60
+	move_time = 60 SECONDS
 	dock_target = "arrival_shuttle"
 	waypoint_station = "nav_arrival_dock"
 	landmark_transition = "nav_arrival_interim"
@@ -328,9 +328,9 @@ AURORA_ESCAPE_POD(4)
 /datum/shuttle/autodock/ferry/merchant_aurora
 	name = "ICV Enterprise"
 	location = 1
-	warmup_time = 10
+	warmup_time = 10 SECONDS
 	shuttle_area = /area/shuttle/merchant
-	move_time = 20
+	move_time = 20 SECONDS
 	dock_target = "merchant_shuttle"
 	waypoint_station = "nav_merchant_dock"
 	landmark_transition = "nav_merchant_interim"
@@ -360,7 +360,7 @@ AURORA_ESCAPE_POD(4)
 /datum/shuttle/autodock/ferry/autoreturn/ccia
 	name = "SCC Shuttle"
 	location = 1
-	warmup_time = 10
+	warmup_time = 10 SECONDS
 	shuttle_area = /area/shuttle/transport1
 	dock_target = "centcom_shuttle"
 	waypoint_station = "nav_ccia_dock"
@@ -385,7 +385,7 @@ AURORA_ESCAPE_POD(4)
 /datum/shuttle/autodock/ferry/specops/ert_aurora
 	name = "Phoenix Shuttle"
 	location = 1
-	warmup_time = 10
+	warmup_time = 10 SECONDS
 	shuttle_area = /area/shuttle/specops
 	dock_target = "specops_shuttle_port"
 	waypoint_station = "nav_horizon_dock_deck_3_port_5"
@@ -412,8 +412,8 @@ AURORA_ESCAPE_POD(4)
 	current_location = "nav_burglar_start"
 	landmark_transition = "nav_burglar_interim"
 	dock_target = "burglar_shuttle"
-	warmup_time = 10
-	move_time = 75
+	warmup_time = 10 SECONDS
+	move_time = 75 SECONDS
 	shuttle_area = /area/shuttle/burglar
 	destination_tags = list(
 		"nav_burglar_start",
@@ -468,8 +468,8 @@ AURORA_ESCAPE_POD(4)
 	current_location = "nav_skipjack_start"
 	landmark_transition = "nav_skipjack_interim"
 	dock_target = "raider_east_control"
-	warmup_time = 10
-	move_time = 75
+	warmup_time = 10 SECONDS
+	move_time = 75 SECONDS
 	shuttle_area = /area/shuttle/skipjack
 	destination_tags = list(
 		"nav_skipjack_start",
@@ -530,8 +530,8 @@ AURORA_ESCAPE_POD(4)
 	current_location = "nav_merc_start"
 	landmark_transition = "nav_merc_interim"
 	dock_target = "merc_shuttle"
-	warmup_time = 10
-	move_time = 75
+	warmup_time = 10 SECONDS
+	move_time = 75 SECONDS
 	shuttle_area = /area/shuttle/mercenary
 	destination_tags = list(
 		"nav_merc_dock",
@@ -585,7 +585,7 @@ AURORA_ESCAPE_POD(4)
 /datum/shuttle/autodock/multi/merc_aurora_elite
 	name = "Merc Elite"
 	current_location = "nav_mercelite_start"
-	warmup_time = 10
+	warmup_time = 10 SECONDS
 	shuttle_area = /area/shuttle/syndicate_elite
 	dock_target = "elite_shuttle_starboard"
 	destination_tags = list(
@@ -633,8 +633,8 @@ AURORA_ESCAPE_POD(4)
 /datum/shuttle/autodock/multi/legion
 	name = "Legion Shuttle"
 	current_location = "nav_legion_start"
-	warmup_time = 10
-	move_time = 75
+	warmup_time = 10 SECONDS
+	move_time = 75 SECONDS
 	ceiling_type = /turf/simulated/shuttle_roof/legion
 	shuttle_area = /area/shuttle/legion
 	dock_target = "legion_shuttle"
@@ -681,8 +681,8 @@ AURORA_ESCAPE_POD(4)
 /datum/shuttle/autodock/multi/research_aurora
 	name = "Research Shuttle"
 	current_location = "nav_research_dock"
-	warmup_time = 10
-	move_time = 60
+	warmup_time = 10 SECONDS
+	move_time = 60 SECONDS
 	shuttle_area = /area/shuttle/research
 	dock_target = "science_shuttle"
 	landmark_transition = "nav_research_interim"
@@ -720,8 +720,8 @@ AURORA_ESCAPE_POD(4)
 /datum/shuttle/autodock/multi/distress
 	name = "Distress Shuttle"
 	current_location = "nav_distress_away"
-	warmup_time = 10
-	move_time = 45
+	warmup_time = 10 SECONDS
+	move_time = 45 SECONDS
 	dock_target = "distress_shuttle_aft"
 	shuttle_area = /area/shuttle/distress
 	landmark_transition = "nav_distress_interim"

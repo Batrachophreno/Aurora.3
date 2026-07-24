@@ -40,7 +40,7 @@
 			// Abandon Ship
 			for(var/datum/shuttle/autodock/ferry/escape_pod/pod in GLOB.escape_pods) // Launch the pods!
 				if(!pod.arming_controller || pod.arming_controller.armed)
-					pod.move_time = (evac_transit_delay/10)
+					pod.move_time = evac_transit_delay
 					pod.launch(src)
 
 			priority_announcement.Announce(replacetext(replacetext(SSatlas.current_map.emergency_shuttle_leaving_dock, "%dock_name%", "[SSatlas.current_map.dock_name]"),  "%ETA%", "[round(get_eta()/60,1)] minute\s"))

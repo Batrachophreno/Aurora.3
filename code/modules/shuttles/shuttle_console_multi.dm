@@ -8,7 +8,7 @@
 	if(istype(shuttle))
 		. += list(
 			"destination_name" = shuttle.next_location? shuttle.next_location.name : "No destination set.",
-			"can_pick" = shuttle.moving_status == SHUTTLE_IDLE,
+			"can_pick" = shuttle.moving_status == SHUTTLE_IDLE && shuttle.process_state == IDLE_STATE && !shuttle.in_use,
 		)
 
 /obj/structure/machinery/computer/shuttle_control/multi/handle_topic_href(var/mob/user, var/datum/shuttle/autodock/multi/shuttle, var/action, var/list/params)
