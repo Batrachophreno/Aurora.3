@@ -1,0 +1,8 @@
+author: Batrachophrenoboocosmomachia
+delete-after: True
+changes:
+  - bugfix: "Shuttle launches, travel, cancellations, fuel checks, landmarks, and landings now handled more reliably."
+  - bugfix: "Fixed shuttle timing and ghost-role spawnpoint activation."
+  - bugfix: "Docking, undocking, and multi-airlock recovery made more reliable."
+  - bugfix: "Docking controllers, airlocks, pumps, and radio messages now validate their state and fail safely."
+  - bugfix: "Shuttle movement tools now validate destinations and log outcomes accurately."
