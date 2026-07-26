@@ -1,4 +1,4 @@
-import { LabeledList, NoticeBox, Section } from 'tgui-core/components';
+import { Box, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 import { capitalize } from 'tgui-core/string';
 import { useBackend } from '../backend';
 
@@ -16,8 +16,29 @@ type Sensor = {
 
 type Datapoint = {
   datapoint: string;
-  data: string;
+  data: number | string | null;
   unit: string;
+  error?: string | null;
+};
+
+const getDatapointLabel = (datapoint: string) => {
+  if (datapoint === 'moles') {
+    return 'Current Moles';
+  }
+  if (datapoint === 'gas_delta') {
+    return 'Round Change';
+  }
+  return capitalize(datapoint);
+};
+
+const formatGasDelta = (delta: number, unit: string) => {
+  if (delta > 0) {
+    return `+${delta} ${unit} gained`;
+  }
+  if (delta < 0) {
+    return `${Math.abs(delta)} ${unit} lost`;
+  }
+  return 'No net change';
 };
 
 export const AtmosControl = (props) => {
@@ -37,12 +58,21 @@ export const SensorData = (props) => {
         <Section title={sensor.name} key={sensor.id_tag}>
           <LabeledList>
             {sensor.datapoints.map((datapoint) =>
-              datapoint.data !== null ? (
+              datapoint.data !== null || datapoint.error ? (
                 <LabeledList.Item
                   key={datapoint.datapoint}
-                  label={capitalize(datapoint.datapoint)}
+                  label={getDatapointLabel(datapoint.datapoint)}
                 >
-                  {datapoint.data} {datapoint.unit}
+                  {datapoint.error ? (
+                    <Box color="bad">{datapoint.error}</Box>
+                  ) : datapoint.datapoint === 'gas_delta' &&
+                    typeof datapoint.data === 'number' ? (
+                    formatGasDelta(datapoint.data, datapoint.unit)
+                  ) : (
+                    <>
+                      {datapoint.data} {datapoint.unit}
+                    </>
+                  )}
                 </LabeledList.Item>
               ) : (
                 ''

@@ -1,8 +1,10 @@
 import {
   Button,
   LabeledList,
+  NoticeBox,
   NumberInput,
   Section,
+  Table,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
@@ -14,6 +16,14 @@ export type TankData = {
   maxpressure: number;
   input: Input;
   output: Output;
+  logs: LogEntry[] | null;
+};
+
+type LogEntry = {
+  roundID: number;
+  roundName: string;
+  gas_type: string;
+  gas_delta: number;
 };
 
 type Input = {
@@ -54,8 +64,47 @@ export const AtmosControlTank = (props) => {
             />
           )}
         </Section>
+        {data.logs && <GasChangeLogs />}
       </Window.Content>
     </Window>
+  );
+};
+
+const formatGasDelta = (delta: number) => {
+  if (delta > 0) {
+    return `+${delta} mol gained`;
+  }
+  if (delta < 0) {
+    return `${Math.abs(delta)} mol lost`;
+  }
+  return 'No net change';
+};
+
+export const GasChangeLogs = (props) => {
+  const { data } = useBackend<TankData>();
+  return (
+    <Section title="Gas Change Logs — Past Ten Rounds">
+      {data.logs?.length ? (
+        <Table>
+          <Table.Row header>
+            <Table.Cell>Record ID</Table.Cell>
+            <Table.Cell>Round</Table.Cell>
+            <Table.Cell>Gas</Table.Cell>
+            <Table.Cell>Change</Table.Cell>
+          </Table.Row>
+          {data.logs.map((entry) => (
+            <Table.Row key={`${entry.gas_type}-${entry.roundID}`}>
+              <Table.Cell>{entry.roundID}</Table.Cell>
+              <Table.Cell>{entry.roundName}</Table.Cell>
+              <Table.Cell>{entry.gas_type}</Table.Cell>
+              <Table.Cell>{formatGasDelta(entry.gas_delta)}</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table>
+      ) : (
+        <NoticeBox>No completed-round gas change records available.</NoticeBox>
+      )}
+    </Section>
   );
 };
 
@@ -78,7 +127,9 @@ export const InputWindow = (props) => {
           maxValue={data.maxrate}
           unit="L/s"
           step={10}
-          onChange={(value) => act('in_set_flowrate', { in_set_flowrate: value })}
+          onChange={(value) =>
+            act('in_set_flowrate', { in_set_flowrate: value })
+          }
         />
       </LabeledList.Item>
     </LabeledList>

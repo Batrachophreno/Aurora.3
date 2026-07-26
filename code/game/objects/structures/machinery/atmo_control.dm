@@ -30,6 +30,23 @@
 		if("ph_sensor")
 			return /singleton/persistent_type/history/large_tank_phoron_expenditure
 
+/proc/get_large_tank_gas_name(sensor_id_tag)
+	switch(sensor_id_tag)
+		if("n_sensor")
+			return "Nitrogen"
+		if("air_sensor")
+			return "Air Mix"
+		if("n2o_sensor")
+			return "Nitrous Oxide"
+		if("o2_sensor")
+			return "Oxygen"
+		if("h_sensor")
+			return "Hydrogen"
+		if("co2_sensor")
+			return "Carbon Dioxide"
+		if("ph_sensor")
+			return "Phoron"
+
 /proc/finalize_large_tank_gas_expenditure(sensor_id_tag, history_type)
 	if(!SSmachinery)
 		return
@@ -76,7 +93,7 @@
 	var/output_pressure = TRUE
 	var/output_temperature = TRUE
 	var/output_moles = TRUE
-	/// Total moles present when this tracked sensor first sampled its tank this round.
+	/// Total moles present when this tracked sensor first samples its tank after server initialization.
 	var/roundstart_moles
 	/// Most recent total mole reading for current-round expenditure logging
 	var/current_moles
@@ -122,7 +139,7 @@
 		if(output_moles)
 			signal.data["moles"] = round(total_moles, 0.1)
 		if(!isnull(tracked_moles))
-			signal.data["gas_expenditure"] = round(roundstart_moles - tracked_moles, 0.1)
+			signal.data["gas_delta"] = round(tracked_moles - roundstart_moles, 0.1)
 
 		if(output)
 			if(total_moles > 0)
@@ -197,6 +214,9 @@
 /obj/structure/machinery/air_sensor/proc/update_gas_expenditure(datum/gas_mixture/air_sample)
 	if(!get_large_tank_gas_history_type(id_tag))
 		return
+	// If the server hasn't finished initializing, we're probably going to get wonky results.
+	if(isnull(roundstart_moles) && !MC_RUNNING())
+		return
 	if(!air_sample)
 		air_sample = return_air()
 	if(!air_sample)
@@ -224,7 +244,11 @@
 	if(isnull(current_moles))
 		return
 	var/gas_expenditure = round(roundstart_moles - current_moles, 0.1)
-	SSpersistence.historyAddRecord(history_type, null, "[gas_expenditure]")
+	var/list/history_value = list(
+		"r" = GLOB.round_id,
+		"e" = gas_expenditure
+	)
+	SSpersistence.historyAddRecord(history_type, null, json_encode(history_value))
 	saved_gas_expenditure_types += history_type
 
 /obj/structure/machinery/computer/general_air_control
@@ -345,10 +369,14 @@
 	for(var/list/sensor_data in data["sensors"])
 		var/id_tag = sensor_data["id_tag"]
 		var/list/sdata = sensor_information[id_tag]
-		sensor_data["datapoints"] += list(list("datapoint" = "moles", "data" = sdata["moles"], "unit" = "mol"))
-		if(roundend_gas_logs && get_large_tank_gas_history_type(id_tag))
-			sensor_data["datapoints"] += list(list("datapoint" = "gas_expenditure", "data" = sdata["gas_expenditure"], "unit" = "mol"))
-	data["gas_history"] = roundend_gas_logs ? get_gas_expenditure_history() : null
+		sensor_data["datapoints"] += list(list(
+			"datapoint" = "moles",
+			"data" = sdata["moles"],
+			"unit" = "mol",
+		))
+		if(get_large_tank_gas_history_type(id_tag))
+			sensor_data["datapoints"] += list(list("datapoint" = "gas_delta", "data" = sdata["gas_delta"], "unit" = "mol"))
+	data["logs"] = roundend_gas_logs ? get_gas_expenditure_history() : null
 	if(input_info)
 		LAZYINITLIST(data["input"])
 		data["input"]["power"] = input_info["power"]
@@ -365,25 +393,35 @@
 /obj/structure/machinery/computer/general_air_control/large_tank_control/proc/get_gas_expenditure_history()
 	if(!isnull(gas_expenditure_history))
 		return gas_expenditure_history
-	gas_expenditure_history = list()
 	if(!SSpersistence?.init_success)
-		return gas_expenditure_history
+		return list()
+	gas_expenditure_history = list()
 	for(var/id_tag in sensors)
 		var/history_type = get_large_tank_gas_history_type(id_tag)
 		if(!history_type)
 			continue
-		var/list/history_records = list()
-		var/list/persistent_records = SSpersistence.historyGetLastRecords(history_type, null, 30, TRUE)
+		var/gas_name = get_large_tank_gas_name(id_tag)
+		var/list/persistent_records = SSpersistence.historyGetLastRecords(history_type, null, 10, TRUE)
 		for(var/datum/persistent_record/record in persistent_records)
-			history_records += list(list(
-				"recorded_at" = record.created_at,
-				"expenditure" = text2num(record.value)
+			var/round_name = record.game_id
+			var/gas_delta
+			// try to get a meaningful delta, dont break everything if it fails?
+			try
+				var/decoded_value = json_decode(record.value)
+				if(islist(decoded_value))
+					var/list/history_value = decoded_value
+					round_name = history_value["r"] || round_name
+					if(!isnull(history_value["e"]))
+						gas_delta = -history_value["e"]
+			catch()
+			if(isnull(gas_delta))
+				gas_delta = -text2num(record.value)
+			gas_expenditure_history += list(list(
+				"roundID" = record.id,
+				"roundName" = round_name || "Unknown",
+				"gas_type" = gas_name,
+				"gas_delta" = gas_delta
 			))
-		gas_expenditure_history += list(list(
-			"id_tag" = id_tag,
-			"name" = sensors[id_tag],
-			"records" = history_records
-		))
 	return gas_expenditure_history
 
 /obj/structure/machinery/computer/general_air_control/large_tank_control/receive_signal(datum/signal/signal)
