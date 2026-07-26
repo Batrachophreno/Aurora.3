@@ -150,8 +150,8 @@
 	icon = strain.icon
 	name = strain.get_name(src)
 	desc = strain.get_desc(src)
-	if(neoblob_color)
-		color = neoblob_color || strain.color
+	if(strain.color)
+		color = strain.color
 	if(light_range && light_power)
 		set_light(light_range, light_power, light_color)
 
