@@ -23,7 +23,7 @@ type LogEntry = {
   roundID: number;
   roundName: string;
   gas_type: string;
-  gas_delta: number;
+  tank_level: number;
 };
 
 type Input = {
@@ -64,45 +64,35 @@ export const AtmosControlTank = (props) => {
             />
           )}
         </Section>
-        {data.logs && <GasChangeLogs />}
+        {data.logs && <GasStorageLogs />}
       </Window.Content>
     </Window>
   );
 };
 
-const formatGasDelta = (delta: number) => {
-  if (delta > 0) {
-    return `+${delta} mol gained`;
-  }
-  if (delta < 0) {
-    return `${Math.abs(delta)} mol lost`;
-  }
-  return 'No net change';
-};
-
-export const GasChangeLogs = (props) => {
+export const GasStorageLogs = (props) => {
   const { data } = useBackend<TankData>();
   return (
-    <Section title="Gas Change Logs — Past Ten Rounds">
+    <Section title="Gas Storage Logs — Past Ten Rounds">
       {data.logs?.length ? (
         <Table>
           <Table.Row header>
             <Table.Cell>Record ID</Table.Cell>
             <Table.Cell>Round</Table.Cell>
             <Table.Cell>Gas</Table.Cell>
-            <Table.Cell>Change</Table.Cell>
+            <Table.Cell>Tank Level</Table.Cell>
           </Table.Row>
           {data.logs.map((entry) => (
             <Table.Row key={`${entry.gas_type}-${entry.roundID}`}>
               <Table.Cell>{entry.roundID}</Table.Cell>
               <Table.Cell>{entry.roundName}</Table.Cell>
               <Table.Cell>{entry.gas_type}</Table.Cell>
-              <Table.Cell>{formatGasDelta(entry.gas_delta)}</Table.Cell>
+              <Table.Cell>{entry.tank_level} kPa</Table.Cell>
             </Table.Row>
           ))}
         </Table>
       ) : (
-        <NoticeBox>No completed-round gas change records available.</NoticeBox>
+        <NoticeBox>No completed-round gas storage records available.</NoticeBox>
       )}
     </Section>
   );
