@@ -77,7 +77,7 @@
 	factories -= growth
 	resources -= growth
 	if(growth == core)
-		on_core_destroyed(growth)
+		core = null
 	if(growth.cluster == src)
 		growth.cluster = null
 	last_activity = world.time
