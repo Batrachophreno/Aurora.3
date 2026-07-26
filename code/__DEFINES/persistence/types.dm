@@ -20,7 +20,13 @@ CREATE_PERSISTENT_TYPE_GENERIC(horizon_overmap_position, "SCCV Horizon sector po
 
 // ##### Persistent history
 
-
+CREATE_PERSISTENT_TYPE_HISTORY(large_tank_nitrogen_expenditure, "Nitrogen expenditure", "Net molar gas expenditure reported by the nitrogen supply tank sensor per round.", FALSE, /singleton/persistent_type_history_expiration_rule/round_count/ten)
+CREATE_PERSISTENT_TYPE_HISTORY(large_tank_air_expenditure, "Airmix expenditure", "Net molar gas expenditure reported by the air supply tank sensor per round.", FALSE, /singleton/persistent_type_history_expiration_rule/round_count/ten)
+CREATE_PERSISTENT_TYPE_HISTORY(large_tank_nitrous_oxide_expenditure, "Nitrous oxide expenditure", "Net molar gas expenditure reported by the nitrous oxide supply tank sensor per round.", FALSE, /singleton/persistent_type_history_expiration_rule/round_count/ten)
+CREATE_PERSISTENT_TYPE_HISTORY(large_tank_oxygen_expenditure, "Oxygen expenditure", "Net molar gas expenditure reported by the oxygen supply tank sensor per round.", FALSE, /singleton/persistent_type_history_expiration_rule/round_count/ten)
+CREATE_PERSISTENT_TYPE_HISTORY(large_tank_hydrogen_expenditure, "Hydrogen expenditure", "Net molar gas expenditure reported by the hydrogen supply tank sensor per round.", FALSE, /singleton/persistent_type_history_expiration_rule/round_count/ten)
+CREATE_PERSISTENT_TYPE_HISTORY(large_tank_carbon_dioxide_expenditure, "Carbon dioxide expenditure", "Net molar gas expenditure reported by the carbon dioxide supply tank sensor per round.", FALSE, /singleton/persistent_type_history_expiration_rule/round_count/ten)
+CREATE_PERSISTENT_TYPE_HISTORY(large_tank_phoron_expenditure, "Phoron expenditure", "Net molar gas expenditure reported by the phoron supply tank sensor per round.", FALSE, /singleton/persistent_type_history_expiration_rule/round_count/ten)
 
 // ##### Persistent history with character validation
 

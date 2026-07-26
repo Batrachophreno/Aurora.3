@@ -18,6 +18,7 @@
 
 	var/input_flow_setting = 200
 	var/pressure_setting = PRESSURE_ONE_THOUSAND * 2
+	var/roundend_gas_logs = FALSE
 
 /obj/item/circuitboard/air_management/supermatter_core
 	name = T_BOARD("core control")
@@ -63,6 +64,7 @@
 
 		LTC.default_input_flow_setting = input_flow_setting
 		LTC.default_pressure_setting = pressure_setting
+		LTC.roundend_gas_logs = roundend_gas_logs
 		return 1
 
 /obj/item/circuitboard/air_management/supermatter_core/construct(var/obj/structure/machinery/computer/general_air_control/supermatter_core/SC)
@@ -107,6 +109,7 @@
 
 		input_flow_setting = LTC.default_input_flow_setting
 		pressure_setting = LTC.default_pressure_setting
+		roundend_gas_logs = LTC.roundend_gas_logs
 		return 1
 
 /obj/item/circuitboard/air_management/supermatter_core/deconstruct(var/obj/structure/machinery/computer/general_air_control/supermatter_core/SC)

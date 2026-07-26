@@ -13,6 +13,52 @@
 #define SIGNAL_CHLORINE 4096
 #define SIGNAL_WATERVAPOR 8192
 
+/proc/get_large_tank_gas_history_type(sensor_id_tag)
+	switch(sensor_id_tag)
+		if("n_sensor")
+			return /singleton/persistent_type/history/large_tank_nitrogen_expenditure
+		if("air_sensor")
+			return /singleton/persistent_type/history/large_tank_air_expenditure
+		if("n2o_sensor")
+			return /singleton/persistent_type/history/large_tank_nitrous_oxide_expenditure
+		if("o2_sensor")
+			return /singleton/persistent_type/history/large_tank_oxygen_expenditure
+		if("h_sensor")
+			return /singleton/persistent_type/history/large_tank_hydrogen_expenditure
+		if("co2_sensor")
+			return /singleton/persistent_type/history/large_tank_carbon_dioxide_expenditure
+		if("ph_sensor")
+			return /singleton/persistent_type/history/large_tank_phoron_expenditure
+
+/proc/finalize_large_tank_gas_expenditure(sensor_id_tag, history_type)
+	if(!SSmachinery)
+		return
+	for(var/obj/structure/machinery/air_sensor/sensor in SSmachinery.machinery)
+		if(sensor.id_tag == sensor_id_tag)
+			sensor.save_gas_expenditure(history_type)
+			return
+
+/singleton/persistent_type/history/large_tank_nitrogen_expenditure/finalization_hook()
+	finalize_large_tank_gas_expenditure("n_sensor", type)
+
+/singleton/persistent_type/history/large_tank_air_expenditure/finalization_hook()
+	finalize_large_tank_gas_expenditure("air_sensor", type)
+
+/singleton/persistent_type/history/large_tank_nitrous_oxide_expenditure/finalization_hook()
+	finalize_large_tank_gas_expenditure("n2o_sensor", type)
+
+/singleton/persistent_type/history/large_tank_oxygen_expenditure/finalization_hook()
+	finalize_large_tank_gas_expenditure("o2_sensor", type)
+
+/singleton/persistent_type/history/large_tank_hydrogen_expenditure/finalization_hook()
+	finalize_large_tank_gas_expenditure("h_sensor", type)
+
+/singleton/persistent_type/history/large_tank_carbon_dioxide_expenditure/finalization_hook()
+	finalize_large_tank_gas_expenditure("co2_sensor", type)
+
+/singleton/persistent_type/history/large_tank_phoron_expenditure/finalization_hook()
+	finalize_large_tank_gas_expenditure("ph_sensor", type)
+
 /obj/structure/machinery/air_sensor
 	name = "gas sensor"
 	desc = "Measures the gas content of the atmosphere around the sensor."
@@ -29,6 +75,13 @@
 	var/output = 0
 	var/output_pressure = TRUE
 	var/output_temperature = TRUE
+	var/output_moles = TRUE
+	/// Total moles present when this tracked sensor first sampled its tank this round.
+	var/roundstart_moles
+	/// Most recent total mole reading for current-round expenditure logging
+	var/current_moles
+	/// History types already saved this round. Shared so replacing a sensor cannot duplicate its round record
+	var/static/list/saved_gas_expenditure_types = list()
 	//Flags:
 	// 1 for oxygen concentration
 	// 2 for phoron concentration
@@ -54,18 +107,24 @@
 	if(on)
 		var/datum/signal/signal = new
 		signal.transmission_method = TRANSMISSION_RADIO
+		signal.source = src
 		signal.data["tag"] = id_tag
 		signal.data["timestamp"] = world.time
 
 		var/datum/gas_mixture/air_sample = return_air()
+		var/total_moles = air_sample.get_total_moles()
+		var/tracked_moles = update_gas_expenditure(air_sample)
 
 		if(output_pressure)
 			signal.data["pressure"] = num2text(round(XGM_PRESSURE(air_sample),0.1),)
 		if(output_temperature)
 			signal.data["temperature"] = round(air_sample.temperature,0.1)
+		if(output_moles)
+			signal.data["moles"] = round(total_moles, 0.1)
+		if(!isnull(tracked_moles))
+			signal.data["gas_expenditure"] = round(roundstart_moles - tracked_moles, 0.1)
 
 		if(output)
-			var/total_moles = air_sample.total_moles
 			if(total_moles > 0)
 				if(output&SIGNAL_OXYGEN)
 					signal.data[GAS_OXYGEN] = round(100*air_sample.gas[GAS_OXYGEN]/total_moles,0.1)
@@ -123,10 +182,50 @@
 	. = ..()
 	set_frequency(frequency)
 
+/obj/structure/machinery/air_sensor/LateInitialize()
+	. = ..()
+	update_gas_expenditure()
+
 /obj/structure/machinery/air_sensor/Destroy()
+	var/history_type = get_large_tank_gas_history_type(id_tag)
+	if(history_type)
+		save_gas_expenditure(history_type, TRUE)
 	if(SSradio)
 		SSradio.remove_object(src,frequency)
 	return ..()
+
+/obj/structure/machinery/air_sensor/proc/update_gas_expenditure(datum/gas_mixture/air_sample)
+	if(!get_large_tank_gas_history_type(id_tag))
+		return
+	if(!air_sample)
+		air_sample = return_air()
+	if(!air_sample)
+		return
+	current_moles = round(air_sample.get_total_moles(), 0.1)
+	if(isnull(roundstart_moles))
+		roundstart_moles = current_moles
+	return current_moles
+
+/obj/structure/machinery/air_sensor/proc/save_gas_expenditure(history_type, assume_empty = FALSE)
+	if(history_type != get_large_tank_gas_history_type(id_tag))
+		return
+	if(history_type in saved_gas_expenditure_types)
+		return
+	if(!SSpersistence?.init_success)
+		return
+	if(isnull(roundstart_moles))
+		update_gas_expenditure()
+	if(isnull(roundstart_moles))
+		return
+	if(assume_empty)
+		current_moles = 0
+	else
+		update_gas_expenditure()
+	if(isnull(current_moles))
+		return
+	var/gas_expenditure = round(roundstart_moles - current_moles, 0.1)
+	SSpersistence.historyAddRecord(history_type, null, "[gas_expenditure]")
+	saved_gas_expenditure_types += history_type
 
 /obj/structure/machinery/computer/general_air_control
 	name = "atmosphere monitoring console"
@@ -200,6 +299,10 @@
 /obj/structure/machinery/computer/general_air_control/large_tank_control
 	ui_type = "AtmosControlTank"
 	frequency = 1441
+	/// Whether or not this terminal displays expenditure history
+	var/roundend_gas_logs = FALSE
+	/// Read-only cache of completed-round expenditure history for this console's sensors.
+	var/list/gas_expenditure_history
 	var/input_tag
 	var/output_tag
 
@@ -222,27 +325,30 @@
 	can_pass_under = FALSE
 	light_power_on = 1
 
+/obj/structure/machinery/computer/general_air_control/large_tank_control/terminal/logger
+	roundend_gas_logs = TRUE
+
 /obj/structure/machinery/computer/general_air_control/large_tank_control/wall
 	icon = 'icons/obj/modular_computers/modular_telescreen.dmi'
 	icon_state = "telescreen"
 	icon_screen = "engi"
 	density = FALSE
 
-/obj/structure/machinery/computer/general_air_control/large_tank_control/terminal
-	icon = 'icons/obj/modular_computers/modular_terminal.dmi'
-	icon_screen = "tank"
-	icon_keyboard = "atmos_key"
-	icon_keyboard_emis = "atmos_key_mask"
-	is_connected = TRUE
-	has_off_keyboards = TRUE
-	can_pass_under = FALSE
-	light_power_on = 1
+/obj/structure/machinery/computer/general_air_control/large_tank_control/wall/logger
+	roundend_gas_logs = TRUE
 
 /obj/structure/machinery/computer/general_air_control/large_tank_control/ui_data(mob/user)
 	. = ..()
 	var/list/data = .
 	data["maxrate"] = max_input_flow_setting
 	data["maxpressure"] = max_pressure_setting
+	for(var/list/sensor_data in data["sensors"])
+		var/id_tag = sensor_data["id_tag"]
+		var/list/sdata = sensor_information[id_tag]
+		sensor_data["datapoints"] += list(list("datapoint" = "moles", "data" = sdata["moles"], "unit" = "mol"))
+		if(roundend_gas_logs && get_large_tank_gas_history_type(id_tag))
+			sensor_data["datapoints"] += list(list("datapoint" = "gas_expenditure", "data" = sdata["gas_expenditure"], "unit" = "mol"))
+	data["gas_history"] = roundend_gas_logs ? get_gas_expenditure_history() : null
 	if(input_info)
 		LAZYINITLIST(data["input"])
 		data["input"]["power"] = input_info["power"]
@@ -255,6 +361,30 @@
 		data["output"]["pressure"] = output_info["internal"]
 		data["output"]["setpressure"] = default_pressure_setting
 	return data
+
+/obj/structure/machinery/computer/general_air_control/large_tank_control/proc/get_gas_expenditure_history()
+	if(!isnull(gas_expenditure_history))
+		return gas_expenditure_history
+	gas_expenditure_history = list()
+	if(!SSpersistence?.init_success)
+		return gas_expenditure_history
+	for(var/id_tag in sensors)
+		var/history_type = get_large_tank_gas_history_type(id_tag)
+		if(!history_type)
+			continue
+		var/list/history_records = list()
+		var/list/persistent_records = SSpersistence.historyGetLastRecords(history_type, null, 30, TRUE)
+		for(var/datum/persistent_record/record in persistent_records)
+			history_records += list(list(
+				"recorded_at" = record.created_at,
+				"expenditure" = text2num(record.value)
+			))
+		gas_expenditure_history += list(list(
+			"id_tag" = id_tag,
+			"name" = sensors[id_tag],
+			"records" = history_records
+		))
+	return gas_expenditure_history
 
 /obj/structure/machinery/computer/general_air_control/large_tank_control/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
