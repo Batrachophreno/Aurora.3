@@ -79,6 +79,8 @@
 	var/neoblob_type = /datum/neoblob_type
 	var/datum/neoblob_type/strain
 	var/datum/neoblob_cluster/cluster
+	/// Tint applied to greyscale neoblob icon states, when unset does not recolor
+	var/neoblob_color
 
 /obj/structure/neoblob
 	neoblob_type = /datum/neoblob_type/astroclast
@@ -148,10 +150,10 @@
 	icon = strain.icon
 	name = strain.get_name(src)
 	desc = strain.get_desc(src)
-	color = strain.color
-	light_color = strain.color
+	if(neoblob_color)
+		color = neoblob_color || strain.color
 	if(light_range && light_power)
-		set_light(light_range, light_power, strain.color)
+		set_light(light_range, light_power, light_color)
 
 /obj/structure/neoblob/CanPass(atom/movable/mover, turf/target, height, air_group)
 	if(mover?.movement_type & PHASING)
@@ -163,10 +165,37 @@
 	return FALSE
 
 /obj/structure/neoblob/update_icon()
-	if(health > maxhealth / 2)
-		icon_state = "blob"
-	else
-		icon_state = "blob_damaged"
+	icon_state = get_neoblob_icon_state()
+	ClearOverlays()
+	apply_neoblob_overlays()
+
+/obj/structure/neoblob/proc/get_neoblob_icon_state()
+	return (health > maxhealth / 2) ? "blob" : "blob_damaged"
+
+/obj/structure/neoblob/proc/apply_neoblob_overlays()
+	if(!strain)
+		return
+
+	var/overlay_sources = strain.get_icon_state_overlays(src)
+	if(!overlay_sources)
+		return
+
+	if(!islist(overlay_sources))
+		overlay_sources = list(overlay_sources)
+
+	var/list/overlays_to_add = list()
+	for(var/overlay_source in overlay_sources)
+		if(!overlay_source)
+			continue
+		if(istext(overlay_source))
+			if(!icon_exists(icon, overlay_source, TRUE))
+				continue
+			overlays_to_add += overlay_image(icon, overlay_source, flags = RESET_COLOR)
+		else
+			overlays_to_add += overlay_source
+
+	if(length(overlays_to_add))
+		AddOverlays(overlays_to_add)
 
 /obj/structure/neoblob/update_health()
 	update_icon()
@@ -393,14 +422,14 @@
 	cluster.ui_interact(usr)
 
 /// Rough icon state changes that reflect the core's health
-/obj/structure/neoblob/core/update_icon()
+/obj/structure/neoblob/core/get_neoblob_icon_state()
 	switch(get_health_percent())
 		if(66 to INFINITY)
-			icon_state = "blob_core"
+			return "blob_core"
 		if(33 to 66)
-			icon_state = "blob_node"
+			return "blob_node"
 		if(-INFINITY to 33)
-			icon_state = "blob_factory"
+			return "blob_factory"
 
 /obj/structure/neoblob/core/process()
 	set waitfor = 0
@@ -443,8 +472,8 @@
 /obj/structure/neoblob/core/secondary/process_core_health()
 	return
 
-/obj/structure/neoblob/core/secondary/update_icon()
-	icon_state = (health / maxhealth >= 0.5) ? "blob_node" : "blob_factory"
+/obj/structure/neoblob/core/secondary/get_neoblob_icon_state()
+	return (health / maxhealth >= 0.5) ? "blob_node" : "blob_factory"
 
 /obj/structure/neoblob/shield
 	name = "shielding mass"
@@ -475,11 +504,8 @@
 	update_nearby_tiles()
 	return ..()
 
-/obj/structure/neoblob/shield/update_icon()
-	if(health > maxhealth / 3)
-		icon_state = "blob_shield"
-	else
-		icon_state = "blob_shield_damaged"
+/obj/structure/neoblob/shield/get_neoblob_icon_state()
+	return (health > maxhealth / 3) ? "blob_shield" : "blob_shield_damaged"
 
 /obj/structure/neoblob/shield/CanPass(var/atom/movable/mover, var/turf/target, var/height = 0, var/air_group = 0)
 	if(mover?.movement_type & PHASING)

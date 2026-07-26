@@ -5,6 +5,10 @@
 	name = "astroclast"
 	color = "#AAFF00"
 	complementary_color = "#57787B"
+	icon_state_overlays = list(
+		"blob_core" = "blob_core_overlay",
+		"blob_node" = "blob_node_overlay"
+	)
 	faction = "astroclast"
 	attack_weapon = "astroclast tendril"
 
@@ -96,7 +100,7 @@
 			IF.deflate(TRUE)
 		if(istype(generic_structure, /obj/structure/machinery/camera))
 			var/obj/structure/machinery/camera/C = generic_structure
-			if(!C.stat & BROKEN)
+			if(!(C.stat & BROKEN))
 				C.add_damage(30)
 
 	for(var/obj/vehicle/V in target_turf)

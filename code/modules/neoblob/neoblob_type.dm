@@ -3,6 +3,7 @@
 	var/color = COLOR_WHITE
 	var/complementary_color = COLOR_WHITE
 	var/icon = 'icons/mob/neoblob/astroclast.dmi'
+	var/list/icon_state_overlays
 	var/faction = "infestation"
 	var/attack_weapon = "writhing mass"
 
@@ -59,6 +60,11 @@
 		if(NEOBLOB_ROLE_RAVAGING)
 			return ravaging_desc
 	return mass_desc
+
+/datum/neoblob_type/proc/get_icon_state_overlays(var/obj/structure/neoblob/growth)
+	if(!growth || !length(icon_state_overlays))
+		return null
+	return icon_state_overlays[growth.icon_state]
 
 /datum/neoblob_type/proc/attack_msg(var/obj/structure/neoblob/growth, var/atom/target)
 	target.visible_message(SPAN_WARNING("\The [growth] lashes out at \the [target]!"), SPAN_DANGER("\The [growth] lashes out at you!"))
