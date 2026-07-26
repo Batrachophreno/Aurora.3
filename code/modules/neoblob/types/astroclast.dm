@@ -83,11 +83,15 @@
 			generic_structure.add_damage(rand(5,20))
 		if(istype(generic_structure, /obj/structure/machinery/door))
 			var/obj/structure/machinery/door/D = generic_structure
+			if(!D.density)
+				continue
 			growth.attack_door(D)
 			if(D.health <= 0)
 				if(!D.open(TRUE))
 					D.visible_message(SPAN_WARNING("\The [growth] bashes through \the [D], demolishing it!"))
 					qdel(D)
+			if(!QDELETED(D) && D.density)
+				return TRUE
 		if(istype(generic_structure, /obj/structure/foamedmetal))
 			generic_structure.visible_message(SPAN_WARNING("\The [growth] lashes into \the [generic_structure], tearing it apart!"))
 			generic_structure.add_damage(30)
