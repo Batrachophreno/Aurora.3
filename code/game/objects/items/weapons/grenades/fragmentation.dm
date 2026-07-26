@@ -70,6 +70,34 @@
 	suppressed = TRUE //embedding messages are still produced so it's kind of weird when enabled.
 	muzzle_type = null
 
+/obj/projectile/bullet/pellet/fragment/spall
+	/// Between 30 and 3 damage, depending on how close you are. Pilot suits are 30 ballistic armour, so they should survive a lot of spall.
+	damage = 2
+	pellets = 15
+	armor_penetration = 10
+	range_step = 1
+	range = 15
+	/// Make the people hit pull big chunks of shrapnel out by hand.
+	embed_chance = 80
+	/// We don't want this to decapitate people in the unlucky event they get hit by the shell (or shell explosion) directly, then more shrapnel afterwards.
+	maim_rate = -1
+	/// Enough to break windows.
+	anti_materiel_potential = 2
+	name = "spall"
+	shrapnel_type = /obj/item/material/shard/shrapnel/large
+
+/obj/projectile/bullet/pellet/fragment/spall/glass
+	damage = 1
+	armor_penetration = 5
+	name = "glass"
+	shrapnel_type = /obj/item/material/shard
+
+/obj/projectile/bullet/pellet/fragment/spall/metalrod
+	damage = 3
+	armor_penetration = 15
+	name = "metal rod"
+	shrapnel_type = /obj/item/stack/rods
+
 /obj/item/grenade/frag
 	name = "fragmentation grenade"
 	desc = "A military fragmentation grenade, designed to explode in a deadly shower of fragments."

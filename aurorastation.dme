@@ -743,6 +743,7 @@
 #include "code\defines\procs\radio.dm"
 #include "code\game\ambience.dm"
 #include "code\game\atom_health.dm"
+#include "code\game\atom_spalling.dm"
 #include "code\game\atoms.dm"
 #include "code\game\atoms_movable.dm"
 #include "code\game\base_turf.dm"

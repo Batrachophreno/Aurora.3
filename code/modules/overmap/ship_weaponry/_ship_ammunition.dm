@@ -6,18 +6,26 @@
 	w_class = WEIGHT_CLASS_HUGE
 	slowdown = 1
 	drop_sound = 'sound/items/drop/shell_drop.ogg'
-	var/projectile_type_override //Override projectile type fired by the gun. This is because certain guns don't use ammo (the Leviathan) but with some we want the ammo to matter.
-	var/overmap_projectile_type_override //Override projectile type on the overmap, fired by the gun. Like the Grauwolf Probe.
-	var/name_override //If set, this will override the ammunition name for the overmap effect.
+	/// Override projectile type fired by the gun. This is because certain guns don't use ammo (the Leviathan) but with some we want the ammo to matter.
+	var/projectile_type_override
+	/// Override projectile type on the overmap, fired by the gun. Like the Grauwolf Probe.
+	var/overmap_projectile_type_override
+	/// If set, this will override the ammunition name for the overmap effect.
+	var/name_override
 	var/written_message
 	var/wielded = FALSE
 	var/caliber = SHIP_CALIBER_NONE
-	var/burst = 0 //If set to a number, this many projectiles will spawn to the side of the main projectile.
-	var/impact_type = SHIP_AMMO_IMPACT_HE //This decides what happens when the ammo hits. Is it a bunkerbuster? HE? AP?
-	var/ammunition_status = SHIP_AMMO_STATUS_GOOD //Currently unused, but will be relevant for chemical ammo.
+	/// If set to a number, this many projectiles will spawn to the side of the main projectile.
+	var/burst = 0
+	/// This decides what happens when the ammo hits. Is it a bunkerbuster? HE? AP?
+	var/impact_type = SHIP_AMMO_IMPACT_HE
+	/// Currently unused, but will be relevant for chemical ammo.
+	var/ammunition_status = SHIP_AMMO_STATUS_GOOD
 	var/ammunition_flags = SHIP_AMMO_FLAG_INFLAMMABLE|SHIP_AMMO_FLAG_VERY_HEAVY
-	var/ammunition_behaviour = SHIP_AMMO_BEHAVIOUR_DUMBFIRE //Not a bitfield!
-	var/overmap_behaviour = SHIP_AMMO_CAN_HIT_HAZARDS|SHIP_AMMO_CAN_HIT_VISITABLES|SHIP_AMMO_CAN_HIT_PLANETS //Whether or not the ammo can hit hazards or ships, and so on.
+	/// Not a bitfield!
+	var/ammunition_behaviour = SHIP_AMMO_BEHAVIOUR_DUMBFIRE
+	/// Whether or not the ammo can hit hazards or ships, and so on.
+	var/overmap_behaviour = SHIP_AMMO_CAN_HIT_HAZARDS|SHIP_AMMO_CAN_HIT_VISITABLES|SHIP_AMMO_CAN_HIT_PLANETS
 	var/overmap_icon_state = "cannon"
 	var/obj/effect/overmap/origin
 	var/atom/overmap_target
@@ -25,8 +33,9 @@
 	var/obj/projectile/original_projectile
 	var/heading = SOUTH
 	var/range = OVERMAP_PROJECTILE_RANGE_MEDIUM
-	var/mob_carry_size = 12 //How large a mob has to be to carry the shell
-	//Cookoff variables.
+	/// How large a mob has to be to carry the shell
+	var/mob_carry_size = 12
+	/// Cookoff variables.
 	var/cookoff_devastation = 0
 	var/cookoff_heavy = 2
 	var/cookoff_light = 3
@@ -179,7 +188,8 @@
 	if(written_message)
 		. += "Sensor readings indicate the presence of a message written on the shell: <b>[written_message]</b>"
 
-/obj/item/ship_ammunition/proc/get_speed() //Lag variable used for step_towards(). Lower is better.
+/// Lag variable used for step_towards(). Lower is better.
+/obj/item/ship_ammunition/proc/get_speed()
 	return 4
 
 /obj/item/ship_ammunition/touch_map_edge(var/new_z)
@@ -216,9 +226,9 @@
 	log_and_message_admins("A projectile ([name]) has entered the Overmap! (<A href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[P.x];Y=[P.y];Z=[P.z]'>JMP</a>)")
 	return TRUE
 
-//SNOWFLAKE CODE: ACTIVATE
-//The problem is getting the projectile from the gun to the map edge. We want to do this naturally, but using process() and BYOND's walk procs makes it look very... unnatural. And also slow!
-//The solution? Let's co-opt projectile code!
+/// SNOWFLAKE CODE: ACTIVATE
+/// The problem is getting the projectile from the gun to the map edge. We want to do this naturally, but using process() and BYOND's walk procs makes it look very... unnatural. And also slow!
+/// The solution? Let's co-opt projectile code!
 /obj/projectile/ship_ammo
 	name = "ship ammunition"
 	icon = 'icons/obj/guns/ship/physical_projectiles.dmi'
@@ -227,87 +237,27 @@
 	anti_materiel_potential = 3
 	impact_sounds = list(BULLET_IMPACT_MEAT = SOUNDS_BULLET_MEAT, BULLET_IMPACT_METAL = SOUNDS_BULLET_METAL)
 	accuracy = 100
-	projectile_piercing = PASSGLASS|PASSGRILLE|PASSNEOBLOB|PASSMOB|PASSCLOSEDTURF|PASSMACHINE|PASSSTRUCTURE|PASSFLAPS|PASSDOORS|PASSVEHICLE|PASSWINDOW|PASSSHIELD //It's a ship weapon let it try to penetrate everything.
-	pierce_decay_damage = 0.95  //Ship weapon projectiles don't lose much damage on pierce by default, but this can be set per projectile.
-	///This is passed to explosion(), it is stored here for when projectiles hit shields and need to damage the shield as if they had exploded.
+	/// It's a ship weapon let it try to penetrate everything.
+	projectile_piercing = PASSGLASS|PASSGRILLE|PASSNEOBLOB|PASSMOB|PASSCLOSEDTURF|PASSMACHINE|PASSSTRUCTURE|PASSFLAPS|PASSDOORS|PASSVEHICLE|PASSWINDOW|PASSSHIELD
+	/// Ship weapon projectiles don't lose much damage on pierce by default, but this can be set per projectile.
+	pierce_decay_damage = 0.95
+	/// This is passed to explosion(), it is stored here for when projectiles hit shields and need to damage the shield as if they had exploded.
 	var/list/explosion_strength = list(0, 0, 0)
-	///The last thing this projectile pierced. Used for spalling effects in on_hit()
+	/// The last thing this projectile pierced. Used for spalling effects in on_hit()
 	var/atom/last_thing_pierced = null
 	var/obj/item/ship_ammunition/ammo
 	var/primed = FALSE
-	///First target we hit. Used to report if a hit was successful.
+	/// First target we hit. Used to report if a hit was successful.
 	var/hit_target = FALSE
 
-/obj/projectile/ship_ammo/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE) //When the projectile moves from a dense tile to a non-dense tile.
+/// When the projectile moves from a dense tile to a non-dense tile.
+/obj/projectile/ship_ammo/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(last_thing_pierced)
 		var/turf/entered_turf = isturf(loc) ? loc : get_turf(loc)
 		if(!(entered_turf.check_density(FALSE, TRUE))) //Checks for mobs so we don't spawn spalling inside the poor bridge crew, getting hit by the shell is bad enough.
-			handle_spalling(entered_turf, movement_dir, last_thing_pierced)
+			last_thing_pierced.emit_spalling(movement_dir, src, entered_turf)
 			last_thing_pierced = null
-
-/**
- * This creates a cone of shrapnel whenever a projectile pierces something dense and then crosses into a non-dense turf.
- * This means that it won't spawn all the shrapnel inside the next thing it penetrates, to simulate spalling.
- * All of of the projectile stats are set custom here, in future it might be good to set them dynmically based on the material of the thing pierced.
- * Too many things don't have a material set, so that will have to wait.
- */
-/obj/projectile/ship_ammo/proc/handle_spalling(atom/source, shrapnel_dir, thing_pierced)
-	set waitfor = FALSE
-
-	src.visible_message(SPAN_DANGER("Huge chunks of shrapnel spray out from \the [thing_pierced] as \the [src] punches through!"))
-
-	var/turf/O = get_turf(src)
-	var/list/target_turfs = list()
-	target_turfs += get_step(O, shrapnel_dir)
-	target_turfs += get_step(O, turn(shrapnel_dir, -45))
-	target_turfs += get_step(O, turn(shrapnel_dir, 45))
-	target_turfs += get_step(get_step(O, turn(shrapnel_dir, -45)), shrapnel_dir)
-	target_turfs += get_step(get_step(O, turn(shrapnel_dir, 45)), shrapnel_dir)
-
-	for(var/turf/T in target_turfs)
-		var/obj/projectile/bullet/pellet/fragment/spall/P
-		if(istype(thing_pierced, /obj/structure/window))
-			P = new /obj/projectile/bullet/pellet/fragment/spall/glass(O)
-		else if(istype(thing_pierced, /obj/structure/grille) || istype(thing_pierced, /obj/structure/window_frame))
-			P = new /obj/projectile/bullet/pellet/fragment/spall/metalrod(O)
-		else if(istype(thing_pierced, /obj/structure/machinery/door/airlock))
-			var/obj/structure/machinery/door/airlock/D = thing_pierced
-			if(D.window_material && D.window_material == GET_SINGLETON(MATERIAL_GLASS))
-				P = new /obj/projectile/bullet/pellet/fragment/spall/glass(O)
-			else
-				P = new /obj/projectile/bullet/pellet/fragment/spall(O)
-		else
-			P = new /obj/projectile/bullet/pellet/fragment/spall(O)
-		P.preparePixelProjectile(T, src)
-		P.firer = src
-		P.fired_from = thing_pierced
-		P.fire()
-	return TRUE
-
-/obj/projectile/bullet/pellet/fragment/spall
-		damage = 2 //Between 30 and 3 damage, depending on how close you are. Pilot suits are 30 ballistic armour, so they should survive a lot of spall.
-		pellets = 15
-		armor_penetration = 10
-		range_step = 1
-		range = 15
-		embed_chance = 80 //Make the people hit pull big chunks of shrapnel out by hand.
-		maim_rate = -1 //We don't want this to decapitate people in the unlucky event they get hit by the shell (or shell explosion) directly, then more shrapnel afterwards.
-		anti_materiel_potential = 2 //Enough to break windows.
-		name = "spall"
-		shrapnel_type = /obj/item/material/shard/shrapnel/large
-
-/obj/projectile/bullet/pellet/fragment/spall/glass
-		damage = 1
-		armor_penetration = 5
-		name = "glass"
-		shrapnel_type = /obj/item/material/shard
-
-/obj/projectile/bullet/pellet/fragment/spall/metalrod
-		damage = 3
-		armor_penetration = 15
-		name = "metal rod"
-		shrapnel_type = /obj/item/stack/rods
 
 /obj/projectile/ship_ammo/Destroy()
 	ammo = null
@@ -326,7 +276,8 @@
 		ammo.original_projectile = src
 		forceMove(ammo)
 
-/obj/projectile/ship_ammo/on_hit(atom/target, blocked, def_zone, var/is_landmark_hit = FALSE) //is_landmark_hit is TRUE when we hit a landmark on a visitable non-ship overmap object.
+/// is_landmark_hit is TRUE when we hit a landmark on a visitable non-ship overmap object.
+/obj/projectile/ship_ammo/on_hit(atom/target, blocked, def_zone, var/is_landmark_hit = FALSE)
 	if(target && !hit_target)
 		hit_target = TRUE
 		var/target_name = target.name
@@ -342,16 +293,12 @@
 			if(M.client)
 				to_chat(M, "<span class='deadsay'>" + create_text_tag("DEAD", M.client) + "[ghost_follow_link(target, M)] A [src.name] hit \the [target.name] in \the [get_area(target)] at [target.x], [target.y], [target.z]!</span>")
 
-	if(istype(target, /turf/simulated/wall) || istype(target, /obj/structure/machinery/door)) //Stores the last thing we pierced for spalling purposes.
+	if(target && target.can_generate_spalling(src)) //Stores the last thing we pierced for spalling purposes.
 		last_thing_pierced = target
-	else if (istype(target, /obj/structure)) //If it is a structure on a dense turf, that uses health,
-		if (target.should_use_health)
-			var/turf/T = get_turf(target)
-			if (T.check_density(FALSE, TRUE))
-				last_thing_pierced = target
 	return ..()
 
-/obj/projectile/ship_ammo/proc/on_translate(var/turf/entry_turf, var/target_turf) //This proc is called when the projectile enters a new ship's overmap zlevel.
+/// This proc is called when the projectile enters a new ship's overmap zlevel.
+/obj/projectile/ship_ammo/proc/on_translate(var/turf/entry_turf, var/target_turf)
 	if(ammo.burst)
 		for(var/i = 1 to ammo.burst)
 			var/turf/new_turf = get_random_turf_in_range(entry_turf, ammo.burst + rand(0, ammo.burst),  0, TRUE, FALSE)
