@@ -36,6 +36,14 @@
 	var/laser_resist = 2
 
 	var/sound_death = 'sound/effects/splat.ogg'
+	/**
+	 * Controls expansion direction weighting. 0 preserves uniform random spread.
+	 *
+	 * WHAT THIS MEANS:
+	 * * Positive values favor target turfs with fewer cardinally adjacent same-cluster growths, making spread stringier.
+	 * * Negative values favor target turfs with more cardinally adjacent same-cluster growths, making spread clumpier.
+	 */
+	var/expansion_adjacency_bias = 0
 
 /datum/neoblob_type/proc/get_name(var/obj/structure/neoblob/growth)
 	switch(growth.neoblob_role)
@@ -93,6 +101,52 @@
 /// Called on expansion to an open turf. Iterate through what you've just landed on, and fuck them all up (probably).
 /datum/neoblob_type/proc/on_contact_atom(var/obj/structure/neoblob/growth, var/turf/target)
 	return FALSE
+
+/datum/neoblob_type/proc/pick_expansion_dir(var/obj/structure/neoblob/growth, var/list/available_dirs)
+	if(!length(available_dirs))
+		return null
+	if(!growth || !expansion_adjacency_bias)
+		return pick(available_dirs)
+
+	var/list/weighted_dirs = list()
+	for(var/expansion_dir in available_dirs)
+		var/turf/target = get_step(growth, expansion_dir)
+		if(!target)
+			continue
+		var/dir_weight = get_expansion_dir_weight(growth, target)
+		if(dir_weight <= 0)
+			continue
+		weighted_dirs[num2text(expansion_dir)] = dir_weight
+
+	if(!length(weighted_dirs))
+		return pick(available_dirs)
+
+	return text2num(pickweight(weighted_dirs))
+
+/datum/neoblob_type/proc/get_expansion_dir_weight(var/obj/structure/neoblob/growth, var/turf/target)
+	var/adjacent_growths = count_expansion_adjacent_growths(growth, target)
+	if(expansion_adjacency_bias > 0)
+		return 1 + ((4 - min(adjacent_growths, 4)) * expansion_adjacency_bias)
+	if(expansion_adjacency_bias < 0)
+		return 1 + (min(adjacent_growths, 4) * abs(expansion_adjacency_bias))
+	return 1
+
+/datum/neoblob_type/proc/count_expansion_adjacent_growths(var/obj/structure/neoblob/growth, var/turf/target)
+	if(!target)
+		return 0
+
+	var/adjacent_growths = 0
+	for(var/check_dir in GLOB.cardinals)
+		var/turf/adjacent_turf = get_step(target, check_dir)
+		if(!adjacent_turf)
+			continue
+		var/obj/structure/neoblob/nearby_growth = locate() in adjacent_turf
+		if(!nearby_growth || nearby_growth == growth)
+			continue
+		if(growth?.cluster && nearby_growth.cluster != growth.cluster)
+			continue
+		adjacent_growths++
+	return adjacent_growths
 
 /// Certain growth types will always grow into a specific type of growth, regardless of the target turf. This is used for things like cores always growing shields, and shields always growing ravaging growths.
 /datum/neoblob_type/proc/get_default_growth_path(var/obj/structure/neoblob/growth)

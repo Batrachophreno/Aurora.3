@@ -177,10 +177,10 @@
 #define COLOR_DARKMODE_TEXT "#a4bad6"
 
 // Neoblob Colours
-#define NEOBLOB_COLOR_CORE         "#c96e28"
-#define NEOBLOB_COLOR_SHIELD       "#9ed659"
-#define NEOBLOB_COLOR_RAV          "#d65f42"
-#define NEOBLOB_COLOR_PULS         "#b5ff5b"
+#define NEOBLOB_COLOR_CORE         "#c96328"
+#define NEOBLOB_COLOR_SHIELD       "#6b4d15"
+#define NEOBLOB_COLOR_RAV          "#a0960c"
+#define NEOBLOB_COLOR_PULS         "#1e3800"
 
 #define RANDOM_RGB rgb(rand(0,255), rand(0,255), rand(0,255))
 

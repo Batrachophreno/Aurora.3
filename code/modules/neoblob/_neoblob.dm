@@ -302,7 +302,9 @@
 	var/list/available_dirs = dirs - bad_dir
 	if(!length(available_dirs))
 		return
-	var/pushDir = pick(available_dirs)
+	var/pushDir = strain ? strain.pick_expansion_dir(src, available_dirs) : pick(available_dirs)
+	if(!pushDir)
+		return
 	var/turf/T = get_step(src, pushDir)
 	if(!T)
 		return
