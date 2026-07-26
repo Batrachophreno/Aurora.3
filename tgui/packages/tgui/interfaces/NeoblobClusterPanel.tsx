@@ -32,13 +32,14 @@ export const NeoblobClusterPanel = (props) => {
             onClick={() => act('toggle_expansion')}
           />
           <Button.Confirm
-            content="Destroy Cluster"
             confirmContent="This will delete all tracked neoblob growth objects. Confirm?"
             icon="exclamation-triangle"
             color="bad"
             disabled={data.destroyed}
             onClick={() => act('destroy_cluster')}
-          />
+          >
+            Destroy Cluster
+          </Button.Confirm>
         </Section>
 
         <Section title="Overview">
