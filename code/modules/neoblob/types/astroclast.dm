@@ -29,6 +29,9 @@
 	ravaging_name = "ravaging mass"
 	ravaging_desc = "A mass of interwoven tendrils. They thrash around haphazardly at anything in reach."
 
+	/// Just a l'il stringy.
+	expansion_adjacency_bias = -2
+
 // Object defines
 /obj/structure/neoblob/astroclast
 
