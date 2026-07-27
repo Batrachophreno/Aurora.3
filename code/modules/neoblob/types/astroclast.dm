@@ -62,8 +62,16 @@
 		var/turf/simulated/wall/SW = target
 		if(!target.should_use_health)
 			return FALSE
+		// Chance to do a crazy spall action instead of generic damage.
+		if(prob(5))
+			var/spalling_direction = get_dir(growth, SW)
+			var/turf/spalling_turf = get_step(SW, spalling_direction)
+			if(spalling_turf)
+				target.emit_spalling(spalling_direction, growth, spalling_turf)
+				target.add_damage(target.maxhealth + 20)
 		// Damage reinforced walls reasonably quickly, but don't one-shot every standard wall.
-		target.add_damage((rand(10, 40) * .01 * target.maxhealth) + 20)
+		else
+			target.add_damage((rand(10, 40) * 0.01 * target.maxhealth) + 20)
 		return TRUE
 	return FALSE
 
