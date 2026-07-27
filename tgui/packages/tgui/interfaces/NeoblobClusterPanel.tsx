@@ -17,14 +17,12 @@ export const NeoblobClusterPanel = (props) => {
   const { act, data } = useBackend<NeoblobClusterPanelData>();
 
   return (
-    <Window>
+    <Window width={780} height={720}>
       <Window.Content scrollable>
         <Section title="Controls">
           <Button
             content={
-              data.expansion_paused
-                ? 'Resume Expansion'
-                : 'Pause Expansion'
+              data.expansion_paused ? 'Resume Expansion' : 'Pause Expansion'
             }
             icon={data.expansion_paused ? 'play' : 'pause'}
             color={data.expansion_paused ? 'good' : 'orange'}
@@ -50,9 +48,7 @@ export const NeoblobClusterPanel = (props) => {
             <LabeledList.Item label="Master Nucleus">
               {data.has_core ? data.master_coordinates : 'No master nucleus'}
             </LabeledList.Item>
-            <LabeledList.Item label="Area">
-              {data.master_area}
-            </LabeledList.Item>
+            <LabeledList.Item label="Area">{data.master_area}</LabeledList.Item>
             <LabeledList.Item label="Tracked Growth">
               {data.growth_count}
             </LabeledList.Item>

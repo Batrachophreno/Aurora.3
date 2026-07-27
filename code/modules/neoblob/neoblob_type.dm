@@ -40,8 +40,8 @@
 	 * Controls expansion direction weighting. 0 preserves uniform random spread.
 	 *
 	 * WHAT THIS MEANS:
-	 * * Positive values favor target turfs with fewer cardinally adjacent same-cluster growths, making spread stringier.
-	 * * Negative values favor target turfs with more cardinally adjacent same-cluster growths, making spread clumpier.
+	 * * Negative values make spread stringier.
+	 * * Positive values make spread clumpier.
 	 */
 	var/expansion_adjacency_bias = 0
 

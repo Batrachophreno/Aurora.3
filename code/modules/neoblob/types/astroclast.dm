@@ -53,10 +53,14 @@
 		return FALSE
 	return TRUE
 
+/// Used when the neoblob failed can_expand_to() on a blocked turf.
 /datum/neoblob_type/astroclast/on_blocked_turf(var/obj/structure/neoblob/growth, var/turf/target)
 	if(istype(target, /turf/simulated/wall))
 		var/turf/simulated/wall/SW = target
-		SW.add_damage(rand(60, 120))
+		if(!target.should_use_health)
+			return FALSE
+		// Damage reinforced walls reasonably quickly, but don't one-shot every standard wall.
+		target.add_damage((rand(10, 40) * .01 * target.maxhealth) + 20)
 		return TRUE
 	return FALSE
 
@@ -135,13 +139,15 @@
 	switch(tendril_type)
 		if(TENDRIL_SOLID)
 			desc = "An incredibly dense, yet flexible, tendril, removed from an astroclast."
-			force = 15
+			// You put in the effort, you deserve it, champ.
+			force = 30
 			color = COLOR_BRONZE
 			origin_tech = list(TECH_MATERIAL = 2, TECH_BIO = 2)
 		if(TENDRIL_FIRE)
 			desc = "A tendril removed from an astroclast. It's hot to the touch."
 			damtype = DAMAGE_BURN
-			force = 22
+			// You put in the effort, you deserve it, champ.
+			force = 30
 			color = COLOR_AMBER
 			origin_tech = list(TECH_POWER = 2, TECH_BIO = 2)
 
