@@ -18,8 +18,9 @@
  * * shrapnel_dir: mandatory. Dir bitflag that we try to throw spalling out from.
  * * source: The projectile that caused the spalling; mostly for flavor text.
  * * emits_from: The turf we spawn our new spalling fragment projectiles from. Generally can be derived if one is not passed.
+ * * message: Sends the default spalling message; set to FALSE if you want to handle messaging elsewhere.
  */
-/atom/proc/emit_spalling(shrapnel_dir = null, atom/source = null, turf/emits_from = null)
+/atom/proc/emit_spalling(shrapnel_dir = null, atom/source = null, turf/emits_from = null, message = TRUE)
 	set waitfor = FALSE
 
 	if(!shrapnel_dir)
@@ -45,10 +46,11 @@
 	else if(!source && get_turf(src) == emits_from)
 		launch_source = src
 
-	if(source)
-		launch_source.visible_message(SPAN_DANGER("Huge chunks of shrapnel spray out from \the [src] as \the [source] punches through!"))
-	else
-		launch_source.visible_message(SPAN_DANGER("Huge chunks of shrapnel spray out from \the [src]!"))
+	if(message)
+		if(source)
+			launch_source.visible_message(SPAN_DANGER("Huge chunks of shrapnel spray out from \the [src] as \the [source] punches through!"))
+		else
+			launch_source.visible_message(SPAN_DANGER("Huge chunks of shrapnel spray out from \the [src]!"))
 
 	var/list/target_turfs = list()
 	target_turfs += get_step(emits_from, shrapnel_dir)

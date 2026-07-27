@@ -59,19 +59,21 @@
 /// Used when the neoblob failed can_expand_to() on a blocked turf.
 /datum/neoblob_type/astroclast/on_blocked_turf(var/obj/structure/neoblob/growth, var/turf/target)
 	if(istype(target, /turf/simulated/wall))
-		var/turf/simulated/wall/SW = target
-		if(!target.should_use_health)
+		var/turf/simulated/wall/simulated_wall = target
+		if(!simulated_wall.should_use_health)
 			return FALSE
-		// Chance to do a crazy spall action instead of generic damage.
-		if(prob(5))
-			var/spalling_direction = get_dir(growth, SW)
-			var/turf/spalling_turf = get_step(SW, spalling_direction)
-			if(spalling_turf)
-				target.emit_spalling(spalling_direction, growth, spalling_turf)
-				target.add_damage(target.maxhealth + 20)
 		// Damage reinforced walls reasonably quickly, but don't one-shot every standard wall.
-		else
-			target.add_damage((rand(10, 40) * 0.01 * target.maxhealth) + 20)
+		simulated_wall.add_damage((rand(10, 40) * 0.01 * simulated_wall.maxhealth) + 20)
+		// Chance to do a crazy spall action instead of generic damage if the wall is badly damaged (but not destroyed, duh).
+		if(simulated_wall && prob(1) && (simulated_wall.health < (simulated_wall.maxhealth / 4)))
+			var/spalling_direction = get_dir(growth, simulated_wall)
+			var/turf/spalling_turf = get_step(simulated_wall, spalling_direction)
+			if(spalling_turf)
+				simulated_wall.emit_spalling(spalling_direction, growth, spalling_turf, FALSE)
+				var/target_name = simulated_wall.name
+				simulated_wall.dismantle_wall(no_product = TRUE)
+				growth.pulse()
+				growth.visible_message(SPAN_HIGHDANGER("Huge chunks of shrapnel spray out from \the [target_name] as \the [growth] punches through!"))
 		return TRUE
 	return FALSE
 
