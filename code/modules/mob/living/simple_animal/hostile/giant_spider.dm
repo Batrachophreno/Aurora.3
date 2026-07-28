@@ -93,7 +93,12 @@
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/servant/Life(seconds_per_tick, times_fired)
 	..()
+	if(stat == DEAD)
+		return 0
 	adjustBruteLoss(-2)
+
+/mob/living/simple_animal/hostile/giant_spider/nurse/servant/should_rest_when_ghosting()
+	return FALSE
 
 //hunters have the most poison and move the fastest, so they can find prey
 /mob/living/simple_animal/hostile/giant_spider/hunter
@@ -347,6 +352,17 @@
 		busy = 0
 		stop_automated_movement = 0
 
+/mob/living/simple_animal/hostile/giant_spider/nurse/proc/can_cocoon_feed_target(var/mob/living/target)
+	if(!target)
+		return FALSE
+	if(!target.stat)
+		return FALSE
+	if(istype(target, /mob/living/simple_animal/hostile/giant_spider))
+		return FALSE
+	if(target.isSynthetic())
+		return FALSE
+	return TRUE
+
 /mob/living/simple_animal/hostile/giant_spider/verb/web()
 	set name = "Spin Web"
 	set desc = "Create a web that slows down movement."
@@ -360,49 +376,37 @@
 	else
 		to_chat(usr, SPAN_WARNING("You cannot secrete webs on a turf that is already webbed!"))
 
-
 /mob/living/simple_animal/hostile/giant_spider/nurse/verb/cocoon()
 	set name = "Cocoon and Feed"
 	set desc = "Cocoon an incapacitated mob so you can feed upon it. This will give you one food point."
 	set category = "Greimorian"
 
-
 	var/list/available_mobs = list()
 
 	for(var/mob/living/A in range(1, src))
-		if(A.stat && !istype(A,/mob/living/simple_animal/hostile/giant_spider) && !A.isSynthetic())
+		if(can_cocoon_feed_target(A))
 			available_mobs += A
-	var/mob/P = tgui_input_list(usr, "Choose a mob to cocoon.", "Cocoon", available_mobs)
-	if(get_dist(src, P) <= 1)
-		src.visible_message("\The [src] begins to secrete a sticky substance around \the [P].")
-		if(!do_after(src, 80))
-			return
+	var/mob/living/P = tgui_input_list(usr, "Choose a mob to cocoon.", "Cocoon", available_mobs)
+	if(!P)
+		return
+	if(get_dist(src, P) > 1 || !can_cocoon_feed_target(P))
+		to_chat(src, SPAN_WARNING("You cannot cocoon \the [P]."))
+		return
 
-		if(P && isturf(P.loc) && get_dist(src, P) <= 1)
-			var/obj/effect/spider/cocoon/C = new(get_turf(P))
-			var/large_cocoon = FALSE
-			C.pixel_x = P.pixel_x
-			C.pixel_y = P.pixel_y
-			for(P in get_turf(C))
-				if(istype(P, /mob/living/simple_animal/hostile/giant_spider))
-					continue
-				large_cocoon = TRUE
-				fed++
-				src.visible_message("\The [src] sticks a proboscis into \the [P] and sucks a viscous substance out.")
-				P.forceMove(C)
-				C.pixel_x = P.pixel_x
-				C.pixel_y = P.pixel_y
-				break
-				if(istype(P, /obj/item))
-					var/obj/item/I = P
-					I.forceMove(C)
-				if(istype(P, /obj/structure))
-					var/obj/structure/S = P
-					if(!S.anchored)
-						S.forceMove(C)
-						large_cocoon = 1
-			if(large_cocoon)
-				C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
+	src.visible_message("\The [src] begins to secrete a sticky substance around \the [P].")
+	if(!do_after(src, 80, P, DO_DEFAULT | DO_USER_UNIQUE_ACT))
+		return
+
+	if(!isturf(P.loc) || get_dist(src, P) > 1 || !can_cocoon_feed_target(P))
+		return
+
+	var/obj/effect/spider/cocoon/C = new(get_turf(P))
+	C.pixel_x = P.pixel_x
+	C.pixel_y = P.pixel_y
+	C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
+	fed++
+	src.visible_message("\The [src] sticks a proboscis into \the [P] and sucks a viscous substance out.")
+	P.forceMove(C)
 
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/verb/eggs()
@@ -414,14 +418,21 @@
 		to_chat(src, SPAN_WARNING("You do not have the nutrients to do this. Try cocooning a corpse!"))
 		return
 
-	var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
+	var/turf/current_turf = get_turf(src)
+	if(!current_turf)
+		return
+
+	var/obj/effect/spider/eggcluster/E = locate() in current_turf
 	if(!E && fed > 0)
 		src.visible_message("\The [src] begins to lay a cluster of eggs.")
-		if(!do_after(src, 50))
+		if(!do_after(src, 50, src, DO_DEFAULT | DO_USER_UNIQUE_ACT))
 			return
-		E = locate() in get_turf(src)
-		if(!E)
-			new /obj/effect/spider/eggcluster(src.loc)
+		current_turf = get_turf(src)
+		if(!current_turf || stat != CONSCIOUS)
+			return
+		E = locate() in current_turf
+		if(!E && fed > 0)
+			new /obj/effect/spider/eggcluster(current_turf)
 			fed--
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/spider_queen/verb/servant()
@@ -433,14 +444,21 @@
 		to_chat(src, SPAN_WARNING("You do not have the nutrients to do this. Try cocooning a corpse!"))
 		return
 
-	var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
+	var/turf/current_turf = get_turf(src)
+	if(!current_turf)
+		return
+
+	var/obj/effect/spider/eggcluster/E = locate() in current_turf
 	if(!E && fed > 0)
 		src.visible_message("\The [src] begins to lay a servant.")
-		if(!do_after(src, 120))
+		if(!do_after(src, 120, src, DO_DEFAULT | DO_USER_UNIQUE_ACT))
 			return
-		E = locate() in get_turf(src)
-		if(!E)
-			new /mob/living/simple_animal/hostile/giant_spider/nurse/servant(get_turf(src))
+		current_turf = get_turf(src)
+		if(!current_turf || stat != CONSCIOUS)
+			return
+		E = locate() in current_turf
+		if(!E && fed > 0)
+			new /mob/living/simple_animal/hostile/giant_spider/nurse/servant(current_turf)
 			playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 			fed--
 

@@ -11,7 +11,7 @@
 
 		if(S)
 			announce_ghost_joinleave(user, 0, "They are now a [name].")
-			S.ckey = user.ckey
+			return S.assign_player(user)
 
 		return S
 	else

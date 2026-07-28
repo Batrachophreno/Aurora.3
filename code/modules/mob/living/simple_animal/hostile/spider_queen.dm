@@ -77,6 +77,25 @@
 		return
 	..()
 
+/mob/living/simple_animal/hostile/giant_spider/nurse/spider_queen/death(gibbed, deathmessage)
+	. = ..()
+	if(hovering)
+		set_ceiling_climb(FALSE)
+
+/mob/living/simple_animal/hostile/giant_spider/nurse/spider_queen/should_rest_when_ghosting()
+	return FALSE
+
+/mob/living/simple_animal/hostile/giant_spider/nurse/spider_queen/proc/set_ceiling_climb(var/enabled)
+	if(hovering == enabled)
+		return FALSE
+	hovering = enabled
+	mouse_opacity = enabled ? FALSE : initial(mouse_opacity)
+	speed = enabled ? -1 : initial(speed)
+	pass_flags = enabled ? (PASSTABLE | PASSMOB) : initial(pass_flags)
+	layer = enabled ? LYING_MOB_LAYER : initial(layer)
+	update_icon()
+	return TRUE
+
 /spell/targeted/ceiling_climb
 	name = "Ceiling Climbing"
 	desc = "Allows the spider queen to walk on the ceiling, becoming untargetable."
@@ -95,31 +114,29 @@
 	..()
 	if(istype(user, /mob/living/simple_animal/hostile/giant_spider/nurse/spider_queen))
 		var/mob/living/simple_animal/hostile/giant_spider/nurse/spider_queen/M = user
-		if(M.hovering)
+		if(M.stat == DEAD || M.hovering)
 			return FALSE
-		M.hovering = TRUE
-		M.mouse_opacity = FALSE
-		M.speed = -1
-		M.update_icon()
-		M.pass_flags = PASSTABLE | PASSMOB
-		M.layer = LYING_MOB_LAYER
+		M.set_ceiling_climb(TRUE)
 		addtimer(CALLBACK(src, PROC_REF(do_landing), M), 1 MINUTE)
 		return TRUE
 	else
 		return FALSE
 
 /spell/targeted/ceiling_climb/proc/do_landing(var/mob/living/simple_animal/hostile/giant_spider/nurse/spider_queen/S)
-	S.hovering = FALSE
-	S.mouse_opacity = TRUE
-	S.speed = initial(S.speed)
-	S.update_icon()
-	S.pass_flags = PASSTABLE
-	S.layer = initial(S.layer)
+	if(QDELETED(S))
+		return FALSE
+	if(!S.hovering)
+		return FALSE
+
+	S.set_ceiling_climb(FALSE)
+	if(S.stat == DEAD)
+		return FALSE
+
 	var/turf/target_turf = get_turf(S)
 	if(target_turf)
 		S.visible_message(SPAN_DANGER("\The [S] lands on the [target_turf]!"))
 		for(var/mob/living/M in target_turf)
-			if(M != src)
+			if(M != S)
 				M.apply_damage(50, DAMAGE_BRUTE)
 				M.apply_effect(6, STUN)
 	return TRUE
