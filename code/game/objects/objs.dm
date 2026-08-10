@@ -105,7 +105,7 @@
 	// This should be considered for any moderation purpose
 	var/persistent_objects_author_ckey = null
 	// Expiration time used when saving/updating a persistent type, this can be changed depending on the use case by assigning a new value
-	var/persistant_objects_expiration_time_days = PERSISTENT_DEFAULT_EXPIRATION_DAYS
+	var/persistent_objects_expiration_time_days = PERSISTENT_DEFAULT_EXPIRATION_DAYS
 	/* END PERSISTENCE VARS */
 
 	/// for easy reference of talking atoms
@@ -258,7 +258,10 @@
 	return
 
 /mob/proc/unset_machine()
+	var/was_viewing_machine_remote_view = is_viewing_camera() || is_viewing_overmap()
 	src.machine = null
+	if(was_viewing_machine_remote_view)
+		reset_view(null)
 
 /mob/proc/set_machine(var/obj/O)
 	if(src.machine)
